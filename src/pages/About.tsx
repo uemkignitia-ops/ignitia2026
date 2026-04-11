@@ -28,7 +28,7 @@ const About = () => {
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const heroScale = useSpring(useTransform(heroProgress, [0, 1], [1, 0.85]), {
+  const heroScale = useSpring(useTransform(heroProgress, [0, 1], [1, 1.15]), {
     stiffness: 80,
     damping: 20,
   });
