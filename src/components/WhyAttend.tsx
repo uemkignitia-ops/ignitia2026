@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Network, Zap, Award, Handshake, PartyPopper } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,6 +41,7 @@ const reasons = [
 ];
 
 const WhyAttend = () => {
+  const isMobile = useIsMobile();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -49,6 +51,10 @@ const WhyAttend = () => {
   const headingScale = useTransform(scrollYProgress, [0, 0.5], [0.92, 1]);
 
   useLayoutEffect(() => {
+    if (isMobile) {
+      return;
+    }
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".why-attend-card",
@@ -71,7 +77,7 @@ const WhyAttend = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   return (
     <section
@@ -79,8 +85,8 @@ const WhyAttend = () => {
       className="section-padding relative overflow-hidden"
     >
       <motion.div
-        style={{ y: orbY }}
-        className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-secondary/5 blur-[150px]"
+        style={isMobile ? undefined : { y: orbY }}
+        className="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-secondary/5 blur-[110px] md:blur-[150px]"
       />
       <div className="container mx-auto relative z-10">
         <motion.div

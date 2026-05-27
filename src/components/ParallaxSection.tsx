@@ -1,5 +1,6 @@
 import { useRef, ReactNode } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ParallaxSectionProps {
   children: ReactNode;
@@ -8,6 +9,7 @@ interface ParallaxSectionProps {
 }
 
 const ParallaxSection = ({ children, offset = 50, className = "" }: ParallaxSectionProps) => {
+  const isMobile = useIsMobile();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -16,6 +18,10 @@ const ParallaxSection = ({ children, offset = 50, className = "" }: ParallaxSect
 
   const y = useTransform(scrollYProgress, [0, 1], [offset, -offset]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
+
+  if (isMobile) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div ref={ref} style={{ y, opacity }} className={className}>

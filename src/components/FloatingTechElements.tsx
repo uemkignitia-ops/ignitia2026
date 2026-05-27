@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // RA.One-inspired SVG Energy Symbol
 const EnergySymbol = ({ size = 32, className = "" }: { size?: number; className?: string }) => (
@@ -107,11 +107,16 @@ const Shape = ({ s }: { s: (typeof shapes)[0] }) => {
   );
 };
 
-const FloatingTechElements = () => (
-  <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-    {shapes.map((s, i) => <Shape key={i} s={s} />)}
-  </div>
-);
+const FloatingTechElements = () => {
+  const isMobile = useIsMobile();
+  const visibleShapes = isMobile ? shapes.slice(0, 4) : shapes;
+
+  return (
+    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+      {visibleShapes.map((s, i) => <Shape key={i} s={s} />)}
+    </div>
+  );
+};
 
 export { EnergySymbol, HelmCorner, FloatingTechElements };
 export default FloatingTechElements;

@@ -4,6 +4,7 @@ import { Trophy, Users, School, Gamepad2, Code } from "lucide-react";
 import { useCountUp } from "@/hooks/useCountUp";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -65,6 +66,7 @@ const StatCard = ({ stat }: { stat: (typeof stats)[0] }) => {
 };
 
 const Highlights = () => {
+  const isMobile = useIsMobile();
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -75,6 +77,10 @@ const Highlights = () => {
   const gridScale = useTransform(scrollYProgress, [0, 0.6], [0.96, 1]);
 
   useLayoutEffect(() => {
+    if (isMobile) {
+      return;
+    }
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".highlight-card",
@@ -97,14 +103,14 @@ const Highlights = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   return (
     <section ref={sectionRef} className="section-padding">
       <div className="container mx-auto">
         <motion.div
           ref={gridRef}
-          style={{ y: gridY, scale: gridScale }}
+          style={isMobile ? undefined : { y: gridY, scale: gridScale }}
           className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6"
         >
           {stats.map((stat) => (

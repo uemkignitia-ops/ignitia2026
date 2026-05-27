@@ -70,6 +70,17 @@
     scroll-behavior: smooth;
   }
 
+  #root {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  html,
+  body,
+  #root {
+    overflow-x: clip;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }
@@ -410,4 +421,25 @@
 /* Cyberpunk flicker on hover */
 .cyberpunk-flicker:hover {
   animation: neonFlicker 0.5s ease-in-out;
+}
+
+@media (max-width: 767px) {
+  html,
+  body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: none;
+  }
+
+  .scanline-overlay::after {
+    display: none;
+  }
+
+  .animated-border-glow::after {
+    animation-duration: 8s;
+    opacity: 0;
+  }
+
+  .pulse-cta {
+    animation-duration: 3.2s;
+  }
 }

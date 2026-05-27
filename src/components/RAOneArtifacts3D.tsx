@@ -2,6 +2,8 @@ import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float } from "@react-three/drei";
 import * as THREE from "three";
+import { motion, useReducedMotion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Glowing H.A.R.T Core (RA.One's characteristic weapon/core)
 const HartCore = ({ position }: { position: [number, number, number] }) => {
@@ -99,6 +101,41 @@ const ScrollCamera = () => {
 }
 
 const RAOneArtifacts3D = () => {
+  const isMobile = useIsMobile();
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return null;
+  }
+
+  if (isMobile) {
+    return (
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden opacity-70">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="absolute top-[20%] right-[-14%] w-56 h-56 rounded-full border border-primary/35"
+        />
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[16%] right-[-20%] w-72 h-72 rounded-full border border-secondary/20"
+        />
+        <motion.div
+          animate={{ y: [0, -14, 0], opacity: [0.2, 0.42, 0.2] }}
+          transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-[-18%] top-[42%] w-64 h-64 rounded-full bg-primary/10 blur-[90px]"
+        />
+        <motion.div
+          animate={{ y: [0, 12, 0], opacity: [0.16, 0.35, 0.16] }}
+          transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute right-[-20%] bottom-[22%] w-72 h-72 rounded-full bg-secondary/10 blur-[100px]"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 z-0 pointer-events-none mix-blend-screen opacity-60">
       <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>

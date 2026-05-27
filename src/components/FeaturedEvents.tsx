@@ -13,6 +13,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import VanillaTilt from "vanilla-tilt";
 import { HelmCorner } from "./FloatingTechElements";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -76,9 +77,10 @@ const RaCornerBracket = () => (
 
 const TiltCard = ({ event }: { event: (typeof events)[0] }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current || isMobile) return;
     VanillaTilt.init(ref.current, {
       max: 12,
       speed: 400,
@@ -88,7 +90,7 @@ const TiltCard = ({ event }: { event: (typeof events)[0] }) => {
       perspective: 900,
     });
     return () => { ref.current?.vanillaTilt?.destroy(); };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div
@@ -138,8 +140,13 @@ const TiltCard = ({ event }: { event: (typeof events)[0] }) => {
 
 const FeaturedEvents = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const isMobile = useIsMobile();
 
   useLayoutEffect(() => {
+    if (isMobile) {
+      return;
+    }
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".featured-event-card",
@@ -155,13 +162,13 @@ const FeaturedEvents = () => {
       );
     }, sectionRef);
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   return (
-    <section ref={sectionRef} id="events" className="section-padding relative">
+    <section ref={sectionRef} id="events" className="section-padding relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full bg-red-900/5 blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] md:w-[800px] h-[240px] md:h-[400px] rounded-full bg-red-900/5 blur-[100px] md:blur-[120px]" />
       </div>
 
       <div className="container mx-auto relative z-10">

@@ -2,6 +2,7 @@ import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, useTexture } from "@react-three/drei";
 import * as THREE from "three";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const RAOneCore = () => {
   const meshRef = useRef<THREE.Group>(null);
@@ -45,8 +46,7 @@ const RAOneCore = () => {
   );
 };
 
-const Particles = () => {
-  const count = 500;
+const Particles = ({ count }: { count: number }) => {
   const positions = useMemo(() => {
     const p = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -90,12 +90,18 @@ const Particles = () => {
 };
 
 const RAOneScene = () => {
+  const isMobile = useIsMobile();
+
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-80" style={{ mixBlendMode: "screen" }}>
-      <Canvas camera={{ position: [0, 0, 7], fov: 60 }}>
+      <Canvas
+        dpr={isMobile ? [0.75, 1] : [1, 1.5]}
+        gl={{ antialias: !isMobile, alpha: true, powerPreference: isMobile ? "low-power" : "high-performance" }}
+        camera={{ position: [0, 0, 7], fov: isMobile ? 65 : 60 }}
+      >
         <ambientLight intensity={0.5} />
         <RAOneCore />
-        <Particles />
+        <Particles count={isMobile ? 140 : 500} />
       </Canvas>
     </div>
   );

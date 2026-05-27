@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CountdownTimer from "./CountdownTimer";
 import FloatingBadges from "./FloatingBadges";
 import RAOneScene from "./RAOneCharacter";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,6 +14,7 @@ const tagline = "Igniting Innovation, Creativity & Competition";
 
 const HeroSection = () => {
   const [typedText, setTypedText] = useState("");
+  const isMobile = useIsMobile();
   const pinRef = useRef<HTMLDivElement>(null);
   const revealLayerRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
@@ -38,10 +40,10 @@ const HeroSection = () => {
         scrollTrigger: {
           trigger: pinRef.current,
           start: "top top",
-          end: "+=1000",
+          end: isMobile ? "+=760" : "+=1000",
           pin: true,          // pins pinRef in place
           pinSpacing: true,   // adds scroll distance after the pin
-          scrub: 0.6,
+          scrub: isMobile ? 0.65 : 0.6,
           anticipatePin: 1,
         },
       });
@@ -51,37 +53,47 @@ const HeroSection = () => {
         revealLayerRef.current,
         {
           clipPath: "circle(150% at 50% 50%)",
-          ease: "power2.inOut",
+          ease: isMobile ? "power3.out" : "power2.inOut",
         },
         0
       )
         .to(
           ringRef.current,
-          { scale: 9, opacity: 0, ease: "power2.inOut" },
+          { scale: isMobile ? 8 : 9, opacity: 0, ease: isMobile ? "power3.out" : "power2.inOut" },
           0
         )
         .to(
           ringInnerRef.current,
-          { scale: 7.5, opacity: 0, ease: "power2.inOut" },
+          { scale: isMobile ? 5.9 : 7.5, opacity: 0, ease: isMobile ? "power3.out" : "power2.inOut" },
           0
         )
         // ② Center text (inside ring) fades out quickly
         .to(
           centerTextRef.current,
-          { opacity: 0, scale: 1.3, ease: "power1.in", duration: 0.15 },
+          {
+            opacity: 0,
+            scale: isMobile ? 1.2 : 1.3,
+            ease: isMobile ? "power2.out" : "power1.in",
+            duration: isMobile ? 0.24 : 0.15,
+          },
           0
         )
         // ③ Full hero content fades in as circle opens
         .fromTo(
           heroContentRef.current,
-          { opacity: 0, y: 25 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.25 },
+          { opacity: 0, y: isMobile ? 16 : 25 },
+          {
+            opacity: 1,
+            y: 0,
+            ease: isMobile ? "power3.out" : "power2.out",
+            duration: isMobile ? 0.34 : 0.25,
+          },
           0.2
         );
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   // Typewriter for tagline
   useEffect(() => {
@@ -116,15 +128,21 @@ const HeroSection = () => {
         {/* Arc Reactor orb behind heading */}
         <div
           className="arc-reactor"
-          style={{ width: 700, height: 700, top: "50%", left: "50%", transform: "translate(-50%, -55%)" }}
+          style={{
+            width: isMobile ? 360 : 700,
+            height: isMobile ? 360 : 700,
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -55%)",
+          }}
         />
         <div
           className="arc-reactor-core"
-          style={{ width: 160, height: 160 }}
+          style={{ width: isMobile ? 110 : 160, height: isMobile ? 110 : 160 }}
         />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary/8 blur-[140px] animate-pulse-glow" />
+        <div className="absolute top-1/4 left-1/4 w-72 md:w-96 h-72 md:h-96 rounded-full bg-primary/8 blur-[120px] md:blur-[140px] animate-pulse-glow" />
         <div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-secondary/8 blur-[120px] animate-pulse-glow"
+          className="absolute bottom-1/4 right-1/4 w-64 md:w-80 h-64 md:h-80 rounded-full bg-secondary/8 blur-[100px] md:blur-[120px] animate-pulse-glow"
           style={{ animationDelay: "1.2s" }}
         />
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,30,0,0.018)_1px,transparent_1px),linear-gradient(90deg,rgba(255,30,0,0.018)_1px,transparent_1px)] bg-[size:60px_60px]" />
@@ -156,6 +174,7 @@ const HeroSection = () => {
         ref={ringInnerRef}
         style={{
           position: "absolute",
+          display: isMobile ? "none" : "block",
           top: "50%",
           left: "50%",
           width: "clamp(210px, 27vw, 315px)",
@@ -201,11 +220,15 @@ const HeroSection = () => {
           <motion.h1
             className="font-heading font-bold leading-[1.05] tracking-tight select-none"
             style={{ fontSize: "clamp(2rem, 5.5vw, 4rem)" }}
-            whileHover={{ 
-              scale: 1.08,
-              rotate: [0, -1, 1, -1, 0],
-              transition: { duration: 0.3 }
-            }}
+            whileHover={
+              isMobile
+                ? undefined
+                : {
+                    scale: 1.08,
+                    rotate: [0, -1, 1, -1, 0],
+                    transition: { duration: 0.3 },
+                  }
+            }
           >
             <span
               className="gradient-text block relative"
@@ -231,7 +254,9 @@ const HeroSection = () => {
           position: "absolute",
           inset: 0,
           zIndex: 10,
-          clipPath: "circle(18vw at 50% 50%)",
+          clipPath: isMobile
+            ? "circle(36vw at 50% 50%)"
+            : "circle(18vw at 50% 50%)",
           willChange: "clip-path",
         }}
       >
