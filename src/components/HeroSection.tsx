@@ -298,10 +298,16 @@ const HeroSection = () => {
               </div>
 
               {/* Main Title */}
-              <h1 className="font-heading text-6xl sm:text-7xl md:text-8xl lg:text-[10rem] font-bold tracking-tight leading-none">
-                <span className="gradient-text text-glow-blue">IGNITIA</span>{" "}
-                <span className="text-foreground">2K26</span>
-              </h1>
+              <div className="relative inline-flex flex-col items-center justify-center">
+                <div className="hero-title-bg absolute inset-0 -z-10 pointer-events-none">
+                  <div className="hero-title-blob"></div>
+                  <div className="hero-title-line"></div>
+                </div>
+                <h1 className="font-heading text-6xl sm:text-7xl md:text-8xl lg:text-[10rem] font-bold tracking-tight leading-none hero-title-text">
+                  <span className="gradient-text text-glow-blue">IGNITIA</span>{" "}
+                  <span className="hero-title-number">2K26</span>
+                </h1>
+              </div>
 
               {/* Typewriter tagline */}
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl h-8">
@@ -320,18 +326,21 @@ const HeroSection = () => {
               </div>
 
               {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-4 mt-2">
+              <div className="flex flex-col sm:flex-row gap-4 mt-2 justify-center">
                 <a
                   href="#register"
-                  className="glow-button pulse-cta cta-sweep inline-flex items-center gap-2 ripple-button"
+                  className="hero-primary-button pulse-cta cta-sweep inline-flex items-center justify-center gap-3 ripple-button"
                 >
-                  Register Now <ArrowRight size={18} />
+                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
+                  Register Now
+                  <ArrowRight size={18} />
                 </a>
                 <a
-                  href="#events"
-                  className="glow-button-secondary inline-flex items-center gap-2 ripple-button"
+                  href="/events"
+                  className="hero-secondary-button inline-flex items-center justify-center gap-2 rounded-full border border-white/10 px-5 py-3 text-sm font-semibold text-white/90 transition duration-300 hover:border-primary/40 hover:bg-white/5 hover:text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)]"
                 >
                   Explore Events
+                  <ArrowRight size={16} />
                 </a>
               </div>
 

@@ -4,7 +4,7 @@ import { X, Zap, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const announcements = [
-  "⚡ IGNITIA'26 is LIVE — Register Now Before Seats Fill Up!",
+  "⚡ IGNITIA'26 registration is open — secure your spot before seats fill up!",
   "🏆 Prize Pool: ₹2L+ across 6 events — Hackathon, Gaming, Quiz, Debates & more!",
   "📅 Aug 1–2, 2026 · UEM Kolkata · IEM-UEM groups",
   "🎮 Blind Coding, Guess Who & Gaming Tournament — Day 2 Events Registration Open!",
@@ -37,19 +37,6 @@ const AnnouncementBar = () => {
         style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       >
         <CornerDecor />
-
-        {/* Left: badge */}
-        <div className="hidden sm:flex items-center gap-2 shrink-0">
-          <div className="relative">
-            <div className="w-7 h-7 rounded-full border border-red-500/60 flex items-center justify-center">
-              <Zap size={13} className="text-red-400" />
-            </div>
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
-          </div>
-          <span className="text-red-400 text-xs font-bold tracking-widest uppercase">
-            LIVE
-          </span>
-        </div>
 
         {/* Ticker */}
         <div className="announcement-ticker min-w-0 flex-1">

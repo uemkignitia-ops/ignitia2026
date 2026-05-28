@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import Highlights from "@/components/Highlights";
-import FeaturedEvents from "@/components/FeaturedEvents";
 import WhyAttend from "@/components/WhyAttend";
 import Sponsors from "@/components/Sponsors";
 import FAQSection from "@/components/FAQSection";
@@ -18,7 +17,6 @@ import ParallaxSection from "@/components/ParallaxSection";
 import PageTransition from "@/components/PageTransition";
 import RAOneArtifacts3D from "@/components/RAOneArtifacts3D";
 import FloatingTechElements from "@/components/FloatingTechElements";
-import AnnouncementBar from "@/components/AnnouncementBar";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
@@ -57,9 +55,6 @@ const Index = () => {
           <Navbar />
           <HeroSection />
           <Highlights />
-          <ParallaxSection offset={isMobile ? 14 : 30}>
-            <FeaturedEvents />
-          </ParallaxSection>
           <WhyAttend />
           <ParallaxSection offset={isMobile ? 10 : 25}>
             <Sponsors />
@@ -69,9 +64,6 @@ const Index = () => {
           <Footer />
         </div>
       </PageTransition>
-
-      {/* Sticky bottom announcement bar — outside PageTransition so it's always on top */}
-      <AnnouncementBar />
     </>
   );
 };

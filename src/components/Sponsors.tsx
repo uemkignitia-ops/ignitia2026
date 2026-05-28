@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 const sponsorTiers = [
   { tier: "Title Sponsor", names: ["TechCorp", "InnovateLabs"] },
@@ -113,12 +114,19 @@ const Sponsors = () => {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <a
-            href="#contact"
-            className="glow-button-secondary text-sm ripple-button"
-          >
-            Become a Sponsor
-          </a>
+          <div className="sponsor-cta-shell inline-flex rounded-full border border-white/10 bg-card/70 p-1 shadow-[0_0_45px_rgba(255,80,110,0.18)]">
+            <a
+              href="#contact"
+              className="sponsor-cta-button inline-flex items-center justify-center gap-3 px-6 py-3 text-sm font-semibold ripple-button"
+            >
+              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
+              <span className="flex flex-col items-start leading-none">
+                <span>Become a Sponsor</span>
+                <span className="text-[11px] text-white/70">Partner with our energy</span>
+              </span>
+              <ArrowRight size={16} />
+            </a>
+          </div>
         </motion.div>
       </motion.div>
     </section>

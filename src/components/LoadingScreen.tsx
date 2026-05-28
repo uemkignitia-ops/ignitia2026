@@ -48,6 +48,7 @@ const LoadingScreen = () => {
           exit={{ opacity: 0, scale: 1.1 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background"
+          style={{ background: "radial-gradient(circle at 20% 20%, rgba(14,165,233,0.18), transparent 25%), radial-gradient(circle at 80% 20%, rgba(255,56,148,0.18), transparent 22%), #020206" }}
         >
           {/* Animated grid bg */}
           <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.04)_1px,transparent_1px)] bg-[size:40px_40px]" />
