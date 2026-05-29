@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { Download, Mail, ArrowRight, Star, Gem, Award } from "lucide-react";
+import { Download, Mail, ArrowRight, Star, Gem, Award, Server, Terminal } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -8,48 +8,106 @@ import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
 
-const tiers = [
+const sponsorCategories = [
   {
-    tier: "Title Sponsor",
-    icon: Gem,
-    color: "from-primary to-neon-cyan",
-    benefits: [
-      "Logo on all materials",
-      "Main stage branding",
-      "Dedicated booth",
-      "Social media features",
-      "Opening ceremony mention",
-    ],
-    sponsors: ["TechCorp Global"],
+    masterHeading: "Hosting partner of IGNITIA",
+    tiers: [
+      {
+        tier: "Hosting partner",
+        icon: Server,
+        color: "from-blue-500 to-cyan-400",
+        benefits: [
+          "Logo on website",
+          "Hosting credits for participants",
+          "Social media mention",
+        ],
+        sponsors: [
+          { name: "Microsoft Student Society", logo: "/sponsors/MSS.jpeg" }
+        ],
+      },
+      {
+        tier: "Hackathon Partner",
+        icon: Terminal,
+        color: "from-green-500 to-emerald-400",
+        benefits: [
+          "API access for hackers",
+          "Dedicated prize track",
+          "Mentorship during hackathon",
+        ],
+        sponsors: [
+          { name: "Crelynex", logo: "/sponsors/CrelyneX.jpg" }
+        ],
+      }
+    ]
   },
   {
-    tier: "Gold Sponsor",
-    icon: Star,
-    color: "from-secondary to-neon-pink",
-    benefits: [
-      "Logo on website & posters",
-      "Booth space",
-      "Social media mention",
-      "Certificate branding",
-    ],
-    sponsors: ["InnovateTech", "CodeLabs India"],
+    masterHeading: "Event Collaborators",
+    tiers: [
+      {
+        tier: "Platform Partners",
+        icon: Award,
+        color: "from-neon-cyan to-secondary",
+        benefits: [
+          "Logo on website",
+          "Social media shoutout",
+          "Community engagement booth",
+        ],
+        sponsors: [
+          { name: "Unstop", logo: "/sponsors/unstop.png" },
+          { name: "Hack2skills", logo: "/sponsors/hack2skill.jpeg" },
+          { name: "Go Daddy", logo: "/sponsors/GoDaddy.jpg" },
+          { name: "Crelynex", logo: "/sponsors/CrelyneX.jpg" },
+        ],
+      }
+    ]
   },
   {
-    tier: "Community Partner",
-    icon: Award,
-    color: "from-neon-cyan to-secondary",
-    benefits: [
-      "Logo on website",
-      "Social media shoutout",
-      "Community engagement booth",
-    ],
-    sponsors: [
-      "DevCommunity",
-      "HackClub UEM",
-      "CodeChef Chapter",
-      "GDSC Kolkata",
-    ],
-  },
+    masterHeading: "Sponsers",
+    tiers: [
+      {
+        tier: "Gold Sponsers",
+        icon: Star,
+        color: "from-secondary to-neon-pink",
+        benefits: [
+          "Logo on website & posters",
+          "Booth space",
+          "Social media mention",
+          "Certificate branding",
+        ],
+        sponsors: [
+          { name: "Crelynex", logo: "/sponsors/CrelyneX.jpg" },
+          { name: "Microsoft Student Society", logo: "/sponsors/MSS.jpeg" }
+        ],
+      },
+      {
+        tier: "Title Sponsers",
+        icon: Gem,
+        color: "from-primary to-neon-cyan",
+        benefits: [
+          "Logo on all materials",
+          "Main stage branding",
+          "Dedicated booth",
+          "Social media features",
+          "Opening ceremony mention",
+        ],
+        sponsors: [
+          { name: "Robo Mellotikos", logo: "/sponsors/robo_mellontikos.jpeg" },
+          { name: "Ugg", logo: "/sponsors/UGG.jpg" },
+          { name: "Dsu", logo: "/sponsors/Dsu.png" },
+          { name: "Rangrez", logo: "/sponsors/Rangrez.jpeg" },
+          { name: "Gdg", logo: "/sponsors/GDG.jpeg" },
+          { name: "Innofusion", logo: "/sponsors/Innofusion_updated.jpg" },
+          { name: "Diversion", logo: "/sponsors/Diversion.png" },
+          { name: "Oratoria", logo: "/sponsors/Oratoria.jpg" },
+          { name: "Technologia", logo: "/sponsors/technologia.jpeg" },
+          { name: "Symphony", logo: "/sponsors/Symphony.jpg" },
+          { name: "Pragya", logo: "/sponsors/Pragya.jpg" },
+          { name: "Gfg", logo: "/sponsors/Gfg.jpg" },
+          { name: "Driveblaze", logo: "/sponsors/Driveblaze.jpg" }
+        ],
+      }
+    ]
+  }
 ];
 
 const SponsorsPage = () => {
@@ -92,60 +150,72 @@ const SponsorsPage = () => {
 
         {/* Tier cards with scale-in on scroll */}
         <section className="section-padding">
-          <div className="container mx-auto space-y-16">
-            {tiers.map((tier, ti) => (
-              <motion.div
-                key={tier.tier}
-                initial={{ opacity: 0, scale: 0.7, rotateX: 12 }}
-                whileInView={{ opacity: 1, scale: 1, rotateX: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: ti * 0.1 }}
-                style={{ transformPerspective: 1000 }}
-              >
-                <div className="text-center mb-8">
-                  <tier.icon size={32} className="text-primary mx-auto mb-2" />
-                  <h2 className="font-heading text-2xl font-bold text-foreground">
-                    {tier.tier}
-                  </h2>
+          <div className="container mx-auto space-y-24">
+            {sponsorCategories.map((category, catIndex) => (
+              <div key={category.masterHeading} className="space-y-16">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="text-center"
+                >
+                  <h1 className="font-heading text-4xl md:text-5xl font-extrabold mb-2 uppercase tracking-tight">
+                    <span className="gradient-text">{category.masterHeading}</span>
+                  </h1>
+                  <div className="w-24 h-1 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto rounded-full opacity-50" />
+                </motion.div>
+
+                <div className="space-y-16">
+                  {category.tiers.map((tier, ti) => (
+                    <motion.div
+                      key={tier.tier}
+                      initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: ti * 0.1 }}
+                    >
+                      <div className="text-center mb-6">
+                        <tier.icon size={32} className="text-primary mx-auto mb-2" />
+                        <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
+                          {tier.tier}
+                        </h2>
+                        
+                        {/* Horizontal Scrolling Benefits Subheading */}
+                        <div className="relative overflow-hidden w-full max-w-4xl mx-auto h-8 flex items-center mb-8">
+                          <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-background to-transparent z-10" />
+                          <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent z-10" />
+                          <motion.div
+                            animate={{ x: ["0%", "-50%"] }}
+                            transition={{ duration: 25, ease: "linear", repeat: Infinity }}
+                            className="flex whitespace-nowrap items-center"
+                          >
+                            {[...tier.benefits, ...tier.benefits].map((b, i) => (
+                              <span key={i} className="text-sm text-muted-foreground font-medium flex items-center gap-4 mx-6">
+                                <span className="text-neon-cyan">✦</span> {b}
+                              </span>
+                            ))}
+                          </motion.div>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
+                        {tier.sponsors.map((s) => (
+                          <motion.div
+                            key={s.name}
+                            whileHover={{ scale: 1.05, y: -5 }}
+                            className="glass-card p-4 flex flex-col items-center justify-center gap-4 cursor-pointer w-[180px]"
+                          >
+                            <div className="bg-white rounded-lg p-3 w-full flex items-center justify-center h-28">
+                              <img src={s.logo} alt={s.name} className="max-h-full max-w-full object-contain" />
+                            </div>
+                            <span className="text-sm text-foreground font-bold tracking-wide text-center">{s.name}</span>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
-                <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-                  <div className="glass-card p-6 shimmer-card">
-                    <h3 className="font-heading text-sm font-semibold text-primary mb-3">
-                      Sponsors
-                    </h3>
-                    <div className="flex flex-wrap gap-3">
-                      {tier.sponsors.map((s) => (
-                        <motion.div
-                          key={s}
-                          whileHover={{ scale: 1.08, y: -3 }}
-                          className="glass-card px-4 py-2 text-sm text-foreground font-medium cursor-pointer"
-                        >
-                          {s}
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="glass-card p-6 shimmer-card">
-                    <h3 className="font-heading text-sm font-semibold text-primary mb-3">
-                      Benefits
-                    </h3>
-                    <ul className="space-y-2">
-                      {tier.benefits.map((b, i) => (
-                        <motion.li
-                          key={i}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: i * 0.05 }}
-                          className="text-sm text-muted-foreground flex items-start gap-2"
-                        >
-                          <span className="text-neon-cyan">✦</span> {b}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </section>
