@@ -42,7 +42,6 @@ const Navbar = () => {
     stiffness: 180,
     damping: 30,
   });
-  const logoOpacity = useTransform(scrollY, [0, 20, 80], [0.25, 0.7, 1]);
   const navHeight = useSpring(useTransform(scrollY, [0, 110], [68, 64]), {
     stiffness: 180,
     damping: 30,
@@ -108,14 +107,10 @@ const Navbar = () => {
       >
         <Link to="/" className="flex items-center gap-2">
           <motion.span
-            style={
-              isHome
-                ? { scale: logoScale, y: logoY, opacity: logoOpacity }
-                : undefined
-            }
+            style={isHome ? { scale: logoScale, y: logoY } : undefined}
             className="origin-left"
           >
-            <motion.span
+            <motion.div
               key={logoPulseKey}
               initial={
                 logoPulseKey
@@ -124,10 +119,13 @@ const Navbar = () => {
               }
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.1, ease: "easeOut" }}
-              className="font-heading text-xl font-bold gradient-text inline-block"
+              className="flex items-center gap-2"
             >
-              IGNITIA'26
-            </motion.span>
+              <motion.img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-6 w-auto" />
+              <motion.span className="font-heading text-xl font-bold gradient-text inline-block">
+                IGNITIA'26
+              </motion.span>
+            </motion.div>
           </motion.span>
         </Link>
 
@@ -201,7 +199,7 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed right-0 top-0 z-50 h-[100dvh] w-[82vw] max-w-[360px] border-l border-glass-border bg-card/95 backdrop-blur-xl p-5 lg:hidden"
+              className="fixed right-0 top-0 z-50 h-[100dvh] w-[82vw] max-w-[360px] border-l border-glass-border bg-card/95 backdrop-blur-xl p-5 flex flex-col overflow-y-auto lg:hidden"
             >
               <div className="flex items-center justify-between pb-4 border-b border-glass-border">
                 <span className="font-heading text-base font-semibold gradient-text">Menu</span>
@@ -214,7 +212,7 @@ const Navbar = () => {
                 </button>
               </div>
 
-              <div className="flex flex-col gap-3 pt-5">
+              <div className="flex flex-col gap-3 pt-6">
                 {navLinks.map((link, i) => (
                   <motion.div
                     key={link.href}
@@ -237,10 +235,12 @@ const Navbar = () => {
                 ))}
               </div>
 
+              <div className="flex-1" />
+
               <Link
                 to="/events"
                 onClick={() => setIsOpen(false)}
-                className="glow-button text-center text-sm !px-6 !py-2 mt-6 w-full"
+                className="glow-button text-center text-sm !px-6 !py-2 w-full"
               >
                 Register Now
               </Link>

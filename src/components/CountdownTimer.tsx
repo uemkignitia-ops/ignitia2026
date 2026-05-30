@@ -15,9 +15,9 @@ const FlipDigit = ({ value, label }: { value: number; label: string }) => {
   const str = String(value).padStart(2, "0");
 
   return (
-    <div className="countdown-unit flex flex-col items-center gap-3">
-      <div className="countdown-panel glass-card neon-glow-blue p-4 md:p-6 min-w-[74px] md:min-w-[108px] text-center relative overflow-hidden">
-        <div className="absolute inset-x-4 top-3 h-1 rounded-full bg-gradient-to-r from-primary/60 via-white/70 to-secondary/60 opacity-70 blur-xl" />
+    <div className="countdown-unit flex flex-col items-center gap-1 md:gap-2.5">
+      <div className="countdown-panel glass-card neon-glow-blue px-2 py-2 md:px-3 md:py-3 min-w-[54px] md:min-w-[74px] text-center relative overflow-hidden">
+        <div className="absolute inset-x-2 top-1.5 h-1 rounded-full bg-gradient-to-r from-primary/60 via-white/70 to-secondary/60 opacity-65 blur-lg" />
         <AnimatePresence mode="popLayout">
           <motion.span
             key={value}
@@ -25,14 +25,14 @@ const FlipDigit = ({ value, label }: { value: number; label: string }) => {
             animate={{ y: 0, opacity: 1, rotateX: 0 }}
             exit={{ y: 30, opacity: 0, rotateX: 90 }}
             transition={{ duration: 0.42, ease: "easeOut" }}
-            className="font-heading text-3xl md:text-5xl font-bold text-primary block relative z-10"
+            className="font-heading text-[1.25rem] md:text-[2.5rem] font-bold text-primary block relative z-10 leading-none"
           >
             {str}
           </motion.span>
         </AnimatePresence>
         <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.45),_transparent_45%),radial-gradient(circle_at_bottom,_rgba(255,20,90,0.18),_transparent_40%)]" />
       </div>
-      <p className="text-[10px] md:text-xs uppercase tracking-[0.35em] text-muted-foreground">
+      <p className="text-[8px] md:text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
         {label}
       </p>
     </div>
@@ -62,17 +62,17 @@ const CountdownTimer = ({ embedded = false }: { embedded?: boolean }) => {
   }, []);
 
   const content = (
-    <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_46%),radial-gradient(circle_at_bottom,_rgba(220,56,77,0.12),_transparent_38%)] px-4 py-6 md:px-6 md:py-7 shadow-[0_0_90px_rgba(244,63,94,0.14)]">
+    <div className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_46%),radial-gradient(circle_at_bottom,_rgba(220,56,77,0.12),_transparent_38%)] px-2.5 py-4 md:px-5 md:py-6 shadow-[0_0_90px_rgba(244,63,94,0.14)]">
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-white/60 to-secondary opacity-50 blur-2xl" />
       <motion.p
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-center text-sm md:text-base text-muted-foreground mb-6 uppercase tracking-[0.45em]"
+        className="text-center text-[9px] md:text-[10px] text-muted-foreground mb-3 md:mb-4 uppercase tracking-[0.28em]"
       >
         <span className="text-primary">Event Starts In</span>
       </motion.p>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 justify-items-center">
+      <div className="grid grid-cols-4 gap-x-1 gap-y-1 sm:gap-2.5 md:gap-2.5 justify-items-center">
         {timeLeft.map((unit, i) => (
           <motion.div
             key={unit.label}
@@ -80,7 +80,7 @@ const CountdownTimer = ({ embedded = false }: { embedded?: boolean }) => {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.08, duration: 0.45, ease: "easeOut" }}
-            className="w-full"
+            className="w-full max-w-[68px] sm:max-w-[84px] md:max-w-[90px]"
           >
             <FlipDigit value={unit.value} label={unit.label} />
           </motion.div>
@@ -91,7 +91,9 @@ const CountdownTimer = ({ embedded = false }: { embedded?: boolean }) => {
 
   if (embedded) {
     return (
-      <div className="relative w-full pt-10 md:pt-6 lg:pt-4">{content}</div>
+      <div className="relative w-full pt-7 md:pt-5 lg:pt-4">
+        <div className="mx-auto w-full max-w-[340px] sm:max-w-3xl">{content}</div>
+      </div>
     );
   }
 

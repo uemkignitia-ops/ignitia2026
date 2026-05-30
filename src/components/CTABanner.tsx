@@ -64,9 +64,11 @@ const CTABanner = () => (
             href="#events"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="hero-secondary-button inline-flex items-center justify-center gap-2 ripple-button"
+            className="hero-explore-button pulse-cta cta-sweep inline-flex items-center justify-center gap-3 ripple-button"
           >
+            <span className="inline-flex h-2.5 w-2.5 rounded-full bg-secondary animate-pulse" />
             Explore Events
+            <ArrowRight size={18} />
           </motion.a>
         </motion.div>
       </motion.div>

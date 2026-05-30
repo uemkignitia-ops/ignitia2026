@@ -37,13 +37,19 @@ const stats = [
   },
 ];
 
-const StatCard = ({ stat }: { stat: (typeof stats)[0] }) => {
+const StatCard = ({ stat, index, isMobile }: { stat: (typeof stats)[0]; index: number; isMobile: boolean }) => {
   const { ref, display } = useCountUp(stat.value);
 
   return (
     <motion.div
       whileHover={{ scale: 1.08, y: -5 }}
-      className="highlight-card glass-card p-6 text-center group hover:border-primary/30 transition-all duration-300 shimmer-card animated-border-glow cursor-pointer"
+      className={`highlight-card glass-card p-5 text-center group hover:border-primary/30 transition-all duration-300 shimmer-card animated-border-glow cursor-pointer ${
+        isMobile
+          ? `mx-auto w-full max-w-[240px] transform ${
+              index === stats.length - 1 ? "col-span-2 justify-self-center max-w-[240px]" : ""
+            }`
+          : "w-full md:max-w-none lg:w-full"
+      }`}
     >
       <motion.div
         whileHover={{ rotate: [0, -10, 10, 0] }}
@@ -65,7 +71,7 @@ const StatCard = ({ stat }: { stat: (typeof stats)[0] }) => {
   );
 };
 
-const Highlights = () => {
+const Highlights = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) => {
   const isMobile = useIsMobile();
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -111,10 +117,15 @@ const Highlights = () => {
         <motion.div
           ref={gridRef}
           style={isMobile ? undefined : { y: gridY, scale: gridScale }}
-          className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6"
+          className="grid grid-cols-2 md:grid-cols-5 gap-5 md:gap-6 lg:gap-4 justify-items-center lg:justify-items-stretch"
         >
-          {stats.map((stat) => (
-            <StatCard key={stat.label} stat={stat} />
+          {stats.map((stat, i) => (
+            <StatCard
+              key={stat.label}
+              stat={stat}
+              index={i}
+              isMobile={isMobile && centerOnMobile}
+            />
           ))}
         </motion.div>
       </div>

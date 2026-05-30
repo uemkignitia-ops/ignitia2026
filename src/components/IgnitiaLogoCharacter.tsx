@@ -4,9 +4,9 @@ import { Float, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const RAOneCore = () => {
+const IgnitiaLogoCore = () => {
   const meshRef = useRef<THREE.Group>(null);
-  const texture = useTexture("/srk-gone.png");
+  const texture = useTexture("/ignitia-3d.png");
 
   useFrame((state) => {
     if (meshRef.current) {
@@ -89,7 +89,7 @@ const Particles = ({ count }: { count: number }) => {
   );
 };
 
-const RAOneScene = () => {
+const IgnitiaLogoScene = () => {
   const isMobile = useIsMobile();
 
   return (
@@ -100,11 +100,11 @@ const RAOneScene = () => {
         camera={{ position: [0, 0, 7], fov: isMobile ? 65 : 60 }}
       >
         <ambientLight intensity={0.5} />
-        <RAOneCore />
+        <IgnitiaLogoCore />
         <Particles count={isMobile ? 140 : 500} />
       </Canvas>
     </div>
   );
 };
 
-export default RAOneScene;
+export default IgnitiaLogoScene;

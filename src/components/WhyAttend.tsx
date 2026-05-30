@@ -104,12 +104,12 @@ const WhyAttend = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
           {reasons.map((r, i) => (
             <motion.div
               key={r.title}
               whileHover={{ scale: 1.03 }}
-              className="why-attend-card flex gap-4 glass-card p-5 hover:border-secondary/30 transition-all duration-300 shimmer-card"
+              className={`why-attend-card flex gap-4 glass-card p-5 hover:border-secondary/30 transition-all duration-300 shimmer-card ${i < 3 ? "lg:col-span-2" : i === 3 ? "lg:col-start-2 lg:col-span-2" : "lg:col-span-2"}`}
             >
               <r.icon size={24} className="text-secondary shrink-0 mt-1" />
               <div>

@@ -270,10 +270,15 @@ const Team = () => (
 
       {/* Hero */}
       <section className="relative min-h-[50vh] flex items-center justify-center pt-16">
-        {/* Arc Reactor behind heading */}
+        {/* Viewport-centered glow behind heading */}
         <div
-          className="arc-reactor"
-          style={{ width: 500, height: 500, top: "50%", left: "50%", transform: "translate(-50%,-50%)" }}
+          className="pointer-events-none fixed inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 50vw 50vh, hsl(0 95% 70% / 0.38) 0%, hsl(0 95% 60% / 0.24) 18%, hsl(0 80% 40% / 0.12) 36%, transparent 58%)",
+            filter: "blur(70px)",
+            zIndex: 0,
+          }}
         />
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.div

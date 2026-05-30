@@ -15,7 +15,7 @@ import CursorTrail from "@/components/CursorTrail";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ParallaxSection from "@/components/ParallaxSection";
 import PageTransition from "@/components/PageTransition";
-import RAOneArtifacts3D from "@/components/RAOneArtifacts3D";
+import IgnitiaLogoArtifacts3D from "@/components/IgnitiaLogoArtifacts3D";
 import FloatingTechElements from "@/components/FloatingTechElements";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -44,7 +44,7 @@ const Index = () => {
       <PageTransition>
         <div className="min-h-screen bg-background scanline-overlay" style={{ paddingBottom: 52 }}>
           {/* Fixed layers */}
-          {isLoaded && <RAOneArtifacts3D />}
+          {isLoaded && <IgnitiaLogoArtifacts3D />}
           {!isMobile && isLoaded && <FloatingTechElements />}
           {!isMobile && <ParticleField />}
           {!isMobile && <ShootingStars />}
@@ -54,12 +54,12 @@ const Index = () => {
           {/* Page content */}
           <Navbar />
           <HeroSection />
-          <Highlights />
+          <Highlights centerOnMobile />
           <WhyAttend />
-          <ParallaxSection offset={isMobile ? 10 : 25}>
-            <Sponsors />
-          </ParallaxSection>
           <FAQSection />
+          <ParallaxSection offset={isMobile ? 10 : 25}>
+            <Sponsors centerOnMobile />
+          </ParallaxSection>
           <CTABanner />
           <Footer />
         </div>

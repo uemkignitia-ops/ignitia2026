@@ -9,7 +9,7 @@ import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
 
 const clubs = [
-  { name: "IEM-UEM groups", role: "Lead Organizer", icon: Cpu },
+  { name: "IEM-UEM group", role: "Lead Organizer", icon: Cpu },
   { name: "Google Developer Group", role: "Tech Partner", icon: Globe },
   { name: "IEEE Student Branch", role: "Knowledge Partner", icon: Lightbulb },
   { name: "ACM Chapter", role: "Coding Partner", icon: Sparkles },
@@ -85,7 +85,7 @@ const About = () => {
               transition={{ delay: 0.5 }}
               className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             >
-              The flagship multi-domain event organized by the IEM-UEM groups
+              The flagship multi-domain event organized by the IEM-UEM group
               at UEM Kolkata — where innovation, creativity, and
               competition converge.
             </motion.p>
@@ -212,7 +212,7 @@ const About = () => {
           </div>
         </section>
 
-        {/* IEM-UEM groups */}
+        {/* IEM-UEM group */}
         <section className="section-padding">
           <div className="container mx-auto">
             <motion.div
@@ -224,10 +224,10 @@ const About = () => {
             >
               <Users className="text-primary mx-auto mb-4" size={40} />
               <h2 className="font-heading text-3xl font-bold text-foreground mb-4">
-                IEM-UEM groups
+                IEM-UEM group
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                The IEM-UEM groups are a thriving ecosystem of education and
+                The IEM-UEM group are a thriving ecosystem of education and
                 innovation, fostering excellence in engineering, management,
                 and science across their various campuses.
               </p>

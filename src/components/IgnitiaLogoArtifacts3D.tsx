@@ -100,7 +100,7 @@ const ScrollCamera = () => {
   return null;
 }
 
-const RAOneArtifacts3D = () => {
+const IgnitiaLogoArtifacts3D = () => {
   const isMobile = useIsMobile();
   const reduceMotion = useReducedMotion();
 
@@ -156,4 +156,4 @@ const RAOneArtifacts3D = () => {
   );
 };
 
-export default RAOneArtifacts3D;
+export default IgnitiaLogoArtifacts3D;

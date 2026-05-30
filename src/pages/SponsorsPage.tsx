@@ -22,7 +22,7 @@ const sponsorCategories = [
           "Social media mention",
         ],
         sponsors: [
-          { name: "Microsoft Student Society", logo: "/sponsors/MSS.jpeg" }
+          { name: "Microsoft Student Society UEMK", logo: "/sponsors/MSS.jpeg" }
         ],
       },
       {
@@ -76,7 +76,7 @@ const sponsorCategories = [
         ],
         sponsors: [
           { name: "Crelynex", logo: "/sponsors/CrelyneX.jpg" },
-          { name: "Microsoft Student Society", logo: "/sponsors/MSS.jpeg" }
+          { name: "Microsoft Student Society UEMK", logo: "/sponsors/MSS.jpeg" }
         ],
       },
       {
@@ -92,17 +92,17 @@ const sponsorCategories = [
         ],
         sponsors: [
           { name: "Robo Mellotikos", logo: "/sponsors/robo_mellontikos.jpeg" },
-          { name: "Ugg", logo: "/sponsors/UGG.jpg" },
-          { name: "Dsu", logo: "/sponsors/Dsu.png" },
+          { name: "UGG UEMK", logo: "/sponsors/UGG.jpg" },
+          { name: "DS UEMK", logo: "/sponsors/Dsu.png" },
           { name: "Rangrez", logo: "/sponsors/Rangrez.jpeg" },
-          { name: "Gdg", logo: "/sponsors/GDG.jpeg" },
+          { name: "GDG UEMK", logo: "/sponsors/GDG.jpeg" },
           { name: "Innofusion", logo: "/sponsors/Innofusion_updated.jpg" },
           { name: "Diversion", logo: "/sponsors/Diversion.png" },
           { name: "Oratoria", logo: "/sponsors/Oratoria.jpg" },
           { name: "Technologia", logo: "/sponsors/technologia.jpeg" },
           { name: "Symphony", logo: "/sponsors/Symphony.jpg" },
           { name: "Pragya", logo: "/sponsors/Pragya.jpg" },
-          { name: "Gfg", logo: "/sponsors/Gfg.jpg" },
+          { name: "GFG UEMK", logo: "/sponsors/Gfg.jpg" },
           { name: "Driveblaze", logo: "/sponsors/Driveblaze.jpg" }
         ],
       }
