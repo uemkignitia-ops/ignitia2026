@@ -16,10 +16,10 @@ const navLinks = [
   { label: "About", href: "/about" },
   { label: "Events", href: "/events" },
   { label: "Schedule", href: "/schedule" },
-  { label: "Team", href: "/team" },
   { label: "Gallery", href: "/gallery" },
-  { label: "Sponsors", href: "/sponsors" },
   { label: "FAQ", href: "/faq" },
+  { label: "Sponsors", href: "/sponsors" },
+  { label: "Team", href: "/team" },
   { label: "Contact", href: "/contact" },
 ];
 

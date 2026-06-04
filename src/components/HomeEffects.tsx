@@ -4,7 +4,6 @@ import ShootingStars from "@/components/ShootingStars";
 import CursorTrail from "@/components/CursorTrail";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import IgnitiaLogoArtifacts3D from "@/components/IgnitiaLogoArtifacts3D";
-import FloatingTechElements from "@/components/FloatingTechElements";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const HomeEffects = () => {
@@ -19,7 +18,6 @@ const HomeEffects = () => {
       <MouseSpotlight />
       <CursorTrail />
       <IgnitiaLogoArtifacts3D />
-      <FloatingTechElements />
       <ParticleField />
       <ShootingStars />
       <AnimatedBlobs />

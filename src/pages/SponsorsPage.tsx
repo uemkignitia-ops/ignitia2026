@@ -205,7 +205,7 @@ const SponsorsPage = () => {
                             whileHover={{ scale: 1.05, y: -5 }}
                             className="glass-card p-4 flex flex-col items-center justify-center gap-4 cursor-pointer w-[180px]"
                           >
-                            <div className="bg-white rounded-lg p-3 w-full flex items-center justify-center h-28">
+                            <div className="rounded-lg p-3 w-full flex items-center justify-center h-28">
                               <img src={s.logo} alt={s.name} className="max-h-full max-w-full object-contain" />
                             </div>
                             <span className="text-sm text-foreground font-bold tracking-wide text-center">{s.name}</span>

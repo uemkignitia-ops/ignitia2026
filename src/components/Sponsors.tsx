@@ -220,7 +220,7 @@ const Sponsors = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) => {
                     }`}
                     style={{ transformPerspective: 600 }}
                   >
-                    <div className={`bg-white rounded-lg p-3 w-full flex items-center justify-center ${isMobile && centerOnMobile ? 'h-20' : 'h-28'}`}>
+                    <div className={`rounded-lg p-3 w-full flex items-center justify-center ${isMobile && centerOnMobile ? 'h-20' : 'h-28'}`}>
                       <img src={s.logo} alt={s.name} className="max-h-full max-w-full object-contain" />
                     </div>
                     <span className="font-heading text-sm md:text-base text-muted-foreground font-bold text-center">
@@ -239,15 +239,15 @@ const Sponsors = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) => {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <div className="sponsor-cta-shell inline-flex rounded-full border border-white/10 bg-card/70 p-1 shadow-[0_0_45px_rgba(255,80,110,0.18)]">
+          <div className="inline-flex">
             <a
               href="#contact"
-              className="sponsor-cta-button inline-flex items-center justify-center gap-3 px-6 py-3 text-sm font-semibold ripple-button"
+              className="hero-explore-outline pulse-cta cta-sweep inline-flex items-center justify-center gap-3 ripple-button"
             >
-              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
+              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-secondary opacity-60" />
               <span className="flex flex-col items-start leading-none">
                 <span>Become a Sponsor</span>
-                <span className="text-[11px] text-white/70">Partner with our energy</span>
+                <span className="text-[11px] text-orange-200/65">Partner with our energy</span>
               </span>
               <ArrowRight size={16} />
             </a>

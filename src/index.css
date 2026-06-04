@@ -343,12 +343,10 @@
   }
 
   .sponsor-marquee-chip {
-    filter: grayscale(1);
     opacity: 0.7;
   }
 
   .sponsor-marquee-chip:hover {
-    filter: grayscale(0);
     opacity: 1;
   }
 
@@ -418,6 +416,89 @@
   .text-glow-purple {
     text-shadow: 0 0 10px hsl(20 70% 50% / 0.5), 0 0 40px hsl(20 70% 50% / 0.2);
   }
+}
+
+/* orbital system animations */
+
+/* Orbit ring container rotation */
+@keyframes orbit-spin-ring {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Orbit ring rotation */
+@keyframes orbit-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Counter-rotation to keep planet content upright */
+@keyframes counter-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* Reverse orbit direction */
+@keyframes orbit-spin-reverse {
+  from { transform: translate(-50%, -50%) rotate(360deg); }
+  to { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+@keyframes counter-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* Sun pulsing glow */
+@keyframes sun-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 40px hsl(24 100% 55% / 0.4),
+      0 0 80px hsl(24 100% 55% / 0.2),
+      0 0 120px hsl(24 100% 55% / 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 60px hsl(24 100% 55% / 0.6),
+      0 0 100px hsl(24 100% 55% / 0.3),
+      0 0 160px hsl(24 100% 55% / 0.15);
+  }
+}
+
+/* Sun corona rays */
+@keyframes sun-corona {
+  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+/* Subtle planet breathing glow */
+@keyframes planet-glow {
+  0%, 100% { box-shadow: 0 0 12px hsl(0 0% 100% / 0.08), 0 0 4px hsl(0 0% 100% / 0.05); }
+  50% { box-shadow: 0 0 20px hsl(0 0% 100% / 0.15), 0 0 8px hsl(0 0% 100% / 0.1); }
+}
+
+/* Orbit ring dash animation */
+@keyframes ring-dash {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -30; }
+}
+
+/* Stars twinkling for the background */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Tooltip fade in */
+@keyframes tooltip-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Mobile vertical layout — floating */
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 /* Scrollbar */
@@ -562,5 +643,19 @@
 
   .pulse-cta {
     animation-duration: 3.2s;
+  }
+
+  /* Orbital system responsive adjustments */
+  /* Tablet: 768px-1024px */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    /* Slightly slower animations on tablet */
+  }
+
+  /* Mobile landscape: 480px-767px */
+  @media (max-width: 767px) {
+    /* Faster hover animations on mobile */
+    button {
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
   }
 }
