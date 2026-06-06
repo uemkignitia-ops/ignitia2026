@@ -23,7 +23,7 @@ const fadeUp = {
 
 const Footer = () => (
   <footer className="relative overflow-hidden border-t border-white/10 bg-background/85 backdrop-blur-xl">
-    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,77,77,0.12),transparent_28%),radial-gradient(circle_at_top_right,rgba(255,255,255,0.04),transparent_24%)]" />
+    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(168,85,247,0.15),transparent_28%),radial-gradient(circle_at_top_right,rgba(255,215,0,0.06),transparent_24%)]" />
     <div className="container relative z-10 mx-auto px-4 py-16 md:py-20">
       <motion.div
         variants={stagger}
@@ -37,7 +37,7 @@ const Footer = () => (
             <img
               src="/ignitia-2d.png"
               alt="IGNITIA logo"
-              className="h-12 w-12 rounded-full object-cover shadow-[0_0_30px_hsl(0_95%_60%/0.22)]"
+              className="h-12 w-12 rounded-full object-cover shadow-[0_0_30px_hsl(270_70%_60%/0.22)]"
             />
             <div>
               <span className="block font-heading text-2xl font-bold gradient-text">

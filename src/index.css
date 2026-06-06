@@ -6,48 +6,48 @@
 
 @layer base {
   :root {
-    --background: 0 0% 3%;
+    --background: 270 30% 2%;
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 6%;
+    --card: 270 30% 4%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 6%;
+    --popover: 270 30% 4%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 0 95% 60%;
-    --primary-foreground: 0 0% 4%;
+    --primary: 270 70% 60%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 20 85% 60%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 45 95% 55%;
+    --secondary-foreground: 0 0% 4%;
 
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 270 20% 12%;
+    --muted-foreground: 270 10% 65%;
 
-    --accent: 0 90% 55%;
+    --accent: 280 80% 65%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 0 0% 14%;
-    --input: 0 0% 14%;
-    --ring: 0 95% 60%;
+    --border: 270 20% 14%;
+    --input: 270 20% 14%;
+    --ring: 270 70% 60%;
 
     --radius: 0.85rem;
 
-    --neon-blue: 0 95% 60%;
-    --neon-cyan: 15 90% 60%;
-    --neon-purple: 20 85% 60%;
-    --neon-pink: 0 90% 55%;
+    --neon-blue: 270 70% 60%;
+    --neon-cyan: 45 95% 55%;
+    --neon-purple: 280 80% 65%;
+    --neon-pink: 50 95% 60%;
 
-    --glass-bg: 0 0% 6%;
-    --glass-border: 0 0% 14%;
+    --glass-bg: 270 30% 4%;
+    --glass-border: 270 20% 14%;
 
-    --glow-blue: 0 0 30px hsl(0 95% 60% / 0.25);
-    --glow-cyan: 0 0 30px hsl(15 90% 60% / 0.25);
-    --glow-purple: 0 0 30px hsl(20 85% 60% / 0.25);
-    --glow-pink: 0 0 30px hsl(0 90% 55% / 0.25);
+    --glow-blue: 0 0 30px hsl(270 70% 60% / 0.25);
+    --glow-cyan: 0 0 30px hsl(45 95% 55% / 0.25);
+    --glow-purple: 0 0 30px hsl(280 80% 65% / 0.25);
+    --glow-pink: 0 0 30px hsl(50 95% 60% / 0.25);
 
     --sidebar-background: 0 0% 5%;
     --sidebar-foreground: 0 0% 98%;
@@ -119,7 +119,7 @@
 
   .glow-button {
     @apply relative overflow-hidden bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-lg transition-all duration-300;
-    box-shadow: 0 0 20px hsl(0 89% 50% / 0.3), 0 0 60px hsl(0 89% 50% / 0.1);
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3), 0 0 60px hsl(var(--primary) / 0.1);
   }
 
   .glow-button:hover {
@@ -133,14 +133,14 @@
 
   .glow-button-secondary:hover {
     @apply bg-primary/10;
-    box-shadow: 0 0 20px hsl(0 89% 50% / 0.2);
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.2);
   }
 
   .hero-primary-button {
-    background: linear-gradient(135deg, hsl(0 95% 55%), hsl(0 75% 58%));
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(280 80% 65%));
     color: #fff;
     border-radius: 9999px;
-    box-shadow: 0 18px 45px rgba(255, 66, 79, 0.22), inset 0 0 24px rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 45px hsl(var(--primary) / 0.22), inset 0 0 24px rgba(255, 255, 255, 0.08);
     padding: 0.9rem 1.75rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     font-weight: 600;
@@ -148,8 +148,8 @@
 
   .hero-primary-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 24px 55px rgba(255, 66, 79, 0.35), inset 0 0 32px rgba(255, 255, 255, 0.12);
-    background: linear-gradient(135deg, hsl(0 95% 60%), hsl(0 78% 62%));
+    box-shadow: 0 24px 55px hsl(var(--primary) / 0.35), inset 0 0 32px rgba(255, 255, 255, 0.12);
+    background: linear-gradient(135deg, hsl(280 80% 65%), hsl(var(--primary)));
   }
 
   .hero-secondary-button {
@@ -285,9 +285,9 @@
     background: linear-gradient(
       45deg,
       transparent 40%,
-      hsl(0 89% 50% / 0.03) 45%,
-      hsl(0 89% 50% / 0.06) 50%,
-      hsl(0 89% 50% / 0.03) 55%,
+      hsl(var(--primary) / 0.03) 45%,
+      hsl(var(--primary) / 0.06) 50%,
+      hsl(var(--primary) / 0.03) 55%,
       transparent 60%
     );
     animation: shimmer 6s ease-in-out infinite;
@@ -305,7 +305,7 @@
     border-radius: inherit;
     background: linear-gradient(
       var(--glow-angle, 0deg),
-      hsl(0 89% 50% / 0.3),
+      hsl(var(--primary) / 0.3),
       transparent 40%,
       transparent 60%,
       hsl(20 70% 50% / 0.3)
@@ -343,12 +343,10 @@
   }
 
   .sponsor-marquee-chip {
-    filter: grayscale(1);
     opacity: 0.7;
   }
 
   .sponsor-marquee-chip:hover {
-    filter: grayscale(0);
     opacity: 1;
   }
 
@@ -363,7 +361,7 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background: hsl(0 89% 50%);
+    background: hsl(var(--primary));
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s ease;
@@ -412,12 +410,114 @@
 
 @layer utilities {
   .text-glow-blue {
-    text-shadow: 0 0 10px hsl(0 89% 50% / 0.5), 0 0 40px hsl(0 89% 50% / 0.2);
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.5), 0 0 40px hsl(var(--primary) / 0.2);
   }
 
   .text-glow-purple {
     text-shadow: 0 0 10px hsl(20 70% 50% / 0.5), 0 0 40px hsl(20 70% 50% / 0.2);
   }
+
+  .backface-hidden {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 99px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+/* orbital system animations */
+
+/* Orbit ring container rotation */
+@keyframes orbit-spin-ring {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Orbit ring rotation */
+@keyframes orbit-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Counter-rotation to keep planet content upright */
+@keyframes counter-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* Reverse orbit direction */
+@keyframes orbit-spin-reverse {
+  from { transform: translate(-50%, -50%) rotate(360deg); }
+  to { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+@keyframes counter-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* Sun pulsing glow */
+@keyframes sun-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 40px hsl(24 100% 55% / 0.4),
+      0 0 80px hsl(24 100% 55% / 0.2),
+      0 0 120px hsl(24 100% 55% / 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 60px hsl(24 100% 55% / 0.6),
+      0 0 100px hsl(24 100% 55% / 0.3),
+      0 0 160px hsl(24 100% 55% / 0.15);
+  }
+}
+
+/* Sun corona rays */
+@keyframes sun-corona {
+  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+/* Subtle planet breathing glow */
+@keyframes planet-glow {
+  0%, 100% { box-shadow: 0 0 12px hsl(0 0% 100% / 0.08), 0 0 4px hsl(0 0% 100% / 0.05); }
+  50% { box-shadow: 0 0 20px hsl(0 0% 100% / 0.15), 0 0 8px hsl(0 0% 100% / 0.1); }
+}
+
+/* Orbit ring dash animation */
+@keyframes ring-dash {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -30; }
+}
+
+/* Stars twinkling for the background */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Tooltip fade in */
+@keyframes tooltip-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Mobile vertical layout — floating */
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 /* Scrollbar */
@@ -430,12 +530,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(0 89% 50% / 0.3);
+  background: hsl(var(--primary) / 0.3);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(0 89% 50% / 0.5);
+  background: hsl(var(--primary) / 0.5);
 }
 
 /* Particle canvas */
@@ -479,8 +579,8 @@
 }
 
 @keyframes pulseCta {
-  0%, 100% { box-shadow: 0 0 20px hsl(0 89% 50% / 0.3), 0 0 60px hsl(0 89% 50% / 0.1); }
-  50% { box-shadow: 0 0 30px hsl(0 89% 50% / 0.6), 0 0 80px hsl(0 89% 50% / 0.3); }
+  0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3), 0 0 60px hsl(var(--primary) / 0.1); }
+  50% { box-shadow: 0 0 30px hsl(var(--primary) / 0.6), 0 0 80px hsl(var(--primary) / 0.3); }
 }
 
 @keyframes ctaSweep {
@@ -504,7 +604,7 @@
 }
 
 @keyframes neonFlicker {
-  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 10px hsl(0 89% 50% / 0.5), 0 0 40px hsl(0 89% 50% / 0.2); }
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 10px hsl(var(--primary) / 0.5), 0 0 40px hsl(var(--primary) / 0.2); }
   20%, 24%, 55% { opacity: 0.4; text-shadow: none; }
 }
 
@@ -562,5 +662,19 @@
 
   .pulse-cta {
     animation-duration: 3.2s;
+  }
+
+  /* Orbital system responsive adjustments */
+  /* Tablet: 768px-1024px */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    /* Slightly slower animations on tablet */
+  }
+
+  /* Mobile landscape: 480px-767px */
+  @media (max-width: 767px) {
+    /* Faster hover animations on mobile */
+    button {
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
   }
 }

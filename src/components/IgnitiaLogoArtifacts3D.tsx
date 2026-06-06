@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float } from "@react-three/drei";
 import * as THREE from "three";
@@ -39,44 +39,6 @@ const HartCore = ({ position }: { position: [number, number, number] }) => {
     </group>
   );
 };
-
-// Cybernetic floating glass cubes representing data blocks breaking down
-const CyberCubes = () => {
-  const cubesCount = 50;
-  const meshRef = useRef<THREE.InstancedMesh>(null);
-  const dummy = useMemo(() => new THREE.Object3D(), []);
-
-  const cubes = useMemo(() => {
-    return Array.from({ length: cubesCount }, () => ({
-      position: [
-        (Math.random() - 0.5) * 30,
-        (Math.random() - 0.5) * 60,
-        (Math.random() - 0.5) * 15 - 5
-      ],
-      rotation: [Math.random() * Math.PI, Math.random() * Math.PI, 0],
-      scale: Math.random() * 0.5 + 0.2,
-      speed: Math.random() * 0.5 + 0.1
-    }));
-  }, [cubesCount]);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      cubes.forEach((cube, i) => {
-        dummy.position.set(cube.position[0], cube.position[1] + Math.sin(state.clock.elapsedTime * cube.speed) * 2, cube.position[2]);
-        dummy.rotation.set(cube.rotation[0] + state.clock.elapsedTime * 0.2, cube.rotation[1] + state.clock.elapsedTime * 0.3, 0);
-        dummy.scale.setScalar(cube.scale);
-        dummy.updateMatrix();
-        meshRef.current!.setMatrixAt(i, dummy.matrix);
-      });
-      meshRef.current.instanceMatrix.needsUpdate = true;
-    }
-  });
-
-  return (
-    <instancedMesh ref={meshRef} args={[new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: "#ff0000", wireframe: true, transparent: true, opacity: 0.15 }), cubesCount]}>
-    </instancedMesh>
-  );
-}
 
 const ScrollCamera = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -147,8 +109,6 @@ const IgnitiaLogoArtifacts3D = () => {
         <HartCore position={[-6, -15, -6]} />
         <HartCore position={[5, -28, -4]} />
         <HartCore position={[-4, -40, -5]} />
-
-        <CyberCubes />
         
         <ScrollCamera />
       </Canvas>

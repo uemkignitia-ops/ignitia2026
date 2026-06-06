@@ -48,10 +48,10 @@ const LoadingScreen = () => {
           exit={{ opacity: 0, scale: 1.1 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background"
-          style={{ background: "radial-gradient(circle at 20% 20%, rgba(255,94,38,0.18), transparent 25%), radial-gradient(circle at 80% 20%, rgba(255,44,84,0.16), transparent 22%), #050406" }}
+          style={{ background: "radial-gradient(circle at 20% 20%, rgba(168,85,247,0.18), transparent 25%), radial-gradient(circle at 80% 20%, rgba(255,215,0,0.16), transparent 22%), #050406" }}
         >
           {/* Animated grid bg */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,94,38,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,94,38,0.04)_1px,transparent_1px)] bg-[size:40px_40px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(168,85,247,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(168,85,247,0.04)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
           {/* Glow orbs */}
           <div className="absolute top-1/3 left-1/3 w-44 md:w-64 h-44 md:h-64 rounded-full bg-primary/15 blur-[75px] md:blur-[100px] animate-pulse-glow" />
@@ -66,10 +66,10 @@ const LoadingScreen = () => {
             transition={{ duration: isMobile ? 2.6 : 2, repeat: Infinity, ease: "linear" }}
             className="w-20 md:w-24 h-20 md:h-24 rounded-full border-2 border-transparent mb-8"
             style={{
-              borderTopColor: "hsl(24 100% 58%)",
-              borderRightColor: "hsl(12 95% 60% / 0.55)",
+              borderTopColor: "hsl(270 70% 60%)",
+              borderRightColor: "hsl(45 95% 55% / 0.55)",
               boxShadow:
-                "0 0 30px hsl(24 100% 58% / 0.3), inset 0 0 30px hsl(24 100% 58% / 0.12)",
+                "0 0 30px hsl(270 70% 60% / 0.3), inset 0 0 30px hsl(270 70% 60% / 0.12)",
             }}
           />
 
@@ -79,7 +79,7 @@ const LoadingScreen = () => {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ delay: 0.2, duration: 0.8 }}
             className="font-heading text-4xl md:text-6xl font-bold gradient-text mb-6 relative z-10"
-            style={{ textShadow: "0 0 24px hsl(24 100% 58% / 0.35)" }}
+            style={{ textShadow: "0 0 24px hsl(270 70% 60% / 0.35)" }}
           >
             IGNITIA '26
           </motion.h1>
@@ -91,8 +91,8 @@ const LoadingScreen = () => {
               style={{
                 width: `${Math.min(progress, 100)}%`,
                 background:
-                  "linear-gradient(90deg, hsl(24 100% 58%), hsl(12 95% 60% / 0.55))",
-                boxShadow: "0 0 10px hsl(24 100% 58% / 0.5)",
+                  "linear-gradient(90deg, hsl(270 70% 60%), hsl(45 95% 55% / 0.55))",
+                boxShadow: "0 0 10px hsl(270 70% 60% / 0.5)",
               }}
               transition={{ duration: 0.22, ease: "easeOut" }}
             />

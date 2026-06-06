@@ -13,10 +13,8 @@ import PageTransition from "@/components/PageTransition";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const HomeEffects = lazy(() => import("@/components/HomeEffects"));
-const mapHref =
-  "https://www.google.com/maps/place/University+of+Engineering+%26+Management,+Kolkata+(UEM)/@22.5599202,88.4899014,17z/data=!3m1!4b1!4m6!3m5!1s0x3a020b267a3cdc13:0xb3b21d652126f40!8m2!3d22.5599202!4d88.4899014!16s%2Fg%2F11c4pg5gwf?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D";
-const mapEmbedSrc =
-  "https://www.google.com/maps?q=University+of+Engineering+%26+Management,+Kolkata+(UEM)&z=17&output=embed";
+const mapEmbedSrc = "https://www.google.com/maps?q=University+of+Engineering+%26+Management,+Kolkata+(UEM)&z=17&output=embed";
+const mapHref = "https://www.google.com/maps/place/University+of+Engineering+%26+Management,+Kolkata+(UEM)/@22.5599202,88.4899014,17z/data=!3m1!4b1!4m6!3m5!1s0x3a020b267a3cdc13:0xb3b21d652126f40!8m2!3d22.5599202!4d88.4899014!16s%2Fg%2F11c4pg5gwf?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D";
 
 const Index = () => {
   const isMobile = useIsMobile();
@@ -26,9 +24,10 @@ const Index = () => {
     const onLoaderComplete = () => setIsLoaded(true);
     window.addEventListener("ignitia:loader-complete", onLoaderComplete);
 
+    // Dynamic fallback safeguard
     const fallbackId = window.setTimeout(() => {
       setIsLoaded(true);
-    }, 2600);
+    }, 3000);
 
     return () => {
       window.removeEventListener("ignitia:loader-complete", onLoaderComplete);
@@ -37,37 +36,49 @@ const Index = () => {
   }, []);
 
   return (
-    <>
-      <PageTransition>
-        <div className="min-h-screen flex flex-col bg-background scanline-overlay">
-          {/* Fixed layers */}
-          <Suspense fallback={null}>
-            {isLoaded && !isMobile && <HomeEffects />}
-          </Suspense>
-          <ScrollProgress />
+    <PageTransition>
+      <div className="min-h-screen flex flex-col bg-[#050406] text-white overflow-x-hidden">
+        <Suspense fallback={null}>
+          {isLoaded && !isMobile && <HomeEffects />}
+        </Suspense>
+        <ScrollProgress />
+        <Navbar />
 
-          {/* Page content */}
-          <Navbar />
-
-          <main className="flex-1">
-            <HeroSection />
+        <main className="flex-1 relative z-10">
+          {/* Handles full 3D interactive zoom */}
+          <HeroSection />
+          
+          {/* Below sections flow up naturally following pin completion */}
+          <div className="relative bg-[#050406] z-20">
             <Highlights centerOnMobile />
+            
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            
             <WhyAttend />
+            
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            
             <FAQSection />
+            
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            
             <ParallaxSection offset={isMobile ? 10 : 25}>
               <Sponsors centerOnMobile />
             </ParallaxSection>
+            
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+            
             <CTABanner />
 
-            {/* Embedded map copied from Contact — displayed below CTA and above footer */}
-            <section className="section-padding">
-              <div className="container mx-auto max-w-5xl">
-                <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-card/45 h-72 transition-all duration-200 hover:border-primary/25 hover:shadow-[0_20px_60px_rgba(255,83,48,0.12)]">
+            {/* Event Map Location Embed */}
+            <section className="section-padding py-16">
+              <div className="container mx-auto max-w-5xl px-4">
+                <div className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] h-72 transition-all duration-300 hover:border-primary/30">
                   <iframe
                     src={mapEmbedSrc}
                     width="100%"
                     height="100%"
-                    style={{ border: 0, pointerEvents: "none" }}
+                    style={{ border: 0, filter: "invert(90%) hue-rotate(180deg)" }}
                     loading="lazy"
                     title="UEM Kolkata Location"
                   />
@@ -75,20 +86,19 @@ const Index = () => {
                     href={mapHref}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Open UEM Kolkata map"
-                    className="absolute right-3 top-3 rounded-full border border-primary/30 bg-background/80 px-3 py-1 text-[11px] font-semibold text-primary backdrop-blur-md transition-colors hover:bg-primary hover:text-white"
+                    className="absolute right-3 top-3 rounded-full border border-white/10 bg-black/60 px-4 py-1 text-xs font-semibold text-white backdrop-blur-md transition-colors hover:bg-primary"
                   >
                     Open Maps
                   </a>
                 </div>
               </div>
             </section>
-          </main>
+          </div>
+        </main>
 
-          <Footer />
-        </div>
-      </PageTransition>
-    </>
+        <Footer />
+      </div>
+    </PageTransition>
   );
 };
 

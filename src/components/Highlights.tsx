@@ -9,64 +9,68 @@ import { useIsMobile } from "@/hooks/use-mobile";
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { icon: Gamepad2, value: "7+", label: "Competitions", color: "text-primary" },
+  { icon: Gamepad2, value: "7+", label: "Competitions", color: "text-primary", bg: "bg-primary/20" },
   {
     icon: Users,
     value: "5000+",
     label: "Expected Footfall",
     color: "text-neon-cyan",
+    bg: "bg-neon-cyan/20"
   },
   {
     icon: School,
     value: "50+",
     label: "Colleges Invited",
-    color: "text-secondary",
+    color: "text-neon-purple",
+    bg: "bg-neon-purple/20"
   },
   {
     icon: Trophy,
     value: "200000+",
     rawDisplay: "₹2L+",
     label: "Prize Pool",
-    color: "text-neon-pink",
+    color: "text-secondary",
+    bg: "bg-secondary/20"
   },
   {
     icon: Code,
     value: "10+",
     label: "Societies Involved",
     color: "text-primary",
+    bg: "bg-primary/20"
   },
 ];
 
-const StatCard = ({ stat, index, isMobile }: { stat: (typeof stats)[0]; index: number; isMobile: boolean }) => {
+const StatCard = ({ stat, index }: { stat: (typeof stats)[0]; index: number }) => {
   const { ref, display } = useCountUp(stat.value);
 
   return (
     <motion.div
-      whileHover={{ scale: 1.08, y: -5 }}
-      className={`highlight-card glass-card p-5 text-center group hover:border-primary/30 transition-all duration-300 shimmer-card animated-border-glow cursor-pointer ${
-        isMobile
-          ? `mx-auto w-full max-w-[240px] transform ${
-              index === stats.length - 1 ? "col-span-2 justify-self-center max-w-[240px]" : ""
-            }`
-          : "w-full md:max-w-none lg:w-full"
-      }`}
+      whileHover={{ scale: 1.05, y: -5 }}
+      className="highlight-card shrink-0 w-64 md:w-full glass-card p-8 text-center group hover:border-primary/40 transition-all duration-300 relative overflow-hidden"
     >
-      <motion.div
-        whileHover={{ rotate: [0, -10, 10, 0] }}
-        transition={{ duration: 0.4 }}
-      >
-        <stat.icon
-          className={`mx-auto mb-3 ${stat.color} group-hover:scale-110 transition-transform`}
-          size={28}
-        />
-      </motion.div>
-      <p
-        ref={ref}
-        className={`font-heading text-2xl md:text-3xl font-bold ${stat.rawDisplay ? "gradient-text" : "text-foreground"}`}
-      >
-        {stat.rawDisplay || display}
-      </p>
-      <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+      <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+      
+      <div className="relative z-10 flex flex-col items-center">
+        <motion.div
+          whileHover={{ rotate: 360 }}
+          transition={{ duration: 1, ease: "easeInOut" }}
+          className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 shadow-lg ${stat.bg} border border-white/10`}
+        >
+          <stat.icon
+            className={`${stat.color} group-hover:scale-110 transition-transform`}
+            size={32}
+          />
+        </motion.div>
+        
+        <p
+          ref={ref}
+          className={`font-heading text-4xl md:text-5xl font-bold tracking-tighter mb-2 ${stat.rawDisplay ? "gradient-text" : "text-white"}`}
+        >
+          {stat.rawDisplay || display}
+        </p>
+        <p className="text-sm uppercase tracking-widest text-muted-foreground font-semibold">{stat.label}</p>
+      </div>
     </motion.div>
   );
 };
@@ -80,12 +84,9 @@ const Highlights = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) =>
     offset: ["start end", "end start"],
   });
   const gridY = useTransform(scrollYProgress, [0, 1], [40, -20]);
-  const gridScale = useTransform(scrollYProgress, [0, 0.6], [0.96, 1]);
 
   useLayoutEffect(() => {
-    if (isMobile) {
-      return;
-    }
+    if (isMobile) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
@@ -97,12 +98,12 @@ const Highlights = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) =>
           scale: 1,
           duration: 0.8,
           ease: "power3.out",
-          stagger: 0.12,
+          stagger: 0.1,
           scrollTrigger: {
-            trigger: gridRef.current,
-            start: "top 78%",
-            end: "top 35%",
-            scrub: 0.9,
+            trigger: sectionRef.current,
+            start: "top 80%",
+            end: "top 40%",
+            scrub: 1,
           },
         },
       );
@@ -112,22 +113,49 @@ const Highlights = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) =>
   }, [isMobile]);
 
   return (
-    <section ref={sectionRef} className="section-padding">
-      <div className="container mx-auto">
+    <section ref={sectionRef} className="relative pt-8 pb-20 md:py-28 overflow-hidden">
+      {/* Top gradient divider */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+      
+      {/* Background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-64 bg-primary/10 blur-[120px] pointer-events-none rounded-full" />
+
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div
-          ref={gridRef}
-          style={isMobile ? undefined : { y: gridY, scale: gridScale }}
-          className="grid grid-cols-2 md:grid-cols-5 gap-5 md:gap-6 lg:gap-4 justify-items-center lg:justify-items-stretch"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12 md:mb-20"
         >
-          {stats.map((stat, i) => (
-            <StatCard
-              key={stat.label}
-              stat={stat}
-              index={i}
-              isMobile={isMobile && centerOnMobile}
-            />
-          ))}
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
+            By The <span className="gradient-text">Numbers</span>
+          </h2>
+          <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
+            The scale of innovation and competition at IGNITIA 2K26.
+          </p>
         </motion.div>
+
+        {isMobile ? (
+          /* Mobile: Horizontal scroll */
+          <div className="-mx-4 px-4 pb-8 overflow-x-auto flex gap-4 snap-x snap-mandatory custom-scrollbar">
+            {stats.map((stat, i) => (
+              <div key={stat.label} className="snap-center first:pl-4 last:pr-4">
+                <StatCard stat={stat} index={i} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          /* Desktop: Grid */
+          <motion.div
+            ref={gridRef}
+            style={{ y: gridY }}
+            className="grid grid-cols-2 md:grid-cols-5 gap-6 justify-items-stretch"
+          >
+            {stats.map((stat, i) => (
+              <StatCard key={stat.label} stat={stat} index={i} />
+            ))}
+          </motion.div>
+        )}
       </div>
     </section>
   );

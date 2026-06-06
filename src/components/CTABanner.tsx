@@ -1,75 +1,101 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Zap } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import NeonFlicker from "./NeonFlicker";
 
 const CTABanner = () => (
-  <section id="register" className="section-padding relative overflow-hidden">
-    {/* subtle background accents only — avoid full-width opaque overlays so adjacent sections blend smoothly */}
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/6 blur-[120px] opacity-40 pointer-events-none" />
+  <section id="register" className="relative py-32 overflow-hidden bg-[#050406]">
+    {/* Full-width gradient mesh background */}
+    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-[#050406] to-secondary/10" />
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.15),transparent_60%)]" />
+
+    {/* Floating Particles/Stars */}
+    <div className="absolute inset-0 opacity-40">
+      {[...Array(20)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 rounded-full bg-white"
+          initial={{
+            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+            y: Math.random() * 400,
+            opacity: Math.random() * 0.5 + 0.3,
+            scale: Math.random() * 1.5 + 0.5,
+          }}
+          animate={{
+            y: [null, Math.random() * -50 - 20],
+            opacity: [null, 0],
+          }}
+          transition={{
+            duration: Math.random() * 3 + 2,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+      ))}
+    </div>
 
     {/* Animated neon rings */}
     <motion.div
-      animate={{ rotate: 360, scale: [1, 1.03, 1] }}
-      transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-primary/12 pointer-events-none opacity-40"
+      animate={{ rotate: 360, scale: [1, 1.05, 1] }}
+      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-primary/20 pointer-events-none opacity-50"
     />
     <motion.div
-      animate={{ rotate: -360, scale: [1.03, 1, 1.03] }}
-      transition={{ duration: 36, repeat: Infinity, ease: "linear" }}
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-secondary/12 pointer-events-none opacity-32"
+      animate={{ rotate: -360, scale: [1.05, 1, 1.05] }}
+      transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full border border-secondary/10 pointer-events-none opacity-30"
     />
 
-    <div className="container mx-auto relative z-10 text-center">
+    <div className="container mx-auto relative z-10 text-center px-4">
       <motion.div
-        initial={{ opacity: 0, scale: 0.8, rotateX: 15 }}
-        whileInView={{ opacity: 1, scale: 1, rotateX: 0 }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="glass-card p-10 md:p-16 max-w-3xl mx-auto shimmer-card animated-border-glow"
-        style={{ transformPerspective: 1000 }}
+        className="max-w-4xl mx-auto"
       >
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="inline-flex items-center gap-2 glass-card px-3 py-1 text-xs text-primary mb-6"
+          transition={{ delay: 0.2 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md mb-8"
         >
-          <Zap size={12} /> Limited Spots Available
+          <Sparkles size={14} className="text-primary animate-pulse" />
+          <span className="text-sm font-medium text-primary tracking-wide uppercase">
+            The Future Is Now
+          </span>
         </motion.div>
 
-        <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground mb-4">
+        <h2 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-none filter drop-shadow-2xl mb-6">
           Ready to <NeonFlicker className="gradient-text">Ignite?</NeonFlicker>
         </h2>
-        <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
+        
+        <p className="text-lg md:text-2xl text-white/80 max-w-2xl mx-auto mb-10 font-light tracking-wide">
           Join thousands of students competing, creating, and connecting at the
           biggest multi-domain event of 2026.
         </p>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <motion.a
+          <a
             href="#register"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="hero-primary-button pulse-cta cta-sweep inline-flex items-center justify-center gap-2 ripple-button"
+            className="hero-primary-button pulse-cta w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-lg"
           >
-            Register Now <ArrowRight size={18} />
-          </motion.a>
-          <motion.a
+            Register Now
+            <ArrowRight size={20} />
+          </a>
+          <a
             href="#events"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="hero-explore-outline pulse-cta cta-sweep inline-flex items-center justify-center gap-3 ripple-button"
+            className="hero-secondary-button glow-button-secondary w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-lg"
           >
-            <span className="inline-flex h-2.5 w-2.5 rounded-full bg-secondary opacity-60" />
             Explore Events
-            <ArrowRight size={18} />
-          </motion.a>
+            <ArrowRight size={20} />
+          </a>
         </motion.div>
       </motion.div>
     </div>

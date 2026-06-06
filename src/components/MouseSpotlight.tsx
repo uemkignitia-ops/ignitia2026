@@ -19,8 +19,8 @@ const MouseSpotlight = () => {
 
       if (spotlight) {
         spotlight.style.background = `
-          radial-gradient(420px circle at ${currentRef.current.x}px ${currentRef.current.y}px, hsl(0 95% 60% / 0.06), transparent 46%),
-          radial-gradient(720px circle at ${currentRef.current.x}px ${currentRef.current.y}px, hsl(20 90% 60% / 0.03), transparent 64%)
+          radial-gradient(420px circle at ${currentRef.current.x}px ${currentRef.current.y}px, hsl(270 70% 60% / 0.06), transparent 46%),
+          radial-gradient(720px circle at ${currentRef.current.x}px ${currentRef.current.y}px, hsl(45 95% 55% / 0.03), transparent 64%)
         `;
       }
 

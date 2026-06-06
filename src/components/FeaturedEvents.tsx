@@ -71,7 +71,7 @@ const events = [
 // RA.One corner SVG bracket
 const RaCornerBracket = () => (
   <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-    <path d="M22 0 L22 8 L18 8 L18 4 L14 4 L14 0 Z" fill="hsl(0 95% 60% / 0.7)" />
+    <path d="M22 0 L22 8 L18 8 L18 4 L14 4 L14 0 Z" fill="hsl(45 95% 55% / 0.7)" />
   </svg>
 );
 
@@ -103,10 +103,10 @@ const TiltCard = ({ event }: { event: (typeof events)[0] }) => {
         className="absolute top-0 right-0 opacity-40 group-hover:opacity-90 transition-opacity duration-300"
         style={{ transform: "scaleX(-1)" }}>
         <path d="M2 2 L28 2 L28 6 L6 6 L6 28 L2 28 Z"
-          fill="hsl(0 95% 60% / 0.5)" stroke="hsl(0 95% 60%)" strokeWidth="1" />
-        <path d="M6 6 L22 6 L22 10 L10 10 L10 22 L6 22 Z"
-          fill="none" stroke="hsl(15 90% 60% / 0.6)" strokeWidth="0.8" />
-        <circle cx="28" cy="28" r="3" fill="hsl(0 95% 60%)" opacity="0.7" />
+          fill="hsl(270 70% 60% / 0.5)" stroke="hsl(270 70% 60%)" strokeWidth="1" />
+        <circle cx="28" cy="28" r="12"
+          fill="none" stroke="hsl(45 95% 55% / 0.6)" strokeWidth="0.8" />
+        <circle cx="28" cy="28" r="3" fill="hsl(270 70% 60%)" opacity="0.7" />
       </svg>
 
       {/* Day badge */}

@@ -30,7 +30,7 @@ const FlipDigit = ({ value, label }: { value: number; label: string }) => {
             {str}
           </motion.span>
         </AnimatePresence>
-        <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.45),_transparent_45%),radial-gradient(circle_at_bottom,_rgba(255,20,90,0.18),_transparent_40%)]" />
+        <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.45),_transparent_45%),radial-gradient(circle_at_bottom,_rgba(168,85,247,0.18),_transparent_40%)]" />
       </div>
       <p className="text-[8px] md:text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
         {label}
@@ -62,7 +62,7 @@ const CountdownTimer = ({ embedded = false }: { embedded?: boolean }) => {
   }, []);
 
   const content = (
-    <div className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_46%),radial-gradient(circle_at_bottom,_rgba(220,56,77,0.12),_transparent_38%)] px-2.5 py-4 md:px-5 md:py-6 shadow-[0_0_90px_rgba(244,63,94,0.14)]">
+    <div className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_46%),radial-gradient(circle_at_bottom,_rgba(168,85,247,0.12),_transparent_38%)] px-2.5 py-4 md:px-5 md:py-6 shadow-[0_0_90px_rgba(168,85,247,0.14)]">
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-white/60 to-secondary opacity-50 blur-2xl" />
       <motion.p
         initial={{ opacity: 0, y: 12 }}

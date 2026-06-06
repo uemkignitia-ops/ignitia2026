@@ -16,10 +16,10 @@ const navLinks = [
   { label: "About", href: "/about" },
   { label: "Events", href: "/events" },
   { label: "Schedule", href: "/schedule" },
-  { label: "Team", href: "/team" },
   { label: "Gallery", href: "/gallery" },
-  { label: "Sponsors", href: "/sponsors" },
   { label: "FAQ", href: "/faq" },
+  { label: "Sponsors", href: "/sponsors" },
+  { label: "Team", href: "/team" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -166,7 +166,7 @@ const Navbar = () => {
               transition={{ duration: 1.1, ease: "easeOut" }}
               className="flex items-center gap-2"
             >
-              <motion.img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_hsl(0_95%_60%/0.28)]" />
+              <motion.img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
               <motion.span className="font-heading text-lg font-bold gradient-text inline-block md:text-xl">
                 IGNITIA '26
               </motion.span>
