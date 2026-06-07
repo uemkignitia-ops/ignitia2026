@@ -75,19 +75,21 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
     group.current.position.y = baseTranslateY + hoverOffset;
 
     // 2. Responsive scroll-bound horizontal translation (X-axis)
-    // On mobile, keep the model centered (0). On desktop, slide it from left to right.
-    const leftX = isMobile ? 0 : -viewportWidth * 0.22;
-    const rightX = isMobile ? 0 : viewportWidth * 0.22;
-    const targetX = THREE.MathUtils.lerp(leftX, rightX, progress);
+    // On mobile, keep the model centered (0). On desktop, start centered and shift to the right.
+    const startX = 0;
+    const endX = isMobile ? 0 : viewportWidth * 0.22;
+    const targetX = THREE.MathUtils.lerp(startX, endX, progress);
 
     // 3. Scroll-bound rotation (Y-axis)
-    // Starts at three-quarter view (0.5 rad) facing right-ish, ends at profile view (-Math.PI / 1.8) facing left
-    const targetRotY = THREE.MathUtils.lerp(0.5, -Math.PI / 1.8, progress);
+    // Starts facing forward with slight depth (0.2 rad), ends at profile view (-Math.PI / 1.8) facing left
+    const startRotY = 0.2;
+    const endRotY = isMobile ? -Math.PI / 2.5 : -Math.PI / 1.8;
+    const targetRotY = THREE.MathUtils.lerp(startRotY, endRotY, progress);
 
     // 4. Scroll-bound scale (Z-axis zoom)
-    // Starts close up, ends slightly pulled back/scaled down
-    const startScale = isMobile ? 1.4 : 2.1;
-    const endScale = isMobile ? 1.05 : 1.5;
+    // Starts larger, ends slightly pulled back/scaled down
+    const startScale = isMobile ? 1.35 : 2.0;
+    const endScale = isMobile ? 1.05 : 1.55;
     const targetScale = THREE.MathUtils.lerp(startScale, endScale, progress);
 
     // 5. Mouse pointer tracking (X and Y offsets) for active hover feel
