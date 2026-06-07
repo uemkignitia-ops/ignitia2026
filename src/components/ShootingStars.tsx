@@ -60,14 +60,16 @@ const ShootingStars = () => {
         ctx.lineWidth = 1.5;
         ctx.stroke();
 
-        // Head glow
+        // Head glow (simulated using dual concentric circles instead of expensive shadowBlur)
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(270, 70%, 60%, ${s.opacity * 0.35})`;
+        ctx.fill();
+
         ctx.beginPath();
         ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
         ctx.fillStyle = `hsla(199, 89%, 80%, ${s.opacity})`;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = "hsl(270 70% 60%)";
         ctx.fill();
-        ctx.shadowBlur = 0;
       }
 
       animId = requestAnimationFrame(draw);

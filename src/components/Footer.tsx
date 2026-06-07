@@ -22,8 +22,18 @@ const fadeUp = {
 };
 
 const Footer = () => (
-  <footer className="relative overflow-hidden border-t border-white/10 bg-background/85 backdrop-blur-xl">
-    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(168,85,247,0.15),transparent_28%),radial-gradient(circle_at_top_right,rgba(255,215,0,0.06),transparent_24%)]" />
+  <footer className="relative overflow-visible border-t border-white/10 bg-background/85 backdrop-blur-xl">
+    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(168,85,247,0.15),transparent_28%),radial-gradient(circle_at_top_right,rgba(255,215,0,0.06),transparent_24%)] overflow-hidden" />
+
+    {/* Character standing on the footer line */}
+    <div className="absolute bottom-full left-4 md:left-12 z-20 pointer-events-none translate-y-6 md:translate-y-10">
+      <img
+        src="/footer-character-transparent.gif"
+        alt="IGNITIA Character"
+        className="h-[180px] md:h-[280px] w-auto object-contain opacity-90 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]"
+      />
+    </div>
+
     <div className="container relative z-10 mx-auto px-4 py-16 md:py-20">
       <motion.div
         variants={stagger}

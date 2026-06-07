@@ -144,8 +144,8 @@ const Gallery = () => {
   const filtered = selectedCategory === "All Stories"
     ? galleryItems
     : selectedCategory
-    ? galleryItems.filter((i) => i.category === selectedCategory)
-    : [];
+      ? galleryItems.filter((i) => i.category === selectedCategory)
+      : [];
 
   return (
     <PageTransition>
@@ -194,7 +194,7 @@ const Gallery = () => {
             >
               Moments from previous editions of IGNITIA
             </motion.p>
-            
+
             {/* View Toggle Slider */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -206,9 +206,8 @@ const Gallery = () => {
                 <button
                   key={view}
                   onClick={() => setActiveView(view as "sphere" | "explore")}
-                  className={`relative px-6 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-full transition-colors z-10 ${
-                    activeView === view ? "text-white" : "text-muted-foreground hover:text-white"
-                  }`}
+                  className={`relative px-6 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-full transition-colors z-10 ${activeView === view ? "text-white" : "text-muted-foreground hover:text-white"
+                    }`}
                 >
                   {activeView === view && (
                     <motion.div
@@ -250,7 +249,7 @@ const Gallery = () => {
             >
               {/* PhotoGallery Component */}
               <div className="container mx-auto px-4 relative z-10 mb-20 pt-8">
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.01, y: -4 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                   className="bg-background/20 backdrop-blur-md rounded-3xl border border-border/30 shadow-2xl min-h-[500px] md:min-h-[750px] w-full p-4 md:p-8 shimmer-card animated-border-glow"
@@ -285,12 +284,12 @@ const Gallery = () => {
                     {selectedCategory}
                   </h2>
                   <p className="text-muted-foreground mt-4">
-                    {selectedCategory === "All Stories" 
-                      ? "Browsing a unified collection of moments across all IGNITIA events." 
+                    {selectedCategory === "All Stories"
+                      ? "Browsing a unified collection of moments across all IGNITIA events."
                       : `Browsing all moments from the ${selectedCategory} events.`}
                   </p>
                 </div>
-                
+
                 {/* Prevent clicks in the modal background from closing (optional, usually handled by backdrop if desired) */}
                 <div className="mt-8 relative z-10">
                   <ImageGallery items={filtered} onImageClick={(item) => setSelected(item)} />
@@ -337,7 +336,7 @@ const Gallery = () => {
             </motion.div>
           )}
         </AnimatePresence>
-        
+
         <Footer />
       </div>
     </PageTransition>

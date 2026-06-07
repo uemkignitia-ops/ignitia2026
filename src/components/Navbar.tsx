@@ -134,56 +134,91 @@ const Navbar = () => {
       window.removeEventListener("ignitia:loader-complete", onLoaderComplete);
   }, []);
 
+  const leftLinks = navLinks.slice(0, 5);
+  const rightLinks = navLinks.slice(5);
+
   return (
     <motion.nav
       initial={{ y: -100 }}
-      animate={{ y: hidden ? -100 : 0 }}
+      animate={{ y: hidden ? -100 : 16 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 mx-auto z-50 w-[95%] max-w-7xl border border-white/10 bg-[#050406]/75 backdrop-blur-xl rounded-full shadow-[0_12px_32px_rgba(0,0,0,0.5)] transition-[width,background-color,border-color,box-shadow] duration-300",
         isScrolled
-          ? "border-transparent bg-background/70 shadow-[0_18px_60px_rgba(0,0,0,0.42)] backdrop-blur-2xl"
-          : "border-transparent bg-transparent",
+          ? "w-[90%] bg-[#050406]/90 border-white/15 shadow-[0_16px_40px_rgba(0,0,0,0.6)]"
+          : "w-[94%]"
       )}
     >
       <motion.div
         style={{ height: isHome ? navHeight : 64 }}
-        className="container mx-auto flex items-center justify-between px-4"
+        className="flex items-center justify-between px-6 w-full relative"
       >
-        <Link to="/" className="flex items-center gap-2 shrink-0">
-          <motion.span
-            style={isHome ? { scale: logoScale, y: logoY } : undefined}
-            className="origin-left"
-          >
-            <motion.div
-              key={logoPulseKey}
-              initial={
-                logoPulseKey
-                  ? { opacity: 0.35, scale: 0.72, filter: "blur(8px)" }
-                  : false
-              }
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              transition={{ duration: 1.1, ease: "easeOut" }}
-              className="flex items-center gap-2"
-            >
-              <motion.img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
-              <motion.span className="font-heading text-lg font-bold gradient-text inline-block md:text-xl">
-                IGNITIA '26
-              </motion.span>
-            </motion.div>
-          </motion.span>
-        </Link>
+        {/* Mobile Logo (left-aligned) */}
+        <div className="flex lg:hidden items-center">
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
+            <span className="font-heading text-lg font-bold gradient-text">
+              IGNITIA '26
+            </span>
+          </Link>
+        </div>
 
-        <div className="hidden lg:flex items-center gap-2 rounded-full border border-white/10 bg-card/55 p-1 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.22)]">
-          {navLinks.map((link) => (
+        {/* Desktop: Left side links */}
+        <div className="hidden lg:flex items-center gap-6 w-[42%] justify-end">
+          {leftLinks.map((link) => (
             <Link
               key={link.href}
               to={link.href}
               className={cn(
-                "rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200",
+                "relative py-1 text-sm font-medium transition-colors duration-200 nav-link-underline",
                 location.pathname === link.href
-                  ? "bg-primary/12 text-primary shadow-[0_0_0_1px_hsl(var(--primary)/0.15)]"
-                  : "text-muted-foreground hover:bg-white/5 hover:text-foreground",
+                  ? "text-primary font-semibold"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        {/* Desktop: Centered Logo */}
+        <div className="hidden lg:flex items-center justify-center shrink-0 w-[16%]">
+          <Link to="/" className="flex items-center gap-2">
+            <motion.span
+              style={isHome ? { scale: logoScale, y: logoY } : undefined}
+              className="origin-center"
+            >
+              <motion.div
+                key={logoPulseKey}
+                initial={
+                  logoPulseKey
+                    ? { opacity: 0.35, scale: 0.72, filter: "blur(8px)" }
+                    : false
+                }
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                transition={{ duration: 1.1, ease: "easeOut" }}
+                className="flex items-center gap-2"
+              >
+                <motion.img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
+                <motion.span className="font-heading text-lg font-bold gradient-text inline-block md:text-xl shrink-0">
+                  IGNITIA '26
+                </motion.span>
+              </motion.div>
+            </motion.span>
+          </Link>
+        </div>
+
+        {/* Desktop: Right side links + Register Button */}
+        <div className="hidden lg:flex items-center gap-6 w-[42%] justify-start">
+          {rightLinks.map((link) => (
+            <Link
+              key={link.href}
+              to={link.href}
+              className={cn(
+                "relative py-1 text-sm font-medium transition-colors duration-200 nav-link-underline",
+                location.pathname === link.href
+                  ? "text-primary font-semibold"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               {link.label}
@@ -191,17 +226,18 @@ const Navbar = () => {
           ))}
           <Link
             to="/events"
-            className="glow-button text-sm !px-5 !py-2 inline-flex items-center gap-2 pulse-cta"
+            className="glow-button text-sm !px-4 !py-1.5 inline-flex items-center gap-2 pulse-cta shrink-0"
           >
-            Register Now
-            <ArrowRight size={14} />
+            Register
+            <ArrowRight size={12} />
           </Link>
         </div>
 
+        {/* Mobile: Hamburger menu button */}
         <button
           ref={mobileButtonRef}
           onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-card/60 text-foreground backdrop-blur-xl"
+          className="lg:hidden relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-card/60 text-foreground backdrop-blur-xl"
           aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={isOpen}
           aria-controls="mobile-navigation"
@@ -215,7 +251,7 @@ const Navbar = () => {
                 exit={{ rotate: 90, opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <X size={24} />
+                <X size={20} />
               </motion.div>
             ) : (
               <motion.div
@@ -225,7 +261,7 @@ const Navbar = () => {
                 exit={{ rotate: -90, opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <Menu size={24} />
+                <Menu size={20} />
               </motion.div>
             )}
           </AnimatePresence>

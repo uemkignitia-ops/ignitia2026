@@ -167,7 +167,10 @@ const HeroSection = () => {
           { opacity: 0, y: 25 },
           { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" },
           "-=0.2",
-        );
+        )
+        // ── Phase 5: Pinned UI Hold ─────────────────────────────────────────
+        // Keep the UI fully visible and interactive for a portion of the scroll
+        .to({}, { duration: 1.2 });
     });
 
     return () => ctx.revert();

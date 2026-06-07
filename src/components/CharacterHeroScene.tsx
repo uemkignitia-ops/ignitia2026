@@ -3,6 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, useAnimations, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Preload the character model
 useGLTF.preload("/3d_models/character-hero-2.glb");
@@ -23,7 +24,7 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
     scene.traverse((child) => {
       if (!(child as THREE.Mesh).isMesh) return;
       const mesh = child as THREE.Mesh;
-      
+
       // Enable shadow support
       mesh.castShadow = true;
       mesh.receiveShadow = true;
@@ -49,7 +50,7 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
   // Autoplay all embedded animations (idle states, breathing, stance, etc.)
   useEffect(() => {
     if (!actions || Object.keys(actions).length === 0) return;
-    
+
     // Play the first animation or all animations (fade them in together if needed)
     Object.values(actions).forEach((action) => {
       if (!action) return;
@@ -65,7 +66,7 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
     const time = state.clock.getElapsedTime();
     const progress = scrollProgressRef.current;
     const { width: viewportWidth, height: viewportHeight } = state.viewport;
-    
+
     // Check if we are on a smaller screen (mobile)
     const isMobile = viewportWidth < 7;
 
@@ -100,7 +101,7 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
     group.current.position.x = THREE.MathUtils.lerp(group.current.position.x, targetX, 0.05);
     group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetRotY + targetMouseX, 0.05);
     group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetMouseY, 0.05);
-    
+
     const nextScale = THREE.MathUtils.lerp(group.current.scale.x, targetScale, 0.05);
     group.current.scale.setScalar(nextScale);
   });
@@ -117,19 +118,21 @@ interface CharacterHeroSceneProps {
 }
 
 export const CharacterHeroScene = ({ scrollProgressRef }: CharacterHeroSceneProps) => {
+  const isMobile = useIsMobile();
   return (
     <div className="absolute inset-0 w-full h-full z-10 pointer-events-auto">
       {/* Visual background grid and glows inside the 3D scene box */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.04)_0%,rgba(0,0,0,0)_70%)] pointer-events-none z-[1]" />
-      
+
       <Canvas
         shadows
         gl={{
-          antialias: true,
+          antialias: !isMobile,
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.2,
           powerPreference: "high-performance",
         }}
+        dpr={isMobile ? 1 : [1, 1.5]}
         camera={{ position: [0, 0, 5], fov: 40, near: 0.1, far: 100 }}
         className="w-full h-full cursor-grab active:cursor-grabbing"
       >
@@ -161,7 +164,7 @@ export const CharacterHeroScene = ({ scrollProgressRef }: CharacterHeroSceneProp
 
         <Suspense fallback={null}>
           <CharacterModel scrollProgressRef={scrollProgressRef} />
-          
+
           <OrbitControls
             enableZoom={false}
             enablePan={false}
@@ -171,17 +174,19 @@ export const CharacterHeroScene = ({ scrollProgressRef }: CharacterHeroSceneProp
             dampingFactor={0.05}
           />
 
-          <EffectComposer disableNormalPass>
-            <Bloom
-              intensity={1.2}
-              luminanceThreshold={0.5}
-              luminanceSmoothing={0.5}
-              mipmapBlur
-            />
-          </EffectComposer>
+          {!isMobile && (
+            <EffectComposer enableNormalPass={false}>
+              <Bloom
+                intensity={1.2}
+                luminanceThreshold={0.5}
+                luminanceSmoothing={0.5}
+                mipmapBlur
+              />
+            </EffectComposer>
+          )}
         </Suspense>
       </Canvas>
-      
+
       {/* Interactive indicator overlay */}
       <div className="absolute bottom-6 right-6 z-10 pointer-events-none opacity-40 bg-black/50 backdrop-blur-sm border border-white/5 px-3 py-1.5 rounded-full text-[9px] text-white uppercase tracking-[0.2em]">
         Drag to Orbit Character

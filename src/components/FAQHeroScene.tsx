@@ -95,7 +95,7 @@ export const FAQHeroScene = () => (
       <ambientLight intensity={6.0} color="#ffffff" />
       <directionalLight position={[5, 8, 5]} intensity={6.0} color="#ffd700" />
       <directionalLight position={[-6, 4, 2]} intensity={7.0} color="#9333ea" />
-      
+
       {/* Heavy front fill light */}
       <directionalLight position={[0, 5, 8]} intensity={6.0} color="#ffffff" />
 
@@ -116,12 +116,12 @@ export const FAQHeroScene = () => (
               mipmapBlur
             />
             <Vignette eskil={false} offset={0.35} darkness={0.7} />
-            <Outline 
-              blur 
+            <Outline
+              blur
               visibleEdgeColor={0xffffff}
               hiddenEdgeColor={0xffffff}
-              edgeStrength={10.0} 
-              width={1000} 
+              edgeStrength={10.0}
+              width={1000}
             />
           </EffectComposer>
         </Selection>

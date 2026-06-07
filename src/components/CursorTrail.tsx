@@ -64,9 +64,6 @@ const CursorTrail = () => {
         point.life *= 0.985;
       });
 
-      ctx.save();
-      ctx.shadowBlur = 28;
-      ctx.shadowColor = "hsla(0, 95%, 60%, 0.55)";
       const glow = ctx.createRadialGradient(cursor.x, cursor.y, 0, cursor.x, cursor.y, 16);
       glow.addColorStop(0, "hsla(0, 95%, 65%, 0.9)");
       glow.addColorStop(0.45, "hsla(18, 90%, 60%, 0.45)");
@@ -75,7 +72,6 @@ const CursorTrail = () => {
       ctx.beginPath();
       ctx.arc(cursor.x, cursor.y, 16, 0, Math.PI * 2);
       ctx.fill();
-      ctx.restore();
 
       animId = requestAnimationFrame(draw);
     };

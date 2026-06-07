@@ -257,16 +257,16 @@ const FAQ = () => {
 
                     {/* Outer gradient: gold at wand → transparent at terminal */}
                     <linearGradient id="spell-fade" gradientUnits="objectBoundingBox" x1="1" y1="0" x2="0" y2="0">
-                      <stop offset="0%"   stopColor="#ffd700" stopOpacity="1" />
-                      <stop offset="65%"  stopColor="#f59e0b" stopOpacity="0.85" />
-                      <stop offset="88%"  stopColor="#f97316" stopOpacity="0.3" />
+                      <stop offset="0%" stopColor="#ffd700" stopOpacity="1" />
+                      <stop offset="65%" stopColor="#f59e0b" stopOpacity="0.85" />
+                      <stop offset="88%" stopColor="#f97316" stopOpacity="0.3" />
                       <stop offset="100%" stopColor="#ffd700" stopOpacity="0" />
                     </linearGradient>
 
                     {/* Strand gradient */}
                     <linearGradient id="strand-fade" gradientUnits="objectBoundingBox" x1="1" y1="0" x2="0" y2="0">
-                      <stop offset="0%"   stopColor="#ffffff" stopOpacity="0.9" />
-                      <stop offset="70%"  stopColor="#fde68a" stopOpacity="0.6" />
+                      <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+                      <stop offset="70%" stopColor="#fde68a" stopOpacity="0.6" />
                       <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
                     </linearGradient>
                   </defs>
@@ -310,7 +310,7 @@ const FAQ = () => {
                   />
                 </svg>
 
-            </div>
+              </div>
 
             </div>
 

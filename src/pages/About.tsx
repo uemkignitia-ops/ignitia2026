@@ -337,7 +337,10 @@ const About = () => {
             </div>
           </div>
         </section>
+<<<<<<< HEAD
         
+=======
+>>>>>>> 20a6800ac05e6d1d1f231b69fb4c5dd64568fe4e
         <Footer />
       </div>
     </PageTransition>

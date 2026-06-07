@@ -3,6 +3,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF, useAnimations, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 useGLTF.preload("/3d_models/intro.glb");
 
@@ -189,76 +190,82 @@ interface SceneProps {
   cameraTargetRef: React.MutableRefObject<THREE.Vector3>;
 }
 
-export const VaderScene = ({ cameraPosRef, cameraTargetRef }: SceneProps) => (
-  <div className="absolute inset-0 w-full h-full z-0">
-    <Canvas
-      gl={{
-        antialias: true,
-        toneMapping: THREE.ACESFilmicToneMapping,
-        toneMappingExposure: 1.4,
-        powerPreference: "high-performance",
-      }}
-      // near=0.01 prevents clipping during the Phase-2 plunge
-      camera={{ position: [6.0, 5.0, 14.0], fov: 45, near: 0.01, far: 1000 }}
-    >
-      <color attach="background" args={["#050406"]} />
+export const VaderScene = ({ cameraPosRef, cameraTargetRef }: SceneProps) => {
+  const isMobile = useIsMobile();
+  return (
+    <div className="absolute inset-0 w-full h-full z-0">
+      <Canvas
+        gl={{
+          antialias: !isMobile,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.4,
+          powerPreference: "high-performance",
+        }}
+        dpr={isMobile ? 1 : [1, 1.5]}
+        // near=0.01 prevents clipping during the Phase-2 plunge
+        camera={{ position: [6.0, 5.0, 14.0], fov: 45, near: 0.01, far: 1000 }}
+      >
+        <color attach="background" args={["#050406"]} />
 
-      {/* Soft purple-black fill — keeps the dark areas from going fully black */}
-      <ambientLight intensity={1.0} color="#180e29" />
+        {/* Soft purple-black fill — keeps the dark areas from going fully black */}
+        <ambientLight intensity={1.0} color="#180e29" />
 
-      {/* Golden key light from upper-right — casts a luxurious warm glow on the character */}
-      <directionalLight position={[5, 8, 5]} intensity={1.5} color="#ffd700" />
+        {/* Golden key light from upper-right — casts a luxurious warm glow on the character */}
+        <directionalLight position={[5, 8, 5]} intensity={1.5} color="#ffd700" />
 
-      {/* Deep purple fill from the left — creates contrast against the gold */}
-      <directionalLight position={[-6, 4, 2]} intensity={2.0} color="#9333ea" />
+        {/* Deep purple fill from the left — creates contrast against the gold */}
+        <directionalLight position={[-6, 4, 2]} intensity={2.0} color="#9333ea" />
 
-      {/* Intense purple/white visor accent — sits just in front of the character's face. */}
-      <pointLight
-        position={[0, 0.4, 1.4]}
-        intensity={6.0}
-        color="#e9d5ff"
-        distance={8}
-        decay={2}
-      />
-
-      {/* Golden rim light from behind — adds cinematic depth separation */}
-      <pointLight
-        position={[3, 2, -4]}
-        intensity={3.0}
-        color="#facc15"
-        distance={12}
-        decay={2}
-      />
-
-      {/* Deep violet rim light from the opposite side */}
-      <pointLight
-        position={[-3, 2, -3]}
-        intensity={4.0}
-        color="#581c87"
-        distance={15}
-        decay={2}
-      />
-
-      <Suspense fallback={null}>
-        <VaderModel cameraTargetRef={cameraTargetRef} />
-        <CameraController
-          cameraPosRef={cameraPosRef}
-          cameraTargetRef={cameraTargetRef}
+        {/* Intense purple/white visor accent — sits just in front of the character's face. */}
+        <pointLight
+          position={[0, 0.4, 1.4]}
+          intensity={6.0}
+          color="#e9d5ff"
+          distance={8}
+          decay={2}
         />
-        <EffectComposer disableNormalPass>
-          <Bloom
-            intensity={1.5}
-            luminanceThreshold={0.4}
-            luminanceSmoothing={0.7}
-            mipmapBlur
+
+        {/* Golden rim light from behind — adds cinematic depth separation */}
+        <pointLight
+          position={[3, 2, -4]}
+          intensity={3.0}
+          color="#facc15"
+          distance={12}
+          decay={2}
+        />
+
+        {/* Deep violet rim light from the opposite side */}
+        <pointLight
+          position={[-3, 2, -3]}
+          intensity={4.0}
+          color="#581c87"
+          distance={15}
+          decay={2}
+        />
+
+        <Suspense fallback={null}>
+          <VaderModel cameraTargetRef={cameraTargetRef} />
+          <CameraController
+            cameraPosRef={cameraPosRef}
+            cameraTargetRef={cameraTargetRef}
           />
-          <Vignette
-            eskil={false}
-            offset={0.35}
-            darkness={0.7}
-          />
-        </EffectComposer>
-      </Suspense>
-    </Canvas>
-  </div>
-);
+          {!isMobile && (
+            <EffectComposer enableNormalPass={false}>
+              <Bloom
+                intensity={1.5}
+                luminanceThreshold={0.4}
+                luminanceSmoothing={0.7}
+                mipmapBlur
+              />
+              <Vignette
+                eskil={false}
+                offset={0.35}
+                darkness={0.7}
+              />
+            </EffectComposer>
+          )}
+        </Suspense>
+      </Canvas>
+    </div>
+  );
+};

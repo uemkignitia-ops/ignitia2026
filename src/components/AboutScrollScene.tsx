@@ -3,6 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, useAnimations, OrbitControls, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Preload the character model
 useGLTF.preload("/3d_models/character-hero.glb");
@@ -144,6 +145,7 @@ interface AboutScrollSceneProps {
 }
 
 export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) => {
+  const isMobile = useIsMobile();
   return (
     <div className="absolute inset-0 w-full h-full z-10 pointer-events-auto">
       {/* Background neon glows */}
@@ -152,11 +154,12 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
       <Canvas
         shadows
         gl={{
-          antialias: true,
+          antialias: !isMobile,
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.3,
           powerPreference: "high-performance",
         }}
+        dpr={isMobile ? 1 : [1, 1.5]}
         camera={{ position: [0, 0, 5.5], fov: 40, near: 0.1, far: 100 }}
         className="w-full h-full cursor-grab active:cursor-grabbing"
       >
@@ -201,15 +204,17 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
             dampingFactor={0.05}
           />
 
-          <EffectComposer disableNormalPass>
-            <Bloom
-              intensity={1.4}
-              luminanceThreshold={0.4}
-              luminanceSmoothing={0.6}
-              mipmapBlur
-            />
-            <Vignette eskil={false} offset={0.35} darkness={0.75} />
-          </EffectComposer>
+          {!isMobile && (
+            <EffectComposer enableNormalPass={false}>
+              <Bloom
+                intensity={1.4}
+                luminanceThreshold={0.4}
+                luminanceSmoothing={0.6}
+                mipmapBlur
+              />
+              <Vignette eskil={false} offset={0.35} darkness={0.75} />
+            </EffectComposer>
+          )}
         </Suspense>
       </Canvas>
 

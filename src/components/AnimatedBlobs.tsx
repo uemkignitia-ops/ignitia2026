@@ -9,6 +9,13 @@ const blobs = [
   { color: "bg-neon-cyan/6", size: "w-[280px] h-[280px]", x: "58%", y: "18%", duration: 18 },
 ];
 
+const blobStyles: Record<string, string> = {
+  "bg-primary/10": "radial-gradient(circle, hsl(var(--primary) / 0.10) 0%, transparent 70%)",
+  "bg-secondary/6": "radial-gradient(circle, hsl(var(--secondary) / 0.06) 0%, transparent 70%)",
+  "bg-neon-pink/5": "radial-gradient(circle, hsl(var(--neon-pink) / 0.05) 0%, transparent 70%)",
+  "bg-neon-cyan/6": "radial-gradient(circle, hsl(var(--neon-cyan) / 0.06) 0%, transparent 70%)",
+};
+
 const AnimatedBlobs = () => {
   const isMobile = useIsMobile();
   const prefersReducedMotion = useReducedMotion();
@@ -29,7 +36,8 @@ const AnimatedBlobs = () => {
             style={{ left: "50vw", top: "50vh" }}
           >
             <motion.div
-              className={`rounded-full ${blob.color} ${blob.size} ${isMobile ? "blur-[95px]" : "blur-[150px]"}`}
+              className={`rounded-full ${blob.size}`}
+              style={{ background: blobStyles[blob.color] }}
               animate={{
                 x: isMobile ? [0, 18, -12, 0] : [0, 44, -28, 16, 0],
                 y: isMobile ? [0, -14, 10, 0] : [0, -36, 24, -16, 0],
@@ -45,8 +53,8 @@ const AnimatedBlobs = () => {
         ) : (
           <motion.div
             key={i}
-            className={`absolute rounded-full ${blob.color} ${blob.size} ${isMobile ? "blur-[95px]" : "blur-[150px]"}`}
-            style={{ left: blob.x, top: blob.y }}
+            className={`absolute rounded-full ${blob.size}`}
+            style={{ left: blob.x, top: blob.y, background: blobStyles[blob.color] }}
             animate={{
               x: isMobile ? [0, 24, -16, 0] : [0, 60, -40, 20, 0],
               y: isMobile ? [0, -18, 14, 0] : [0, -50, 30, -20, 0],
