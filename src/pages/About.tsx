@@ -53,7 +53,7 @@ const About = () => {
       });
 
       // Timeline transitions for sci-fi overlay panels
-      
+     
       // Phase 1: Hero content fades out
       tl.to("#about-hero-content", {
         opacity: 0,
@@ -67,7 +67,7 @@ const About = () => {
         { opacity: 0, y: 40 },
         { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
       );
-      
+     
       // Keep it visible for a scrub duration, then fade out
       tl.to("#about-vision-content", {
         opacity: 0,
@@ -290,7 +290,7 @@ const About = () => {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {clubs.map((club, i) => {
+              {clubs.map((club) => {
                 const Icon = club.icon;
                 return (
                   <div
@@ -319,7 +319,7 @@ const About = () => {
               <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-orange-500/30" />
               <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-orange-500/30" />
               <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-orange-500/30" />
-              
+             
               <Users className="text-orange-500 mx-auto mb-4" size={40} />
               <h2 className="font-heading text-3xl font-bold text-foreground mb-4">
                 IEM-UEM Group
@@ -337,10 +337,7 @@ const About = () => {
             </div>
           </div>
         </section>
-<<<<<<< HEAD
-        
-=======
->>>>>>> 20a6800ac05e6d1d1f231b69fb4c5dd64568fe4e
+       
         <Footer />
       </div>
     </PageTransition>
