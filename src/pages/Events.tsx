@@ -25,6 +25,7 @@ import PageTransition from "@/components/PageTransition";
 import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
+import { TerminalSubheading } from "@/components/TerminalSubheading";
 
 const themes = {
   orange: {
@@ -826,14 +827,12 @@ const Events = () => {
 
           {/* Subtitle + filter bar */}
           <div className="mt-10 mb-0 flex flex-col items-center gap-6 relative z-10 pb-12">
-            <motion.p
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="text-muted-foreground text-base md:text-lg font-medium"
-            >
-              Seven thrilling competitions &middot; UEM Kolkata
-            </motion.p>
+            <div className="w-full flex justify-center">
+              <TerminalSubheading 
+                text="Seven thrilling competitions &middot; UEM Kolkata"
+                className="text-muted-foreground text-base md:text-lg font-medium text-center"
+              />
+            </div>
 
             {/* Filter Bar — scrollable on mobile */}
             <div className="w-full overflow-x-auto px-4 flex justify-center hide-scrollbar">
@@ -881,7 +880,7 @@ const Events = () => {
                   className={event.isWide ? "md:col-span-2 relative" : "md:col-span-1 relative"}
                 >
                   {event.id === "hackathon" && (
-                    <div className="absolute bottom-full left-[20px] md:left-[50px] -z-10 pointer-events-none -mb-[10px] md:-mb-[15px]">
+                    <div className="hidden md:block absolute bottom-full left-[20px] md:left-[50px] -z-10 pointer-events-none -mb-[10px] md:-mb-[15px]">
                       <img
                         src="/download.gif"
                         alt="Sci-Fi Hologram"
@@ -906,7 +905,7 @@ const Events = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+              className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
               onClick={() => { setSelectedEvent(null); setShowRulebook(false); }}
             >
               <motion.div

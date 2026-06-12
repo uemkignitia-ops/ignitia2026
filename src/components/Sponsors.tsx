@@ -102,7 +102,7 @@ const Sponsors = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) => {
               {[...allSponsors, ...allSponsors].map((s, i) => (
                 <span
                   key={i}
-                  className="sponsor-marquee-chip glass-card px-6 py-3 mx-3 font-heading text-sm text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-300 hover:scale-105 inline-flex items-center gap-3 shrink-0"
+                  className="sponsor-marquee-chip glass-card px-6 py-3 mx-3 font-heading text-sm text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-300 hover:scale-105 inline-flex items-center w-max max-w-none gap-3 shrink-0"
                 >
                   <img
                     src={s.logo}
@@ -127,7 +127,7 @@ const Sponsors = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) => {
               viewport={{ once: true }}
               transition={{ delay: ti * 0.1 }}
             >
-              <p className="text-center text-sm text-muted-foreground mb-4 uppercase tracking-wider">
+              <p className="text-center text-sm text-primary font-mono mb-4 uppercase tracking-widest">
                 {tier.tier}
               </p>
               <div

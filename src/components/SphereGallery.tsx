@@ -1,4 +1,4 @@
-import SphereImageGrid, { ImageData }  from "@/components/ui/img-sphere";
+import SphereImageGrid, { ImageData } from "@/components/ui/img-sphere";
 import React from 'react';
 
 // ==========================================
@@ -40,12 +40,12 @@ interface SphereConfig {
 }
 
 const CONFIG: SphereConfig = {
-  containerSize: 850,          // Container size in pixels (increased)
-  sphereRadius: 300,           // Virtual sphere radius (increased)
+  containerSize: 950,          // Container size in pixels (increased slightly)
+  sphereRadius: 340,           // Virtual sphere radius (increased slightly)
   dragSensitivity: 0.8,        // Mouse drag sensitivity (0.1 - 2.0)
   momentumDecay: 0.96,         // How fast momentum fades (0.8 - 0.99)
   maxRotationSpeed: 6,         // Maximum rotation speed (1 - 10)
-  baseImageScale: 0.15,        // Base image size
+  baseImageScale: 0.16,        // Base image size
   hoverScale: 1.3,             // Hover scale multiplier
   perspective: 1200,           // CSS perspective value (adjusted for larger size)
   autoRotate: true,            // Enable/disable auto rotation
@@ -65,15 +65,18 @@ export default function SphereGallery() {
   const isMobile = windowWidth < 768;
   const isTablet = windowWidth >= 768 && windowWidth < 1024;
 
+  const mobileContainerSize = Math.min(windowWidth, 380);
+  const mobileSphereRadius = mobileContainerSize * 0.44;
+
   const dynamicConfig = {
     ...CONFIG,
-    containerSize: isMobile ? 340 : isTablet ? 600 : CONFIG.containerSize,
-    sphereRadius: isMobile ? 140 : isTablet ? 220 : CONFIG.sphereRadius,
-    baseImageScale: isMobile ? 0.14 : isTablet ? 0.12 : CONFIG.baseImageScale,
+    containerSize: isMobile ? mobileContainerSize : isTablet ? 650 : CONFIG.containerSize,
+    sphereRadius: isMobile ? mobileSphereRadius : isTablet ? 250 : CONFIG.sphereRadius,
+    baseImageScale: isMobile ? 0.15 : isTablet ? 0.13 : CONFIG.baseImageScale,
   };
 
   return (
-    <div className="w-full p-2 md:p-6 flex justify-center items-center overflow-hidden">
+    <div className="w-full flex justify-center items-center overflow-hidden relative px-0">
       <SphereImageGrid
         images={IMAGES}
         {...dynamicConfig}

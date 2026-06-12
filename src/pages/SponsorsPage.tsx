@@ -16,6 +16,7 @@ import PageTransition from "@/components/PageTransition";
 import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
+import { TerminalSubheading } from "@/components/TerminalSubheading";
 
 // ─── Real sponsor data ────────────────────────────────────────────────────────
 const sponsorCategories = [
@@ -303,15 +304,12 @@ const SponsorsPage = () => {
             </motion.div>
           </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25, duration: 0.6 }}
-            className="mt-10 text-muted-foreground text-sm md:text-base font-medium text-center relative z-10 px-4 max-w-2xl mx-auto"
-          >
-            The visionaries and industry leaders powering the future of
-            technology at Ignitia 2k26.
-          </motion.p>
+          <div className="mt-10 mb-6 flex justify-center w-full px-4 relative z-10">
+            <TerminalSubheading 
+              text="The visionaries and industry leaders powering the future of technology at Ignitia 2k26."
+              className="text-muted-foreground text-sm md:text-base font-medium text-center max-w-2xl"
+            />
+          </div>
         </section>
 
         {/* ── Scrolling Marquee ───────────────────────────────────────────── */}

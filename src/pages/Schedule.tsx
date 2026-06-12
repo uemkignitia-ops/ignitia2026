@@ -8,6 +8,7 @@ import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { TerminalSubheading } from "@/components/TerminalSubheading";
 
 const schedule = {
   "Day 1 — Aug 1": [
@@ -590,14 +591,12 @@ const Schedule = () => {
             </motion.div>
           </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25, duration: 0.6 }}
-            className="mt-10 text-muted-foreground text-base md:text-lg font-medium text-center relative z-10 px-4"
-          >
-            Plan your day and explore the exciting lineup of events at Ignitia 2k26.
-          </motion.p>
+          <div className="mt-10 mb-6 flex justify-center w-full px-4 relative z-10">
+            <TerminalSubheading 
+              text="Plan your day and explore the exciting lineup of events at Ignitia 2k26."
+              className="text-muted-foreground text-base md:text-lg font-medium text-center max-w-2xl"
+            />
+          </div>
         </section>
 
         <section className="pb-24">

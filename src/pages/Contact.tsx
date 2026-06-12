@@ -7,6 +7,7 @@ import PageTransition from "@/components/PageTransition";
 import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
+import { TerminalSubheading } from "@/components/TerminalSubheading";
 
 const mapHref =
   "https://www.google.com/maps/place/University+of+Engineering+%26+Management,+Kolkata+(UEM)/@22.5599202,88.4899014,17z/data=!3m1!4b1!4m6!3m5!1s0x3a020b267a3cdc13:0xb3b21d652126f40!8m2!3d22.5599202!4d88.4899014!16s%2Fg%2F11c4pg5gwf?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D";
@@ -113,30 +114,30 @@ const Contact = () => {
               </motion.div>
             </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25, duration: 0.6 }}
-              className="mt-10 text-muted-foreground text-base md:text-lg font-medium text-center relative z-10 px-4"
-            >
-              We're here to help — for general enquiries, partnerships, or media requests, drop us a message.
-            </motion.p>
+            <div className="mt-10 mb-6 flex justify-center w-full px-4 relative z-10">
+              <TerminalSubheading 
+                text="We're here to help — for general enquiries, partnerships, or media requests, drop us a message."
+                className="text-muted-foreground text-base md:text-lg font-medium text-center max-w-2xl"
+              />
+            </div>
           </section>
 
           <section className="section-padding">
             <div className="container mx-auto max-w-5xl">
               <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
                 <div className="space-y-5">
-                  <div className="rounded-2xl border border-white/8 bg-card/45 p-5 md:p-6 transition-all duration-200 hover:border-primary/20 hover:bg-card/55">
-                    <div className="flex items-start gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105">
+                  <div className="relative overflow-hidden border border-primary/20 bg-black/60 p-5 md:p-6 transition-all duration-300 hover:border-primary/60 group" style={{ clipPath: "polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)" }}>
+                    <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(139,92,246,1)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,1)_1px,transparent_1px)] bg-[size:10px_10px]" />
+                    <div className="absolute left-0 top-0 w-1 h-full bg-primary/40 group-hover:bg-primary transition-colors" />
+                    <div className="flex items-start gap-4 relative z-10">
+                      <div className="w-12 h-12 bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110 shadow-[0_0_15px_rgba(139,92,246,0.2)]">
                         <Mail size={18} className="text-primary" />
                       </div>
                       <div>
-                        <div className="text-sm font-semibold text-foreground">Email</div>
+                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Email_Link</div>
                         <a
                           href="mailto:ignitia@uem.edu.in"
-                          className="text-sm text-muted-foreground transition-colors duration-200 hover:text-primary"
+                          className="text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white"
                         >
                           ignitia@uem.edu.in
                         </a>
@@ -144,16 +145,18 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  <div className="rounded-2xl border border-white/8 bg-card/45 p-5 md:p-6 transition-all duration-200 hover:border-primary/20 hover:bg-card/55">
-                    <div className="flex items-start gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 transition-transform duration-200 hover:scale-105">
+                  <div className="relative overflow-hidden border border-primary/20 bg-black/60 p-5 md:p-6 transition-all duration-300 hover:border-primary/60 group" style={{ clipPath: "polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)" }}>
+                    <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(139,92,246,1)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,1)_1px,transparent_1px)] bg-[size:10px_10px]" />
+                    <div className="absolute left-0 top-0 w-1 h-full bg-primary/40 group-hover:bg-primary transition-colors" />
+                    <div className="flex items-start gap-4 relative z-10">
+                      <div className="w-12 h-12 bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110 shadow-[0_0_15px_rgba(139,92,246,0.2)]">
                         <Phone size={18} className="text-primary" />
                       </div>
                       <div>
-                        <div className="text-sm font-semibold text-foreground">Phone</div>
+                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Comms_Freq</div>
                         <a
                           href="tel:+919876543210"
-                          className="text-sm text-muted-foreground transition-colors duration-200 hover:text-primary"
+                          className="text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white"
                         >
                           +91 98765 43210
                         </a>
@@ -161,63 +164,79 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  <div className="rounded-2xl border border-white/8 bg-card/45 p-5 md:p-6 transition-all duration-200 hover:border-primary/20 hover:bg-card/55">
-                    <div className="flex items-start gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 transition-transform duration-200 hover:scale-105">
+                  <div className="relative overflow-hidden border border-primary/20 bg-black/60 p-5 md:p-6 transition-all duration-300 hover:border-primary/60 group" style={{ clipPath: "polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)" }}>
+                    <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(139,92,246,1)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,1)_1px,transparent_1px)] bg-[size:10px_10px]" />
+                    <div className="absolute left-0 top-0 w-1 h-full bg-primary/40 group-hover:bg-primary transition-colors" />
+                    <div className="flex items-start gap-4 relative z-10">
+                      <div className="w-12 h-12 bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110 shadow-[0_0_15px_rgba(139,92,246,0.2)]">
                         <MapPin size={18} className="text-primary" />
                       </div>
                       <div>
-                        <div className="text-sm font-semibold text-foreground">Venue</div>
+                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Loc_Coords</div>
                         <a
                           href={mapHref}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-sm text-muted-foreground transition-colors duration-200 hover:text-primary"
+                          className="text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white"
                         >
-                          UEM Kolkata, New Town, Kolkata 700160
+                          UEM Kolkata, New Town
                         </a>
                       </div>
                     </div>
                   </div>
 
-                  <div className="group relative mt-4 hidden overflow-hidden rounded-2xl border border-white/8 bg-card/45 h-64 transition-all duration-200 hover:border-primary/25 hover:shadow-[0_20px_60px_rgba(255,83,48,0.12)] lg:block">
+                  <div className="group relative mt-4 hidden overflow-hidden border-2 border-primary/30 bg-black/80 h-64 transition-all duration-300 hover:border-primary/80 lg:block shadow-[0_0_30px_rgba(139,92,246,0.15)]" style={{ clipPath: "polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)" }}>
+                    <div className="absolute inset-0 pointer-events-none bg-primary/10 animate-pulse z-10" />
+                    
+                    <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary z-20 m-2" />
+                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary z-20 m-2" />
+                    
                     <iframe
                       src={mapEmbedSrc}
                       width="100%"
                       height="100%"
-                      style={{ border: 0, filter: "invert(90%) hue-rotate(180deg)" }}
+                      style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) sepia(50%)" }}
                       loading="lazy"
                       title="UEM Kolkata Location"
+                      className="opacity-80 mix-blend-screen"
                     />
                     <a
                       href={mapHref}
                       target="_blank"
                       rel="noreferrer"
                       aria-label="Open UEM Kolkata map"
-                      className="absolute right-3 top-3 rounded-full border border-primary/30 bg-background/80 px-3 py-1 text-[11px] font-semibold text-primary backdrop-blur-md transition-colors hover:bg-primary hover:text-white"
+                      className="absolute right-4 top-4 z-30 font-mono border border-primary/50 bg-black/80 px-4 py-1.5 text-xs font-bold text-primary backdrop-blur-md transition-all hover:bg-primary/20 shadow-[0_0_10px_rgba(139,92,246,0.3)] uppercase tracking-widest"
                     >
-                      Open Maps
+                      [ Init_Nav ]
                     </a>
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-white/8 bg-card/45 p-6 md:p-8 lg:min-h-[100%]">
-                  <h2 className="font-heading text-xl font-semibold mb-5">Send us a message</h2>
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="relative border border-primary/20 bg-black/80 p-6 md:p-8 lg:min-h-[100%] shadow-[0_0_30px_rgba(139,92,246,0.1)] group" style={{ clipPath: "polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 0 100%)" }}>
+                  <div className="absolute top-0 right-0 w-[42.4px] h-[42.4px] bg-primary/20 origin-bottom-left rotate-45 -translate-y-full" />
+                  
+                  <div className="mb-8">
+                    <TerminalSubheading 
+                      text="Send us a message"
+                      className="font-mono text-xl md:text-2xl font-bold text-primary uppercase"
+                    />
+                  </div>
+                  
+                  <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <label className="text-xs text-muted-foreground">Full name</label>
-                      <input className="w-full mt-1 px-4 py-3 rounded-xl bg-background/40 border border-white/8 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20" required />
+                      <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; ID_Signature</label>
+                      <input className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-primary focus:outline-none focus:bg-primary/5 transition-all" placeholder="ENTER NAME_" required />
                     </div>
                     <div>
-                      <label className="text-xs text-muted-foreground">Email</label>
-                      <input type="email" className="w-full mt-1 px-4 py-3 rounded-xl bg-background/40 border border-white/8 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20" required />
+                      <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Comms_Address</label>
+                      <input type="email" className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-primary focus:outline-none focus:bg-primary/5 transition-all" placeholder="ENTER EMAIL_" required />
                     </div>
                     <div>
-                      <label className="text-xs text-muted-foreground">Message</label>
-                      <textarea rows={6} className="w-full mt-1 px-4 py-3 rounded-xl bg-background/40 border border-white/8 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20" required />
+                      <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Data_Payload</label>
+                      <textarea rows={5} className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-primary focus:outline-none focus:bg-primary/5 transition-all resize-none" placeholder="ENTER MESSAGE_" required />
                     </div>
-                    <button type="submit" className="glow-button inline-flex items-center gap-2 px-6 py-3">
-                      <Send size={14} /> {submitted ? "Sent" : "Send Message"}
+                    <button type="submit" className="w-full font-mono font-bold uppercase tracking-widest text-sm inline-flex items-center justify-center gap-3 px-6 py-4 border border-primary text-primary hover:bg-primary hover:text-black transition-colors shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(139,92,246,0.6)]">
+                      <Send size={16} /> {submitted ? "TRANSMISSION SUCCESSFUL" : "TRANSMIT_DATA"}
                     </button>
                   </form>
                 </div>

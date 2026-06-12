@@ -10,6 +10,7 @@ import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
 import { Cpu, Globe, Lightbulb, Sparkles, Users, Facebook, Instagram, Linkedin, Github, ArrowRight } from "lucide-react";
+import { TerminalSubheading } from "@/components/TerminalSubheading";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -105,7 +106,7 @@ const About = () => {
           <Suspense fallback={
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#050406] z-10">
               <div className="w-12 h-12 rounded-full border-4 border-orange-500 border-t-transparent animate-spin mb-4" />
-              <span className="text-xs tracking-widest text-orange-500 uppercase animate-pulse font-mono">Initializing Telemetry Link...</span>
+              <span className="text-xs tracking-widest text-orange-500 uppercase animate-pulse font-mono">Loading Experience...</span>
             </div>
           }>
             <AboutScrollScene scrollProgressRef={scrollProgressRef} />
@@ -205,13 +206,13 @@ const About = () => {
 
                 <div className="flex items-center gap-2 mb-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-ping" />
-                  <span className="font-mono text-[9px] tracking-[0.3em] text-orange-400 uppercase">Core Directive // Vision Statement</span>
+                  <span className="font-mono text-[9px] tracking-[0.3em] text-orange-400 uppercase">Our Vision</span>
                 </div>
 
-                <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight mb-4">
-                  Igniting the Next Generation of{" "}
-                  <span className="text-orange-500">Innovators.</span>
-                </h2>
+                <TerminalSubheading 
+                  text="Igniting the Next Generation of Innovators."
+                  className="font-mono text-xl md:text-2xl font-bold tracking-tight mb-4 text-white"
+                />
 
                 <div className="grid md:grid-cols-2 gap-4 text-xs text-white/60 leading-relaxed font-mono">
                   <p className="border-l border-orange-500/20 pl-2">
@@ -273,7 +274,7 @@ const About = () => {
 
                 <div className="flex items-center gap-2 mb-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
-                  <span className="font-mono text-[9px] tracking-[0.3em] text-cyan-400/80 uppercase">Telemetry Readout // Fest Metrics</span>
+                  <span className="font-mono text-[9px] tracking-[0.3em] text-cyan-400/80 uppercase">Key Metrics</span>
                 </div>
 
                 <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight mb-4">
@@ -325,9 +326,10 @@ const About = () => {
               <p className="text-xs text-orange-500 uppercase tracking-[0.3em] font-mono mb-2">
                 COLLABORATING SOCIETIES
               </p>
-              <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground">
-                Powered by <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">Community</span>
-              </h2>
+              <TerminalSubheading 
+                text="Powered by Community"
+                className="font-mono text-2xl md:text-3xl font-bold text-foreground"
+              />
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -336,15 +338,22 @@ const About = () => {
                 return (
                   <div
                     key={club.name}
-                    className="glass-card bg-card/75 backdrop-blur-2xl p-6 text-center shimmer-card animated-border-glow cursor-pointer transition-all hover:scale-105 hover:-translate-y-2"
+                    className="relative group bg-card/40 backdrop-blur-md p-6 text-center border border-white/10 hover:border-orange-500/50 transition-all duration-300 overflow-hidden cursor-pointer"
+                    style={{ clipPath: "polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px))" }}
                   >
-                    <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-orange-500/10 flex items-center justify-center">
-                      <Icon size={28} className="text-orange-500" />
+                    <div className="absolute top-0 right-0 w-4 h-4 bg-orange-500/20 group-hover:bg-orange-500/40 transition-colors" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }} />
+                    <div className="absolute bottom-0 left-0 w-4 h-4 bg-orange-500/20 group-hover:bg-orange-500/40 transition-colors" style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%)" }} />
+                    
+                    {/* Scanning line effect on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-500/10 to-transparent translate-y-[-100%] group-hover:animate-scanline pointer-events-none" />
+
+                    <div className="w-14 h-14 mx-auto mb-4 rounded-lg bg-black/40 border border-white/5 flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300">
+                      <Icon size={24} className="text-orange-500/70 group-hover:text-orange-400 transition-colors" />
                     </div>
-                    <h3 className="font-heading text-lg font-semibold text-foreground mb-1">
+                    <h3 className="font-mono text-base font-bold text-white/90 mb-1 tracking-wide relative z-10">
                       {club.name}
                     </h3>
-                    <p className="text-xs text-muted-foreground">{club.role}</p>
+                    <p className="text-[10px] uppercase tracking-widest text-orange-500/60 font-mono relative z-10">{club.role}</p>
                   </div>
                 );
               })}

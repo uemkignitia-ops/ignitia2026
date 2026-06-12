@@ -12,6 +12,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
 import CountdownTimer from "@/components/CountdownTimer";
+import { TerminalSubheading } from "@/components/TerminalSubheading";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -277,10 +278,10 @@ const Index = () => {
                     </h2>
                   </div>
 
-                  <p className="font-mono text-xs md:text-sm text-white/50 leading-relaxed border-l-2 border-primary/30 pl-3">
-                    <span className="text-primary/60 mr-1">//</span>
-                    IGNITIA 2K26 brings together the brightest coders, designers, gamers, and roboticists. A crucible of competitive spirit and technical mastery — 2 days of adrenaline and innovation.
-                  </p>
+                  <TerminalSubheading 
+                    text="IGNITIA 2K26 brings together the brightest coders, designers, gamers, and roboticists. A crucible of competitive spirit and technical mastery — 2 days of adrenaline and innovation." 
+                    className="text-xs md:text-sm text-white/50 leading-relaxed border-l-2 border-primary/30 pl-3" 
+                  />
 
                   <div className="space-y-3 pt-1">
                     {[

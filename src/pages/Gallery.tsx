@@ -14,6 +14,7 @@ import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
 import SphereGallery from "@/components/SphereGallery";
+import { TerminalSubheading } from "@/components/TerminalSubheading";
 import { ImageGallery } from "@/components/ui/image-gallery";
 import { CircularGallery, type GalleryItem } from "@/components/ui/circular-gallery-2";
 import { PhotoGallery } from "@/components/ui/gallery";
@@ -166,7 +167,7 @@ const Gallery = () => {
             >
               <ZoomIn size={14} className="text-primary" /> MEMORIES & MOMENTS
             </motion.p>
-            
+
             <div className="relative w-full" style={{ perspective: "800px" }}>
               <div style={{ transformStyle: "preserve-3d" }}>
                 {/* Shadow/depth clone */}
@@ -222,14 +223,12 @@ const Gallery = () => {
               </div>
             </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-muted-foreground text-sm max-w-xl mx-auto font-medium mb-12"
-            >
-              Moments from previous editions of IGNITIA
-            </motion.p>
+            <div className="w-full flex justify-center px-4 mb-12 relative z-10">
+              <TerminalSubheading
+                text="Moments from previous editions of IGNITIA"
+                className="text-muted-foreground text-sm font-medium text-center max-w-xl"
+              />
+            </div>
 
             {/* View Toggle Slider */}
             <motion.div
@@ -269,8 +268,8 @@ const Gallery = () => {
               transition={{ duration: 0.3 }}
             >
               {/* 3D Image Sphere Section */}
-              <section className="py-12 relative overflow-hidden">
-                <div className="container mx-auto">
+              <section className="py-12 pb-32 md:pb-12 relative overflow-hidden min-h-[50vh] flex justify-center items-center w-full px-0">
+                <div className="w-full">
                   <SphereGallery />
                 </div>
               </section>

@@ -30,7 +30,7 @@ const Footer = () => (
       <img
         src="/footer-character-transparent.gif"
         alt="IGNITIA Character"
-        className="h-[180px] md:h-[280px] w-auto object-contain opacity-90 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]"
+        className="h-[80px] md:h-[280px] w-auto object-contain opacity-90 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]"
       />
     </div>
 

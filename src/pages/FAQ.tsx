@@ -14,6 +14,7 @@ import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
 import { FAQHeroScene } from "@/components/FAQHeroScene";
+import { TerminalSubheading } from "@/components/TerminalSubheading";
 
 const faqs = [
   {
@@ -219,14 +220,12 @@ const FAQ = () => {
             </motion.div>
           </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25, duration: 0.6 }}
-            className="mt-10 text-muted-foreground text-base md:text-lg font-medium text-center relative z-10 px-4"
-          >
-            QUERY IGNITIA NETWORK: Accessing encrypted event intelligence...
-          </motion.p>
+          <div className="mt-10 mb-6 flex justify-center w-full px-4 relative z-10">
+            <TerminalSubheading 
+              text="Frequently asked questions and details about the event."
+              className="text-muted-foreground text-base md:text-lg font-medium text-center max-w-2xl"
+            />
+          </div>
         </section>
 
         {/* Hero Interactive Area: Terminal Box + 3 Rays + 3D Model */}
@@ -517,18 +516,18 @@ const FAQ = () => {
               <Terminal size={32} className="mx-auto text-[#ffd700] mb-4 opacity-80" />
 
               <h2 className="font-mono text-xl sm:text-2xl font-bold mb-4 uppercase tracking-[0.2em] text-[#9333ea] drop-shadow-[0_0_8px_rgba(147,51,234,0.6)]">
-                &gt; SYSTEM QUERY UNRESOLVED?
+                Still have questions?
               </h2>
               <p className="text-muted-foreground mb-8 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-mono">
-                If the databanks lack the required intelligence, establish a direct link with central command. We are monitoring all comms channels.
+                If you can't find what you're looking for, feel free to contact our support team.
               </p>
               <a
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=support@ignitia.com"
+                href="mailto:support@ignitia.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-8 py-4 rounded-sm border border-[#9333ea] bg-[#9333ea]/10 text-[#ffd700] font-mono font-bold hover:bg-[#9333ea] hover:text-black hover:scale-105 hover:shadow-[0_0_20px_rgba(255,215,0,0.6)] transition-all duration-300 uppercase tracking-[0.1em] text-sm"
               >
-                INITIATE COMMS LINK
+                Contact Support
               </a>
             </motion.div>
 

@@ -219,7 +219,7 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
       </Canvas>
 
       <div className="absolute bottom-6 right-6 z-10 pointer-events-none opacity-40 bg-black/60 backdrop-blur-sm border border-orange-500/20 px-3 py-1.5 rounded-full text-[9px] text-orange-400 uppercase tracking-[0.2em] font-mono">
-        Telemetry Active // Drag to Rotate Mascot
+        Drag to Rotate Mascot
       </div>
     </div>
   );

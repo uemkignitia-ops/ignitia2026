@@ -75,13 +75,7 @@ export const ThreeDCarousel = ({ sections, convenors, onOpenMemberCard, orbitCol
     >
       {/* Top Section Badge */}
       <div className="relative flex items-center gap-2 mb-10 px-4 py-1.5 rounded-full border border-white/10 bg-black/60 backdrop-blur-md z-20">
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 -mb-[20px] pointer-events-none -z-10 drop-shadow-[0_0_15px_rgba(249,115,22,0.4)]">
-          <img 
-            src="/team-mascot.gif" 
-            alt="Team Mascot" 
-            className="w-64 sm:w-80 h-auto object-contain" 
-          />
-        </div>
+
         <Layers size={13} className="text-orange-500 relative z-10" />
         <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/90 font-bold relative z-10">
           Team Divisions view
@@ -106,30 +100,37 @@ export const ThreeDCarousel = ({ sections, convenors, onOpenMemberCard, orbitCol
             return (
               <motion.div
                 key={section.title}
-                className="w-[260px] h-[340px] sm:w-[340px] sm:h-[390px] rounded-2xl border flex flex-col justify-between items-stretch shrink-0 transition-all duration-300"
+                className="w-[260px] h-[340px] sm:w-[340px] sm:h-[390px] flex flex-col justify-between items-stretch shrink-0 transition-all duration-500 relative group"
                 animate={{
                   scale: isSelected ? 1 : 0.88,
                   opacity: isSelected ? 1 : 0.3,
                 }}
                 style={{
                   background: isSelected 
-                    ? `linear-gradient(160deg, hsl(${hslColor} / 0.15) 0%, #070707 65%)`
+                    ? `linear-gradient(180deg, rgba(10,10,15,0.8) 0%, rgba(5,5,8,0.95) 100%)`
                     : `#030303`,
-                  borderColor: isSelected ? `hsl(${hslColor} / 0.5)` : "rgba(255,255,255,0.06)",
-                  boxShadow: isSelected 
-                    ? `0 30px 65px -15px hsl(${hslColor} / 0.3), inset 0 1px 1px rgba(255,255,255,0.1)` 
-                    : "none",
                   pointerEvents: isSelected ? "auto" : "none",
+                  clipPath: "polygon(0 15px, 15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px))",
+                  border: `1px solid ${isSelected ? `hsl(${hslColor} / 0.5)` : "rgba(255,255,255,0.1)"}`,
                 }}
               >
+                {/* Holographic grid background removed per request */}
+                
+                {/* Corner accents */}
+                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2" style={{ borderColor: `hsl(${hslColor})` }} />
+                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2" style={{ borderColor: `hsl(${hslColor})` }} />
+                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2" style={{ borderColor: `hsl(${hslColor})` }} />
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2" style={{ borderColor: `hsl(${hslColor})` }} />
+
                 {/* Colored Top Glow Strip */}
                 <div 
-                  className="h-1 w-1/3 mx-auto rounded-b-full shrink-0 transition-all duration-300"
+                  className="h-1 w-2/3 mx-auto relative overflow-hidden"
                   style={{ 
-                    background: `hsl(${hslColor})`,
-                    boxShadow: isSelected ? `0 2px 12px hsl(${hslColor} / 0.6)` : 'none'
+                    background: `hsl(${hslColor} / 0.2)`
                   }}
-                />
+                >
+                  <div className="absolute inset-0 w-1/3 bg-white animate-scanline" style={{ background: `hsl(${hslColor})`, boxShadow: `0 0 10px hsl(${hslColor})` }} />
+                </div>
 
                 <div className="p-5 sm:p-6 flex flex-col flex-grow justify-between min-h-0">
                   <div className="flex flex-col min-h-0">
@@ -147,24 +148,26 @@ export const ThreeDCarousel = ({ sections, convenors, onOpenMemberCard, orbitCol
                           key={mIdx}
                           disabled={!isSelected}
                           onClick={() => onOpenMemberCard(member, hslColor)}
-                          className="w-full text-left p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.07] hover:border-white/[0.12] transition-all flex items-center justify-between group cursor-pointer"
+                          className="w-full text-left p-2.5 bg-black/40 border border-white/5 hover:border-white/20 transition-all flex items-center justify-between group cursor-pointer relative overflow-hidden"
                         >
-                          <div className="flex items-center gap-3 min-w-0">
+                          <div className="absolute inset-y-0 left-0 w-1 scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-bottom" style={{ background: `hsl(${hslColor})` }} />
+                          <div className="flex items-center gap-3 min-w-0 pl-2 relative z-10">
                             <div 
-                              className="w-8 h-8 rounded-full flex items-center justify-center font-heading text-xs font-black text-white shrink-0"
+                              className="w-8 h-8 flex items-center justify-center font-mono text-xs font-bold text-white shrink-0 shadow-[0_0_10px_rgba(255,255,255,0.1)]"
                               style={{ 
-                                background: `radial-gradient(circle, hsl(${hslColor} / 0.25) 0%, transparent 100%)`, 
-                                border: `1px solid hsl(${hslColor} / 0.4)` 
+                                background: `rgba(0,0,0,0.5)`, 
+                                border: `1px solid hsl(${hslColor} / 0.4)`,
+                                clipPath: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)"
                               }}
                             >
                               {member.initials}
                             </div>
                             <div className="min-w-0">
-                              <p className="text-xs font-bold text-white group-hover:text-orange-400 transition-colors truncate">{member.name}</p>
-                              <p className="text-[10px] text-white/50 font-medium truncate">{member.role}</p>
+                              <p className="text-xs font-mono tracking-wide font-bold text-white group-hover:text-white transition-colors truncate" style={{ textShadow: `0 0 5px hsl(${hslColor} / 0.5)` }}>{member.name}</p>
+                              <p className="text-[10px] text-white/50 font-mono tracking-widest uppercase truncate">{member.role}</p>
                             </div>
                           </div>
-                          <HelpCircle size={13} className="text-white/20 group-hover:text-white/50 transition-colors shrink-0" />
+                          <HelpCircle size={13} className="text-white/20 group-hover:text-white/80 transition-colors shrink-0 relative z-10" />
                         </button>
                       ))}
                     </div>

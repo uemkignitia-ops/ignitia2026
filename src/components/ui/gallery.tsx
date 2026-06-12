@@ -141,7 +141,6 @@ export const PhotoGallery = ({
 
   return (
     <div className="relative w-full h-full flex flex-col justify-center items-center overflow-hidden">
-      <div className="absolute inset-0 max-md:hidden -z-10 h-full w-full bg-transparent bg-[linear-gradient(to_right,#57534e_1px,transparent_1px),linear-gradient(to_bottom,#57534e_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)] dark:bg-[linear-gradient(to_right,#a8a29e_1px,transparent_1px),linear-gradient(to_bottom,#a8a29e_1px,transparent_1px)]"></div>
       
       <div className="mt-8 flex-shrink-0">
         <h3 className="z-20 mx-auto max-w-2xl justify-center font-heading bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text py-3 text-center text-4xl text-transparent dark:bg-gradient-to-r dark:from-white dark:via-slate-200 dark:to-white dark:bg-clip-text md:text-5xl font-bold">

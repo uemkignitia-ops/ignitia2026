@@ -7,6 +7,7 @@ import PageTransition from "@/components/PageTransition";
 import ParticleField from "@/components/ParticleField";
 import ScrollProgress from "@/components/ScrollProgress";
 import { ThreeDCarousel } from "@/components/ThreeDCarousel";
+import { TerminalSubheading } from "@/components/TerminalSubheading";
 
 // Data structures for team members and orbits
 
@@ -1046,14 +1047,12 @@ const Team = () => {
 
           {/* Subtitle + hint */}
           <div className="mt-8 mb-0 flex flex-col items-center gap-3 relative z-10 pb-10">
-            <motion.p
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="text-muted-foreground text-sm md:text-base font-medium"
-            >
-              A dedicated group of visionaries, planners, and creators shaping IGNITIA '26
-            </motion.p>
+            <div className="w-full flex justify-center px-4">
+              <TerminalSubheading 
+                text="A dedicated group of visionaries, planners, and creators shaping IGNITIA '26"
+                className="text-muted-foreground text-sm md:text-base font-medium text-center max-w-2xl"
+              />
+            </div>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
