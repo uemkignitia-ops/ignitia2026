@@ -6,6 +6,7 @@ import * as THREE from "three";
 import CountdownTimer from "./CountdownTimer";
 import { VaderScene } from "./VaderScene";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -307,14 +308,14 @@ const HeroSection = () => {
 
               {/* CTAs — left-aligned, not centred */}
               <div className="flex flex-wrap gap-4 pt-2">
-                <a href="#register" className="hero-primary-button pulse-cta flex items-center gap-3 text-sm">
+                <Link to="/events" className="hero-primary-button pulse-cta flex items-center gap-3 text-sm">
                   Register Now
                   <ArrowRight size={16} />
-                </a>
-                <a href="/events" className="hero-secondary-button glow-button-secondary flex items-center gap-3 text-sm">
+                </Link>
+                <Link to="/events" className="hero-secondary-button glow-button-secondary flex items-center gap-3 text-sm">
                   Explore Events
                   <ArrowRight size={16} />
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -330,7 +331,7 @@ const HeroSection = () => {
                 {/* Label */}
                 <div className="flex items-center gap-2 mb-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                  <span className="font-mono text-[9px] tracking-[0.35em] text-white/40 uppercase">Event Launch Sequence</span>
+                  <span className="font-mono text-[9px] tracking-[0.35em] text-white/40 uppercase">Event Launch Countdown</span>
                 </div>
 
                 {/* Countdown display */}

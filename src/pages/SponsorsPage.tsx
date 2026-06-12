@@ -1,5 +1,6 @@
 import { useRef, useMemo } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   Download,
   Mail,
@@ -17,6 +18,7 @@ import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
 import { TerminalSubheading } from "@/components/TerminalSubheading";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // ─── Real sponsor data ────────────────────────────────────────────────────────
 const sponsorCategories = [
@@ -197,8 +199,8 @@ const SponsorCard = ({
 
       {/* Name */}
       <p
-        className={`font-heading font-bold text-center text-white/85 leading-tight
-                    ${large ? "text-base" : "text-sm"}`}
+        className={`font-heading font-bold text-center text-white/85 leading-tight w-full break-words
+                    ${large ? "text-base" : "text-xs sm:text-sm"}`}
       >
         {sponsor.name}
       </p>
@@ -209,6 +211,8 @@ const SponsorCard = ({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 const SponsorsPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   return (
     <PageTransition>
@@ -239,7 +243,7 @@ const SponsorsPage = () => {
             transition={{ duration: 0.5 }}
             className="text-center text-[11px] md:text-xs text-primary uppercase tracking-[0.45em] mb-5 font-semibold font-mono flex items-center justify-center gap-2"
           >
-            <Hexagon size={13} className="text-primary shrink-0" /> ALLIANCES
+            <Hexagon size={13} className="text-primary shrink-0" /> PARTNERS
           </motion.p>
 
           {/* Main Title — perspective tilt */}
@@ -318,20 +322,20 @@ const SponsorsPage = () => {
           <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
           <motion.div
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 18, ease: "linear", repeat: Infinity }}
+            transition={{ duration: isMobile ? 10 : 18, ease: "linear", repeat: Infinity }}
             className="flex whitespace-nowrap"
           >
             {[...allSponsorsUnique, ...allSponsorsUnique].map((s, i) => (
               <span
                 key={i}
-                className="inline-flex items-center gap-3 mx-6 px-5 py-2 rounded-full border border-white/8 bg-white/[0.03] text-sm text-muted-foreground font-mono"
+                className="inline-flex items-center gap-2 sm:gap-3 mx-3 sm:mx-6 px-3 sm:px-5 py-2 rounded-full border border-white/8 bg-white/[0.03] text-xs sm:text-sm text-muted-foreground font-mono shrink-0 max-w-[200px] sm:max-w-none"
               >
                 <img
                   src={s.logo}
                   alt={s.name}
-                  className="h-5 w-auto object-contain rounded opacity-80"
+                  className="h-4 sm:h-5 w-auto object-contain rounded opacity-80 shrink-0"
                 />
-                {s.name}
+                <span className="truncate">{s.name}</span>
               </span>
             ))}
           </motion.div>
@@ -523,15 +527,15 @@ const SponsorsPage = () => {
                   <Download size={16} />
                   Download Brochure
                 </motion.a>
-                <motion.a
-                  href="mailto:sponsor@ignitia2k26.com"
+                <motion.button
+                  onClick={() => navigate('/contact')}
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
                   className="hero-secondary-button glow-button-secondary flex items-center justify-center gap-3"
                 >
                   <Mail size={16} />
                   Contact Team
-                </motion.a>
+                </motion.button>
               </div>
             </motion.div>
           </div>

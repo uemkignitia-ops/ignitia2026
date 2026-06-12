@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { MessageCircleQuestion } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const faqs = [
   {
@@ -65,10 +66,10 @@ const FAQSection = () => (
             Everything you need to know about participating in the biggest fest of the year. Can't find your answer? Reach out to us.
           </p>
 
-          <a href="#contact" className="inline-flex items-center gap-2 text-primary hover:text-white transition-colors text-sm font-semibold uppercase tracking-wider group">
+          <Link to="/contact" className="inline-flex items-center gap-2 text-primary hover:text-white transition-colors text-sm font-semibold uppercase tracking-wider group">
             Contact Support
             <span className="group-hover:translate-x-1 transition-transform">→</span>
-          </a>
+          </Link>
         </motion.div>
 
         {/* Right Side: Accordion */}

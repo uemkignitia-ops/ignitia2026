@@ -19,7 +19,7 @@ const LoaderCore = ({ progress, isMobile }: LoaderCoreProps) => {
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
-    
+
     // Scale reacts to loading progress (starts compact, expands as loading completes)
     const baseScale = 0.95 + (progress / 100) * 0.55; // grows from 0.95 to 1.5
     const pulse = Math.sin(time * 4) * 0.04;
@@ -27,10 +27,10 @@ const LoaderCore = ({ progress, isMobile }: LoaderCoreProps) => {
 
     if (groupRef.current) {
       groupRef.current.scale.setScalar(currentScale);
-      
+
       // Acceleration based on loading progress
       const rotationSpeed = 1.0 + (progress / 100) * 2.5; // up to 3.5x speed
-      
+
       // Rotate the entire assembly slowly
       groupRef.current.rotation.y = time * 0.15 * rotationSpeed;
     }
@@ -201,10 +201,10 @@ const LoadingScreen = () => {
 
               {/* Cyan key light to reflect off metal surfaces */}
               <pointLight position={[6, 5, 5]} intensity={3.5} color="#2df5ff" />
-              
+
               {/* Hot pink fill light from opposite angle */}
               <pointLight position={[-6, -4, 4]} intensity={2.8} color="#ff3ca0" />
-              
+
               {/* Golden rim light from behind to highlight glass boundaries */}
               <directionalLight position={[0, 6, -5]} intensity={2.5} color="#ffd700" />
 
@@ -248,7 +248,7 @@ const LoadingScreen = () => {
             transition={{ delay: 0.5 }}
             className="text-xs text-muted-foreground mt-4 font-mono relative z-10 text-center tracking-[0.18em]"
           >
-            INITIALIZING CORE... {Math.round(progress)}%
+            LOADING... {Math.round(progress)}%
           </motion.p>
         </motion.div>
       )}

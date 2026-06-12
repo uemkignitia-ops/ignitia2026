@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import NeonFlicker from "./NeonFlicker";
+import { Link } from "react-router-dom";
 
 const CTABanner = () => (
   <section id="register" className="relative py-32 overflow-hidden bg-[#050406]">
@@ -82,20 +83,20 @@ const CTABanner = () => (
           transition={{ delay: 0.4 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <a
-            href="#register"
+          <Link
+            to="/events"
             className="hero-primary-button pulse-cta w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-lg"
           >
             Register Now
             <ArrowRight size={20} />
-          </a>
-          <a
-            href="#events"
+          </Link>
+          <Link
+            to="/events"
             className="hero-secondary-button glow-button-secondary w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-lg"
           >
             Explore Events
             <ArrowRight size={20} />
-          </a>
+          </Link>
         </motion.div>
       </motion.div>
     </div>

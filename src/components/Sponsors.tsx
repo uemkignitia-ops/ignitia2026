@@ -102,14 +102,14 @@ const Sponsors = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) => {
               {[...allSponsors, ...allSponsors].map((s, i) => (
                 <span
                   key={i}
-                  className="sponsor-marquee-chip glass-card px-6 py-3 mx-3 font-heading text-sm text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-300 hover:scale-105 inline-flex items-center w-max max-w-none gap-3 shrink-0"
+                  className="sponsor-marquee-chip glass-card px-4 sm:px-6 py-3 mx-2 sm:mx-3 font-heading text-xs sm:text-sm text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-300 hover:scale-105 inline-flex items-center max-w-[180px] sm:max-w-none gap-2 sm:gap-3 shrink-0"
                 >
                   <img
                     src={s.logo}
                     alt={s.name}
-                    className="h-6 w-auto object-contain rounded"
+                    className="h-5 sm:h-6 w-auto object-contain rounded shrink-0"
                   />
-                  {s.name}
+                  <span className="truncate">{s.name}</span>
                 </span>
               ))}
             </motion.div>

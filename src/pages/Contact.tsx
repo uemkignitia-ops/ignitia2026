@@ -48,7 +48,7 @@ const Contact = () => {
               transition={{ duration: 0.5 }}
               className="text-center text-[11px] md:text-xs text-primary uppercase tracking-[0.45em] mb-5 font-semibold font-mono flex items-center justify-center gap-2"
             >
-              <Mail size={14} className="text-primary" /> COMMUNICATION LINK
+              <Mail size={14} className="text-primary" /> CONTACT US
             </motion.p>
 
             {/* Main Title — full-width, centered, perspective tilt */}
@@ -134,7 +134,7 @@ const Contact = () => {
                         <Mail size={18} className="text-primary" />
                       </div>
                       <div>
-                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Email_Link</div>
+                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Email Address</div>
                         <a
                           href="mailto:ignitia@uem.edu.in"
                           className="text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white"
@@ -153,7 +153,7 @@ const Contact = () => {
                         <Phone size={18} className="text-primary" />
                       </div>
                       <div>
-                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Comms_Freq</div>
+                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Phone Number</div>
                         <a
                           href="tel:+919876543210"
                           className="text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white"
@@ -172,7 +172,7 @@ const Contact = () => {
                         <MapPin size={18} className="text-primary" />
                       </div>
                       <div>
-                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Loc_Coords</div>
+                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Location</div>
                         <a
                           href={mapHref}
                           target="_blank"
@@ -207,7 +207,7 @@ const Contact = () => {
                       aria-label="Open UEM Kolkata map"
                       className="absolute right-4 top-4 z-30 font-mono border border-primary/50 bg-black/80 px-4 py-1.5 text-xs font-bold text-primary backdrop-blur-md transition-all hover:bg-primary/20 shadow-[0_0_10px_rgba(139,92,246,0.3)] uppercase tracking-widest"
                     >
-                      [ Init_Nav ]
+                      [ Get Directions ]
                     </a>
                   </div>
                 </div>
@@ -224,19 +224,19 @@ const Contact = () => {
                   
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; ID_Signature</label>
+                      <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Full Name</label>
                       <input className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-primary focus:outline-none focus:bg-primary/5 transition-all" placeholder="ENTER NAME_" required />
                     </div>
                     <div>
-                      <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Comms_Address</label>
+                      <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Email Address</label>
                       <input type="email" className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-primary focus:outline-none focus:bg-primary/5 transition-all" placeholder="ENTER EMAIL_" required />
                     </div>
                     <div>
-                      <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Data_Payload</label>
+                      <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Message</label>
                       <textarea rows={5} className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-primary focus:outline-none focus:bg-primary/5 transition-all resize-none" placeholder="ENTER MESSAGE_" required />
                     </div>
                     <button type="submit" className="w-full font-mono font-bold uppercase tracking-widest text-sm inline-flex items-center justify-center gap-3 px-6 py-4 border border-primary text-primary hover:bg-primary hover:text-black transition-colors shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(139,92,246,0.6)]">
-                      <Send size={16} /> {submitted ? "TRANSMISSION SUCCESSFUL" : "TRANSMIT_DATA"}
+                      <Send size={16} /> {submitted ? "MESSAGE SENT" : "SEND MESSAGE"}
                     </button>
                   </form>
                 </div>

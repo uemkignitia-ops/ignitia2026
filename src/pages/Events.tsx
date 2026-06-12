@@ -217,7 +217,7 @@ const events = [
     id: "guess-who",
     icon: HelpCircle,
     title: "Guess Who",
-    category: "GAMING",
+    category: "NON-TECH",
     prize: "₹10K",
     teamSize: "Solo",
     teamSizeLabel: "FORMAT",
@@ -514,7 +514,7 @@ const EventCard = ({
 
               {/* Bottom details */}
               <div className="flex justify-between items-end pt-4 border-t border-white/5 mt-auto">
-                <div className="flex gap-6">
+                <div className="flex flex-wrap gap-3 sm:gap-6">
                   <div className="md:hidden">
                     <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono">PRIZE</span>
                     <span className={`text-sm font-semibold ${theme.iconText}`}>{event.prize}</span>
@@ -611,7 +611,7 @@ const EventCard = ({
 
             {/* Bottom details */}
             <div className="flex justify-between items-end mt-auto pt-4 border-t border-white/5 relative z-10">
-              <div className="flex gap-6">
+              <div className="flex flex-wrap gap-3 sm:gap-6">
                 <div>
                   <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">TEAM</span>
                   <span className="text-sm font-semibold text-white">{event.teamSize}</span>
@@ -695,7 +695,7 @@ const EventCard = ({
 
         {/* Bottom details */}
         <div className="relative z-10 flex justify-between items-center">
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-3 sm:gap-4">
             <div>
               <span className="text-[9px] uppercase tracking-wider text-muted-foreground block font-mono">PRIZE</span>
               <span className={`text-xs font-semibold ${theme.iconText}`}>{event.prize}</span>
@@ -828,19 +828,19 @@ const Events = () => {
           {/* Subtitle + filter bar */}
           <div className="mt-10 mb-0 flex flex-col items-center gap-6 relative z-10 pb-12">
             <div className="w-full flex justify-center">
-              <TerminalSubheading 
+              <TerminalSubheading
                 text="Seven thrilling competitions &middot; UEM Kolkata"
                 className="text-muted-foreground text-base md:text-lg font-medium text-center"
               />
             </div>
 
-            {/* Filter Bar — scrollable on mobile */}
-            <div className="w-full overflow-x-auto px-4 flex justify-center hide-scrollbar">
+            {/* Filter Bar */}
+            <div className="w-full px-4 flex justify-center">
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.35 }}
-                className="border border-white/10 bg-white/[0.04] backdrop-blur-xl p-1.5 rounded-full flex gap-1 items-center shadow-[0_4px_30px_rgba(0,0,0,0.4)] shrink-0"
+                className="border border-white/10 bg-white/[0.04] backdrop-blur-xl p-1.5 rounded-2xl md:rounded-full flex flex-wrap justify-center gap-1.5 items-center shadow-[0_4px_30px_rgba(0,0,0,0.4)] max-w-full"
               >
                 {["ALL", "TECHNICAL", "GAMING", "NON-TECH"].map((filter) => {
                   const isActive = activeFilter === filter;
@@ -848,7 +848,7 @@ const Events = () => {
                     <button
                       key={filter}
                       onClick={() => setActiveFilter(filter)}
-                      className={`px-4 py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider md:tracking-widest transition-all duration-300 shrink-0 ${isActive
+                      className={`px-3 sm:px-4 py-2 rounded-xl md:rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider md:tracking-widest transition-all duration-300 flex-grow sm:flex-grow-0 text-center ${isActive
                         ? "bg-primary text-white shadow-[0_0_18px_rgba(139,92,246,0.6)]"
                         : "text-muted-foreground hover:text-white hover:bg-white/8"
                         }`}

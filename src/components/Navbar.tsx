@@ -303,7 +303,7 @@ const Navbar = () => {
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
                 <div>
                   <span className="font-heading text-base font-semibold gradient-text">IGNITIA '26</span>
-                  <p className="text-[11px] text-muted-foreground uppercase tracking-[0.28em] mt-1">Navigation</p>
+                  <p className="text-[11px] text-muted-foreground uppercase tracking-[0.28em] mt-1">Menu</p>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}

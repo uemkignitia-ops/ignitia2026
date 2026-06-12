@@ -13,6 +13,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
 import CountdownTimer from "@/components/CountdownTimer";
 import { TerminalSubheading } from "@/components/TerminalSubheading";
+import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -121,7 +122,7 @@ const Index = () => {
             <Suspense fallback={
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-transparent z-10">
                 <div className="w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin mb-4" />
-                <span className="text-xs tracking-widest text-muted-foreground uppercase animate-pulse font-mono">Initializing Telemetry Link...</span>
+                <span className="text-xs tracking-widest text-muted-foreground uppercase animate-pulse font-mono">Loading Experience...</span>
               </div>
             }>
               <CharacterHeroScene scrollProgressRef={characterScrollProgressRef} />
@@ -200,14 +201,14 @@ const Index = () => {
                   </div>
 
                   <div className="flex flex-wrap gap-4 pt-2">
-                    <a href="#register" className="hero-primary-button pulse-cta flex items-center gap-3 text-sm">
+                    <Link to="/events" className="hero-primary-button pulse-cta flex items-center gap-3 text-sm">
                       Register Now
                       <ArrowRight size={16} />
-                    </a>
-                    <a href="/events" className="hero-secondary-button glow-button-secondary flex items-center gap-3 text-sm">
+                    </Link>
+                    <Link to="/events" className="hero-secondary-button glow-button-secondary flex items-center gap-3 text-sm">
                       Explore Events
                       <ArrowRight size={16} />
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -221,7 +222,7 @@ const Index = () => {
 
                     <div className="flex items-center gap-2 mb-4">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                      <span className="font-mono text-[9px] tracking-[0.35em] text-white/40 uppercase">Event Launch Sequence</span>
+                      <span className="font-mono text-[9px] tracking-[0.35em] text-white/40 uppercase">Event Launch Countdown</span>
                     </div>
 
                     <CountdownTimer embedded />
@@ -266,7 +267,7 @@ const Index = () => {
 
                   <div className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-neon-cyan animate-ping" />
-                    <span className="font-mono text-[9px] tracking-[0.3em] text-neon-cyan/60 uppercase">Fest Diagnostics // System Readout</span>
+                    <span className="font-mono text-[9px] tracking-[0.3em] text-neon-cyan/60 uppercase">Event Overview: Quick Stats</span>
                   </div>
 
                   <div>
@@ -278,9 +279,9 @@ const Index = () => {
                     </h2>
                   </div>
 
-                  <TerminalSubheading 
-                    text="IGNITIA 2K26 brings together the brightest coders, designers, gamers, and roboticists. A crucible of competitive spirit and technical mastery — 2 days of adrenaline and innovation." 
-                    className="text-xs md:text-sm text-white/50 leading-relaxed border-l-2 border-primary/30 pl-3" 
+                  <TerminalSubheading
+                    text="IGNITIA 2K26 brings together the brightest coders, designers, gamers, and roboticists. A crucible of competitive spirit and technical mastery — 2 days of adrenaline and innovation."
+                    className="text-xs md:text-sm text-white/50 leading-relaxed border-l-2 border-primary/30 pl-3"
                   />
 
                   <div className="space-y-3 pt-1">
@@ -306,13 +307,13 @@ const Index = () => {
                   </div>
 
                   <div className="flex flex-wrap gap-3 pt-2">
-                    <a href="#register" className="glow-button flex items-center gap-2 text-xs py-2 px-5">
+                    <Link to="/events" className="glow-button flex items-center gap-2 text-xs py-2 px-5">
                       <span>Access Portal</span>
                       <span className="font-mono opacity-70">&gt;&gt;</span>
-                    </a>
-                    <a href="/events" className="glow-button-secondary border-white/10 text-white hover:border-white/30 text-xs py-2 px-5">
+                    </Link>
+                    <Link to="/schedule" className="glow-button-secondary border-white/10 text-white hover:border-white/30 text-xs py-2 px-5">
                       Fest Schedule
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

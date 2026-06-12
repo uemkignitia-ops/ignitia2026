@@ -15,6 +15,7 @@ import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
 import { FAQHeroScene } from "@/components/FAQHeroScene";
 import { TerminalSubheading } from "@/components/TerminalSubheading";
+import { Link } from "react-router-dom";
 
 const faqs = [
   {
@@ -242,7 +243,7 @@ const FAQ = () => {
                   {/* Windows CMD Header */}
                   <div className="mb-4 text-xs sm:text-sm text-[#CCCCCC]/90 relative z-10">
                     <p className="text-[#ffd700]/80">IGNITIA FAQ Core [Version 2026.1.0]</p>
-                    <p>&copy; 2026 IGNITIA &apos;26. POWER LEVEL: MAXIMUM.</p>
+                    <p>&copy; 2026 IGNITIA &apos;26. Ready to help.</p>
                   </div>
 
                   {/* CLI Active Search Bar */}
@@ -511,7 +512,7 @@ const FAQ = () => {
               {/* Cyber UI Details */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#ffd700]/50 to-transparent opacity-50" />
               <div className="absolute top-4 left-4 w-2 h-2 rounded-full bg-[#ffd700] animate-pulse" />
-              <div className="absolute bottom-4 right-4 text-[10px] text-[#9333ea]/60 font-mono">SYS_STATUS: ONLINE</div>
+              <div className="absolute bottom-4 right-4 text-[10px] text-[#9333ea]/60 font-mono">Status: Online</div>
 
               <Terminal size={32} className="mx-auto text-[#ffd700] mb-4 opacity-80" />
 
@@ -521,14 +522,12 @@ const FAQ = () => {
               <p className="text-muted-foreground mb-8 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-mono">
                 If you can't find what you're looking for, feel free to contact our support team.
               </p>
-              <a
-                href="mailto:support@ignitia.com"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/contact"
                 className="inline-flex items-center justify-center px-8 py-4 rounded-sm border border-[#9333ea] bg-[#9333ea]/10 text-[#ffd700] font-mono font-bold hover:bg-[#9333ea] hover:text-black hover:scale-105 hover:shadow-[0_0_20px_rgba(255,215,0,0.6)] transition-all duration-300 uppercase tracking-[0.1em] text-sm"
               >
                 Contact Support
-              </a>
+              </Link>
             </motion.div>
 
           </div>

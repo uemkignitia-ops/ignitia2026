@@ -6,7 +6,7 @@ import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 // Preload the character model
-useGLTF.preload("/3d_models/character-hero.glb");
+useGLTF.preload("/3d_models/character-hero-2.glb");
 
 interface AboutModelProps {
   scrollProgressRef: React.MutableRefObject<number>;
@@ -14,7 +14,7 @@ interface AboutModelProps {
 
 const AboutModel = ({ scrollProgressRef }: AboutModelProps) => {
   const group = useRef<THREE.Group>(null);
-  const { scene, animations } = useGLTF("/3d_models/character-hero.glb");
+  const { scene, animations } = useGLTF("/3d_models/character-hero-2.glb");
   const { actions } = useAnimations(animations, group);
 
   // Material traversal: Fix colors and apply glow enhancements
@@ -24,7 +24,7 @@ const AboutModel = ({ scrollProgressRef }: AboutModelProps) => {
     scene.traverse((child) => {
       if (!(child as THREE.Mesh).isMesh) return;
       const mesh = child as THREE.Mesh;
-      
+
       // Enable shadow support
       mesh.castShadow = true;
       mesh.receiveShadow = true;
@@ -50,7 +50,7 @@ const AboutModel = ({ scrollProgressRef }: AboutModelProps) => {
   // Autoplay all animations
   useEffect(() => {
     if (!actions || Object.keys(actions).length === 0) return;
-    
+
     // Play all active animations
     Object.values(actions).forEach((action) => {
       if (!action) return;
@@ -66,13 +66,13 @@ const AboutModel = ({ scrollProgressRef }: AboutModelProps) => {
     const time = state.clock.getElapsedTime();
     const progress = scrollProgressRef.current;
     const { width: viewportWidth } = state.viewport;
-    
+
     const isMobile = viewportWidth < 7;
 
     // 1. Hover/levitate animation (sine wave on Y-axis)
     const hoverOffset = Math.sin(time * 1.5) * 0.08;
     const baseTranslateY = isMobile ? -0.8 : -1.0;
-    
+
     // 2. Interactive scroll-bound keyframing
     let targetX = 0;
     let targetRotY = 0;
@@ -107,7 +107,7 @@ const AboutModel = ({ scrollProgressRef }: AboutModelProps) => {
     group.current.position.x = THREE.MathUtils.lerp(group.current.position.x, targetX, 0.05);
     group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetRotY + targetMouseX, 0.05);
     group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetMouseY, 0.05);
-    
+
     const nextScale = THREE.MathUtils.lerp(group.current.scale.x, targetScale, 0.05);
     group.current.scale.setScalar(nextScale);
   });
@@ -150,7 +150,7 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
     <div className="absolute inset-0 w-full h-full z-10 pointer-events-auto">
       {/* Background neon glows */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.04)_0%,rgba(0,0,0,0)_70%)] pointer-events-none z-[1]" />
-      
+
       <Canvas
         shadows
         gl={{
@@ -194,7 +194,7 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
         <Suspense fallback={null}>
           <AboutModel scrollProgressRef={scrollProgressRef} />
           <HolographicGrid />
-          
+
           <OrbitControls
             enableZoom={false}
             enablePan={false}
