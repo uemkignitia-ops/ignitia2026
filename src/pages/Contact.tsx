@@ -115,7 +115,7 @@ const Contact = () => {
             </div>
 
             <div className="mt-10 mb-6 flex justify-center w-full px-4 relative z-10">
-              <TerminalSubheading 
+              <TerminalSubheading
                 text="We're here to help — for general enquiries, partnerships, or media requests, drop us a message."
                 className="text-muted-foreground text-base md:text-lg font-medium text-center max-w-2xl"
               />
@@ -187,10 +187,10 @@ const Contact = () => {
 
                   <div className="group relative mt-4 hidden overflow-hidden border-2 border-primary/30 bg-black/80 h-64 transition-all duration-300 hover:border-primary/80 lg:block shadow-[0_0_30px_rgba(139,92,246,0.15)]" style={{ clipPath: "polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)" }}>
                     <div className="absolute inset-0 pointer-events-none bg-primary/10 animate-pulse z-10" />
-                    
+
                     <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary z-20 m-2" />
                     <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary z-20 m-2" />
-                    
+
                     <iframe
                       src={mapEmbedSrc}
                       width="100%"
@@ -214,26 +214,26 @@ const Contact = () => {
 
                 <div className="relative border border-primary/20 bg-black/80 p-6 md:p-8 lg:min-h-[100%] shadow-[0_0_30px_rgba(139,92,246,0.1)] group" style={{ clipPath: "polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 0 100%)" }}>
                   <div className="absolute top-0 right-0 w-[42.4px] h-[42.4px] bg-primary/20 origin-bottom-left rotate-45 -translate-y-full" />
-                  
+
                   <div className="mb-8">
-                    <TerminalSubheading 
+                    <TerminalSubheading
                       text="Send us a message"
                       className="font-mono text-xl md:text-2xl font-bold text-primary uppercase"
                     />
                   </div>
-                  
+
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Full Name</label>
-                      <input className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-primary focus:outline-none focus:bg-primary/5 transition-all" placeholder="ENTER NAME_" required />
+                      <input className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-white focus:outline-none focus:bg-primary/5 transition-colors duration-500" placeholder="ENTER NAME_" required />
                     </div>
                     <div>
                       <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Email Address</label>
-                      <input type="email" className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-primary focus:outline-none focus:bg-primary/5 transition-all" placeholder="ENTER EMAIL_" required />
+                      <input type="email" className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-white focus:outline-none focus:bg-primary/5 transition-colors duration-500" placeholder="ENTER EMAIL_" required />
                     </div>
                     <div>
                       <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Message</label>
-                      <textarea rows={5} className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-primary focus:outline-none focus:bg-primary/5 transition-all resize-none" placeholder="ENTER MESSAGE_" required />
+                      <textarea rows={5} className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-white focus:outline-none focus:bg-primary/5 transition-colors duration-500 resize-none" placeholder="ENTER MESSAGE_" required />
                     </div>
                     <button type="submit" className="w-full font-mono font-bold uppercase tracking-widest text-sm inline-flex items-center justify-center gap-3 px-6 py-4 border border-primary text-primary hover:bg-primary hover:text-black transition-colors shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(139,92,246,0.6)]">
                       <Send size={16} /> {submitted ? "MESSAGE SENT" : "SEND MESSAGE"}
@@ -241,23 +241,29 @@ const Contact = () => {
                   </form>
                 </div>
 
-                <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-card/45 h-64 transition-all duration-200 hover:border-primary/25 hover:shadow-[0_20px_60px_rgba(255,83,48,0.12)] lg:hidden">
-                    <iframe
-                      src={mapEmbedSrc}
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0, filter: "invert(90%) hue-rotate(180deg)" }}
-                      loading="lazy"
-                      title="UEM Kolkata Location"
-                    />
+                <div className="group relative mt-8 overflow-hidden border-2 border-primary/30 bg-black/80 h-72 transition-all duration-300 hover:border-primary/80 shadow-[0_0_30px_rgba(139,92,246,0.15)] lg:hidden" style={{ clipPath: "polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)" }}>
+                  <div className="absolute inset-0 pointer-events-none bg-primary/10 animate-pulse z-10" />
+                  
+                  <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary z-20 m-2" />
+                  <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary z-20 m-2" />
+                  
+                  <iframe
+                    src={mapEmbedSrc}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) sepia(50%)" }}
+                    loading="lazy"
+                    title="UEM Kolkata Location"
+                    className="opacity-80 mix-blend-screen"
+                  />
                   <a
                     href={mapHref}
                     target="_blank"
                     rel="noreferrer"
                     aria-label="Open UEM Kolkata map"
-                    className="absolute right-3 top-3 rounded-full border border-primary/30 bg-background/80 px-3 py-1 text-[11px] font-semibold text-primary backdrop-blur-md transition-colors hover:bg-primary hover:text-white"
+                    className="absolute right-4 top-4 z-30 font-mono border border-primary/50 bg-black/80 px-4 py-1.5 text-xs font-bold text-primary backdrop-blur-md transition-all hover:bg-primary/20 shadow-[0_0_10px_rgba(139,92,246,0.3)] uppercase tracking-widest"
                   >
-                    Open Maps
+                    [ Get Directions ]
                   </a>
                 </div>
               </div>

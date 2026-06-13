@@ -52,7 +52,7 @@ interface CircularGalleryProps
    * Optional class name to override the default font (e.g., from Next/font).
    */
   fontClassName?: string;
-  
+
   onItemClick?: (item: GalleryItem, index: number) => void;
 }
 
@@ -588,11 +588,11 @@ class App {
   onTouchMove(e: MouseEvent | TouchEvent) {
     if (!this.isDown) return;
     const x = "touches" in e ? e.touches[0].clientX : e.clientX;
-    
+
     if (Math.abs(this.dragStartPos - x) > 5) {
       this.isDragging = true;
     }
-    
+
     const distance = (this.start - x) * (this.scrollSpeed * 0.025);
     this.scroll.target = (this.scroll as any).position + distance;
   }
@@ -600,7 +600,7 @@ class App {
   onTouchUp() {
     this.isDown = false;
     this.onCheck();
-    
+
     if (!this.isDragging && this.medias && this.medias.length > 0) {
       const width = this.medias[0].width;
       const itemIndex = Math.round(Math.abs(this.scroll.target) / width);

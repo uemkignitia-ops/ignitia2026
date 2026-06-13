@@ -134,7 +134,7 @@ const HolographicGrid = () => {
   return (
     <gridHelper
       ref={gridRef}
-      args={[30, 30, "#ff5500", "#1e1b4b"]}
+      args={[30, 30, "#facc15", "#1e1b4b"]}
       position={[0, -1.5, 0]}
     />
   );
@@ -149,7 +149,7 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
   return (
     <div className="absolute inset-0 w-full h-full z-10 pointer-events-auto">
       {/* Background neon glows */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.04)_0%,rgba(0,0,0,0)_70%)] pointer-events-none z-[1]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.04)_0%,rgba(0,0,0,0)_70%)] pointer-events-none z-[1]" />
 
       <Canvas
         shadows
@@ -172,7 +172,7 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
         <directionalLight
           position={[5, 5, 4]}
           intensity={2.5}
-          color="#ff7b00"
+          color="#a855f7"
           castShadow
           shadow-mapSize={[1024, 1024]}
         />
@@ -188,7 +188,7 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
         <pointLight position={[3, -1, 3]} intensity={1.5} color="#06b6d4" distance={8} />
 
         {/* Floating cyber particles */}
-        <Sparkles count={isMobile ? 15 : 40} scale={6} size={2.5} speed={0.4} color="#ff7b00" />
+        <Sparkles count={isMobile ? 15 : 40} scale={6} size={2.5} speed={0.4} color="#a855f7" />
         <Sparkles count={isMobile ? 10 : 30} scale={6} size={1.8} speed={0.6} color="#06b6d4" />
 
         <Suspense fallback={null}>
@@ -218,7 +218,7 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
         </Suspense>
       </Canvas>
 
-      <div className="absolute bottom-6 right-6 z-10 pointer-events-none opacity-40 bg-black/60 backdrop-blur-sm border border-orange-500/20 px-3 py-1.5 rounded-full text-[9px] text-orange-400 uppercase tracking-[0.2em] font-mono">
+      <div className="absolute bottom-6 right-6 z-10 pointer-events-none opacity-40 bg-black/60 backdrop-blur-sm border border-primary/20 px-3 py-1.5 rounded-full text-[9px] text-primary uppercase tracking-[0.2em] font-mono">
         Drag to Rotate Mascot
       </div>
     </div>

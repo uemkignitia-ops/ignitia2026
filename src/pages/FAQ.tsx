@@ -512,7 +512,7 @@ const FAQ = () => {
               {/* Cyber UI Details */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#ffd700]/50 to-transparent opacity-50" />
               <div className="absolute top-4 left-4 w-2 h-2 rounded-full bg-[#ffd700] animate-pulse" />
-              <div className="absolute bottom-4 right-4 text-[10px] text-[#9333ea]/60 font-mono">Status: Online</div>
+              <div className="absolute bottom-3 right-4 sm:bottom-4 sm:right-6 text-[10px] text-[#9333ea]/60 font-mono">Status: Online</div>
 
               <Terminal size={32} className="mx-auto text-[#ffd700] mb-4 opacity-80" />
 

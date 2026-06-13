@@ -247,7 +247,7 @@ const Gallery = () => {
                   {activeView === view && (
                     <motion.div
                       layoutId="gallery-view-toggle"
-                      className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-600 rounded-full shadow-[0_0_15px_rgba(249,115,22,0.4)] z-[-1]"
+                      className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full shadow-[0_0_15px_rgba(168,85,247,0.4)] z-[-1]"
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}

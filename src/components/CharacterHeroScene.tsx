@@ -24,7 +24,7 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
     scene.traverse((child) => {
       if (!(child as THREE.Mesh).isMesh) return;
       const mesh = child as THREE.Mesh;
-     
+
       // Enable shadow support
       mesh.castShadow = true;
       mesh.receiveShadow = true;
@@ -50,7 +50,7 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
   // Autoplay all embedded animations (idle states, breathing, stance, etc.)
   useEffect(() => {
     if (!actions || Object.keys(actions).length === 0) return;
-   
+
     // Play the first animation or all animations (fade them in together if needed)
     Object.values(actions).forEach((action) => {
       if (!action) return;
@@ -66,7 +66,7 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
     const time = state.clock.getElapsedTime();
     const progress = scrollProgressRef.current;
     const { width: viewportWidth } = state.viewport;
-   
+
     // Check if we are on a smaller screen (mobile)
     const isMobile = viewportWidth < 7;
 
@@ -101,7 +101,7 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
     group.current.position.x = THREE.MathUtils.lerp(group.current.position.x, targetX, 0.05);
     group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetRotY + targetMouseX, 0.05);
     group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetMouseY, 0.05);
-   
+
     const nextScale = THREE.MathUtils.lerp(group.current.scale.x, targetScale, 0.05);
     group.current.scale.setScalar(nextScale);
   });
@@ -123,7 +123,7 @@ export const CharacterHeroScene = ({ scrollProgressRef }: CharacterHeroSceneProp
     <div className="absolute inset-0 w-full h-full z-10 pointer-events-auto">
       {/* Visual background grid and glows inside the 3D scene box */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.04)_0%,rgba(0,0,0,0)_70%)] pointer-events-none z-[1]" />
-     
+
       <Canvas
         shadows
         gl={{
@@ -164,7 +164,7 @@ export const CharacterHeroScene = ({ scrollProgressRef }: CharacterHeroSceneProp
 
         <Suspense fallback={null}>
           <CharacterModel scrollProgressRef={scrollProgressRef} />
-         
+
           <OrbitControls
             enableZoom={false}
             enablePan={false}
@@ -186,7 +186,7 @@ export const CharacterHeroScene = ({ scrollProgressRef }: CharacterHeroSceneProp
           )}
         </Suspense>
       </Canvas>
-     
+
       {/* Interactive indicator overlay */}
       <div className="absolute bottom-6 right-6 z-10 pointer-events-none opacity-40 bg-black/50 backdrop-blur-sm border border-white/5 px-3 py-1.5 rounded-full text-[9px] text-white uppercase tracking-[0.2em]">
         Drag to Orbit Character

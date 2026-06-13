@@ -68,7 +68,7 @@ export const ThreeDCarousel = ({ sections, convenors, onOpenMemberCard, orbitCol
   }, [isHovered, count]);
 
   return (
-    <div 
+    <div
       className="relative w-full max-w-7xl mx-auto pt-24 pb-12 flex flex-col items-center justify-center overflow-x-clip select-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -84,12 +84,12 @@ export const ThreeDCarousel = ({ sections, convenors, onOpenMemberCard, orbitCol
 
       {/* Outer Viewport Container */}
       <div className="relative w-full h-[390px] sm:h-[430px] flex items-center justify-center">
-        
+
         {/* The Anchor Track Frame Container */}
-        <motion.div 
+        <motion.div
           className="absolute flex gap-4 sm:gap-6 items-center w-[260px] sm:w-[340px]"
-          animate={{ 
-            x: `calc(${activeIndex * -100}% - ${activeIndex * (isMobile ? 16 : 24)}px)` 
+          animate={{
+            x: `calc(${activeIndex * -100}% - ${activeIndex * (isMobile ? 16 : 24)}px)`
           }}
           transition={{ type: "spring", stiffness: 220, damping: 26 }}
         >
@@ -106,7 +106,7 @@ export const ThreeDCarousel = ({ sections, convenors, onOpenMemberCard, orbitCol
                   opacity: isSelected ? 1 : 0.3,
                 }}
                 style={{
-                  background: isSelected 
+                  background: isSelected
                     ? `linear-gradient(180deg, rgba(10,10,15,0.8) 0%, rgba(5,5,8,0.95) 100%)`
                     : `#030303`,
                   pointerEvents: isSelected ? "auto" : "none",
@@ -115,7 +115,7 @@ export const ThreeDCarousel = ({ sections, convenors, onOpenMemberCard, orbitCol
                 }}
               >
                 {/* Holographic grid background removed per request */}
-                
+
                 {/* Corner accents */}
                 <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2" style={{ borderColor: `hsl(${hslColor})` }} />
                 <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2" style={{ borderColor: `hsl(${hslColor})` }} />
@@ -123,9 +123,9 @@ export const ThreeDCarousel = ({ sections, convenors, onOpenMemberCard, orbitCol
                 <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2" style={{ borderColor: `hsl(${hslColor})` }} />
 
                 {/* Colored Top Glow Strip */}
-                <div 
+                <div
                   className="h-1 w-2/3 mx-auto relative overflow-hidden"
-                  style={{ 
+                  style={{
                     background: `hsl(${hslColor} / 0.2)`
                   }}
                 >
@@ -152,10 +152,10 @@ export const ThreeDCarousel = ({ sections, convenors, onOpenMemberCard, orbitCol
                         >
                           <div className="absolute inset-y-0 left-0 w-1 scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-bottom" style={{ background: `hsl(${hslColor})` }} />
                           <div className="flex items-center gap-3 min-w-0 pl-2 relative z-10">
-                            <div 
+                            <div
                               className="w-8 h-8 flex items-center justify-center font-mono text-xs font-bold text-white shrink-0 shadow-[0_0_10px_rgba(255,255,255,0.1)]"
-                              style={{ 
-                                background: `rgba(0,0,0,0.5)`, 
+                              style={{
+                                background: `rgba(0,0,0,0.5)`,
                                 border: `1px solid hsl(${hslColor} / 0.4)`,
                                 clipPath: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)"
                               }}

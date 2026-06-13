@@ -8,6 +8,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import LoadingScreen from "./components/LoadingScreen";
 import ScrollControls from "./components/ScrollControls";
 import RouteLoader from "./components/RouteLoader";
+import CursorTrail from "./components/CursorTrail";
 
 const Index = lazy(() => import("./pages/Index"));
 const About = lazy(() => import("./pages/About"));
@@ -53,6 +54,7 @@ const App = () => (
       <LoadingScreen />
       <BrowserRouter>
         <ScrollControls />
+        <CursorTrail />
         <AnimatedRoutes />
       </BrowserRouter>
     </TooltipProvider>

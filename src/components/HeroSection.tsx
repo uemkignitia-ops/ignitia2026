@@ -302,8 +302,8 @@ const HeroSection = () => {
 
               {/* Date + venue as inline terminal data */}
               <div className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-white/40">
-                <span><span className="text-secondary/70">DATE</span> :: 01–02.AUG.2026</span>
-                <span><span className="text-neon-cyan/70">LOC</span> :: UEM Kolkata, WB</span>
+                <span><span className="text-secondary/70">DATE</span>: 01–02.AUG.2026</span>
+                <span><span className="text-neon-cyan/70">LOC</span>: UEM Kolkata, WB</span>
               </div>
 
               {/* CTAs — left-aligned, not centred */}

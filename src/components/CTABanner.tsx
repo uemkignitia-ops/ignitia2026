@@ -4,10 +4,16 @@ import NeonFlicker from "./NeonFlicker";
 import { Link } from "react-router-dom";
 
 const CTABanner = () => (
-  <section id="register" className="relative py-32 overflow-hidden bg-[#050406]">
+  <section id="register" className="relative py-32 overflow-hidden bg-transparent">
     {/* Full-width gradient mesh background */}
-    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-[#050406] to-secondary/10" />
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.15),transparent_60%)]" />
+    <div 
+      className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10" 
+      style={{ maskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)" }}
+    />
+    <div 
+      className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.15),transparent_60%)]" 
+      style={{ maskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)" }}
+    />
 
     {/* Floating Particles/Stars */}
     <div className="absolute inset-0 opacity-40">
@@ -85,17 +91,17 @@ const CTABanner = () => (
         >
           <Link
             to="/events"
-            className="hero-primary-button pulse-cta w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-lg"
+            className="hero-primary-button pulse-cta w-full sm:w-auto flex items-center justify-center gap-2 sm:gap-3 px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg"
           >
             Register Now
-            <ArrowRight size={20} />
+            <ArrowRight className="w-5 h-5" />
           </Link>
           <Link
             to="/events"
-            className="hero-secondary-button glow-button-secondary w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-lg"
+            className="hero-secondary-button glow-button-secondary w-full sm:w-auto flex items-center justify-center gap-2 sm:gap-3 px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg"
           >
             Explore Events
-            <ArrowRight size={20} />
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>
       </motion.div>

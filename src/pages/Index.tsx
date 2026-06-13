@@ -196,8 +196,8 @@ const Index = () => {
                   </p>
 
                   <div className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-white/40">
-                    <span><span className="text-secondary/70">DATE</span> :: 01–02.AUG.2026</span>
-                    <span><span className="text-neon-cyan/70">LOC</span> :: UEM Kolkata, WB</span>
+                    <span><span className="text-secondary/70">DATE</span>: 01–02.AUG.2026</span>
+                    <span><span className="text-neon-cyan/70">LOC</span>: UEM Kolkata, WB</span>
                   </div>
 
                   <div className="flex flex-wrap gap-4 pt-2">
@@ -319,33 +319,41 @@ const Index = () => {
               </div>
             </div>
 
+            {/* Gradient fade to seamlessly blend into next section */}
+            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-30" />
           </section>
 
           {/* Below sections flow up naturally following pin completion */}
           <div className="relative bg-transparent z-20">
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
             <CTABanner />
 
             {/* Event Map Location Embed */}
             <section className="section-padding py-16">
               <div className="container mx-auto max-w-5xl px-4">
-                <div className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] h-72 transition-all duration-300 hover:border-primary/30">
+                <div className="group relative overflow-hidden border-2 border-primary/30 bg-black/80 h-72 transition-all duration-300 hover:border-primary/80 shadow-[0_0_30px_rgba(139,92,246,0.15)]" style={{ clipPath: "polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)" }}>
+                  <div className="absolute inset-0 pointer-events-none bg-primary/10 animate-pulse z-10" />
+
+                  <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary z-20 m-2" />
+                  <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary z-20 m-2" />
+
                   <iframe
                     src={mapEmbedSrc}
                     width="100%"
                     height="100%"
-                    style={{ border: 0, filter: "invert(90%) hue-rotate(180deg)" }}
+                    style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) sepia(50%)" }}
                     loading="lazy"
                     title="UEM Kolkata Location"
+                    className="opacity-80 mix-blend-screen"
                   />
                   <a
                     href={mapHref}
                     target="_blank"
                     rel="noreferrer"
-                    className="absolute right-3 top-3 rounded-full border border-white/10 bg-black/60 px-4 py-1 text-xs font-semibold text-white backdrop-blur-md transition-colors hover:bg-primary"
+                    aria-label="Open UEM Kolkata map"
+                    className="absolute right-4 top-4 z-30 font-mono border border-primary/50 bg-black/80 px-4 py-1.5 text-xs font-bold text-primary backdrop-blur-md transition-all hover:bg-primary/20 shadow-[0_0_10px_rgba(139,92,246,0.3)] uppercase tracking-widest"
                   >
-                    Open Maps
+                    [ Get Directions ]
                   </a>
                 </div>
               </div>

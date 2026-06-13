@@ -141,10 +141,10 @@ export const PhotoGallery = ({
 
   return (
     <div className="relative w-full h-full flex flex-col justify-center items-center overflow-hidden">
-      
+
       <div className="mt-8 flex-shrink-0">
         <h3 className="z-20 mx-auto max-w-2xl justify-center font-heading bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text py-3 text-center text-4xl text-transparent dark:bg-gradient-to-r dark:from-white dark:via-slate-200 dark:to-white dark:bg-clip-text md:text-5xl font-bold">
-          Explore The <span className="text-orange-500"> Memories</span>
+          Explore The <span className="text-primary"> Memories</span>
         </h3>
         <p className="lg:text-md my-2 text-center text-xs font-light uppercase tracking-widest text-slate-600 dark:text-slate-400 font-mono">
           A Journey Through Visual Stories
@@ -164,7 +164,7 @@ export const PhotoGallery = ({
             initial="hidden"
             animate={isLoaded ? "visible" : "hidden"}
           >
-            <div 
+            <div
               className="relative transition-all duration-300"
               style={{ height: photoHeight, width: photoWidth }}
             >
@@ -194,11 +194,11 @@ export const PhotoGallery = ({
           </motion.div>
         </motion.div>
       </div>
-      
+
       <div className="flex w-full justify-center pb-8 mt-4 flex-shrink-0">
-        <Button 
-          variant="outline" 
-          className="border-orange-500/30 text-orange-500 hover:bg-orange-500/10 hover:text-orange-400"
+        <Button
+          variant="outline"
+          className="border-primary/30 text-primary hover:bg-primary/10 hover:text-primary"
           onClick={() => onCategorySelect?.("All Stories")}
         >
           View All Stories

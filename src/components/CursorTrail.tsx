@@ -22,7 +22,7 @@ const CursorTrail = () => {
     let cursorY = window.innerHeight / 2;
 
     // Track whether cursor has ever entered the window
-    let hasEntered = false;
+    let hasEntered = true;
 
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;

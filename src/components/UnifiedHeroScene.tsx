@@ -170,7 +170,7 @@ const MascotModel = ({ visible, scrollProgressRef }: MascotModelProps) => {
     group.current.position.x = THREE.MathUtils.lerp(group.current.position.x, targetX, 0.05);
     group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetRotY + targetMouseX, 0.05);
     group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetMouseY, 0.05);
-    
+
     const nextScale = THREE.MathUtils.lerp(group.current.scale.x, targetScale, 0.05);
     group.current.scale.setScalar(nextScale);
   });
@@ -203,7 +203,7 @@ const CameraController = ({ scrollProgressRef, controlsRef }: CameraControllerPr
       // --- VADER SCENE PHASE ---
       // Map progress [0, 0.45] -> t [0, 1]
       const t = progress / 0.45;
-      
+
       const pStart = new THREE.Vector3(6.0, 5.0, 14.0);
       const tStart = new THREE.Vector3(0.0, -0.4, 0.0);
 
@@ -257,7 +257,7 @@ const CameraController = ({ scrollProgressRef, controlsRef }: CameraControllerPr
 
       // Pull back quickly in the first 20% of the mascot phase
       const tPull = Math.min(1, t * 5);
-      
+
       targetCamPos.lerpVectors(pEnd, pMascotCam, tPull);
       targetCamTarget.lerpVectors(tEnd, tMascotCam, tPull);
     }
@@ -280,7 +280,7 @@ interface UnifiedHeroSceneProps {
 
 export const UnifiedHeroScene = ({ scrollProgressRef }: UnifiedHeroSceneProps) => {
   const controlsRef = useRef<any>(null);
-  
+
   // Track visibility reactively at render-time for direct DOM updates
   const progressVal = scrollProgressRef.current;
   const showVader = progressVal < 0.45;
@@ -335,7 +335,7 @@ export const UnifiedHeroScene = ({ scrollProgressRef }: UnifiedHeroSceneProps) =
           {/* Render both models, visibility is driven inside useFrame and state */}
           <VaderModel visible={showVader} />
           <MascotModel visible={showMascot} scrollProgressRef={scrollProgressRef} />
-          
+
           <CameraController scrollProgressRef={scrollProgressRef} controlsRef={controlsRef} />
 
           <OrbitControls
