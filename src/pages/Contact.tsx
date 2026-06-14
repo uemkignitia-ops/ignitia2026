@@ -136,10 +136,10 @@ const Contact = () => {
                       <div>
                         <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Email Address</div>
                         <a
-                          href="mailto:ignitia@uem.edu.in"
+                          href="mailto:uemk.ignitia@gmail.com"
                           className="text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white"
                         >
-                          ignitia@uem.edu.in
+                          uemk.ignitia@gmail.com
                         </a>
                       </div>
                     </div>
@@ -152,13 +152,28 @@ const Contact = () => {
                       <div className="w-12 h-12 bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110 shadow-[0_0_15px_rgba(139,92,246,0.2)]">
                         <Phone size={18} className="text-primary" />
                       </div>
-                      <div>
-                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Phone Number</div>
+                      <div className="flex flex-col gap-3">
+                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Contact</div>
                         <a
-                          href="tel:+919876543210"
-                          className="text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white"
+                          href="tel:+917439115647"
+                          className="text-xs md:text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white flex flex-col sm:flex-row sm:items-baseline sm:gap-3"
                         >
-                          +91 98765 43210
+                          <span className="text-white/80 min-w-[160px]">Snehashish Das:</span>
+                          <span className="whitespace-nowrap">+91 74391 15647</span>
+                        </a>
+                        <a
+                          href="tel:+917439223022"
+                          className="text-xs md:text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white flex flex-col sm:flex-row sm:items-baseline sm:gap-3"
+                        >
+                          <span className="text-white/80 min-w-[160px]">Priyanshu Mitra:</span>
+                          <span className="whitespace-nowrap">+91 74392 23022</span>
+                        </a>
+                        <a
+                          href="tel:+918274090864"
+                          className="text-xs md:text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white flex flex-col sm:flex-row sm:items-baseline sm:gap-3"
+                        >
+                          <span className="text-white/80 min-w-[160px]">Aranya Rath:</span>
+                          <span className="whitespace-nowrap">+91 82740 90864</span>
                         </a>
                       </div>
                     </div>
@@ -243,10 +258,10 @@ const Contact = () => {
 
                 <div className="group relative mt-8 overflow-hidden border-2 border-primary/30 bg-black/80 h-72 transition-all duration-300 hover:border-primary/80 shadow-[0_0_30px_rgba(139,92,246,0.15)] lg:hidden" style={{ clipPath: "polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)" }}>
                   <div className="absolute inset-0 pointer-events-none bg-primary/10 animate-pulse z-10" />
-                  
+
                   <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary z-20 m-2" />
                   <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary z-20 m-2" />
-                  
+
                   <iframe
                     src={mapEmbedSrc}
                     width="100%"

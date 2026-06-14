@@ -40,7 +40,7 @@ const Footer = () => (
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.7fr_0.7fr_1fr_0.8fr]"
+        className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.7fr_0.7fr_1.2fr_0.8fr] lg:gap-x-10 xl:gap-x-14"
       >
         <motion.div variants={fadeUp} className="space-y-5">
           <Link to="/" className="inline-flex items-center gap-3">
@@ -137,24 +137,36 @@ const Footer = () => (
           <div className="flex flex-col gap-3">
             <motion.a
               whileHover={{ x: 4 }}
-              href="mailto:ignitia@uem.edu.in"
+              href="mailto:uemk.ignitia@gmail.com"
               className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-card/60 text-primary">
                 <Mail size={14} />
               </span>
-              <span>ignitia@uem.edu.in</span>
+              <span>uemk.ignitia@gmail.com</span>
             </motion.a>
-            <motion.a
+            <motion.div
               whileHover={{ x: 4 }}
-              href="tel:+919876543210"
-              className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="flex items-start gap-3"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-card/60 text-primary">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-card/60 text-primary shrink-0">
                 <Phone size={14} />
               </span>
-              <span>+91 98765 43210</span>
-            </motion.a>
+              <div className="flex flex-col gap-2.5 pt-1.5">
+                <a href="tel:+917439115647" className="text-xs sm:text-sm text-muted-foreground transition-colors hover:text-foreground flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
+                  <span className="text-white/80 min-w-[120px]">Snehashish Das:</span>
+                  <span className="whitespace-nowrap">+91 74391 15647</span>
+                </a>
+                <a href="tel:+917439223022" className="text-xs sm:text-sm text-muted-foreground transition-colors hover:text-foreground flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
+                  <span className="text-white/80 min-w-[120px]">Priyanshu Mitra:</span>
+                  <span className="whitespace-nowrap">+91 74392 23022</span>
+                </a>
+                <a href="tel:+918274090864" className="text-xs sm:text-sm text-muted-foreground transition-colors hover:text-foreground flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
+                  <span className="text-white/80 min-w-[120px]">Aranya Rath:</span>
+                  <span className="whitespace-nowrap">+91 82740 90864</span>
+                </a>
+              </div>
+            </motion.div>
             <motion.div
               whileHover={{ x: 4 }}
               className="flex items-start gap-3 text-sm text-muted-foreground"
