@@ -45,6 +45,18 @@ const Index = () => {
     };
   }, []);
 
+  // Load Devfolio SDK
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://apply.devfolio.co/v2/sdk.js';
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    }
+  }, []);
+
   // Typewriter effect for Hero tagline
   useEffect(() => {
     if (!isLoaded) return;
@@ -206,13 +218,12 @@ const Index = () => {
                       Register Now
                       <ArrowRight size={16} />
                     </Link>
-                    <a
-                      href="#"
-                      className="devfolio-apply-button flex items-center gap-2.5 text-sm transition-all duration-200 hover:-translate-y-[2px] active:scale-[0.98]"
-                    >
-                      <img src="/devfolio.png" alt="Devfolio" className="w-5 h-5 object-contain" />
-                      Apply with Devfolio
-                    </a>
+                    <div 
+                      className="apply-button" 
+                      data-hackathon-slug="ignisys-1" 
+                      data-button-theme="light"
+                      style={{ height: "44px", width: "312px" }}
+                    ></div>
                     <Link to="/events" className="hero-secondary-button glow-button-secondary flex items-center gap-3 text-sm">
                       Explore Events
                       <ArrowRight size={16} />
