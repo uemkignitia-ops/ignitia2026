@@ -87,13 +87,14 @@ const Index = () => {
         y: -50,
         duration: 0.6,
         ease: "power2.inOut",
+        pointerEvents: "none"
       });
 
       // 2. Fade in the About Fest details panel
       tl.fromTo(
         "#showcase-overlay-about",
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+        { opacity: 0, y: 50, pointerEvents: "none" },
+        { opacity: 1, y: 0, pointerEvents: "auto", duration: 0.8, ease: "power2.out" }
       );
     }, indexRef);
 
@@ -205,6 +206,13 @@ const Index = () => {
                       Register Now
                       <ArrowRight size={16} />
                     </Link>
+                    <a
+                      href="#"
+                      className="devfolio-apply-button flex items-center gap-2.5 text-sm transition-all duration-200 hover:-translate-y-[2px] active:scale-[0.98]"
+                    >
+                      <img src="/devfolio.png" alt="Devfolio" className="w-5 h-5 object-contain" />
+                      Apply with Devfolio
+                    </a>
                     <Link to="/events" className="hero-secondary-button glow-button-secondary flex items-center gap-3 text-sm">
                       Explore Events
                       <ArrowRight size={16} />
@@ -256,7 +264,7 @@ const Index = () => {
                 <circle cx="72%" cy="75%" r="3" fill="rgba(197,160,89,0.25)" />
               </svg>
 
-              <div className="container mx-auto px-8 md:px-16 lg:px-20 pointer-events-auto">
+              <div className="container mx-auto px-8 md:px-16 lg:px-20">
                 <div className="max-w-xl space-y-5 border border-white/10 bg-black/70 backdrop-blur-md p-6 md:p-8 relative"
                   style={{ clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))" }}
                 >
