@@ -12,6 +12,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import { Cpu, Globe, Lightbulb, Sparkles, Users, Facebook, Instagram, Linkedin, Github, ArrowRight } from "lucide-react";
 import { TerminalSubheading } from "@/components/TerminalSubheading";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,6 +21,20 @@ const clubs = [
   { name: "Microsoft Student Society UEMK", role: "Hosting Partner", icon: Globe },
   { name: "Department of CSE (IOT,CS,BT)", role: "Knowledge Partner", icon: Lightbulb },
 ];
+
+const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    stroke="none"
+  >
+    <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z" />
+  </svg>
+);
 
 const About = () => {
   const isMobile = useIsMobile();
@@ -65,14 +80,15 @@ const About = () => {
 
       // Phase 2: Vision content fades in
       tl.fromTo("#about-vision-content",
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+        { opacity: 0, y: 40, pointerEvents: "none" },
+        { opacity: 1, y: 0, pointerEvents: "auto", duration: 0.8, ease: "power2.out" }
       );
 
       // Keep it visible for a scrub duration, then fade out
       tl.to("#about-vision-content", {
         opacity: 0,
         y: -40,
+        pointerEvents: "none",
         duration: 0.6,
         delay: 0.6,
         ease: "power2.inOut",
@@ -80,8 +96,8 @@ const About = () => {
 
       // Phase 3: Stats telemetry fades in
       tl.fromTo("#about-stats-content",
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+        { opacity: 0, y: 40, pointerEvents: "none" },
+        { opacity: 1, y: 0, pointerEvents: "auto", duration: 0.8, ease: "power2.out" }
       );
 
     }, containerRef);
@@ -196,7 +212,7 @@ const About = () => {
             className="absolute inset-0 flex items-center justify-start pointer-events-none z-20 opacity-0"
           >
             <div className="container mx-auto px-6 md:px-16 lg:px-20">
-              <div className="max-w-xl border border-white/10 bg-black/80 backdrop-blur-md p-6 md:p-8 relative pointer-events-auto"
+              <div className="max-w-xl border border-white/10 bg-black/80 backdrop-blur-md p-6 md:p-8 relative"
                 style={{ clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))" }}
               >
                 <div className="absolute top-0 right-0 w-5 h-5 bg-primary/40" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }} />
@@ -230,20 +246,22 @@ const About = () => {
                 {/* Social links */}
                 <div className="flex gap-4 mt-6">
                   {[
-                    { icon: Facebook, href: "https://www.facebook.com" },
-                    { icon: Instagram, href: "https://www.instagram.com" },
-                    { icon: Linkedin, href: "https://www.linkedin.com" },
-                    { icon: Github, href: "https://www.github.com" },
+                    { icon: DiscordIcon, href: "https://discord.gg/shUKTMPMTj" },
+                    { icon: Instagram, href: "https://www.instagram.com/ignitia2k26" },
+                    { icon: Facebook, href: "https://www.facebook.com/people/Ignitia/61573281091277/" },
+                    { icon: Linkedin, href: "https://www.linkedin.com/company/ignitia2k26" },
                   ].map((soc, i) => (
-                    <a
+                    <motion.a
                       key={i}
                       href={soc.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-8 h-8 border border-white/10 bg-black/40 rounded-lg flex items-center justify-center hover:text-primary hover:border-primary/50 transition-colors"
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="relative z-50 pointer-events-auto flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-card/60 text-muted-foreground transition-colors hover:text-white hover:border-white/20"
                     >
-                      <soc.icon size={14} />
-                    </a>
+                      <soc.icon size={18} />
+                    </motion.a>
                   ))}
                 </div>
               </div>
@@ -264,7 +282,7 @@ const About = () => {
             </svg>
 
             <div className="container mx-auto px-6 md:px-16 lg:px-20">
-              <div className="max-w-xl border border-white/10 bg-black/85 backdrop-blur-md p-6 md:p-8 relative pointer-events-auto"
+              <div className="max-w-xl border border-white/10 bg-black/85 backdrop-blur-md p-6 md:p-8 relative"
                 style={{ clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))" }}
               >
                 <div className="absolute top-0 right-0 w-5 h-5 bg-cyan-500/40" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }} />
