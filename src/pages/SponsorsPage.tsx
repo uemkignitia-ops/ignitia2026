@@ -73,6 +73,7 @@ const sponsorCategories = [
           "Community engagement booth",
         ],
         sponsors: [
+          { name: "Devfolio", alt: "DEVFOLIO LOGO", logo: "/sponsors/Devfolio_Logo-Colored.png" },
           { name: "Unstop", logo: "/sponsors/unstop.png" },
           { name: "Hack2skills", logo: "/sponsors/hack2skill.jpeg" },
           { name: "Go Daddy", logo: "/sponsors/GoDaddy.jpg" },
@@ -192,7 +193,7 @@ const SponsorCard = ({
       >
         <img
           src={sponsor.logo}
-          alt={sponsor.name}
+          alt={(sponsor as any).alt || sponsor.name}
           className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
         />
       </div>
@@ -332,7 +333,7 @@ const SponsorsPage = () => {
               >
                 <img
                   src={s.logo}
-                  alt={s.name}
+                  alt={(s as any).alt || s.name}
                   className="h-4 sm:h-5 w-auto object-contain rounded opacity-80 shrink-0"
                 />
                 <span className="truncate">{s.name}</span>

@@ -16,7 +16,7 @@ const FlipDigit = ({ value, label }: { value: number; label: string }) => {
 
   return (
     <div className="countdown-unit flex flex-col items-center gap-1 md:gap-2.5">
-      <div className="countdown-panel glass-card neon-glow-blue px-2 py-2 md:px-3 md:py-3 min-w-[54px] md:min-w-[74px] text-center relative overflow-hidden">
+      <div className="countdown-panel bg-primary/10 border border-primary/30 px-2 py-2 md:px-3 md:py-3 min-w-[54px] md:min-w-[74px] text-center relative overflow-hidden transition-all duration-300">
         <div className="absolute inset-x-2 top-1.5 h-1 rounded-full bg-gradient-to-r from-primary/60 via-white/70 to-secondary/60 opacity-65 blur-lg" />
         <AnimatePresence mode="popLayout">
           <motion.span
@@ -30,7 +30,7 @@ const FlipDigit = ({ value, label }: { value: number; label: string }) => {
             {str}
           </motion.span>
         </AnimatePresence>
-        <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.45),_transparent_45%),radial-gradient(circle_at_bottom,_rgba(168,85,247,0.18),_transparent_40%)]" />
+        <div className="absolute inset-0 pointer-events-none opacity-[0.05] bg-[linear-gradient(rgba(139,92,246,1)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,1)_1px,transparent_1px)] bg-[size:5px_5px]" />
       </div>
       <p className="text-[8px] md:text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
         {label}
@@ -62,8 +62,11 @@ const CountdownTimer = ({ embedded = false }: { embedded?: boolean }) => {
   }, []);
 
   const content = (
-    <div className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_46%),radial-gradient(circle_at_bottom,_rgba(168,85,247,0.12),_transparent_38%)] px-2.5 py-4 md:px-5 md:py-6 shadow-[0_0_90px_rgba(168,85,247,0.14)]">
-      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-white/60 to-secondary opacity-50 blur-2xl" />
+    <div className="relative overflow-hidden border border-primary/30 bg-black/80 px-2.5 py-4 md:px-5 md:py-6 shadow-[0_0_30px_rgba(139,92,246,0.15)] group" style={{ clipPath: "polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)" }}>
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(139,92,246,1)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,1)_1px,transparent_1px)] bg-[size:10px_10px]" />
+      <div className="absolute left-0 top-0 w-1 h-full bg-primary/40 group-hover:bg-primary transition-colors" />
+      <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary z-20 m-2" />
+      <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary z-20 m-2" />
       <motion.p
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}

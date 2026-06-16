@@ -225,7 +225,7 @@ const Gallery = () => {
 
             <div className="w-full flex justify-center px-4 mb-12 relative z-10">
               <TerminalSubheading
-                text="Moments from previous editions of IGNITIA"
+                text="Highlighted moments from IGNITIA"
                 className="text-muted-foreground text-sm font-medium text-center max-w-xl"
               />
             </div>

@@ -116,7 +116,7 @@ const Contact = () => {
 
             <div className="mt-10 mb-6 flex justify-center w-full px-4 relative z-10">
               <TerminalSubheading
-                text="We're here to help — for general enquiries, partnerships, or media requests, drop us a message."
+                text="We're here to help - for general enquiries, partnerships, or media requests, drop us a message."
                 className="text-muted-foreground text-base md:text-lg font-medium text-center max-w-2xl"
               />
             </div>
@@ -240,19 +240,21 @@ const Contact = () => {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Full Name</label>
-                      <input className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-white focus:outline-none focus:bg-primary/5 transition-colors duration-500" placeholder="ENTER NAME_" required />
+                      <input className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-white focus:outline-none focus:bg-primary/5 transition-colors duration-500" placeholder="ENTER NAME" required />
                     </div>
                     <div>
                       <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Email Address</label>
-                      <input type="email" className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-white focus:outline-none focus:bg-primary/5 transition-colors duration-500" placeholder="ENTER EMAIL_" required />
+                      <input type="email" className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-white focus:outline-none focus:bg-primary/5 transition-colors duration-500" placeholder="ENTER EMAIL" required />
                     </div>
                     <div>
                       <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Message</label>
-                      <textarea rows={5} className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-white focus:outline-none focus:bg-primary/5 transition-colors duration-500 resize-none" placeholder="ENTER MESSAGE_" required />
+                      <textarea rows={5} className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-white focus:outline-none focus:bg-primary/5 transition-colors duration-500 resize-none" placeholder="ENTER MESSAGE" required />
                     </div>
-                    <button type="submit" className="w-full font-mono font-bold uppercase tracking-widest text-sm inline-flex items-center justify-center gap-3 px-6 py-4 border border-primary text-primary hover:bg-primary hover:text-black transition-colors shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(139,92,246,0.6)]">
-                      <Send size={16} /> {submitted ? "MESSAGE SENT" : "SEND MESSAGE"}
-                    </button>
+                    <div className="pt-8">
+                      <button type="submit" className="w-full font-mono font-bold uppercase tracking-widest text-sm inline-flex items-center justify-center gap-3 px-6 py-4 border border-primary text-primary hover:bg-primary hover:text-black transition-colors shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(139,92,246,0.6)]">
+                        <Send size={16} /> {submitted ? "MESSAGE SENT" : "SEND MESSAGE"}
+                      </button>
+                    </div>
                   </form>
                 </div>
 

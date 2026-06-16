@@ -185,7 +185,7 @@ const About = () => {
 
             <p className="text-muted-foreground text-sm max-w-xl mx-auto font-medium leading-relaxed mt-10">
               The flagship multi-domain event organized by the IEM-UEM group
-              at UEM Kolkata — where innovation, creativity, and
+              at UEM Kolkata - where innovation, creativity, and
               competition converge.
             </p>
           </div>

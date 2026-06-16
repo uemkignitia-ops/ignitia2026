@@ -26,6 +26,7 @@ const navLinks = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(() => !!(window as any).__IGNITIA_LOADER_DONE__);
   const [isScrolled, setIsScrolled] = useState(false);
   const [logoPulseKey, setLogoPulseKey] = useState(0);
   const lastYRef = useRef(0);
@@ -128,11 +129,15 @@ const Navbar = () => {
   }, [isOpen, isMobile]);
 
   useEffect(() => {
-    const onLoaderComplete = () => setLogoPulseKey((k) => k + 1);
+    if (isLoaded) return;
+    const onLoaderComplete = () => {
+      setLogoPulseKey((k) => k + 1);
+      setIsLoaded(true);
+    };
     window.addEventListener("ignitia:loader-complete", onLoaderComplete);
     return () =>
       window.removeEventListener("ignitia:loader-complete", onLoaderComplete);
-  }, []);
+  }, [isLoaded]);
 
   const leftLinks = navLinks.slice(0, 5);
   const rightLinks = navLinks.slice(5);
@@ -141,20 +146,25 @@ const Navbar = () => {
     <>
       {/* Desktop Home Page Corner Logos */}
       {isHome && (
-        <>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isLoaded ? 1 : 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="pointer-events-none"
+        >
           <div className="hidden md:flex fixed top-6 left-10 md:top-[2.75rem] md:left-[4.5rem] z-[150] pointer-events-auto">
             <img src="/iem-logo.png" alt="IEM Logo" className="h-24 md:h-[8rem] w-auto object-contain drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]" />
           </div>
           <div className="hidden md:flex fixed top-6 right-10 md:top-[2.75rem] md:right-[4.5rem] z-[150] pointer-events-auto">
             <img src="/uem-logo.png" alt="UEM Logo" className="h-24 md:h-[8rem] w-auto object-contain drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]" />
           </div>
-        </>
+        </motion.div>
       )}
 
       <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: hidden ? -100 : 16 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: hidden || !isLoaded ? -100 : 16, opacity: isLoaded ? 1 : 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
         className={cn(
           "fixed top-0 left-0 right-0 mx-auto z-[110] w-[95%] max-w-7xl border border-white/10 bg-[#050406]/75 backdrop-blur-xl rounded-full shadow-[0_12px_32px_rgba(0,0,0,0.5)] transition-[width,background-color,border-color,box-shadow] duration-300",
           isScrolled
@@ -288,7 +298,7 @@ const Navbar = () => {
 
           {/* Static Character GIF sticking out on the right side */}
           {location.pathname !== "/faq" && (
-            <motion.div 
+            <motion.div
               animate={{ opacity: hidden ? 0 : 1, y: hidden ? -20 : 0 }}
               transition={{ duration: 0.2 }}
               className="hidden md:block absolute top-[-5px] md:top-[0px] right-[-5px] md:right-0 pointer-events-none z-10"
@@ -363,12 +373,12 @@ const Navbar = () => {
                 ))}
               </div>
 
-              <div className="flex-1" />
+              <div className="flex-1 min-h-[24px]" />
 
               <Link
                 to="/events"
                 onClick={() => setIsOpen(false)}
-                className="glow-button text-center text-sm !px-6 !py-3 w-full inline-flex items-center justify-center gap-2 mb-8"
+                className="glow-button text-center text-sm !px-6 !py-3 w-full inline-flex items-center justify-center gap-2 mb-8 mt-4 shrink-0"
               >
                 Register Now
                 <ArrowRight size={14} />

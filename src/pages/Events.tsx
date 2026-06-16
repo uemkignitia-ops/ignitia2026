@@ -131,14 +131,14 @@ export type EventType = {
 
 const events: EventType[] = [
   {
-    id: "ignysis",
+    id: "ignisys",
     icon: Zap,
     title: "IGNISYS",
     category: "TECHNICAL",
     prize: "TBD",
     teamSize: "1-4",
     duration: "Hybrid",
-    day: "1st & 2nd",
+    day: "001 & 002",
     entryFee: "Free",
     theme: "orange",
     rulebookUrl: "https://drive.google.com/file/d/1x0szLJB-k8JGOt1MozE0S5vgDmxHTci2/preview",
@@ -172,7 +172,7 @@ const events: EventType[] = [
     teamSize: "Solo",
     teamSizeLabel: "FORMAT",
     duration: "Online",
-    day: "July 28 - August 01",
+    day: "001 & 002",
     entryFee: "₹70 / person",
     theme: "purple",
     rulebookUrl: "https://drive.google.com/file/d/1R8xPidpPx2p1QltAYp4CHPAa5jWi2mys/preview",
@@ -200,7 +200,7 @@ const events: EventType[] = [
     teamSize: "2 - 4",
     teamSizeLabel: "FORMAT",
     duration: "Hybrid",
-    day: "July 29 - August 02",
+    day: "001 & 002",
     entryFee: "₹200 / team",
     theme: "pink",
     rulebookUrl: "https://drive.google.com/file/d/1lLt8tuXtGmcSJPXT94Mpcs_o9Rxtt3SM/preview",
@@ -228,7 +228,7 @@ const events: EventType[] = [
     teamSize: "Solo",
     teamSizeLabel: "SOLO",
     duration: "Offline",
-    day: "02",
+    day: "002",
     entryFee: "TBD",
     theme: "teal",
     rulebookUrl: "https://drive.google.com/file/d/19BRSzJ3Rxb9QDE9D9jui0kho0kjiF1z9/preview",
@@ -256,7 +256,7 @@ const events: EventType[] = [
     teamSize: "Solo",
     teamSizeLabel: "FORMAT",
     duration: "Offline (15-20 mins)",
-    day: "02",
+    day: "002",
     entryFee: "TBD",
     theme: "yellow",
     rulebookUrl: "https://drive.google.com/file/d/187w12QZWolU72Lj1Uh8OWfvteZfv65R2/preview",
@@ -283,7 +283,7 @@ const events: EventType[] = [
     teamSize: "1 - 2",
     teamSizeLabel: "TEAM / SOLO",
     duration: "Offline",
-    day: "01",
+    day: "001",
     entryFee: "₹50 / person",
     theme: "blue",
     rulebookUrl: "https://drive.google.com/file/d/1-h3tIhTGEJRQPEHFksjzG500BSpr6wab/preview",
@@ -312,7 +312,7 @@ const events: EventType[] = [
     teamSize: "Solo",
     teamSizeLabel: "FORMAT",
     duration: "Offline (50 mins - 1.5 hrs)",
-    day: "02",
+    day: "002",
     entryFee: "TBD",
     theme: "pink",
     rulebookUrl: "https://drive.google.com/file/d/1ssMOPgn2USMshSZ7Byw7_b3mpMOQuQW2/preview",
@@ -339,7 +339,7 @@ const events: EventType[] = [
     teamSize: "Any Size",
     teamSizeLabel: "FORMAT",
     duration: "Offline Finals",
-    day: "02",
+    day: "002",
     entryFee: "TBD",
     theme: "orange",
     rulebookUrl: "https://drive.google.com/file/d/1cgB9s2y6E7ivKWrTNvh7DYowvz7QxoAU/preview",
@@ -366,7 +366,7 @@ const events: EventType[] = [
     teamSize: "Min 5",
     teamSizeLabel: "FORMAT",
     duration: "Offline",
-    day: "01 & 02",
+    day: "001 & 002",
     entryFee: "TBD",
     theme: "purple",
     rulebookUrl: "https://drive.google.com/file/d/1WV0U7e-uMVoG4X5nUR5wMHY_aB06ZwLf/preview",
@@ -394,7 +394,7 @@ const events: EventType[] = [
     teamSize: "2 - 4",
     teamSizeLabel: "FORMAT",
     duration: "Offline",
-    day: "01 & 02",
+    day: "001 & 002",
     entryFee: "TBD",
     theme: "teal",
     rulebookUrl: "https://drive.google.com/file/d/19qHWLouS6_GdrPjQ9205eXye4osJx2T9/preview",
@@ -420,7 +420,7 @@ const events: EventType[] = [
     teamSize: "Solo",
     teamSizeLabel: "FORMAT",
     duration: "Offline",
-    day: "02",
+    day: "002",
     entryFee: "₹100 / person",
     theme: "yellow",
     rulebookUrl: "https://drive.google.com/file/d/1xODG1S779xIJxol8Jbk3Q8wOxFwdI91t/preview",
@@ -703,7 +703,7 @@ const EventCard = ({
                     </div>
                   )}
                   <div>
-                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold font-semibold">TEAM</span>
+                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold font-semibold">FORMAT</span>
                     <span className="text-sm font-semibold text-white">{event.teamSize}</span>
                   </div>
                   <div>
@@ -798,7 +798,7 @@ const EventCard = ({
             <div className="flex justify-between items-end mt-auto pt-4 border-t border-white/5 relative z-10">
               <div className="flex flex-wrap gap-3 sm:gap-6">
                 <div>
-                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">TEAM</span>
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">FORMAT</span>
                   <span className="text-sm font-semibold text-white">{event.teamSize}</span>
                 </div>
                 <div>
@@ -889,7 +889,7 @@ const EventCard = ({
             )}
             <div>
               <span className="text-[9px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">
-                {"teamSizeLabel" in event ? event.teamSizeLabel : "TEAM"}
+                FORMAT
               </span>
               <span className="text-xs font-semibold text-white">{event.teamSize}</span>
             </div>
@@ -929,7 +929,7 @@ const getEventImage = (id: string) => {
 
 const getEventOverlayImage = (id: string) => {
   const overlayMap: Record<string, string> = {
-    "ignysis": "/ignysis.png",
+    "ignisys": "/ignisys.png",
     "quizophonia": "/quizophonia.png",
     "bgmi": "/bgmi.png",
     "evadex": "/evadex.png",
@@ -1061,7 +1061,7 @@ const Events = () => {
           <div className="mt-10 mb-0 flex flex-col items-center gap-6 relative z-10 pb-12">
             <div className="w-full flex justify-center">
               <TerminalSubheading
-                text="Seven thrilling competitions &middot; UEM Kolkata"
+                text="Eleven thrilling competitions &middot; UEM Kolkata"
                 className="text-muted-foreground text-base md:text-lg font-medium text-center"
               />
             </div>
@@ -1127,9 +1127,9 @@ const Events = () => {
                       title={event.title}
                       description={event.description}
                       prize={event.prize}
-                      format={event.teamSize}
+                      format={event.duration}
                       entryFee={event.entryFee}
-                      day={event.day ? `0${event.day}` : undefined}
+                      day={event.day}
                       metadataPaddingLeft={event.id === "ai-argumentarium" ? "60px" : undefined}
                       borderColor={getBorderColor(event.theme)}
                       borderBgColor="var(--border-bg-color)"

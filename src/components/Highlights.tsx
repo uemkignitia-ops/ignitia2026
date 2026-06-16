@@ -12,7 +12,7 @@ const stats = [
   { icon: Gamepad2, value: "7+", label: "Competitions", color: "text-primary", bg: "bg-primary/20" },
   {
     icon: Users,
-    value: "5000+",
+    value: "1000+",
     label: "Expected Footfall",
     color: "text-neon-cyan",
     bg: "bg-neon-cyan/20"
@@ -50,7 +50,7 @@ const StatCard = ({ stat, index }: { stat: (typeof stats)[0]; index: number }) =
       className="highlight-card shrink-0 w-64 md:w-full glass-card p-8 text-center group hover:border-primary/40 transition-all duration-300 relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-      
+
       <div className="relative z-10 flex flex-col items-center">
         <motion.div
           whileHover={{ rotate: 360 }}
@@ -62,7 +62,7 @@ const StatCard = ({ stat, index }: { stat: (typeof stats)[0]; index: number }) =
             size={32}
           />
         </motion.div>
-        
+
         <p
           ref={ref}
           className={`font-heading text-4xl md:text-5xl font-bold tracking-tighter mb-2 ${stat.rawDisplay ? "gradient-text" : "text-white"}`}
@@ -116,7 +116,7 @@ const Highlights = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) =>
     <section ref={sectionRef} className="relative pt-8 pb-20 md:py-28 overflow-hidden">
       {/* Top gradient divider */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-      
+
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-64 bg-primary/10 blur-[120px] pointer-events-none rounded-full" />
 

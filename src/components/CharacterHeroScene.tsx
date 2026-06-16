@@ -136,8 +136,7 @@ export const CharacterHeroScene = ({ scrollProgressRef }: CharacterHeroSceneProp
         camera={{ position: [0, 0, 5], fov: 40, near: 0.1, far: 100 }}
         className="w-full h-full cursor-grab active:cursor-grabbing"
       >
-        <color attach="background" args={["#050406"]} />
-
+        {/* Removed solid background color to allow comets to show behind */}
         {/* Ambient fill light with violet/blue tint */}
         <ambientLight intensity={0.9} color="#151324" />
 

@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect, useState, useRef } from "react";
+import FlyingComets from "@/components/FlyingComets";
 import Navbar from "@/components/Navbar";
 import CTABanner from "@/components/CTABanner";
 import Footer from "@/components/Footer";
@@ -25,13 +26,14 @@ const tagline = "Igniting Innovation, Creativity & Competition";
 
 const Index = () => {
   const isMobile = useIsMobile();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(() => !!(window as any).__IGNITIA_LOADER_DONE__);
   const [typedText, setTypedText] = useState("");
   const indexRef = useRef<HTMLDivElement>(null);
   const characterScrollProgressRef = useRef(0);
 
   // Loader complete listener
   useEffect(() => {
+    if (isLoaded) return;
     const onLoaderComplete = () => setIsLoaded(true);
     window.addEventListener("ignitia:loader-complete", onLoaderComplete);
 
@@ -129,7 +131,7 @@ const Index = () => {
           {/* Unified Pinned Hero & About Section */}
           <section
             id="hero-showcase-section"
-            className="relative h-screen w-full overflow-hidden"
+            className="relative h-screen w-full overflow-hidden bg-[#050406]"
           >
             {/* Full-bleed 3D Character Canvas as background */}
             <Suspense fallback={
@@ -143,6 +145,9 @@ const Index = () => {
 
             {/* Vignette overlay — darkens edges for cinematic feel */}
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_50%,#050406_100%)] z-10" />
+
+            {/* Flying Comets — desktop only, top-left → bottom-right */}
+            <FlyingComets />
 
             {/* HUD Frame corner brackets */}
             <div className="absolute inset-6 md:inset-10 border border-white/[0.03] pointer-events-none z-20">
@@ -180,54 +185,56 @@ const Index = () => {
               </div>
 
               {/* Main Landing content layout */}
-              <div className="w-full px-8 md:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-center pointer-events-auto">
+              <div className="w-full px-6 sm:px-8 md:px-16 lg:px-24 pt-24 sm:pt-20 md:pt-0 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-center pointer-events-auto">
                 {/* Title block */}
                 <div className="space-y-5">
                   <div className="flex items-center gap-3">
-                    <span className="block w-8 h-px bg-primary/60" />
-                    <span className="font-mono text-[10px] text-primary/80 uppercase tracking-[0.3em]">
+                    <span className="block w-6 sm:w-8 h-px bg-primary/60" />
+                    <span className="font-mono text-[13px] sm:text-sm md:text-base text-primary/90 uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold">
                       IEM-UEM Group × UEM Kolkata
                     </span>
                   </div>
 
                   <div className="relative">
                     <h1 className="font-heading leading-[0.85] tracking-tighter">
-                      <span className="block text-[clamp(4rem,12vw,9rem)] font-black bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 select-none">
+                      <span className="block text-[clamp(5rem,15vw,9rem)] font-black bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 select-none">
                         IGNITIA
                       </span>
-                      <span className="block text-[clamp(2rem,7vw,5.5rem)] font-black bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-400 to-secondary ml-2 md:ml-6">
+                      <span className="block text-[clamp(3.5rem,10vw,5.5rem)] font-black bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-400 to-secondary">
                         2K26
                       </span>
                     </h1>
                     <div className="absolute left-[-1.5rem] top-0 bottom-0 w-px bg-gradient-to-b from-primary/0 via-primary/60 to-primary/0" />
                   </div>
 
-                  <p className="font-mono text-sm md:text-base text-white/60 tracking-wide min-h-[1.5em]">
+                  <p className="font-mono text-base md:text-lg lg:text-xl text-white/60 tracking-wide min-h-[1.5em] font-medium">
                     <span className="text-primary/70 mr-2">&gt;</span>
                     {typedText}
                     <span className="animate-blink text-primary">_</span>
                   </p>
 
-                  <div className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-white/40">
+                  <div className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-base md:text-xl font-semibold text-white/60">
                     <span><span className="text-secondary/70">DATE</span>: 01–02.AUG.2026</span>
                     <span><span className="text-neon-cyan/70">LOC</span>: UEM Kolkata, WB</span>
                   </div>
 
-                  <div className="flex flex-wrap gap-4 pt-2">
-                    <Link to="/events" className="hero-primary-button pulse-cta flex items-center gap-3 text-sm">
-                      Register Now
-                      <ArrowRight size={16} />
-                    </Link>
-                    <div 
-                      className="apply-button" 
-                      data-hackathon-slug="ignisys-1" 
+                  <div className="flex flex-col gap-4 pt-2">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                      <Link to="/events" className="hero-primary-button pulse-cta flex items-center gap-3 text-sm">
+                        Register Now
+                        <ArrowRight size={16} />
+                      </Link>
+                      <Link to="/events" className="hero-secondary-button glow-button-secondary flex items-center gap-3 text-sm">
+                        Explore Events
+                        <ArrowRight size={16} />
+                      </Link>
+                    </div>
+                    <div
+                      className="apply-button"
+                      data-hackathon-slug="ignisys-ignitia"
                       data-button-theme="light"
                       style={{ height: "44px", width: "312px" }}
                     ></div>
-                    <Link to="/events" className="hero-secondary-button glow-button-secondary flex items-center gap-3 text-sm">
-                      Explore Events
-                      <ArrowRight size={16} />
-                    </Link>
                   </div>
                 </div>
 
@@ -306,7 +313,7 @@ const Index = () => {
                   <div className="space-y-3 pt-1">
                     {[
                       { label: "PRIZE POOL", value: "₹2,00,000+", pct: 90, color: "from-secondary to-yellow-400" },
-                      { label: "FOOTFALL", value: "5000+", pct: 85, color: "from-primary to-purple-400" },
+                      { label: "FOOTFALL", value: "1000+", pct: 85, color: "from-primary to-purple-400" },
                       { label: "COLLABORATORS", value: "50+ Colleges", pct: 75, color: "from-neon-cyan to-teal-400" },
                       { label: "ARENAS", value: "7+", pct: 55, color: "from-pink-500 to-primary" },
                     ].map(({ label, value, pct, color }) => (
