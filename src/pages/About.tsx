@@ -17,9 +17,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const clubs = [
   { name: "IEM-UEM group", role: "Lead Organizer", icon: Cpu },
-  { name: "Google Developer Group", role: "Tech Partner", icon: Globe },
-  { name: "IEEE Student Branch", role: "Knowledge Partner", icon: Lightbulb },
-  { name: "ACM Chapter", role: "Coding Partner", icon: Sparkles },
+  { name: "Microsoft Student Society UEMK", role: "Hosting Partner", icon: Globe },
+  { name: "Department of CSE (IOT,CS,BT)", role: "Knowledge Partner", icon: Lightbulb },
 ];
 
 const About = () => {
@@ -55,7 +54,7 @@ const About = () => {
       });
 
       // Timeline transitions for sci-fi overlay panels
-     
+
       // Phase 1: Hero content fades out
       tl.to("#about-hero-content", {
         opacity: 0,
@@ -69,7 +68,7 @@ const About = () => {
         { opacity: 0, y: 40 },
         { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
       );
-     
+
       // Keep it visible for a scrub duration, then fade out
       tl.to("#about-vision-content", {
         opacity: 0,
@@ -210,7 +209,7 @@ const About = () => {
                   <span className="font-mono text-[9px] tracking-[0.3em] text-primary uppercase">Our Vision</span>
                 </div>
 
-                <TerminalSubheading 
+                <TerminalSubheading
                   text="Igniting the Next Generation of Innovators."
                   className="font-mono text-xl md:text-2xl font-bold tracking-tight mb-4 text-white"
                 />
@@ -327,13 +326,13 @@ const About = () => {
               <p className="text-xs text-primary uppercase tracking-[0.3em] font-mono mb-2">
                 COLLABORATING SOCIETIES
               </p>
-              <TerminalSubheading 
+              <TerminalSubheading
                 text="Powered by Community"
                 className="font-mono text-2xl md:text-3xl font-bold text-foreground"
               />
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {clubs.map((club) => {
                 const Icon = club.icon;
                 return (
@@ -344,7 +343,7 @@ const About = () => {
                   >
                     <div className="absolute top-0 right-0 w-4 h-4 bg-primary/20 group-hover:bg-primary/40 transition-colors" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }} />
                     <div className="absolute bottom-0 left-0 w-4 h-4 bg-primary/20 group-hover:bg-primary/40 transition-colors" style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%)" }} />
-                    
+
                     {/* Scanning line effect on hover */}
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-transparent translate-y-[-100%] group-hover:animate-scanline pointer-events-none" />
 
@@ -370,7 +369,7 @@ const About = () => {
               <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-primary/30" />
               <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-primary/30" />
               <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-primary/30" />
-             
+
               <Users className="text-primary mx-auto mb-4" size={40} />
               <h2 className="font-heading text-3xl font-bold text-foreground mb-4">
                 IEM-UEM Group
@@ -388,7 +387,7 @@ const About = () => {
             </div>
           </div>
         </section>
-       
+
         <Footer />
       </div>
     </PageTransition>

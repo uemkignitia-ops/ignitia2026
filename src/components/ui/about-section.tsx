@@ -6,7 +6,7 @@ import { useRef } from "react";
 
 export default function AboutSection3() {
   const heroRef = useRef<HTMLDivElement>(null);
-  
+
   const revealVariants = {
     visible: (i: number) => ({
       y: 0,
@@ -23,7 +23,7 @@ export default function AboutSection3() {
       opacity: 0,
     },
   };
-  
+
   const scaleVariants = {
     visible: (i: number) => ({
       opacity: 1,
@@ -268,7 +268,7 @@ export default function AboutSection3() {
                 customVariants={revealVariants}
                 className="text-muted-foreground uppercase text-xs tracking-widest mb-8"
               >
-                Lead Organizer | Tech Partner
+                Lead Organizer | Hosting Partner
               </TimelineContent>
 
               <TimelineContent

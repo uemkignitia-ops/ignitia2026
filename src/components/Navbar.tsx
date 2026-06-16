@@ -139,223 +139,245 @@ const Navbar = () => {
 
   return (
     <>
-      <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: hidden ? -100 : 16 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={cn(
-        "fixed top-0 left-0 right-0 mx-auto z-[110] w-[95%] max-w-7xl border border-white/10 bg-[#050406]/75 backdrop-blur-xl rounded-full shadow-[0_12px_32px_rgba(0,0,0,0.5)] transition-[width,background-color,border-color,box-shadow] duration-300",
-        isScrolled
-          ? "w-[90%] bg-[#050406]/90 border-white/15 shadow-[0_16px_40px_rgba(0,0,0,0.6)]"
-          : "w-[94%]"
-      )}
-    >
-      <motion.div
-        style={{ height: isHome ? navHeight : 64 }}
-        className="flex items-center justify-between px-6 w-full relative"
-      >
-        {/* Mobile Logo (left-aligned) */}
-        <div className="flex lg:hidden items-center">
-          <Link to="/" className="flex items-center gap-2">
-            <img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
-            <span className="font-heading text-lg font-bold gradient-text">
-              IGNITIA '26
-            </span>
-          </Link>
-        </div>
-
-        {/* Desktop: Left side links */}
-        <div className="hidden lg:flex items-center gap-6 w-[42%] justify-end">
-          {leftLinks.map((link) => (
-            <Link
-              key={link.href}
-              to={link.href}
-              className={cn(
-                "relative py-1 text-sm font-medium transition-colors duration-200 nav-link-underline",
-                location.pathname === link.href
-                  ? "text-primary font-semibold"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </div>
-
-        {/* Desktop: Centered Logo */}
-        <div className="hidden lg:flex items-center justify-center shrink-0 w-[16%]">
-          <Link to="/" className="flex items-center gap-2">
-            <motion.span
-              style={isHome ? { scale: logoScale, y: logoY } : undefined}
-              className="origin-center"
-            >
-              <motion.div
-                key={logoPulseKey}
-                initial={
-                  logoPulseKey
-                    ? { opacity: 0.35, scale: 0.72, filter: "blur(8px)" }
-                    : false
-                }
-                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                transition={{ duration: 1.1, ease: "easeOut" }}
-                className="flex items-center gap-2"
-              >
-                <motion.img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
-                <motion.span className="font-heading text-lg font-bold gradient-text inline-block md:text-xl shrink-0">
-                  IGNITIA '26
-                </motion.span>
-              </motion.div>
-            </motion.span>
-          </Link>
-        </div>
-
-        {/* Desktop: Right side links + Register Button */}
-        <div className="hidden lg:flex items-center gap-6 w-[42%] justify-start">
-          {rightLinks.map((link) => (
-            <Link
-              key={link.href}
-              to={link.href}
-              className={cn(
-                "relative py-1 text-sm font-medium transition-colors duration-200 nav-link-underline",
-                location.pathname === link.href
-                  ? "text-primary font-semibold"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <Link
-            to="/events"
-            className="glow-button text-sm !px-4 !py-1.5 inline-flex items-center gap-2 pulse-cta shrink-0"
-          >
-            Register
-            <ArrowRight size={12} />
-          </Link>
-        </div>
-
-        {/* Mobile: Hamburger menu button */}
-        <button
-          ref={mobileButtonRef}
-          onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden relative z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-card/60 text-foreground backdrop-blur-xl"
-          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-          aria-expanded={isOpen}
-          aria-controls="mobile-navigation"
-        >
-          <AnimatePresence mode="wait">
-            {isOpen ? (
-              <motion.div
-                key="x"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <X size={20} />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="m"
-                initial={{ rotate: 90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: -90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Menu size={20} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </button>
-
-        {/* Static Character GIF sticking out on the right side */}
-        {location.pathname !== "/faq" && (
-          <div className="hidden md:block absolute top-[-5px] md:top-[0px] right-[-5px] md:right-0 pointer-events-none z-10">
-            <img
-              src="/Transparent_gif_flipped.gif"
-              alt="Navbar Character"
-              className="w-28 md:w-40 lg:w-48 h-auto brightness-110 drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]"
-            />
-          </div>
-        )}
-      </motion.div>
-    </motion.nav>
-
-    <AnimatePresence>
-      {isOpen && (
+      {/* Desktop Home Page Corner Logos */}
+      {isHome && (
         <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[115] bg-black/45 backdrop-blur-[2px] lg:hidden"
-            onClick={() => setIsOpen(false)}
-          />
-
-          <motion.aside
-            ref={mobileNavRef}
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
-            id="mobile-navigation"
-            className="fixed right-0 top-0 z-[120] h-[100dvh] w-[88vw] max-w-[380px] border-l border-white/10 bg-background/95 backdrop-blur-2xl p-5 flex flex-col overflow-y-auto lg:hidden"
-          >
-            <div className="flex items-center justify-between pb-4 border-b border-white/10">
-              <div>
-                <span className="font-heading text-base font-semibold gradient-text">IGNITIA '26</span>
-                <p className="text-[11px] text-muted-foreground uppercase tracking-[0.28em] mt-1">Menu</p>
-              </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                aria-label="Close navigation menu"
-                className="text-foreground/90 hover:text-primary transition-colors"
-              >
-                <X size={22} />
-              </button>
-            </div>
-
-            <div className="flex flex-col gap-2 pt-6">
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, x: 24 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.03 * i }}
-                >
-                  <Link
-                    to={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className={cn(
-                      "flex items-center justify-between rounded-xl border px-4 py-3 transition-colors",
-                      location.pathname === link.href
-                        ? "border-primary/25 bg-primary/12 text-primary"
-                        : "border-white/8 bg-white/[0.02] text-muted-foreground hover:border-primary/15 hover:bg-white/[0.04] hover:text-foreground",
-                    )}
-                  >
-                    <span>{link.label}</span>
-                    <ArrowRight size={14} className="opacity-60" />
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="flex-1" />
-
-            <Link
-              to="/events"
-              onClick={() => setIsOpen(false)}
-              className="glow-button text-center text-sm !px-6 !py-3 w-full inline-flex items-center justify-center gap-2 mb-8"
-            >
-              Register Now
-              <ArrowRight size={14} />
-            </Link>
-          </motion.aside>
+          <div className="hidden md:flex fixed top-6 left-10 md:top-[2.75rem] md:left-[4.5rem] z-[150] pointer-events-auto">
+            <img src="/iem-logo.png" alt="IEM Logo" className="h-24 md:h-[8rem] w-auto object-contain drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]" />
+          </div>
+          <div className="hidden md:flex fixed top-6 right-10 md:top-[2.75rem] md:right-[4.5rem] z-[150] pointer-events-auto">
+            <img src="/uem-logo.png" alt="UEM Logo" className="h-24 md:h-[8rem] w-auto object-contain drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]" />
+          </div>
         </>
       )}
-    </AnimatePresence>
-  </>
+
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: hidden ? -100 : 16 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className={cn(
+          "fixed top-0 left-0 right-0 mx-auto z-[110] w-[95%] max-w-7xl border border-white/10 bg-[#050406]/75 backdrop-blur-xl rounded-full shadow-[0_12px_32px_rgba(0,0,0,0.5)] transition-[width,background-color,border-color,box-shadow] duration-300",
+          isScrolled
+            ? "w-[90%] bg-[#050406]/90 border-white/15 shadow-[0_16px_40px_rgba(0,0,0,0.6)]"
+            : "w-[94%]"
+        )}
+      >
+        <motion.div
+          style={{ height: isHome ? navHeight : 64 }}
+          className="flex items-center justify-between px-6 w-full relative"
+        >
+          {/* Mobile Logo (left-aligned) */}
+          <div className="flex lg:hidden items-center shrink-0">
+            <Link to="/" className="flex items-center gap-2">
+              <img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
+              <span className="font-heading text-lg font-bold gradient-text whitespace-nowrap">
+                IGNITIA '26
+              </span>
+            </Link>
+          </div>
+
+          {/* Mobile: IEM and UEM logos */}
+          <div className="flex lg:hidden flex-1 justify-end items-center gap-2.5 sm:gap-4 pr-3 sm:pr-5">
+            <img src="/iem-logo.png" alt="IEM" className="h-12 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]" />
+            <img src="/uem-logo.png" alt="UEM" className="h-12 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]" />
+          </div>
+
+          {/* Desktop: Left side links */}
+          <div className="hidden lg:flex items-center gap-6 w-[42%] justify-end">
+            {leftLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={cn(
+                  "relative py-1 text-sm font-medium transition-colors duration-200 nav-link-underline",
+                  location.pathname === link.href
+                    ? "text-primary font-semibold"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Desktop: Centered Logo */}
+          <div className="hidden lg:flex items-center justify-center shrink-0 w-[16%]">
+            <Link to="/" className="flex items-center gap-2">
+              <motion.span
+                style={isHome ? { scale: logoScale, y: logoY } : undefined}
+                className="origin-center"
+              >
+                <motion.div
+                  key={logoPulseKey}
+                  initial={
+                    logoPulseKey
+                      ? { opacity: 0.35, scale: 0.72, filter: "blur(8px)" }
+                      : false
+                  }
+                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 1.1, ease: "easeOut" }}
+                  className="flex items-center gap-2"
+                >
+                  <motion.img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
+                  <motion.span className="font-heading text-lg font-bold gradient-text inline-block md:text-xl shrink-0">
+                    IGNITIA '26
+                  </motion.span>
+                </motion.div>
+              </motion.span>
+            </Link>
+          </div>
+
+          {/* Desktop: Right side links + Register Button */}
+          <div className="hidden lg:flex items-center gap-6 w-[42%] justify-start">
+            {rightLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={cn(
+                  "relative py-1 text-sm font-medium transition-colors duration-200 nav-link-underline",
+                  location.pathname === link.href
+                    ? "text-primary font-semibold"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              to="/events"
+              className="glow-button text-sm !px-4 !py-1.5 inline-flex items-center gap-2 pulse-cta shrink-0"
+            >
+              Register
+              <ArrowRight size={12} />
+            </Link>
+          </div>
+
+          {/* Mobile: Hamburger menu button */}
+          <button
+            ref={mobileButtonRef}
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden relative z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-card/60 text-foreground backdrop-blur-xl"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-navigation"
+          >
+            <AnimatePresence mode="wait">
+              {isOpen ? (
+                <motion.div
+                  key="x"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X size={20} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="m"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Menu size={20} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </button>
+
+          {/* Static Character GIF sticking out on the right side */}
+          {location.pathname !== "/faq" && (
+            <motion.div 
+              animate={{ opacity: hidden ? 0 : 1, y: hidden ? -20 : 0 }}
+              transition={{ duration: 0.2 }}
+              className="hidden md:block absolute top-[-5px] md:top-[0px] right-[-5px] md:right-0 pointer-events-none z-10"
+            >
+              <img
+                src="/Transparent_gif_flipped.gif"
+                alt="Navbar Character"
+                className="w-28 md:w-40 lg:w-48 h-auto brightness-110 drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]"
+              />
+            </motion.div>
+          )}
+        </motion.div>
+      </motion.nav>
+
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[115] bg-black/45 backdrop-blur-[2px] lg:hidden"
+              onClick={() => setIsOpen(false)}
+            />
+
+            <motion.aside
+              ref={mobileNavRef}
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+              id="mobile-navigation"
+              className="fixed right-0 top-0 z-[120] h-[100dvh] w-[88vw] max-w-[380px] border-l border-white/10 bg-background/95 backdrop-blur-2xl p-5 flex flex-col overflow-y-auto lg:hidden"
+            >
+              <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <div>
+                  <span className="font-heading text-base font-semibold gradient-text">IGNITIA '26</span>
+                  <p className="text-[11px] text-muted-foreground uppercase tracking-[0.28em] mt-1">Menu</p>
+                </div>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  aria-label="Close navigation menu"
+                  className="text-foreground/90 hover:text-primary transition-colors"
+                >
+                  <X size={22} />
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-2 pt-6">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, x: 24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.03 * i }}
+                  >
+                    <Link
+                      to={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className={cn(
+                        "flex items-center justify-between rounded-xl border px-4 py-3 transition-colors",
+                        location.pathname === link.href
+                          ? "border-primary/25 bg-primary/12 text-primary"
+                          : "border-white/8 bg-white/[0.02] text-muted-foreground hover:border-primary/15 hover:bg-white/[0.04] hover:text-foreground",
+                      )}
+                    >
+                      <span>{link.label}</span>
+                      <ArrowRight size={14} className="opacity-60" />
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="flex-1" />
+
+              <Link
+                to="/events"
+                onClick={() => setIsOpen(false)}
+                className="glow-button text-center text-sm !px-6 !py-3 w-full inline-flex items-center justify-center gap-2 mb-8"
+              >
+                Register Now
+                <ArrowRight size={14} />
+              </Link>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
