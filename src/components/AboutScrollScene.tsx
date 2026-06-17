@@ -198,8 +198,8 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
           <OrbitControls
             enableZoom={false}
             enablePan={false}
-            minPolarAngle={Math.PI / 2.5}
-            maxPolarAngle={Math.PI / 1.8}
+            minPolarAngle={isMobile ? Math.PI / 3 : Math.PI / 2.5}
+            maxPolarAngle={isMobile ? Math.PI / 2 : Math.PI / 1.8}
             enableDamping
             dampingFactor={0.05}
           />
@@ -218,8 +218,8 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
         </Suspense>
       </Canvas>
 
-      <div className="absolute bottom-6 right-6 z-10 pointer-events-none opacity-40 bg-black/60 backdrop-blur-sm border border-primary/20 px-3 py-1.5 rounded-full text-[9px] text-primary uppercase tracking-[0.2em] font-mono">
-        Drag to Rotate Mascot
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 pointer-events-none opacity-50 bg-black/60 backdrop-blur-sm border border-amber-400/30 px-3 py-1.5 rounded-full text-[9px] text-amber-400 uppercase tracking-[0.2em] font-mono whitespace-nowrap">
+        {isMobile ? "Drag upper half to rotate" : "Drag to Rotate Mascot"}
       </div>
     </div>
   );

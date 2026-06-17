@@ -128,6 +128,9 @@ const About = () => {
             <AboutScrollScene scrollProgressRef={scrollProgressRef} />
           </Suspense>
 
+          {/* Mobile bottom-half scroll overlay */}
+          <div className="md:hidden absolute bottom-0 left-0 w-full h-[55%] z-10" aria-hidden="true" />
+
           {/* HUD Frame brackets */}
           <div className="absolute inset-6 md:inset-10 border border-white/[0.02] pointer-events-none z-20">
             <div className="absolute top-0 left-0 w-6 h-6 border-t border-l border-secondary/60" />
