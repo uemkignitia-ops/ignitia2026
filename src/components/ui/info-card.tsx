@@ -14,6 +14,9 @@ export interface InfoCardProps {
   format?: string;
   entryFee?: string;
   day?: string;
+  customFooterText?: string;
+  customHeader?: React.ReactNode | ((hovered: boolean) => React.ReactNode);
+  overlayHeight?: string;
   metadataPaddingLeft?: string | number;
   width?: number | string;
   height?: number | string;
@@ -42,6 +45,9 @@ export const InfoCard: React.FC<InfoCardProps> = ({
   format,
   entryFee,
   day,
+  customFooterText,
+  customHeader,
+  overlayHeight,
   metadataPaddingLeft = 0,
   width = "100%",
   height = "100%",
@@ -115,7 +121,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        cursor: "pointer",
+        cursor: title === "Cultural Program" ? "default" : "pointer",
         userSelect: "none",
         transition: "box-shadow 0.3s",
         position: "relative",
@@ -138,33 +144,39 @@ export const InfoCard: React.FC<InfoCardProps> = ({
         }}
       >
         <div style={{ width: "100%", height: "200px", position: "relative", overflow: "hidden" }}>
-          <img
-            src={image}
-            alt={title}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              display: "block",
-              filter: hovered ? "contrast(0.925)" : "contrast(0.825)",
-              transition: "filter 0.3s ease",
-            }}
-          />
-          {overlayImage && (
-            <img
-              src={overlayImage}
-              alt={`${title} overlay`}
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "auto",
-                height: "95%",
-                objectFit: "contain",
-                zIndex: 10,
-              }}
-            />
+          {customHeader ? (
+            typeof customHeader === "function" ? (customHeader as Function)(hovered) : customHeader
+          ) : (
+            <>
+              <img
+                src={image}
+                alt={title}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
+                  filter: hovered ? "contrast(0.925)" : "contrast(0.825)",
+                  transition: "filter 0.3s ease",
+                }}
+              />
+              {overlayImage && (
+                <img
+                  src={overlayImage}
+                  alt={`${title} overlay`}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "auto",
+                    height: overlayHeight || "95%",
+                    objectFit: "contain",
+                    zIndex: 10,
+                  }}
+                />
+              )}
+            </>
           )}
         </div>
         <div
@@ -242,35 +254,59 @@ export const InfoCard: React.FC<InfoCardProps> = ({
             {description}
           </p>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "clamp(16px, 6vw, 40px)",
-              marginTop: "auto",
-              paddingTop: "16px",
-              paddingLeft: metadataPaddingLeft,
-              borderTop: `1px solid rgba(255,255,255,0.05)`,
-              width: "100%",
-            }}
-          >
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <span style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "1px", color: "rgba(255,255,255,0.4)", fontFamily: "monospace", marginBottom: "4px" }}>Prize</span>
-              <span style={{ fontSize: "12px", fontWeight: "bold", color: effectBgColor, textShadow: `0 0 10px ${effectBgColor}66` }}>{prize || "TBD"}</span>
+          {customFooterText ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                marginTop: "auto",
+                paddingTop: "16px",
+                borderTop: `1px solid rgba(255,255,255,0.05)`,
+                width: "100%",
+                fontSize: "11px",
+                fontWeight: "bold",
+                color: "#fff",
+                lineHeight: "1.4",
+                fontFamily: "monospace",
+              }}
+            >
+              {customFooterText}
             </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <span style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "1px", color: "rgba(255,255,255,0.4)", fontFamily: "monospace", marginBottom: "4px" }}>Format</span>
-              <span style={{ fontSize: "12px", fontWeight: "bold", color: "#fff" }}>{format || "TBD"}</span>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                gap: "8px",
+                marginTop: "auto",
+                paddingTop: "16px",
+                paddingLeft: metadataPaddingLeft,
+                borderTop: `1px solid rgba(255,255,255,0.05)`,
+                width: "100%",
+              }}
+            >
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: "1 1 0px", minWidth: "0px", textAlign: "center" }}>
+                <span style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.5px", color: "rgba(255,255,255,0.4)", fontFamily: "monospace", marginBottom: "4px", whiteSpace: "nowrap" }}>Prize</span>
+                <span style={{ fontSize: "11px", fontWeight: "bold", color: effectBgColor, textShadow: `0 0 10px ${effectBgColor}66`, lineHeight: "1.2" }}>{prize || "TBD"}</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: "1 1 0px", minWidth: "0px", textAlign: "center" }}>
+                <span style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.5px", color: "rgba(255,255,255,0.4)", fontFamily: "monospace", marginBottom: "4px", whiteSpace: "nowrap" }}>Entry Fee</span>
+                <span style={{ fontSize: "11px", fontWeight: "bold", color: "#fff", lineHeight: "1.2" }}>{entryFee || "TBD"}</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: "1 1 0px", minWidth: "0px", textAlign: "center" }}>
+                <span style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.5px", color: "rgba(255,255,255,0.4)", fontFamily: "monospace", marginBottom: "4px", whiteSpace: "nowrap" }}>Format</span>
+                <span style={{ fontSize: "11px", fontWeight: "bold", color: "#fff", lineHeight: "1.2" }}>{format || "TBD"}</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: "1 1 0px", minWidth: "0px", textAlign: "center" }}>
+                <span style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.5px", color: "rgba(255,255,255,0.4)", fontFamily: "monospace", marginBottom: "4px", whiteSpace: "nowrap" }}>Day</span>
+                <span style={{ fontSize: "11px", fontWeight: "bold", color: "#fff", lineHeight: "1.2" }}>
+                  {day ? day.replace(/\b([a-zA-Z]+)\s+(\d+)\b/g, "$1\u00a0$2") : "TBD"}
+                </span>
+              </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <span style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "1px", color: "rgba(255,255,255,0.4)", fontFamily: "monospace", marginBottom: "4px" }}>Entry Fee</span>
-              <span style={{ fontSize: "12px", fontWeight: "bold", color: "#fff" }}>{entryFee || "TBD"}</span>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <span style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "1px", color: "rgba(255,255,255,0.4)", fontFamily: "monospace", marginBottom: "4px" }}>Day</span>
-              <span style={{ fontSize: "12px", fontWeight: "bold", color: "#fff" }}>{day || "TBD"}</span>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

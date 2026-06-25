@@ -118,6 +118,7 @@ export type EventType = {
   entryFee: string;
   theme: keyof typeof themes;
   rulebookUrl?: string;
+  registrationUrl?: string;
   isWide?: boolean;
   leftPoolLayout?: boolean;
   arrowTop?: boolean;
@@ -127,7 +128,10 @@ export type EventType = {
   overview: string;
   rules?: string[];
   criteria?: string[];
+  contacts?: { name: string; phone: string; }[];
 };
+
+const CENTRAL_REGISTRATION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfvs3XKBQYwTZUh95ci5k6urZkY5ODUBswVJKpR8jplK3odvw/viewform";
 
 const events: EventType[] = [
   {
@@ -135,50 +139,55 @@ const events: EventType[] = [
     icon: Zap,
     title: "IGNISYS",
     category: "TECHNICAL",
-    prize: "TBD",
+    prize: "₹30,000",
     teamSize: "1-4",
-    duration: "Hybrid",
-    day: "001 & 002",
+    duration: "24 Hours",
+    day: "Aug 1 & 2",
     entryFee: "Free",
     theme: "orange",
     rulebookUrl: "https://drive.google.com/file/d/1x0szLJB-k8JGOt1MozE0S5vgDmxHTci2/preview",
+    registrationUrl: "https://ignisys-ignitia.devfolio.co/",
     isWide: true,
     arrowTop: true,
     isTopEvent: true,
     watermark: "01",
-    description: "Collaborate on problem-solving to crack designated tracks and submit an innovative solution.",
-    overview: "IGNISYS is a hybrid hackathon where teams collaborate to solve designated tracks. Round 1 features a 720-hour online project window where participants must submit a comprehensive presentation and video detailing their solution. The top 20 qualifying teams will advance to Round 2, culminating in an offline presentation before a jury at the IEM Newtown campus on August 2nd.",
+    description: "\"Build it, break it, ship it — real problems, real pressure, real glory.\"",
+    overview: "A hybrid hackathon where teams solve real-world problem statements through innovation and collaboration. Online prelims followed by an offline finale before a jury panel.",
     rules: [
+      "The hackathon is a 24-hour non-stop building and innovation event.",
       "Teams must consist of a minimum of 1 and a maximum of 4 participants.",
       "Registration is completely free and open to students from any department of any registered college or university.",
       "Inter-college and cross-branch teams are permitted.",
       "A student cannot be a part of more than one team.",
-      "Only the team leader is permitted to submit the final solution in the form of a PPT and video before the deadline.",
       "Internet usage for research is allowed, but direct plagiarism or copied solutions will result in immediate disqualification."
     ],
     criteria: [
-      "Originality: Ideas submitted must represent the original work of the team.",
-      "Technical Execution: Participants may prepare up to 20% of their code structure or logic at home prior to the final round.",
-      "Presentation Quality: The offline pitch requires a 7-minute presentation followed by a 3-minute Q&A session.",
-      "Required Structure: Problem Statement, Understanding & Approach, Detailed Solution, System Architecture, Technologies, Innovation Summary, Research/References."
+      "Innovation & Originality: How creative and unique is the solution?",
+      "Technical Execution: Quality of the code structure, functional prototype, and complexity.",
+      "Presentation: Pitch effectively to the jury (7-minute presentation + 3-minute Q&A)."
     ],
+    contacts: [
+      { name: "Rony Roy", phone: "6297403940" },
+      { name: "Daliya Paul", phone: "9748753104" }
+    ]
   },
   {
     id: "efootball",
     icon: Gamepad2,
     title: "E-Football Ultimate 11",
     category: "GAMING",
-    prize: "TBD",
+    prize: "₹4,000",
     teamSize: "Solo",
     teamSizeLabel: "FORMAT",
     duration: "Online",
-    day: "001 & 002",
+    day: "July 28 - Aug 1",
     entryFee: "₹70 / person",
     theme: "purple",
     rulebookUrl: "https://drive.google.com/file/d/1R8xPidpPx2p1QltAYp4CHPAa5jWi2mys/preview",
+    registrationUrl: "https://forms.gle/Wi9oDmLXYsb4jPQ48",
     watermark: "02",
-    description: "One Match. One Chance. One Champion.",
-    overview: "A completely online, 32-participant, single-elimination knockout tournament played on the mobile platform of the latest E-Football version.",
+    description: "\"One player, eleven decisions — be the manager and the match-winner.\"",
+    overview: "A fast-paced knockout mobile football tournament. Tactical awareness and game management decide who claims the Ultimate Champion title.",
     rules: [
       "Solo participation requires a ₹70 non-refundable entry fee.",
       "Extra time and penalties must be set to ON, while \"Smart Assist\" must be turned OFF.",
@@ -194,47 +203,55 @@ const events: EventType[] = [
   {
     id: "bgmi",
     icon: Gamepad2,
-    title: "Battlegrounds Mobile India",
+    title: "BGMI Battle Royale",
     category: "GAMING",
-    prize: "TBD",
-    teamSize: "2 - 4",
-    teamSizeLabel: "FORMAT",
-    duration: "Hybrid",
-    day: "001 & 002",
-    entryFee: "₹200 / team",
+    prize: "₹8,500",
+    teamSize: "4 + 1",
+    teamSizeLabel: "SQUAD",
+    duration: "Hybrid Mode",
+    day: "July 29, 30 & Aug 2",
+    entryFee: "₹200 / squad",
     theme: "pink",
     rulebookUrl: "https://drive.google.com/file/d/1lLt8tuXtGmcSJPXT94Mpcs_o9Rxtt3SM/preview",
+    registrationUrl: "https://forms.gle/ZiiFZj74nrBVgjUR7",
     watermark: "03",
-    description: "Squad-based mobile survival tournament.",
-    overview: "A hybrid TPP Squad-based BGMI tournament featuring online qualifiers and offline finals. Teams must compete utilizing the BGIS 2026 ranking mechanism across all major maps.",
+    description: "\"Zone in, squad up — the last circle crowns the legend.\"",
+    overview: "Competitive esports squad battles with online qualifiers leading to an offline finale. Strategy, teamwork, and clutch decision-making — all tested.",
     rules: [
-      "Teams require a minimum of 2 players and a maximum of 4, with 1 optional substitute allowed.",
-      "All players must use iOS or Android mobile devices; iPads, tablets, triggers, or external controllers are strictly prohibited.",
-      "The use of any third-party application or hack results in an instant ban.",
-      "Players are strictly prohibited from picking up or using the \"Emergency Pickup\" item."
+      "Teams require a squad of 4 players + 1 optional substitute (4+1 format).",
+      "All players must use iOS or Android mobile devices; iPads, tablets, emulators, triggers, or external controllers are strictly prohibited.",
+      "The tournament uses a points-based Battle Royale system.",
+      "The use of any third-party application, hacks, or cheats results in an instant disqualification and ban.",
+      "Tournament dates: 29th & 30th July (Online Qualifiers 7:30 PM onwards) and 2nd August (Offline Finals)."
     ],
     criteria: [
-      "Scoring utilizes a placement point system awarding 10 points for 1st place, scaling down to 0 points for 17th place and below.",
-      "Every confirmed finish is worth 1 point.",
-      "Ties are broken by total first-place finishes, total placement points, accumulated finishes, and most recent match placement."
+      "Evaluation and ranking are strictly points-based according to placement and finishes (kills).",
+      "Standard competitive BGIS scoring and ties resolution mechanisms apply."
     ],
+    contacts: [
+      { name: "Soham Roy", phone: "8906014314" },
+      { name: "Sudeshna Sarkar", phone: "9867621693" },
+      { name: "Debangshu Sarkar", phone: "7074919071" },
+      { name: "Arpayan Chakraborty", phone: "8509068265" }
+    ]
   },
   {
     id: "blind-coding",
     icon: Code,
     title: "Blind Coding",
     category: "TECHNICAL",
-    prize: "TBD",
+    prize: "Recognitions",
     teamSize: "Solo",
     teamSizeLabel: "SOLO",
     duration: "Offline",
-    day: "002",
-    entryFee: "TBD",
+    day: "Aug 2",
+    entryFee: "central registration",
     theme: "teal",
     rulebookUrl: "https://drive.google.com/file/d/19BRSzJ3Rxb9QDE9D9jui0kho0kjiF1z9/preview",
+    registrationUrl: CENTRAL_REGISTRATION_URL,
     watermark: "04",
-    description: "Code without screen visibility.",
-    overview: "An individual programming challenge conducted in Python, Java, or C where participants must write code without being able to see their screens.",
+    description: "\"Code in the dark — where logic speaks louder than the screen.\"",
+    overview: "An individual coding challenge across Python, Java, and C — where precision, logic, and speed under a blind-coding environment determine the winner.",
     rules: [
       "This competition is strictly for individual participants.",
       "Once the timer starts, participants cannot view their own screen or any other participant's screen.",
@@ -252,17 +269,18 @@ const events: EventType[] = [
     icon: HelpCircle,
     title: "Guess Who?",
     category: "NON-TECH",
-    prize: "TBD",
+    prize: "Recognitions",
     teamSize: "Solo",
     teamSizeLabel: "FORMAT",
     duration: "Offline (15-20 mins)",
-    day: "002",
-    entryFee: "TBD",
+    day: "Aug 2",
+    entryFee: "central registration",
     theme: "yellow",
     rulebookUrl: "https://drive.google.com/file/d/187w12QZWolU72Lj1Uh8OWfvteZfv65R2/preview",
+    registrationUrl: CENTRAL_REGISTRATION_URL,
     watermark: "05",
-    description: "Spot it. Guess it. Own it.",
-    overview: "A fast-paced, 15 to 20-minute Bollywood guessing challenge. Participants must identify celebrities through zoomed-in visuals, such as eyes, smiles, hairstyles, and iconic accessories.",
+    description: "\"Eyes, smiles, and accessories — Bollywood in a blink.\"",
+    overview: "A fast-paced Bollywood celebrity guessing game using zoomed-in visuals of eyes, smiles, hairstyles, and accessories. Quick thinking wins here!",
     rules: [
       "This is an individual event; no teams, collaboration, or discussion is allowed.",
       "Participants must raise their hand or follow the host's instructions, as only the first valid answer will be considered.",
@@ -279,19 +297,20 @@ const events: EventType[] = [
     icon: Brain,
     title: "Quizophonia",
     category: "NON-TECH",
-    prize: "TBD",
+    prize: "₹1,100",
     teamSize: "1 - 2",
     teamSizeLabel: "TEAM / SOLO",
     duration: "Offline",
-    day: "001",
+    day: "Aug 1",
     entryFee: "₹50 / person",
     theme: "blue",
     rulebookUrl: "https://drive.google.com/file/d/1-h3tIhTGEJRQPEHFksjzG500BSpr6wab/preview",
+    registrationUrl: "https://forms.gle/rJ5bxnGSUyPXw6kr5",
     isWide: true,
     leftPoolLayout: true,
     watermark: "06",
-    description: "Wisdom of domains covering Biz-Tech and more.",
-    overview: "A Biz-Tech themed quiz competition open to all registered college or university students below 25 years of age. The quiz spans various areas related to business and technology.",
+    description: "\"From reel to rocket science — know a little of everything, win it all.\"",
+    overview: "A dynamic multi-domain quiz spanning Music, Cinema, Technology, Space, Olympics, Food, Online Trends, and more — open to solo participants and 2-member teams.",
     rules: [
       "Teams can consist of a maximum of 2 members, but individual participation is also allowed.",
       "Participants must carry a valid identity card.",
@@ -308,17 +327,18 @@ const events: EventType[] = [
     icon: Palette,
     title: "Pixel Prophecy",
     category: "NON-TECH",
-    prize: "TBD",
+    prize: "Recognitions",
     teamSize: "Solo",
     teamSizeLabel: "FORMAT",
     duration: "Offline (50 mins - 1.5 hrs)",
-    day: "002",
-    entryFee: "TBD",
+    day: "Aug 2",
+    entryFee: "central registration",
     theme: "pink",
     rulebookUrl: "https://drive.google.com/file/d/1ssMOPgn2USMshSZ7Byw7_b3mpMOQuQW2/preview",
+    registrationUrl: CENTRAL_REGISTRATION_URL,
     watermark: "07",
-    description: "Design the icon. Capture the aura.",
-    overview: "An individual poster design competition where participants randomly draw a chit featuring a Bollywood celebrity. Participants must create a poster inspired by that celebrity's aura and signature postures during the event.",
+    description: "\"One celebrity, infinite frames — design their world in pixels.\"",
+    overview: "A celebrity-inspired poster design challenge. Participants draw a celebrity at random and transform their persona into a visually compelling work of art.",
     rules: [
       "This is strictly an individual competition with no pre-designed templates or external work permitted.",
       "Participants must bring their own charged devices (laptop/iPad/tablet) and designing tools.",
@@ -335,17 +355,17 @@ const events: EventType[] = [
     icon: Palette,
     title: "Cineverse",
     category: "NON-TECH",
-    prize: "TBD",
+    prize: "₹3,000",
     teamSize: "Any Size",
     teamSizeLabel: "FORMAT",
     duration: "Offline Finals",
-    day: "002",
-    entryFee: "TBD",
+    day: "Aug 2",
+    entryFee: "₹120 / team",
     theme: "orange",
     rulebookUrl: "https://drive.google.com/file/d/1cgB9s2y6E7ivKWrTNvh7DYowvz7QxoAU/preview",
     watermark: "08",
-    description: "Short film making competition.",
-    overview: "A filmmaking competition where participants create and complete a short film prior to the event, submitting it via Google Drive. The submitted content must be completely original and free from copyright violations.",
+    description: "\"Lights, camera, 5 minutes — tell a story the world needs to see.\"",
+    overview: "A filmmaking competition celebrating cinematic storytelling. Create an original short film and compete for recognition among fellow aspiring creators.",
     rules: [
       "Teams can consist of any number of members with a flat ₹120 registration fee per team.",
       "The film's duration must be strictly between 4 and 5 minutes.",
@@ -361,18 +381,19 @@ const events: EventType[] = [
     id: "circuit-crawl",
     icon: Zap,
     title: "Circuit Crawl",
-    category: "TECHNICAL",
-    prize: "TBD",
+    category: "ROBOTICS",
+    prize: "Recognitions",
     teamSize: "Min 5",
     teamSizeLabel: "FORMAT",
     duration: "Offline",
-    day: "001 & 002",
-    entryFee: "TBD",
+    day: "Aug 1 & 2",
+    entryFee: "central registration",
     theme: "purple",
     rulebookUrl: "https://drive.google.com/file/d/1WV0U7e-uMVoG4X5nUR5wMHY_aB06ZwLf/preview",
+    registrationUrl: CENTRAL_REGISTRATION_URL,
     watermark: "09",
-    description: "Every curve holds a challenge.",
-    overview: "An autonomous line follower robot competition. Teams must build a mobile machine that can detect and follow predefined paths consisting of either a black line on a white surface or vice versa.",
+    description: "\"Navigate every twist without missing a beat — precision is the engine.\"",
+    overview: "A robot navigation challenge through twists, turns, and obstacles — testing engineering accuracy, reliability, and strategic race design.",
     rules: [
       "Each team must have a minimum of 5 members.",
       "The robot must be strictly autonomous with no Wi-Fi or Bluetooth communication allowed.",
@@ -389,18 +410,19 @@ const events: EventType[] = [
     id: "evadex",
     icon: Swords,
     title: "Evade-X",
-    category: "TECHNICAL",
-    prize: "TBD",
+    category: "ROBOTICS",
+    prize: "Recognitions",
     teamSize: "2 - 4",
     teamSizeLabel: "FORMAT",
     duration: "Offline",
-    day: "001 & 002",
-    entryFee: "TBD",
+    day: "Aug 1 & 2",
+    entryFee: "central registration",
     theme: "teal",
     rulebookUrl: "https://drive.google.com/file/d/19qHWLouS6_GdrPjQ9205eXye4osJx2T9/preview",
+    registrationUrl: CENTRAL_REGISTRATION_URL,
     watermark: "10",
-    description: "Escape Limits, Embrace Innovation.",
-    overview: "A robotics competition challenging teams to design a wired or wireless robot capable of manually operating and navigating through all turns of a specialized track.",
+    description: "\"Engineer the fastest machine — obstacles are just opportunities in disguise.\"",
+    overview: "An obstacle-track robotics challenge where speed, precision, and engineering intelligence determine the victor.",
     rules: [
       "Teams must consist of 2 to 4 participants with a registration fee of ₹120 per team.",
       "Robots must not exceed 25 x 25 x 25 cm dimensions or 3.0 kg in weight (with a 10% tolerance allowed for both).",
@@ -416,19 +438,20 @@ const events: EventType[] = [
     icon: Brain,
     title: "The AI Argumentarium",
     category: "NON-TECH",
-    prize: "TBD",
+    prize: "Recognitions",
     teamSize: "Solo",
     teamSizeLabel: "FORMAT",
     duration: "Offline",
-    day: "002",
-    entryFee: "₹100 / person",
+    day: "Aug 2",
+    entryFee: "central registration",
     theme: "yellow",
     rulebookUrl: "https://drive.google.com/file/d/1xODG1S779xIJxol8Jbk3Q8wOxFwdI91t/preview",
+    registrationUrl: CENTRAL_REGISTRATION_URL,
     isWide: true,
     leftPoolLayout: true,
     watermark: "11",
-    description: "Oxford Style Debate (Modified).",
-    overview: "Participants will compete as individual speakers in a modified Oxford-style debate. Their stance (For or Against) will be assigned randomly through a lottery system. The debate will be trilingual, permitting English, Bengali, and Hindi, though speakers must stick to one chosen language throughout.",
+    description: "\"The sharpest argument wins — let reason, not rhetoric, rule the floor.\"",
+    overview: "An intellectually engaging debate competition celebrating critical thinking, persuasion, and the art of constructing well-reasoned arguments.",
     rules: [
       "The speaking order alternates between FOR and AGAINST the motion.",
       "Preliminary rounds consist of a 2-minute main speech and a 1-minute rebuttal, while final rounds extend the main speech to 3 minutes.",
@@ -454,8 +477,8 @@ const events: EventType[] = [
     theme: "pink",
     rulebookUrl: "",
     watermark: "12",
-    description: "Cultural Program Description (Placeholder).",
-    overview: "Cultural Program Overview (Placeholder).",
+    description: "\"Take the stage — your talent is the only ticket you need.\"",
+    overview: "A stage for performers to showcase their artistic talents in a celebration of youth, energy, and creativity.",
     rules: [
       "Rule 1 Placeholder",
       "Rule 2 Placeholder"
@@ -467,448 +490,7 @@ const events: EventType[] = [
   },
 ];
 
-const InteractiveCardWrapper = ({
-  children,
-  onClick,
-  theme,
-  isWide,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  theme: typeof themes[keyof typeof themes];
-  isWide?: boolean;
-}) => {
-  const cardRef = useRef<HTMLDivElement>(null);
 
-  // Motion values for mouse coordinates (normalized from -0.5 to 0.5)
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  // Springs for buttery smooth physics-based 3D tilting
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), { damping: 20, stiffness: 120 });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { damping: 20, stiffness: 120 });
-
-  // Custom states for hover coordinate gradients
-  const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    // Normalize coordinates around center (0,0)
-    x.set((mouseX / width) - 0.5);
-    y.set((mouseY / height) - 0.5);
-
-    setGlowPos({ x: mouseX, y: mouseY });
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    // Reset tilt on leave
-    x.set(0);
-    y.set(0);
-  };
-
-  // Convert theme text styles to matching spotlight transparent RGBA colors
-  const getGlowColor = () => {
-    if (theme.iconText.includes("orange")) return "rgba(249, 115, 22, 0.12)";
-    if (theme.iconText.includes("purple")) return "rgba(168, 85, 247, 0.12)";
-    if (theme.iconText.includes("teal")) return "rgba(20, 184, 166, 0.12)";
-    if (theme.iconText.includes("amber") || theme.iconText.includes("yellow")) return "rgba(245, 158, 11, 0.12)";
-    if (theme.iconText.includes("pink")) return "rgba(236, 72, 153, 0.12)";
-    if (theme.iconText.includes("sky") || theme.iconText.includes("blue")) return "rgba(14, 165, 233, 0.12)";
-    return "rgba(255, 255, 255, 0.08)";
-  };
-
-  const getBorderGlowColor = () => {
-    if (theme.iconText.includes("orange")) return "rgba(249, 115, 22, 0.35)";
-    if (theme.iconText.includes("purple")) return "rgba(168, 85, 247, 0.35)";
-    if (theme.iconText.includes("teal")) return "rgba(20, 184, 166, 0.35)";
-    if (theme.iconText.includes("amber") || theme.iconText.includes("yellow")) return "rgba(245, 158, 11, 0.35)";
-    if (theme.iconText.includes("pink")) return "rgba(236, 72, 153, 0.35)";
-    if (theme.iconText.includes("sky") || theme.iconText.includes("blue")) return "rgba(14, 165, 233, 0.35)";
-    return "rgba(255, 255, 255, 0.2)";
-  };
-
-  const getShadowStyle = () => {
-    if (!isHovered) return {};
-    if (theme.iconText.includes("orange")) return { boxShadow: "0 0 30px rgba(249, 115, 22, 0.18)" };
-    if (theme.iconText.includes("purple")) return { boxShadow: "0 0 30px rgba(168, 85, 247, 0.18)" };
-    if (theme.iconText.includes("teal")) return { boxShadow: "0 0 30px rgba(20, 184, 166, 0.18)" };
-    if (theme.iconText.includes("amber") || theme.iconText.includes("yellow")) return { boxShadow: "0 0 30px rgba(245, 158, 11, 0.18)" };
-    if (theme.iconText.includes("pink")) return { boxShadow: "0 0 30px rgba(236, 72, 153, 0.18)" };
-    if (theme.iconText.includes("sky") || theme.iconText.includes("blue")) return { boxShadow: "0 0 30px rgba(14, 165, 233, 0.18)" };
-    return {};
-  };
-
-  const getWrapperGradient = () => {
-    if (theme.iconText.includes("orange")) return "bg-gradient-to-r from-orange-600 via-orange-400 to-orange-500";
-    if (theme.iconText.includes("purple")) return "bg-gradient-to-r from-purple-600 via-purple-400 to-purple-500";
-    if (theme.iconText.includes("teal")) return "bg-gradient-to-r from-teal-600 via-teal-400 to-teal-500";
-    if (theme.iconText.includes("amber") || theme.iconText.includes("yellow")) return "bg-gradient-to-r from-amber-600 via-amber-400 to-amber-500";
-    if (theme.iconText.includes("pink")) return "bg-gradient-to-r from-pink-600 via-pink-400 to-pink-500";
-    if (theme.iconText.includes("sky") || theme.iconText.includes("blue")) return "bg-gradient-to-r from-sky-600 via-sky-400 to-sky-500";
-    return "bg-gradient-to-r from-gray-600 via-gray-400 to-gray-500";
-  };
-
-  return (
-    <div className={`relative p-[2px] rounded-[26px] ${getWrapperGradient()} ${isWide ? "md:col-span-2" : "md:col-span-1"}`}>
-      <motion.div
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onClick={onClick}
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-          ...getShadowStyle(),
-        }}
-        className={`relative group overflow-hidden rounded-[24px] bg-[#0c0d0e]/85 backdrop-blur-xl transition-[border-color,box-shadow,background-color] duration-300 cursor-pointer w-full h-full`}
-      >
-        {/* Cyber scanlines / tech scan overlay on hover */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.08] transition-opacity duration-500 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.35)_50%),linear-gradient(90deg,rgba(255,0,0,0.05),rgba(0,255,0,0.02),rgba(0,0,255,0.05))] bg-[length:100%_4px,3px_100%] z-0"
-        />
-
-        {/* Cyber ambient micro grid details */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 bg-[linear-gradient(to_right,gray_1px,transparent_1px),linear-gradient(to_bottom,gray_1px,transparent_1px)] bg-[size:32px_32px] z-0"
-        />
-
-        {/* Magnetic spotlight radial glow inside card */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
-          style={{
-            background: `radial-gradient(400px circle at ${glowPos.x}px ${glowPos.y}px, ${getGlowColor()}, transparent 80%)`,
-          }}
-        />
-
-        {/* Dynamic Border highlight glow overlay using CSS masking */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 rounded-[24px]"
-          style={{
-            margin: "-1px",
-            border: "2px solid transparent",
-            backgroundImage: `radial-gradient(150px circle at ${glowPos.x}px ${glowPos.y}px, ${getBorderGlowColor()}, transparent 70%)`,
-            WebkitMask: "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
-            WebkitMaskComposite: "destination-out",
-            maskComposite: "exclude",
-          }}
-        />
-
-        {/* Dynamic 3D depth wrapper for inner content */}
-        <div style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }} className="relative z-10 w-full h-full">
-          {children}
-        </div>
-      </motion.div>
-    </div>
-  );
-};
-
-const EventCard = ({
-  event,
-  onOpenDetails,
-}: {
-  event: EventType;
-  onOpenDetails: (event: EventType) => void;
-}) => {
-  const theme = themes[event.theme];
-  const IconComponent = event.icon;
-
-  if ("isWide" in event && event.isWide) {
-    if ("leftPoolLayout" in event && event.leftPoolLayout) {
-      // Quiz-style wide card
-      return (
-        <InteractiveCardWrapper
-          onClick={() => onOpenDetails(event)}
-          theme={theme}
-          isWide={true}
-        >
-          {/* Watermark outline text */}
-          {"watermark" in event && event.watermark && (
-            <div
-              style={{ transform: "translateZ(10px)" }}
-              className="absolute top-2 right-4 text-[9rem] font-black text-white/[0.02] select-none font-heading tracking-tighter leading-none pointer-events-none"
-            >
-              {event.watermark}
-            </div>
-          )}
-
-          {/* Diagonal glow beam */}
-          <div className={`absolute right-[10%] top-0 bottom-0 w-[35%] -skew-x-[25deg] bg-gradient-to-r from-transparent ${theme.beam} pointer-events-none blur-sm transition-transform duration-700 group-hover:scale-x-110`} />
-
-          <div className="flex flex-col md:flex-row h-full min-h-[280px]">
-            {/* Left Column (only on md and up) */}
-            {event.prize && event.prize !== "N/A" && event.prize !== "TBA" && (
-              <div
-                style={{ transform: "translateZ(15px)" }}
-                className="hidden md:flex flex-col justify-center items-center px-10 border-r border-white/5 relative z-10 w-[200px] shrink-0"
-              >
-                <span className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 font-mono">PRIZE POOL</span>
-                <span className={`text-3xl font-extrabold font-heading ${theme.textGlow}`}>
-                  {event.prize}
-                </span>
-                <span className="text-xs uppercase tracking-wider text-muted-foreground mt-2 font-mono">
-                  DAY {event.day}
-                </span>
-              </div>
-            )}
-
-            {/* Right Column */}
-            <div className="flex-1 flex flex-col justify-between p-8 relative z-10">
-              {/* Top Header line */}
-              <div className="relative flex items-center justify-between mb-6 w-full">
-                <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-white/10 -translate-y-1/2" />
-                <span
-                  style={{ transform: "translateZ(20px)" }}
-                  className={`relative z-10 px-3 py-1 text-xs font-semibold tracking-wider border rounded-md ${theme.badge}`}
-                >
-                  {event.category}
-                </span>
-              </div>
-
-              {/* Main Content */}
-              <div
-                style={{ transform: "translateZ(25px)" }}
-                className="flex gap-4 items-start mb-6"
-              >
-                <div className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 border ${theme.iconBg}`}>
-                  <IconComponent className={theme.iconText} size={28} />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold font-heading text-white">{event.title}</h3>
-                  <p className="text-muted-foreground text-sm mt-1 max-w-md">{event.description}</p>
-                </div>
-              </div>
-
-              {/* Bottom details */}
-              <div className="flex justify-between items-end pt-4 border-t border-white/5 mt-auto">
-                <div className="flex flex-wrap gap-3 sm:gap-6">
-                  {event.prize && event.prize !== "N/A" && event.prize !== "TBA" && (
-                    <div className="md:hidden">
-                      <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono">PRIZE</span>
-                      <span className={`text-sm font-semibold ${theme.iconText}`}>{event.prize}</span>
-                    </div>
-                  )}
-                  <div>
-                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold font-semibold">FORMAT</span>
-                    <span className="text-sm font-semibold text-white">{event.teamSize}</span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold font-semibold">DAY</span>
-                    <span className="text-sm font-semibold text-white">{event.day}</span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">ENTRY FEE</span>
-                    <span className="text-sm font-semibold text-white">{event.entryFee}</span>
-                  </div>
-                </div>
-                <button
-                  style={{ transform: "translateZ(30px)" }}
-                  className={`w-10 h-10 rounded-full border border-white/20 bg-transparent flex items-center justify-center text-white transition-all duration-300 ${theme.arrowHover}`}
-                >
-                  <ArrowRight size={16} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </InteractiveCardWrapper>
-      );
-    } else {
-      // Hackathon-style wide card
-      return (
-        <InteractiveCardWrapper
-          onClick={() => onOpenDetails(event)}
-          theme={theme}
-          isWide={true}
-        >
-          <div className="w-full h-full p-8 flex flex-col justify-between min-h-[280px]">
-            {/* Watermark outline text */}
-            {"watermark" in event && event.watermark && (
-              <div
-                style={{ transform: "translateZ(10px)" }}
-                className="absolute top-2 right-4 text-[9rem] font-black text-white/[0.02] select-none font-heading tracking-tighter leading-none pointer-events-none"
-              >
-                {event.watermark}
-              </div>
-            )}
-
-            {/* Diagonal glow beam */}
-            <div className={`absolute right-[10%] top-0 bottom-0 w-[35%] -skew-x-[25deg] bg-gradient-to-r from-transparent ${theme.beam} pointer-events-none blur-sm transition-transform duration-700 group-hover:scale-x-110`} />
-
-            {/* Top Line & Category & Circle Arrow */}
-            <div className="relative flex items-center justify-between mb-8 w-full">
-              <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-white/10 -translate-y-1/2" />
-              <span
-                style={{ transform: "translateZ(20px)" }}
-                className={`relative z-10 px-3 py-1 text-xs font-semibold tracking-wider border rounded-md ${theme.badge}`}
-              >
-                {event.category}
-              </span>
-              <button
-                style={{ transform: "translateZ(30px)" }}
-                className={`relative z-10 w-10 h-10 rounded-full border border-white/20 bg-[#0c0d0e] flex items-center justify-center text-white transition-all duration-300 ${theme.arrowHover}`}
-              >
-                <ArrowRight size={16} />
-              </button>
-            </div>
-
-            {/* Main Body content */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 relative z-10">
-              <div
-                style={{ transform: "translateZ(25px)" }}
-                className="flex gap-4 items-start"
-              >
-                <div className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 border ${theme.iconBg}`}>
-                  <IconComponent className={theme.iconText} size={28} />
-                </div>
-                <div>
-                  <h3 className="text-2xl md:text-3xl font-bold font-heading text-white">{event.title}</h3>
-                  <p className="text-muted-foreground text-sm mt-1 max-w-md">{event.description}</p>
-                </div>
-              </div>
-              {/* Massive Prize Pool info */}
-              {event.prize && event.prize !== "N/A" && event.prize !== "TBA" && (
-                <div
-                  style={{ transform: "translateZ(20px)" }}
-                  className="text-left md:text-right shrink-0"
-                >
-                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono">PRIZE POOL</span>
-                  <span className={`text-3xl md:text-4xl font-extrabold font-heading ${theme.textGlow}`}>
-                    {event.prize}
-                  </span>
-                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground block mt-1 font-mono">TOP EVENT</span>
-                </div>
-              )}
-            </div>
-
-            {/* Bottom details */}
-            <div className="flex justify-between items-end mt-auto pt-4 border-t border-white/5 relative z-10">
-              <div className="flex flex-wrap gap-3 sm:gap-6">
-                <div>
-                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">FORMAT</span>
-                  <span className="text-sm font-semibold text-white">{event.teamSize}</span>
-                </div>
-                <div>
-                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">DURATION</span>
-                  <span className="text-sm font-semibold text-white">{event.duration}</span>
-                </div>
-                <div>
-                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">DAY</span>
-                  <span className="text-sm font-semibold text-white">{event.day}</span>
-                </div>
-                <div>
-                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">ENTRY FEE</span>
-                  <span className="text-sm font-semibold text-white">{event.entryFee}</span>
-                </div>
-              </div>
-              <div className="px-3 py-1 text-xs border border-white/10 rounded text-muted-foreground uppercase tracking-widest font-mono">
-                DAY {event.day}
-              </div>
-            </div>
-          </div>
-        </InteractiveCardWrapper>
-      );
-    }
-  }
-
-  // Vertical card (Gaming Tournament, Blind Coding, Guess Who, Debates)
-  return (
-    <InteractiveCardWrapper
-      onClick={() => onOpenDetails(event)}
-      theme={theme}
-      isWide={false}
-    >
-      <div className="flex flex-col justify-between h-full min-h-[360px] p-6">
-        {/* Diagonal glow beam */}
-        <div className={`absolute right-[5%] top-0 bottom-0 w-[40%] -skew-x-[20deg] bg-gradient-to-r from-transparent ${theme.beam} pointer-events-none blur-sm transition-transform duration-700 group-hover:scale-x-110`} />
-
-        {/* Watermark outline text */}
-        {"watermark" in event && event.watermark && (
-          <div
-            style={{ transform: "translateZ(10px)" }}
-            className="absolute top-2 right-4 text-[9rem] font-black text-white/[0.02] select-none font-heading tracking-tighter leading-none pointer-events-none"
-          >
-            {event.watermark}
-          </div>
-        )}
-
-        {/* Top row */}
-        <div className="relative z-10 flex justify-between items-start mb-6">
-          <span
-            style={{ transform: "translateZ(20px)" }}
-            className={`text-[10px] font-bold tracking-wider px-2 py-0.5 border rounded uppercase ${theme.badge}`}
-          >
-            {event.category}
-          </span>
-          <span className="text-[10px] font-mono border border-white/10 px-2 py-0.5 rounded text-muted-foreground uppercase tracking-widest">
-            DAY {event.day}
-          </span>
-        </div>
-
-        {/* Body content */}
-        <div className="relative z-10 flex-1 flex flex-col justify-center mb-6">
-          <div
-            style={{ transform: "translateZ(25px)" }}
-            className={`w-12 h-12 rounded-xl mb-4 flex items-center justify-center shrink-0 border ${theme.iconBg}`}
-          >
-            <IconComponent className={theme.iconText} size={24} />
-          </div>
-          <h3
-            style={{ transform: "translateZ(20px)" }}
-            className="text-xl font-bold font-heading text-white mb-2"
-          >
-            {event.title}
-          </h3>
-          <p className="text-muted-foreground text-xs leading-relaxed">{event.description}</p>
-        </div>
-
-        {/* Separator line */}
-        <div className="relative z-10 w-full h-[1px] bg-white/5 my-4" />
-
-        {/* Bottom details */}
-        <div className="relative z-10 flex justify-between items-center">
-          <div className="flex flex-wrap gap-3 sm:gap-4">
-            {event.prize && event.prize !== "N/A" && event.prize !== "TBA" && (
-              <div>
-                <span className="text-[9px] uppercase tracking-wider text-muted-foreground block font-mono">PRIZE</span>
-                <span className={`text-xs font-semibold ${theme.iconText}`}>{event.prize}</span>
-              </div>
-            )}
-            <div>
-              <span className="text-[9px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">
-                FORMAT
-              </span>
-              <span className="text-xs font-semibold text-white">{event.teamSize}</span>
-            </div>
-            <div>
-              <span className="text-[9px] uppercase tracking-wider text-muted-foreground block font-mono">ENTRY FEE</span>
-              <span className="text-xs font-semibold text-white">{event.entryFee}</span>
-            </div>
-          </div>
-          <button
-            style={{ transform: "translateZ(30px)" }}
-            className={`w-8 h-8 rounded-full border border-white/20 bg-transparent flex items-center justify-center text-white transition-all duration-300 ${theme.arrowHover}`}
-          >
-            <ArrowRight size={14} />
-          </button>
-        </div>
-      </div>
-    </InteractiveCardWrapper>
-  );
-};
 
 const getBorderColor = (theme: string) => {
   if (theme === "orange" || theme === "yellow") return "var(--border-color-1)";
@@ -923,7 +505,6 @@ const getHoverTextColor = (theme: string) => {
 }
 
 const getEventImage = (id: string) => {
-  if (id === "circuit-crawl") return "/circuit-crawl-bg.png";
   return "/event-bg.png";
 };
 
@@ -940,6 +521,7 @@ const getEventOverlayImage = (id: string) => {
     "ai-argumentarium": "/ai-argumentarium.png",
     "cineverse": "/cineverse.png",
     "pixel-prophecy": "/pixel-prophecy.png",
+    "circuit-crawl": "/Untitled design (1).png",
   };
   return overlayMap[id] || undefined;
 };
@@ -1074,7 +656,7 @@ const Events = () => {
                 transition={{ duration: 0.5, delay: 0.35 }}
                 className="border border-white/10 bg-white/[0.04] backdrop-blur-xl p-1.5 rounded-2xl md:rounded-full flex flex-wrap justify-center gap-1.5 items-center shadow-[0_4px_30px_rgba(0,0,0,0.4)] max-w-full"
               >
-                {["ALL", "TECHNICAL", "GAMING", "NON-TECH"].map((filter) => {
+                {["ALL", "TECHNICAL", "GAMING", "NON-TECH", "ROBOTICS"].map((filter) => {
                   const isActive = activeFilter === filter;
                   return (
                     <button
@@ -1098,9 +680,52 @@ const Events = () => {
         <section className="pb-24 px-4 md:px-8 max-w-7xl mx-auto relative z-10">
           <motion.div
             layout
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 overflow-visible"
+            className={
+              activeFilter === "ROBOTICS"
+                ? "flex flex-col md:flex-row flex-wrap justify-center gap-6 overflow-visible"
+                : "grid grid-cols-1 md:grid-cols-3 gap-6 overflow-visible"
+            }
           >
             <AnimatePresence mode="popLayout">
+              {activeFilter !== "GAMING" && (
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4 }}
+                  className={activeFilter === "ROBOTICS" ? "w-full relative overflow-visible" : "md:col-span-3 relative overflow-visible"}
+                >
+                  <div
+                    onClick={() => window.open(CENTRAL_REGISTRATION_URL, "_blank")}
+                    className="w-full h-full min-h-[300px]"
+                  >
+                    <InfoCard
+                      image="/event-bg.png"
+                      overlayImage="/Untitled design.png"
+                      overlayHeight="125%"
+                      title="CENTRAL REGISTRATION FORM"
+                      description="Pay ₹299 once to participate in all 6 core events: Blind Coding, Guess Who?, Pixel Prophecy, Circuit Crawl, Evade-X, and The AI Argumentarium."
+                      prize="Recognitions"
+                      entryFee="₹299"
+                      format="All 6 Events"
+                      day="Aug 1 & 2"
+                      borderColor={getBorderColor("orange")}
+                      borderBgColor="var(--border-bg-color)"
+                      cardBgColor="var(--card-bg-color)"
+                      shadowColor="var(--shadow-color)"
+                      textColor="var(--text-color)"
+                      hoverTextColor={getHoverTextColor("orange")}
+                      fontFamily="var(--font-family)"
+                      rtlFontFamily="var(--rtl-font-family)"
+                      effectBgColor={getBorderColor("orange")}
+                      patternColor1="var(--pattern-color1)"
+                      patternColor2="var(--pattern-color2)"
+                    />
+                  </div>
+                </motion.div>
+              )}
+
               {filteredEvents.map((event) => (
                 <motion.div
                   layout
@@ -1109,7 +734,13 @@ const Events = () => {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4 }}
                   key={event.id}
-                  className={event.isWide ? "md:col-span-2 relative overflow-visible" : "md:col-span-1 relative overflow-visible"}
+                  className={
+                    activeFilter === "ROBOTICS"
+                      ? "w-full md:w-[calc(33.333%-16px)] relative overflow-visible"
+                      : event.isWide
+                        ? "md:col-span-2 relative overflow-visible"
+                        : "md:col-span-1 relative overflow-visible"
+                  }
                 >
                   {event.id === "hackathon" && (
                     <div className="hidden md:block absolute bottom-full left-[20px] md:left-[50px] -z-10 pointer-events-none -mb-[10px] md:-mb-[15px]">
@@ -1120,16 +751,18 @@ const Events = () => {
                       />
                     </div>
                   )}
-                  <div onClick={() => setSelectedEvent(event)} className="w-full h-full min-h-[300px]">
+                  <div onClick={() => event.id !== "cultural-program" && setSelectedEvent(event)} className="w-full h-full min-h-[300px]">
                     <InfoCard
                       image={getEventImage(event.id)}
                       overlayImage={getEventOverlayImage(event.id)}
                       title={event.title}
                       description={event.description}
                       prize={event.prize}
-                      format={event.duration}
+                      format={event.teamSize}
                       entryFee={event.entryFee}
                       day={event.day}
+                      customFooterText={event.id === "cultural-program" ? "A stage for performers to showcase their artistic talents in a celebration of youth, energy, and creativity." : undefined}
+                      overlayHeight={event.id === "circuit-crawl" ? "80%" : undefined}
                       metadataPaddingLeft={event.id === "ai-argumentarium" ? "60px" : undefined}
                       borderColor={getBorderColor(event.theme)}
                       borderBgColor="var(--border-bg-color)"
@@ -1286,6 +919,25 @@ const Events = () => {
                       </div>
                     )}
                   </div>
+
+                  {/* Contact Persons */}
+                  {selectedEvent.contacts && selectedEvent.contacts.length > 0 && (
+                    <div className="pt-4 border-t border-white/5">
+                      <h4 className={`text-xs uppercase tracking-wider font-semibold font-mono mb-3 ${themes[selectedEvent.theme].iconText}`}>
+                        Contact Persons
+                      </h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {selectedEvent.contacts.map((contact, idx) => (
+                          <div key={idx} className="flex justify-between items-center p-3 border border-white/5 bg-[#ffffff01] rounded-xl font-mono text-xs text-muted-foreground">
+                            <span>{contact.name}</span>
+                            <a href={`tel:${contact.phone}`} className={`hover:underline ${themes[selectedEvent.theme].iconText}`}>
+                              {contact.phone}
+                            </a>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Modal Footer */}
@@ -1297,7 +949,9 @@ const Events = () => {
                     Rulebook
                   </button>
                   <motion.a
-                    href="#"
+                    href={selectedEvent.registrationUrl || "#"}
+                    target={selectedEvent.registrationUrl ? "_blank" : undefined}
+                    rel={selectedEvent.registrationUrl ? "noopener noreferrer" : undefined}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className={`w-full sm:w-auto relative overflow-hidden font-mono font-semibold uppercase tracking-wider px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl transition-all duration-300 text-center text-sm ${selectedEvent.theme === "orange" ? "bg-orange-500 text-white shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_30px_rgba(249,115,22,0.5)]" :
