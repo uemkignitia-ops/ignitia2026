@@ -1,5 +1,4 @@
 import { Suspense, lazy, useEffect, useState, useRef } from "react";
-import FlyingComets from "@/components/FlyingComets";
 import Navbar from "@/components/Navbar";
 import CTABanner from "@/components/CTABanner";
 import Footer from "@/components/Footer";
@@ -15,35 +14,67 @@ import { ArrowRight } from "lucide-react";
 import CountdownTimer from "@/components/CountdownTimer";
 import { TerminalSubheading } from "@/components/TerminalSubheading";
 import { Link } from "react-router-dom";
-import { ChevronDown } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const HomeEffects = lazy(() => import("@/components/HomeEffects"));
-const mapEmbedSrc = "https://www.google.com/maps?q=University+of+Engineering+%26+Management,+Kolkata+(UEM)&z=17&output=embed";
-const mapHref = "https://www.google.com/maps/place/University+of+Engineering+%26+Management,+Kolkata+(UEM)/@22.5599202,88.4899014,17z/data=!3m1!4b1!4m6!3m5!1s0x3a020b267a3cdc13:0xb3b21d652126f40!8m2!3d22.5599202!4d88.4899014!16s%2Fg%2F11c4pg5gwf?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D";
+const mapEmbedSrc =
+  "https://www.google.com/maps?q=University+of+Engineering+%26+Management,+Kolkata+(UEM)&z=17&output=embed";
+const mapHref =
+  "https://www.google.com/maps/place/University+of+Engineering+%26+Management,+Kolkata+(UEM)/@22.5599202,88.4899014,17z/data=!3m1!4b1!4m6!3m5!1s0x3a020b267a3cdc13:0xb3b21d652126f40!8m2!3d22.5599202!4d88.4899014!16s%2Fg%2F11c4pg5gwf?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D";
 
 const tagline = "Igniting Innovation, Creativity & Competition";
 
 const Index = () => {
   const isMobile = useIsMobile();
-  const [isLoaded, setIsLoaded] = useState(() => !!(window as any).__IGNITIA_LOADER_DONE__);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [typedText, setTypedText] = useState("");
   const indexRef = useRef<HTMLDivElement>(null);
   const characterScrollProgressRef = useRef(0);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
-  const touchScrolledRef = useRef(false);
-
-  // Loader complete listener
+  const [showSdk, setShowSdk] = useState(false);
+ 
+  // Load Devfolio SDK — only load on production, keep fallback on localhost/local IPs
   useEffect(() => {
-    if (isLoaded) return;
+    const isLocal =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1" ||
+      window.location.hostname.startsWith("192.168.");
+ 
+    if (isLocal) {
+      setShowSdk(false);
+      return;
+    }
+ 
+    const existing = document.getElementById("devfolio-sdk");
+    if (existing) {
+      if ((window as any).devfolio) (window as any).devfolio.init();
+      setShowSdk(true);
+      return;
+    }
+ 
+    const script = document.createElement("script");
+    script.id = "devfolio-sdk";
+    script.src = "https://apply.devfolio.co/v2/sdk.js";
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      setTimeout(() => {
+        if ((window as any).devfolio) (window as any).devfolio.init();
+        setShowSdk(true);
+      }, 300);
+    };
+    script.onerror = () => {
+      setShowSdk(false);
+    };
+    document.body.appendChild(script);
+ 
+    return () => {
+      const s = document.getElementById("devfolio-sdk");
+      if (s) document.body.removeChild(s);
+    };
+  }, []);
+
+  useEffect(() => {
     const onLoaderComplete = () => setIsLoaded(true);
     window.addEventListener("ignitia:loader-complete", onLoaderComplete);
 
@@ -55,18 +86,6 @@ const Index = () => {
       window.removeEventListener("ignitia:loader-complete", onLoaderComplete);
       window.clearTimeout(fallbackId);
     };
-  }, []);
-
-  // Load Devfolio SDK
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://apply.devfolio.co/v2/sdk.js';
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    }
   }, []);
 
   // Typewriter effect for Hero tagline
@@ -111,14 +130,20 @@ const Index = () => {
         y: -50,
         duration: 0.6,
         ease: "power2.inOut",
-        pointerEvents: "none"
+        pointerEvents: "none",
       });
 
       // 2. Fade in the About Fest details panel
       tl.fromTo(
         "#showcase-overlay-about",
         { opacity: 0, y: 50, pointerEvents: "none" },
-        { opacity: 1, y: 0, pointerEvents: "auto", duration: 0.8, ease: "power2.out" }
+        {
+          opacity: 1,
+          y: 0,
+          pointerEvents: "auto",
+          duration: 0.8,
+          ease: "power2.out",
+        },
       );
     }, indexRef);
 
@@ -127,7 +152,10 @@ const Index = () => {
 
   return (
     <PageTransition>
-      <div ref={indexRef} className="min-h-screen flex flex-col bg-background scanline-overlay text-white overflow-x-hidden">
+      <div
+        ref={indexRef}
+        className="min-h-screen flex flex-col bg-background scanline-overlay text-white overflow-x-hidden"
+      >
         <ParticleField />
         <AnimatedBlobs />
         <Suspense fallback={null}>
@@ -137,27 +165,29 @@ const Index = () => {
         <Navbar />
 
         <main className="flex-1 relative z-10">
-
           {/* Unified Pinned Hero & About Section */}
           <section
             id="hero-showcase-section"
-            className="relative h-screen w-full overflow-hidden bg-[#050406]"
+            className="relative h-screen w-full overflow-hidden"
           >
             {/* Full-bleed 3D Character Canvas as background */}
-            <Suspense fallback={
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-transparent z-10">
-                <div className="w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin mb-4" />
-                <span className="text-xs tracking-widest text-muted-foreground uppercase animate-pulse font-mono">Loading Experience...</span>
-              </div>
-            }>
-              <CharacterHeroScene scrollProgressRef={characterScrollProgressRef} />
+            <Suspense
+              fallback={
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-transparent z-10">
+                  <div className="w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin mb-4" />
+                  <span className="text-xs tracking-widest text-muted-foreground uppercase animate-pulse font-mono">
+                    Loading Experience...
+                  </span>
+                </div>
+              }
+            >
+              <CharacterHeroScene
+                scrollProgressRef={characterScrollProgressRef}
+              />
             </Suspense>
 
             {/* Vignette overlay — darkens edges for cinematic feel */}
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_50%,#050406_100%)] z-10" />
-
-            {/* Flying Comets — desktop only, top-left → bottom-right */}
-            <FlyingComets />
 
             {/* HUD Frame corner brackets */}
             <div className="absolute inset-6 md:inset-10 border border-white/[0.03] pointer-events-none z-20">
@@ -175,124 +205,167 @@ const Index = () => {
               {/* Asymmetric radial glows */}
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_20%_50%,rgba(168,85,247,0.08)_0%,rgba(0,0,0,0)_70%)] pointer-events-none" />
 
-
+              {/* Floating code/binary particles */}
+              <div
+                className="absolute inset-0 pointer-events-none select-none overflow-hidden"
+                aria-hidden
+              >
+                {[
+                  "01",
+                  "//",
+                  "0x",
+                  "{}",
+                  "1A",
+                  "if",
+                  "fn",
+                  "10",
+                  "AI",
+                  "∑",
+                  "λ",
+                  ">>",
+                  "0b",
+                  "∞",
+                  "==",
+                ].map((char, i) => (
+                  <span
+                    key={i}
+                    className="absolute font-mono text-white/[0.04] text-xs animate-float-particle"
+                    style={{
+                      left: `${(i * 6.5 + 3) % 95}%`,
+                      top: `${(i * 13 + 7) % 90}%`,
+                      animationDelay: `${i * 0.4}s`,
+                      animationDuration: `${6 + (i % 4)}s`,
+                      fontSize: i % 3 === 0 ? "1.5rem" : "0.7rem",
+                    }}
+                  >
+                    {char}
+                  </span>
+                ))}
+              </div>
 
               {/* Main Landing content layout */}
-              <div className="w-full px-6 sm:px-8 md:px-16 lg:px-24 pt-10 sm:pt-14 md:pt-0 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-4 md:gap-8 items-center pointer-events-auto">
+              <div className="w-full px-8 md:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-center pointer-events-auto">
                 {/* Title block */}
                 <div className="space-y-5">
                   <div className="flex items-center gap-3">
-                    <span className="block w-6 sm:w-8 h-px bg-primary/60" />
-                    <span className="font-mono text-[13px] sm:text-sm md:text-base text-primary/90 uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold">
+                    <span className="block w-8 h-px bg-primary/60" />
+                    <span className="font-mono text-[10px] text-primary/80 uppercase tracking-[0.3em]">
                       IEM-UEM Group × UEM Kolkata
                     </span>
                   </div>
 
                   <div className="relative">
                     <h1 className="font-heading leading-[0.85] tracking-tighter">
-                      <span className="block text-[clamp(5rem,15vw,9rem)] font-black bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 select-none">
+                      <span className="block text-[clamp(4rem,12vw,9rem)] font-black bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 select-none">
                         IGNITIA
                       </span>
-                      <span className="block text-[clamp(3.5rem,10vw,5.5rem)] font-black bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-400 to-secondary">
+                      <span className="block text-[clamp(2rem,7vw,5.5rem)] font-black bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-400 to-secondary ml-2 md:ml-6">
                         2K26
                       </span>
                     </h1>
                     <div className="absolute left-[-1.5rem] top-0 bottom-0 w-px bg-gradient-to-b from-primary/0 via-primary/60 to-primary/0" />
                   </div>
 
-                  <p className="font-mono text-base md:text-lg lg:text-xl text-white/60 tracking-wide min-h-[1.5em] font-medium">
+                  <p className="font-mono text-sm md:text-base text-white/60 tracking-wide min-h-[1.5em]">
                     <span className="text-primary/70 mr-2">&gt;</span>
                     {typedText}
                     <span className="animate-blink text-primary">_</span>
                   </p>
 
-                  <div className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-base md:text-xl font-semibold text-white/60">
-                    <span><span className="text-secondary/70">DATE</span>: 01–02.AUG.2026</span>
-                    <span><span className="text-neon-cyan/70">LOC</span>: UEM Kolkata, WB</span>
+                  <div className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-white/40">
+                    <span>
+                      <span className="text-secondary/70">DATE</span>:
+                      01–02.AUG.2026
+                    </span>
+                    <span>
+                      <span className="text-neon-cyan/70">LOC</span>: UEM
+                      Kolkata, WB
+                    </span>
                   </div>
 
-                  <div className="flex flex-col gap-4 pt-2">
-                    <div className="flex flex-row sm:flex-row items-center lg:items-center lg:justify-start gap-3 sm:gap-4 w-full">
-                      <Link to="/events" className="hero-primary-button pulse-cta flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-sm flex-1 sm:flex-none sm:w-auto px-4 sm:px-6 whitespace-nowrap">
-                        Register Now
-                        <ArrowRight className="w-4 h-4 sm:w-4 sm:h-4" />
-                      </Link>
-                      <Link to="/events" className="hero-secondary-button glow-button-secondary flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-sm flex-1 sm:flex-none sm:w-auto px-4 sm:px-6 whitespace-nowrap">
-                        Explore Events
-                        <ArrowRight className="w-4 h-4 sm:w-4 sm:h-4" />
-                      </Link>
+                  <div className="flex flex-col items-start gap-6 pt-3">
+                    <Link
+                      to="/events"
+                      className="hero-primary-button pulse-cta flex items-center gap-3 text-sm"
+                    >
+                      Register Now
+                      <ArrowRight size={16} />
+                    </Link>
+                    {/* Devfolio apply button — SDK renders on production; fallback shown on localhost */}
+                    <div
+                      className="relative"
+                      style={{ height: "44px", width: "312px" }}
+                    >
+                      {showSdk ? (
+                        /* Official SDK target div */
+                        <div
+                          className="apply-button w-full h-full"
+                          data-hackathon-slug="ignisys-ignitia"
+                          data-button-theme="dark"
+                          style={{ height: "44px", width: "312px" }}
+                        />
+                      ) : (
+                        /* Fallback — visible when SDK is not loaded (like on localhost) */
+                        <a
+                          href="https://ignisys-ignitia.devfolio.co/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="devfolio-apply-button flex items-center justify-center gap-3 text-sm h-full w-full"
+                        >
+                          <img
+                            src="/devfolio.png"
+                            alt="Devfolio"
+                            width={20}
+                            height={20}
+                            className="w-5 h-5 object-contain brightness-0 invert"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).style.display =
+                                "none";
+                            }}
+                          />
+                          Apply on Devfolio
+                          <ArrowRight size={14} />
+                        </a>
+                      )}
                     </div>
-                    <div className="flex flex-col lg:flex-row items-center lg:justify-start gap-4 w-full">
-                      <div
-                        className="apply-button"
-                        data-hackathon-slug="ignisys-ignitia"
-                        data-button-theme="light"
-                        style={{ height: "44px", width: "312px" }}
-                      ></div>
-                      <span className="text-white/60 font-mono text-sm uppercase">OR</span>
-
-                      <DropdownMenu modal={false} open={dropdownOpen} onOpenChange={setDropdownOpen}>
-                        <DropdownMenuTrigger
-                          onPointerDown={(e) => {
-                            // On touch devices, block Radix's pointerdown handler — we'll open on touchend instead
-                            if (e.pointerType === "touch") e.preventDefault();
-                          }}
-                          onTouchStart={(e) => {
-                            touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-                            touchScrolledRef.current = false;
-                          }}
-                          onTouchMove={(e) => {
-                            if (touchStartRef.current) {
-                              const dy = Math.abs(e.touches[0].clientY - touchStartRef.current.y);
-                              const dx = Math.abs(e.touches[0].clientX - touchStartRef.current.x);
-                              if (dy > 8 || dx > 8) touchScrolledRef.current = true;
-                            }
-                          }}
-                          onTouchEnd={() => {
-                            if (!touchScrolledRef.current) setDropdownOpen((o) => !o);
-                            touchStartRef.current = null;
-                            touchScrolledRef.current = false;
-                          }}
-                          className="relative flex items-center justify-center gap-3 bg-[#111116] border border-white/10 text-white font-mono text-sm px-5 py-2 hover:bg-[#1a1a24] data-[state=open]:bg-[#1a1a24] lg:hover:bg-white/5 lg:data-[state=open]:bg-[#111116] transition-all focus:outline-none focus:border-primary/80 h-[44px] rounded-md cursor-pointer group shadow-[0_0_15px_rgba(168,85,247,0.15)] w-[220px] lg:w-[200px]">
-                          <span>Apply with</span>
-                          <ChevronDown className="absolute right-4 h-4 w-4 opacity-50 group-hover:opacity-100 transition-opacity" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="bg-[#09090b] border border-white/20 text-white font-mono min-w-[220px] lg:min-w-[200px] p-1.5 shadow-[0_0_30px_rgba(168,85,247,0.2)]">
-                          <DropdownMenuItem className="cursor-pointer hover:bg-white/10 focus:bg-white/10 py-3 px-3 transition-colors flex items-center justify-center gap-3 rounded-sm" onClick={() => window.open("https://unstop.com/o/p7hPAvZ", "_blank")}>
-                            <div className="w-7 h-7 flex items-center justify-center bg-white/5 rounded-md p-1 border border-white/5">
-                              <img src="/unstop-icon.png" alt="Unstop" className="w-full h-full object-contain" style={{ imageRendering: 'crisp-edges' }} />
-                            </div>
-                            <span className="font-semibold tracking-wide">Unstop</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="cursor-pointer hover:bg-white/10 focus:bg-white/10 py-3 px-3 transition-colors flex items-center justify-center gap-3 rounded-sm" onClick={() => window.open("https://luma.com/do2pxms5", "_blank")}>
-                            <div className="w-7 h-7 flex items-center justify-center bg-white/5 rounded-md p-1 border border-white/5">
-                              <img src="/luma-icon.png" alt="Luma" className="w-full h-full object-contain" style={{ imageRendering: 'crisp-edges' }} />
-                            </div>
-                            <span className="font-semibold tracking-wide">Luma</span>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-
-                    </div>
+                    <Link
+                      to="/events"
+                      className="hero-secondary-button glow-button-secondary flex items-center gap-3 text-sm"
+                    >
+                      Explore Events
+                      <ArrowRight size={16} />
+                    </Link>
                   </div>
                 </div>
 
                 {/* T-MINUS countdown box */}
                 <div className="w-full lg:w-auto lg:min-w-[320px]">
-                  <div className="relative border-0 md:border md:border-white/10 bg-transparent md:bg-black/60 p-0 md:p-7 overflow-hidden"
-                    style={{ clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))" }}
+                  <div
+                    className="relative border border-white/10 bg-black/60 p-5 md:p-7 overflow-hidden"
+                    style={{
+                      clipPath:
+                        "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))",
+                    }}
                   >
-                    <div className="absolute top-0 right-0 w-4 h-4 bg-primary/50 hidden md:block" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }} />
-                    <div className="absolute bottom-0 left-0 w-4 h-4 bg-secondary/50 hidden md:block" style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%)" }} />
+                    <div
+                      className="absolute top-0 right-0 w-4 h-4 bg-primary/50"
+                      style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }}
+                    />
+                    <div
+                      className="absolute bottom-0 left-0 w-4 h-4 bg-secondary/50"
+                      style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%)" }}
+                    />
 
-                    <div className="hidden md:flex items-center gap-2 mb-4">
+                    <div className="flex items-center gap-2 mb-4">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                      <span className="font-mono text-[9px] tracking-[0.35em] text-white/40 uppercase">Event Launch Countdown</span>
+                      <span className="font-mono text-[9px] tracking-[0.35em] text-white/40 uppercase">
+                        Event Launch Countdown
+                      </span>
                     </div>
 
                     <CountdownTimer embedded />
 
-                    <div className="hidden md:block mt-4 space-y-1">
+                    <div className="mt-4 space-y-1">
                       <div className="flex justify-between font-mono text-[8px] text-white/30 uppercase tracking-widest">
                         <span>Event window open</span>
                         <span>Launch</span>
@@ -312,27 +385,66 @@ const Index = () => {
               id="showcase-overlay-about"
               className="absolute inset-0 flex items-center pointer-events-none z-20 opacity-0"
             >
-              <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden>
-                <line x1="75%" y1="30%" x2="52%" y2="20%" stroke="rgba(168,85,247,0.15)" strokeWidth="1" strokeDasharray="4 6" />
-                <line x1="78%" y1="55%" x2="52%" y2="55%" stroke="rgba(0,255,200,0.1)" strokeWidth="1" strokeDasharray="3 8" />
-                <line x1="72%" y1="75%" x2="52%" y2="80%" stroke="rgba(197,160,89,0.12)" strokeWidth="1" strokeDasharray="4 6" />
+              <svg
+                className="absolute inset-0 w-full h-full pointer-events-none"
+                aria-hidden
+              >
+                <line
+                  x1="75%"
+                  y1="30%"
+                  x2="52%"
+                  y2="20%"
+                  stroke="rgba(168,85,247,0.15)"
+                  strokeWidth="1"
+                  strokeDasharray="4 6"
+                />
+                <line
+                  x1="78%"
+                  y1="55%"
+                  x2="52%"
+                  y2="55%"
+                  stroke="rgba(0,255,200,0.1)"
+                  strokeWidth="1"
+                  strokeDasharray="3 8"
+                />
+                <line
+                  x1="72%"
+                  y1="75%"
+                  x2="52%"
+                  y2="80%"
+                  stroke="rgba(197,160,89,0.12)"
+                  strokeWidth="1"
+                  strokeDasharray="4 6"
+                />
                 <circle cx="75%" cy="30%" r="3" fill="rgba(168,85,247,0.3)" />
                 <circle cx="78%" cy="55%" r="3" fill="rgba(0,255,200,0.2)" />
                 <circle cx="72%" cy="75%" r="3" fill="rgba(197,160,89,0.25)" />
               </svg>
 
               <div className="container mx-auto px-8 md:px-16 lg:px-20">
-                <div className="max-w-xl space-y-5 border border-white/10 bg-black/70 backdrop-blur-md p-6 md:p-8 relative"
-                  style={{ clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))" }}
+                <div
+                  className="max-w-xl space-y-5 border border-white/10 bg-black/70 backdrop-blur-md p-6 md:p-8 relative"
+                  style={{
+                    clipPath:
+                      "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))",
+                  }}
                 >
-                  <div className="absolute top-0 right-0 w-5 h-5 bg-primary/40" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }} />
-                  <div className="absolute bottom-0 left-0 w-5 h-5 bg-secondary/40" style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%)" }} />
+                  <div
+                    className="absolute top-0 right-0 w-5 h-5 bg-primary/40"
+                    style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }}
+                  />
+                  <div
+                    className="absolute bottom-0 left-0 w-5 h-5 bg-secondary/40"
+                    style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%)" }}
+                  />
                   <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-primary/50" />
                   <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-secondary/50" />
 
                   <div className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-neon-cyan animate-ping" />
-                    <span className="font-mono text-[9px] tracking-[0.3em] text-neon-cyan/60 uppercase">Event Overview: Quick Stats</span>
+                    <span className="font-mono text-[9px] tracking-[0.3em] text-neon-cyan/60 uppercase">
+                      Event Overview: Quick Stats
+                    </span>
                   </div>
 
                   <div>
@@ -351,15 +463,39 @@ const Index = () => {
 
                   <div className="space-y-3 pt-1">
                     {[
-                      { label: "PRIZE POOL", value: "₹2,00,000+", pct: 90, color: "from-secondary to-yellow-400" },
-                      { label: "FOOTFALL", value: "1000+", pct: 85, color: "from-primary to-purple-400" },
-                      { label: "COLLABORATORS", value: "50+ Colleges", pct: 75, color: "from-neon-cyan to-teal-400" },
-                      { label: "ARENAS", value: "7+", pct: 55, color: "from-pink-500 to-primary" },
+                      {
+                        label: "PRIZE POOL",
+                        value: "₹2,00,000+",
+                        pct: 90,
+                        color: "from-secondary to-yellow-400",
+                      },
+                      {
+                        label: "FOOTFALL",
+                        value: "5000+",
+                        pct: 85,
+                        color: "from-primary to-purple-400",
+                      },
+                      {
+                        label: "COLLABORATORS",
+                        value: "50+ Colleges",
+                        pct: 75,
+                        color: "from-neon-cyan to-teal-400",
+                      },
+                      {
+                        label: "ARENAS",
+                        value: "7+",
+                        pct: 55,
+                        color: "from-pink-500 to-primary",
+                      },
                     ].map(({ label, value, pct, color }) => (
                       <div key={label} className="space-y-1">
                         <div className="flex justify-between items-baseline">
-                          <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest">{label}</span>
-                          <span className="font-mono text-xs font-bold text-white/80">{value}</span>
+                          <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest">
+                            {label}
+                          </span>
+                          <span className="font-mono text-xs font-bold text-white/80">
+                            {value}
+                          </span>
                         </div>
                         <div className="relative h-[3px] bg-white/[0.06] overflow-hidden">
                           <div
@@ -372,11 +508,17 @@ const Index = () => {
                   </div>
 
                   <div className="flex flex-wrap gap-3 pt-2">
-                    <Link to="/events" className="glow-button flex items-center gap-2 text-xs py-2 px-5">
+                    <Link
+                      to="/events"
+                      className="glow-button flex items-center gap-2 text-xs py-2 px-5"
+                    >
                       <span>Access Portal</span>
                       <span className="font-mono opacity-70">&gt;&gt;</span>
                     </Link>
-                    <Link to="/schedule" className="glow-button-secondary border-white/10 text-white hover:border-white/30 text-xs py-2 px-5">
+                    <Link
+                      to="/schedule"
+                      className="glow-button-secondary border-white/10 text-white hover:border-white/30 text-xs py-2 px-5"
+                    >
                       Fest Schedule
                     </Link>
                   </div>
@@ -390,13 +532,18 @@ const Index = () => {
 
           {/* Below sections flow up naturally following pin completion */}
           <div className="relative bg-transparent z-20">
-
             <CTABanner />
 
             {/* Event Map Location Embed */}
-            <section className="section-padding py-6 md:py-16">
+            <section className="section-padding py-16">
               <div className="container mx-auto max-w-5xl px-4">
-                <div className="group relative overflow-hidden border-2 border-primary/30 bg-black/80 h-72 transition-all duration-300 hover:border-primary/80 shadow-[0_0_30px_rgba(139,92,246,0.15)]" style={{ clipPath: "polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)" }}>
+                <div
+                  className="group relative overflow-hidden border-2 border-primary/30 bg-black/80 h-72 transition-all duration-300 hover:border-primary/80 shadow-[0_0_30px_rgba(139,92,246,0.15)]"
+                  style={{
+                    clipPath:
+                      "polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)",
+                  }}
+                >
                   <div className="absolute inset-0 pointer-events-none bg-primary/10 animate-pulse z-10" />
 
                   <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary z-20 m-2" />
@@ -406,7 +553,10 @@ const Index = () => {
                     src={mapEmbedSrc}
                     width="100%"
                     height="100%"
-                    style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) sepia(50%)" }}
+                    style={{
+                      border: 0,
+                      filter: "invert(90%) hue-rotate(180deg) sepia(50%)",
+                    }}
                     loading="lazy"
                     title="UEM Kolkata Location"
                     className="opacity-80 mix-blend-screen"
@@ -416,9 +566,9 @@ const Index = () => {
                     target="_blank"
                     rel="noreferrer"
                     aria-label="Open UEM Kolkata map"
-                    className="absolute right-4 top-4 z-30 font-mono border border-primary/50 bg-black/80 px-3 py-1 text-[10px] md:px-4 md:py-1.5 md:text-xs font-bold text-primary backdrop-blur-md transition-all hover:bg-primary/20 shadow-[0_0_10px_rgba(139,92,246,0.3)] uppercase tracking-widest"
+                    className="absolute right-4 top-4 z-30 font-mono border border-primary/50 bg-black/80 px-4 py-1.5 text-xs font-bold text-primary backdrop-blur-md transition-all hover:bg-primary/20 shadow-[0_0_10px_rgba(139,92,246,0.3)] uppercase tracking-widest"
                   >
-                    [ Directions ]
+                    [ Get Directions ]
                   </a>
                 </div>
               </div>
