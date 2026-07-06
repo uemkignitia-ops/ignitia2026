@@ -459,25 +459,33 @@ function GaugeCard({ gauge }: { gauge: GaugeConfig }) {
         }} />
 
         {/* Corner bracket TL */}
-        <div style={{ position: "absolute", top: 12, left: 12, width: 18, height: 18,
+        <div style={{
+          position: "absolute", top: 12, left: 12, width: 18, height: 18,
           borderTop: `1.5px solid rgba(${gauge.glowRgb},${hovered ? 0.7 : 0.25})`,
           borderLeft: `1.5px solid rgba(${gauge.glowRgb},${hovered ? 0.7 : 0.25})`,
-          borderRadius: "3px 0 0 0", transition: "border-color 0.3s" }} />
+          borderRadius: "3px 0 0 0", transition: "border-color 0.3s"
+        }} />
         {/* Corner bracket TR */}
-        <div style={{ position: "absolute", top: 12, right: 12, width: 18, height: 18,
+        <div style={{
+          position: "absolute", top: 12, right: 12, width: 18, height: 18,
           borderTop: `1.5px solid rgba(${gauge.glowRgb},${hovered ? 0.7 : 0.25})`,
           borderRight: `1.5px solid rgba(${gauge.glowRgb},${hovered ? 0.7 : 0.25})`,
-          borderRadius: "0 3px 0 0", transition: "border-color 0.3s" }} />
+          borderRadius: "0 3px 0 0", transition: "border-color 0.3s"
+        }} />
         {/* Corner bracket BL */}
-        <div style={{ position: "absolute", bottom: 12, left: 12, width: 18, height: 18,
+        <div style={{
+          position: "absolute", bottom: 12, left: 12, width: 18, height: 18,
           borderBottom: `1.5px solid rgba(${gauge.glowRgb},${hovered ? 0.7 : 0.25})`,
           borderLeft: `1.5px solid rgba(${gauge.glowRgb},${hovered ? 0.7 : 0.25})`,
-          borderRadius: "0 0 0 3px", transition: "border-color 0.3s" }} />
+          borderRadius: "0 0 0 3px", transition: "border-color 0.3s"
+        }} />
         {/* Corner bracket BR */}
-        <div style={{ position: "absolute", bottom: 12, right: 12, width: 18, height: 18,
+        <div style={{
+          position: "absolute", bottom: 12, right: 12, width: 18, height: 18,
           borderBottom: `1.5px solid rgba(${gauge.glowRgb},${hovered ? 0.7 : 0.25})`,
           borderRight: `1.5px solid rgba(${gauge.glowRgb},${hovered ? 0.7 : 0.25})`,
-          borderRadius: "0 0 3px 0", transition: "border-color 0.3s" }} />
+          borderRadius: "0 0 3px 0", transition: "border-color 0.3s"
+        }} />
 
         {/* Ambient radial glow under meter */}
         <div style={{
@@ -708,43 +716,7 @@ function Header({ visible }: { visible: boolean }) {
       marginBottom: "60px",
       position: "relative", zIndex: 2,
     }}>
-      {/* Eyebrow */}
-      <motion.div
-        initial={{ opacity: 0, y: -16 }}
-        animate={visible ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          display: "inline-flex", alignItems: "center", gap: 10,
-          padding: "6px 20px", borderRadius: "50px",
-          background: "rgba(0,212,255,0.07)",
-          border: "1px solid rgba(0,212,255,0.2)",
-          marginBottom: 20,
-        }}
-      >
-        <span style={{
-          width: 6, height: 6, borderRadius: "50%",
-          background: "#00d4ff",
-          boxShadow: "0 0 8px #00d4ff",
-          display: "inline-block",
-          animation: "gaugePulse 2s ease-in-out infinite",
-        }} />
-        <span style={{
-          fontSize: "10px", fontWeight: 800,
-          letterSpacing: "0.26em", textTransform: "uppercase",
-          color: "#00d4ff",
-          fontFamily: "'Space Grotesk', sans-serif",
-        }}>
-          MLSA UEMK · LIVE METRICS
-        </span>
-        <span style={{
-          width: 6, height: 6, borderRadius: "50%",
-          background: "#00d4ff",
-          boxShadow: "0 0 8px #00d4ff",
-          display: "inline-block",
-          animation: "gaugePulse 2s ease-in-out infinite",
-          animationDelay: "1s",
-        }} />
-      </motion.div>
+
 
       {/* Main title */}
       <motion.h2
@@ -777,21 +749,7 @@ function Header({ visible }: { visible: boolean }) {
         </span>
       </motion.h2>
 
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={visible ? { opacity: 1 } : {}}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        style={{
-          fontFamily: "'Space Grotesk', sans-serif",
-          fontSize: "14px",
-          letterSpacing: "0.18em",
-          color: "rgba(255,255,255,0.3)",
-          textTransform: "uppercase",
-          margin: 0,
-        }}
-      >
-        Real-time Platform Data · Season 2025–26
-      </motion.p>
+
     </div>
   );
 }
@@ -846,7 +804,7 @@ function StatusStrip({ visible }: { visible: boolean }) {
           fontSize: "10px", letterSpacing: "0.14em",
           color: "rgba(255,255,255,0.2)", textTransform: "uppercase",
         }}>
-          © MLSA UEMK · 2025–26 · ALL SYSTEMS GO
+          © IGNITIA · 2025–26 · ALL SYSTEMS GO
         </span>
       </div>
     </motion.div>
@@ -934,7 +892,7 @@ export default function StatsDark() {
         className="stats-dark"
         style={{
           position: "relative",
-          background: "linear-gradient(160deg, #010308 0%, #030b1a 35%, #040d20 65%, #010308 100%)",
+          background: "transparent",
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
@@ -1000,7 +958,6 @@ export default function StatsDark() {
           </div>
         </div>
 
-        <StatusStrip visible={sectionVisible} />
       </section>
     </>
   );

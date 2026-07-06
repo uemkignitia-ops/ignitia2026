@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
-const TARGET_DATE = "2026-09-15T09:00:00";
+const TARGET_DATE = "2026-08-01T00:00:00";
 
 interface TimeLeft {
   days: number;
@@ -188,13 +188,6 @@ export default function Timer({
         <div className="cyber-panel-inner">
           <div className="cyber-hazard" aria-hidden="true" />
 
-          <div className="cyber-top-row">
-            <span className="cyber-live-dot" />
-            <span className="cyber-eyebrow">
-              {isOver ? "SYSTEM // LIVE" : eyebrow}
-            </span>
-            <span className="cyber-code" aria-hidden="true">{`0x${hexCode}`}</span>
-          </div>
 
           <div className="cyber-title">
             {isOver ? "IGNITIA IS LIVE" : "COUNTDOWN ACTIVE"}
@@ -222,13 +215,7 @@ export default function Timer({
             <DigitTile value={seconds} label="SEC" index={3} loading={loading} reduceMotion={reduceMotion} />
           </div>
 
-          <div className="cyber-bottom-row">
-            <span>VECTOR LOCK</span>
-            <span className="cyber-progress">
-              <i />
-            </span>
-            <span>LAUNCH</span>
-          </div>
+          {/* Bottom row telemetry labels removed per request */}
         </div>
       </motion.div>
 
@@ -410,8 +397,8 @@ export default function Timer({
 
         .cyber-tile {
           position: relative;
-          width: clamp(58px, 7vw, 76px);
-          height: clamp(62px, 7vw, 84px);
+          width: clamp(48px, 5.5vw, 63px);
+          height: clamp(52px, 5.5vw, 70px);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -460,7 +447,7 @@ export default function Timer({
           z-index: 3;
           color: var(--cyber-text);
           font-family: "Share Tech Mono", monospace;
-          font-size: clamp(30px, 4vw, 44px);
+          font-size: clamp(24px, 3.2vw, 36px);
           font-weight: 700;
           line-height: 1;
           font-variant-numeric: tabular-nums;

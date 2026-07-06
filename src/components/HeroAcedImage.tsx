@@ -13,7 +13,7 @@ export default function HeroAcedImage() {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
     >
-      
+
 
       <motion.div
         animate={reduceMotion ? { y: 0 } : { y: [0, -10, 0] }}
@@ -30,10 +30,10 @@ export default function HeroAcedImage() {
         className="relative"
       >
         <img
-  src="/images/Terminal.png"
-  alt="ACED Ignitia visual"
-  className="w-full h-auto object-contain drop-shadow-[0_0_35px_rgba(43,232,255,0.35)]"
-/>
+          src="/images/Terminal.png"
+          alt="ACED Ignitia visual"
+          className="w-full h-auto object-contain drop-shadow-[0_0_35px_rgba(43,232,255,0.35)]"
+        />
 
         <div className="absolute left-1/2 bottom-4 h-[2px] w-[65%] -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent blur-[1px]" />
       </motion.div>

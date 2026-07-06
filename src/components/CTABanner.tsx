@@ -250,18 +250,7 @@ const CTABanner = () => (
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="max-w-4xl mx-auto"
       >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md mb-8"
-        >
-          <Sparkles size={14} className="text-primary animate-pulse" />
-          <span className="text-sm font-medium text-primary tracking-wide uppercase">
-            The Future Is Now
-          </span>
-        </motion.div>
+
 
         <h2 className="ignite-heading mb-7">
   <span className="ignite-ready">Ready to</span>
