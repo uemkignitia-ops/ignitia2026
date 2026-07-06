@@ -7,7 +7,6 @@ interface AuthContextType {
   login: (email: string, pass: string) => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
-  registerAdmin: (email: string, pass: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,14 +25,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Check persistent session on mount
   useEffect(() => {
-    // Check local storage session first (for offline/initial credential sessions)
-    const isMockSession = localStorage.getItem("ignitia_admin_session") === "true";
-    if (isMockSession) {
-      setCurrentUser({ email: "uemk.ignitia@gmail.com", uid: "admin-fallback" });
-      setLoading(false);
-      return;
-    }
-
     if (!isSupabaseEnabled || !supabase) {
       setLoading(false);
       return;
@@ -70,17 +61,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       throw new Error("Access Denied: Only the official admin email can access this dashboard.");
     }
 
-    // For local testing: force mock login without attempting to hit Supabase.
-    if (pass === "WueN69emGDPhu.Q") {
-      localStorage.setItem("ignitia_admin_session", "true");
-      setCurrentUser({ email, uid: "admin-fallback" });
-    } else {
-      throw new Error("Invalid admin password.");
+    if (!isSupabaseEnabled || !supabase) {
+      throw new Error("Supabase is not initialized. Cannot perform admin login.");
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password: pass,
+    });
+
+    if (error) {
+      throw error;
+    }
+
+    if (data.user) {
+      setCurrentUser({ email: data.user.email ?? null, uid: data.user.id });
     }
   };
 
   const logout = async () => {
-    localStorage.removeItem("ignitia_admin_session");
     if (isSupabaseEnabled && supabase) {
       await supabase.auth.signOut();
     }
@@ -96,28 +95,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const registerAdmin = async (email: string, pass: string) => {
-    if (isSupabaseEnabled && supabase) {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password: pass,
-      });
-      if (error) throw error;
-      if (data.user) {
-        setCurrentUser({ email: data.user.email ?? email, uid: data.user.id });
-      }
-    } else {
-      throw new Error("Supabase is not initialized. Cannot register new admins.");
-    }
-  };
-
   const value = {
     currentUser,
     loading,
     login,
     logout,
     resetPassword,
-    registerAdmin,
   };
 
   return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
