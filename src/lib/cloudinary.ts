@@ -1,3 +1,5 @@
+import { supabase } from "./supabase";
+
 export interface CloudinaryResult {
   secure_url: string;
   public_id: string;
@@ -42,12 +44,21 @@ export const uploadGalleryImage = async (file: File): Promise<CloudinaryResult> 
 
   const base64Data = await fileToBase64(file);
 
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (supabase) {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.access_token) {
+      headers["Authorization"] = `Bearer ${session.access_token}`;
+    }
+  }
+
   const res = await fetch("/api/upload", {
     method: "POST",
     body: JSON.stringify({ file: base64Data }),
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
   });
 
   if (!res.ok) {
@@ -68,12 +79,21 @@ export const uploadGalleryImage = async (file: File): Promise<CloudinaryResult> 
 export const deleteGalleryImage = async (public_id: string): Promise<void> => {
   if (!public_id) return;
 
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (supabase) {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.access_token) {
+      headers["Authorization"] = `Bearer ${session.access_token}`;
+    }
+  }
+
   const res = await fetch("/api/delete", {
     method: "POST",
     body: JSON.stringify({ public_id }),
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
   });
 
   if (!res.ok) {

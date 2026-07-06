@@ -28,7 +28,6 @@ const Navbar = () => {
   const [hidden, setHidden] = useState(false);
   const [isLoaded, setIsLoaded] = useState(() => !!(window as any).__IGNITIA_LOADER_DONE__);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [logoPulseKey, setLogoPulseKey] = useState(0);
   const lastYRef = useRef(0);
   const tickingRef = useRef(false);
   const hiddenRef = useRef(false);
@@ -39,15 +38,7 @@ const Navbar = () => {
   const isHome = location.pathname === "/";
 
   const { scrollY } = useScroll();
-  const logoScale = useSpring(useTransform(scrollY, [0, 110], [0.97, 1]), {
-    stiffness: 180,
-    damping: 30,
-  });
-  const logoY = useSpring(useTransform(scrollY, [0, 110], [2, 0]), {
-    stiffness: 180,
-    damping: 30,
-  });
-  const navHeight = useSpring(useTransform(scrollY, [0, 110], [68, 64]), {
+  const navHeight = useSpring(useTransform(scrollY, [0, 110], [84, 76]), {
     stiffness: 180,
     damping: 30,
   });
@@ -96,11 +87,6 @@ const Navbar = () => {
     if (!isMobile) {
       return;
     }
-
-    // document.body.style.overflow = isOpen ? "hidden" : "";
-    // return () => {
-    //   document.body.style.overflow = "";
-    // };
   }, [isOpen, isMobile]);
 
   useEffect(() => {
@@ -131,7 +117,6 @@ const Navbar = () => {
   useEffect(() => {
     if (isLoaded) return;
     const onLoaderComplete = () => {
-      setLogoPulseKey((k) => k + 1);
       setIsLoaded(true);
     };
     window.addEventListener("ignitia:loader-complete", onLoaderComplete);
@@ -139,28 +124,11 @@ const Navbar = () => {
       window.removeEventListener("ignitia:loader-complete", onLoaderComplete);
   }, [isLoaded]);
 
-  const leftLinks = navLinks.slice(0, 5);
-  const rightLinks = navLinks.slice(5);
+  const leftLinks = navLinks.slice(0, 4); // Home, About, Events, Schedule
+  const rightLinks = navLinks.slice(4); // Gallery, FAQ, Sponsors, Team, Contact
 
   return (
     <>
-      {/* Desktop Home Page Corner Logos */}
-      {isHome && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isLoaded ? 1 : 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="pointer-events-none"
-        >
-          <div className="hidden md:flex fixed top-6 left-10 md:top-[2.75rem] md:left-[4.5rem] z-[150] pointer-events-none">
-            <img src="/iem-logo.png" alt="IEM Logo" className="h-24 md:h-[8rem] w-auto object-contain drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]" />
-          </div>
-          <div className="hidden md:flex fixed top-6 right-10 md:top-[2.75rem] md:right-[4.5rem] z-[150] pointer-events-none">
-            <img src="/uem-logo.png" alt="UEM Logo" className="h-24 md:h-[8rem] w-auto object-contain drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]" />
-          </div>
-        </motion.div>
-      )}
-
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: hidden || !isLoaded ? -100 : 16, opacity: isLoaded ? 1 : 0 }}
@@ -173,18 +141,9 @@ const Navbar = () => {
         )}
       >
         <motion.div
-          style={{ height: isHome ? navHeight : 64 }}
+          style={{ height: isHome ? navHeight : 76 }}
           className="flex items-center justify-between px-6 w-full relative"
         >
-          {/* Admin Lock Access Icon (Left Side) */}
-          <Link
-            to="/admin/login"
-            className="flex items-center justify-center text-white/40 hover:text-primary active:scale-95 transition-all duration-200 p-2.5 mr-3 border border-white/5 hover:border-primary/30 rounded-lg hover:bg-primary/5 hover:shadow-[0_0_10px_rgba(139,92,246,0.15)] z-[120] min-w-[36px] min-h-[36px]"
-            title="Admin Login"
-          >
-            <Lock size={16} />
-          </Link>
-
           {/* Mobile Logo (left-aligned) */}
           <div className="flex lg:hidden items-center shrink-0">
             <Link to="/" className="flex items-center gap-2">
@@ -201,73 +160,70 @@ const Navbar = () => {
             <img src="/uem-logo.png" alt="UEM" className="h-12 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]" />
           </div>
 
-          {/* Desktop: Left side links */}
-          <div className="hidden lg:flex items-center gap-6 w-[42%] justify-end">
+          {/* Desktop Left aligned Section: Lock, IEM/UEM Logos, Left Links, IGNITIA Brand, Right Links */}
+          <div className="hidden lg:flex items-center gap-4 xl:gap-5 flex-1 justify-start">
+            {/* Admin Lock Access Icon */}
+            <Link
+              to="/admin/login"
+              className="flex items-center justify-center text-white/40 hover:text-primary active:scale-95 transition-all duration-200 p-2 border border-white/5 hover:border-primary/30 rounded-lg hover:bg-primary/5 hover:shadow-[0_0_10px_rgba(139,92,246,0.15)] min-w-[32px] min-h-[32px] shrink-0"
+              title="Admin Login"
+            >
+              <Lock size={14} />
+            </Link>
+
+            {/* Desktop IEM & UEM Logos (side-by-side) */}
+            <div className="flex items-center gap-2 shrink-0 border-r border-white/10 pr-4 mr-1">
+              <img src="/iem-logo.png" alt="IEM Logo" className="h-14 w-auto object-contain drop-shadow-[0_0_8px_rgba(255,215,0,0.25)]" />
+              <img src="/uem-logo.png" alt="UEM Logo" className="h-14 w-auto object-contain drop-shadow-[0_0_8px_rgba(255,215,0,0.25)]" />
+            </div>
+
+            {/* First 4 quick links */}
             {leftLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
                 className={cn(
-                  "relative py-1 text-sm font-medium transition-colors duration-200 nav-link-underline",
+                  "relative py-1 text-xs xl:text-sm font-bold transition-colors duration-200 nav-link-underline whitespace-nowrap",
                   location.pathname === link.href
-                    ? "text-primary font-semibold"
+                    ? "text-primary"
                     : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {link.label}
               </Link>
             ))}
-          </div>
 
-          {/* Desktop: Centered Logo */}
-          <div className="hidden lg:flex items-center justify-center shrink-0 w-[16%]">
-            <Link to="/" className="flex items-center gap-2">
-              <motion.span
-                style={isHome ? { scale: logoScale, y: logoY } : undefined}
-                className="origin-center"
-              >
-                <motion.div
-                  key={logoPulseKey}
-                  initial={
-                    logoPulseKey
-                      ? { opacity: 0.35, scale: 0.72, filter: "blur(8px)" }
-                      : false
-                  }
-                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                  transition={{ duration: 1.1, ease: "easeOut" }}
-                  className="flex items-center gap-2"
-                >
-                  <motion.img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
-                  <motion.span className="font-heading text-lg font-bold gradient-text inline-block md:text-xl shrink-0">
-                    IGNITIA '26
-                  </motion.span>
-                </motion.div>
-              </motion.span>
+            {/* IGNITIA Brand Logo & Text inline with same padding */}
+            <Link to="/" className="flex items-center gap-2 shrink-0 mx-1">
+              <img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-8 w-8 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
+              <span className="font-heading text-sm xl:text-base font-black gradient-text inline-block tracking-wide">
+                IGNITIA '26
+              </span>
             </Link>
-          </div>
 
-          {/* Desktop: Right side links + Register Button */}
-          <div className="hidden lg:flex items-center gap-6 w-[42%] justify-start">
+            {/* Remaining quick links */}
             {rightLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
                 className={cn(
-                  "relative py-1 text-sm font-medium transition-colors duration-200 nav-link-underline",
+                  "relative py-1 text-xs xl:text-sm font-bold transition-colors duration-200 nav-link-underline whitespace-nowrap",
                   location.pathname === link.href
-                    ? "text-primary font-semibold"
+                    ? "text-primary"
                     : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {link.label}
               </Link>
             ))}
+
+            {/* Register Now Button inline with extra left margin for visual emphasis */}
             <Link
               to="/events"
-              className="glow-button text-sm !px-4 !py-1.5 inline-flex items-center gap-2 pulse-cta shrink-0"
+              className="glow-button text-xs xl:text-sm !px-4.5 !py-2 inline-flex items-center gap-2 pulse-cta shrink-0 font-extrabold ml-2"
             >
               Register
-              <ArrowRight size={12} />
+              <ArrowRight size={13} />
             </Link>
           </div>
 
@@ -310,7 +266,7 @@ const Navbar = () => {
             <motion.div
               animate={{ opacity: hidden ? 0 : 1, y: hidden ? -20 : 0 }}
               transition={{ duration: 0.2 }}
-              className="hidden md:block absolute top-[-5px] md:top-[0px] right-[-5px] md:right-0 pointer-events-none z-10"
+              className="hidden md:block absolute top-[-5px] md:top-[0px] right-[-15px] lg:right-[-25px] pointer-events-none z-10"
             >
               <img
                 src="/Transparent_gif_flipped.gif"
