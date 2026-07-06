@@ -581,13 +581,7 @@ const Events = () => {
                     rel={selectedEvent.registrationUrl ? "noopener noreferrer" : undefined}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`w-full sm:w-auto relative overflow-hidden font-mono font-semibold uppercase tracking-wider px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl transition-all duration-300 text-center text-sm ${selectedEvent.theme === "orange" ? "bg-orange-500 text-white shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_30px_rgba(249,115,22,0.5)]" :
-                      selectedEvent.theme === "purple" ? "bg-purple-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]" :
-                        selectedEvent.theme === "purple" ? "bg-purple-500 text-white shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.5)]" :
-                          selectedEvent.theme === "yellow" ? "bg-amber-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_30px_rgba(245,158,11,0.5)]" :
-                            selectedEvent.theme === "pink" ? "bg-pink-500 text-white shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:shadow-[0_0_30px_rgba(236,72,153,0.5)]" :
-                              "bg-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)]"
-                      }`}
+                    className="w-full sm:w-auto relative overflow-hidden font-semibold uppercase tracking-wider px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl transition-all duration-300 text-center text-sm register-button-orange"
                   >
                     Register Now
                   </motion.a>

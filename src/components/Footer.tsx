@@ -98,13 +98,50 @@ const Footer = () => (
         </motion.div>
       </motion.div>
 
+      {/* Credits Section */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.15 }}
+        className="mt-8 text-center text-[10px] text-muted-foreground font-['Orbitron'] tracking-wider"
+      >
+        Designed & Developed by :{" "}
+        <a
+          href="https://www.linkedin.com/in/diptodeep-biswas/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="no-underline text-inherit hover:text-white transition-colors"
+        >
+          Diptodeep Biswas
+        </a>{" "}
+        •{" "}
+        <a
+          href="https://www.linkedin.com/in/tridibesh-sen/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="no-underline text-inherit hover:text-white transition-colors"
+        >
+          Tridibesh Sen
+        </a>{" "}
+        •{" "}
+        <a
+          href="https://www.linkedin.com/in/pranab-singh-2043b6273/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="no-underline text-inherit hover:text-white transition-colors"
+        >
+          Pranab Singh
+        </a>
+      </motion.div>
+
       {/* Copyright Bottom Section */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="mt-6 text-center text-[10px] text-muted-foreground font-['Orbitron'] tracking-wider"
+        className="mt-2 text-center text-[10px] text-muted-foreground font-['Orbitron'] tracking-wider"
       >
         © 2026 IGNITIA '26 · Built for students, powered by the IEM-UEM group, UEM Kolkata.
       </motion.div>

@@ -18,7 +18,7 @@ const STARS = [
 
 const CTABanner = () => (
   <section
-  
+
     id="register"
     className="relative py-32 overflow-hidden bg-transparent"
   >
@@ -33,12 +33,12 @@ const CTABanner = () => (
   }
 
   .ignite-ready {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Orbitron", "Rajdhani", system-ui, sans-serif;
     font-size: clamp(3rem, 7vw, 6.8rem);
     font-weight: 900;
     letter-spacing: -0.06em;
-    color: rgba(255,255,255,0.96);
-    text-shadow: 0 0 28px rgba(255,255,255,0.16);
+    color: rgba(255,255,255,0.85);
+    text-shadow: 0 0 16px rgba(255,255,255,0.08);
   }
 
   .ignite-word-wrap {
@@ -51,7 +51,7 @@ const CTABanner = () => (
     position: relative;
     z-index: 2;
     display: inline-block;
-    font-family: "Orbitron", "Audiowide", system-ui, sans-serif;
+    font-family: "Orbitron", "Rajdhani", system-ui, sans-serif;
     font-size: clamp(4.4rem, 12vw, 12rem);
     font-weight: 900;
     letter-spacing: 0.04em;
@@ -68,9 +68,9 @@ const CTABanner = () => (
     -webkit-background-clip: text;
     background-clip: text;
     filter:
-      drop-shadow(0 0 12px rgba(255, 94, 0, 0.55))
-      drop-shadow(0 0 34px rgba(168, 85, 247, 0.35));
-    animation: ignite-lava 3.2s ease-in-out infinite;
+      drop-shadow(0 0 3px rgba(0, 245, 255, 0.25))
+      drop-shadow(0 0 10px rgba(168, 85, 247, 0.15));
+    animation: ignite-lava 4.5s ease-in-out infinite;
   }
 
   .ignite-word::after {
@@ -78,7 +78,7 @@ const CTABanner = () => (
     position: absolute;
     inset: 0;
     z-index: -1;
-    color: rgba(255, 72, 0, 0.28);
+    color: rgba(255, 72, 0, 0.04);
     filter: blur(18px);
     transform: translateY(8px);
   }
@@ -93,8 +93,8 @@ const CTABanner = () => (
     border-radius: 999px;
     background: linear-gradient(90deg, transparent, #ff4d00, #ffd166, #a855f7, transparent);
     box-shadow:
-      0 0 18px rgba(255, 94, 0, 0.75),
-      0 0 38px rgba(168, 85, 247, 0.5);
+      0 0 8px rgba(255, 94, 0, 0.35),
+      0 0 18px rgba(168, 85, 247, 0.25);
     animation: ember-line 2.4s ease-in-out infinite;
   }
 
@@ -148,17 +148,26 @@ const CTABanner = () => (
   .spark-5 { left: 52%; bottom: 62%; animation-delay: 1.55s; }
 
   @keyframes ignite-lava {
-    0%, 100% {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
       filter:
-        drop-shadow(0 0 12px rgba(255, 94, 0, 0.55))
-        drop-shadow(0 0 34px rgba(168, 85, 247, 0.35));
+        drop-shadow(0 0 3px rgba(0, 245, 255, 0.25))
+        drop-shadow(0 0 10px rgba(168, 85, 247, 0.15));
+      opacity: 1;
+      transform: translateY(0);
+    }
+    20%, 24%, 55% {
+      filter:
+        drop-shadow(0 0 1px rgba(0, 245, 255, 0.05))
+        drop-shadow(0 0 2px rgba(168, 85, 247, 0.05));
+      opacity: 0.82;
       transform: translateY(0);
     }
     50% {
       filter:
-        drop-shadow(0 0 20px rgba(255, 125, 0, 0.85))
-        drop-shadow(0 0 54px rgba(255, 45, 85, 0.5));
-      transform: translateY(-2px);
+        drop-shadow(0 0 3px rgba(0, 245, 255, 0.25))
+        drop-shadow(0 0 10px rgba(168, 85, 247, 0.15));
+      opacity: 0.96;
+      transform: translateY(-1px);
     }
   }
 
@@ -253,26 +262,26 @@ const CTABanner = () => (
 
 
         <h2 className="ignite-heading mb-7">
-  <span className="ignite-ready">Ready to</span>
+          <span className="ignite-ready">Ready to</span>
 
-  <span className="ignite-word-wrap">
-    <span className="ignite-word">IGNITE</span>
+          <span className="ignite-word-wrap">
+            <span className="ignite-word">IGNITE</span>
 
-    {/* flame layer */}
-    
+            {/* flame layer */}
 
-    {/* sparks */}
-    <span className="ignite-spark spark-1" />
-    <span className="ignite-spark spark-2" />
-    <span className="ignite-spark spark-3" />
-    <span className="ignite-spark spark-4" />
-    <span className="ignite-spark spark-5" />
-  </span>
-</h2>
-        <p className="text-lg md:text-2xl text-white/75 max-w-3xl mx-auto mb-10 font-light tracking-wide leading-relaxed">
-  Step into Ignitia 2K26 — where tech battles, creative arenas, innovation, 
-  and campus energy collide into one unforgettable experience.
-</p>
+
+            {/* sparks */}
+            <span className="ignite-spark spark-1" />
+            <span className="ignite-spark spark-2" />
+            <span className="ignite-spark spark-3" />
+            <span className="ignite-spark spark-4" />
+            <span className="ignite-spark spark-5" />
+          </span>
+        </h2>
+        <p className="text-base md:text-xl text-white/75 max-w-3xl mx-auto mb-10 font-['Orbitron'] tracking-wider leading-relaxed">
+          Step into Ignitia 2K26 — where tech battles, creative arenas, innovation,
+          and campus energy collide into one unforgettable experience.
+        </p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -283,14 +292,14 @@ const CTABanner = () => (
         >
           <Link
             to="/events"
-            className="hero-primary-button pulse-cta flex-1 sm:flex-none sm:w-auto flex items-center justify-center gap-1.5 sm:gap-3 px-2 sm:px-8 py-3 sm:py-4 text-xs sm:text-lg whitespace-nowrap"
+            className="register-button-orange pulse-cta flex-1 sm:flex-none sm:w-auto flex items-center justify-center gap-1.5 sm:gap-3 px-2 sm:px-8 py-3 sm:py-4 text-xs sm:text-base font-['Orbitron'] tracking-wider whitespace-nowrap"
           >
             Register Now
             <ArrowRight className="w-3.5 h-3.5 sm:w-5 sm:h-5 shrink-0" />
           </Link>
           <Link
             to="/events"
-            className="hero-secondary-button glow-button-secondary flex-1 sm:flex-none sm:w-auto flex items-center justify-center gap-1.5 sm:gap-3 px-2 sm:px-8 py-3 sm:py-4 text-xs sm:text-lg whitespace-nowrap"
+            className="hero-secondary-button glow-button-secondary flex-1 sm:flex-none sm:w-auto flex items-center justify-center gap-1.5 sm:gap-3 px-2 sm:px-8 py-3 sm:py-4 text-xs sm:text-base font-['Orbitron'] tracking-wider whitespace-nowrap"
           >
             Explore Events
             <ArrowRight className="w-3.5 h-3.5 sm:w-5 sm:h-5 shrink-0" />

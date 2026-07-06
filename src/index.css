@@ -1701,3 +1701,23 @@
     transform: translateX(0%);
   }
 }
+
+/* Custom style for Register Now buttons across the site (Solid Violet) */
+.register-button-orange {
+  background: #a855f7 !important;
+  color: #ffffff !important;
+  border-color: rgba(168, 85, 247, 0.4) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.35), 0 0 35px rgba(168, 85, 247, 0.15) !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.register-button-orange:hover {
+  background: #b45cff !important;
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.55), 0 0 50px rgba(168, 85, 247, 0.25) !important;
+  transform: translateY(-2px) scale(1.01) !important;
+}
+
+.register-button-orange:active {
+  transform: translateY(0) scale(0.98) !important;
+}

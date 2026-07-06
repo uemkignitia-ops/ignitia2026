@@ -9,6 +9,7 @@ interface GaugeConfig {
   value: number;
   maxValue: number;
   suffix: string;
+  prefix?: string;
   label: string;
   sublabel: string;
   unit: string;
@@ -26,29 +27,30 @@ interface GaugeConfig {
 
 const GAUGES: GaugeConfig[] = [
   {
-    id: "impressions",
-    value: 25000,
-    maxValue: 30000,
+    id: "prizepool",
+    value: 200000,
+    maxValue: 250000,
     suffix: "+",
-    label: "REACH",
-    sublabel: "IMPRESSIONS",
-    unit: "VIEWS",
+    prefix: "₹",
+    label: "PRIZE",
+    sublabel: "POOL",
+    unit: "INR",
     glow: "#00d4ff",
     glowRgb: "0,212,255",
     glowSecondary: "#0099ff",
     tickColor: "#00aaff",
-    size: "hero",
+    size: "large",
     delay: 0,
-    detail: "25,000+",
-    subdetail: "Across All Platforms",
+    detail: "₹2,00,000+",
+    subdetail: "Cash & Goodies",
   },
   {
-    id: "candidates",
-    value: 200,
-    maxValue: 250,
+    id: "footfall",
+    value: 1000,
+    maxValue: 1200,
     suffix: "+",
-    label: "MEMBERS",
-    sublabel: "SELECTED",
+    label: "EXPECTED",
+    sublabel: "FOOTFALL",
     unit: "PEOPLE",
     glow: "#a78bfa",
     glowRgb: "167,139,250",
@@ -56,42 +58,42 @@ const GAUGES: GaugeConfig[] = [
     tickColor: "#9b72f8",
     size: "large",
     delay: 200,
-    detail: "200+",
-    subdetail: "Verified & Onboarded",
+    detail: "1,000+",
+    subdetail: "Expected Footfall",
   },
   {
     id: "colleges",
     value: 50,
     maxValue: 60,
     suffix: "+",
-    label: "NETWORK",
+    label: "COLLABORATING",
     sublabel: "COLLEGES",
     unit: "INST.",
     glow: "#00ff88",
     glowRgb: "0,255,136",
     glowSecondary: "#00cc66",
     tickColor: "#00ee77",
-    size: "medium",
+    size: "large",
     delay: 350,
-    detail: "50+",
-    subdetail: "IITs · NITs · BITs",
+    detail: "50+ Colleges",
+    subdetail: "Colleges & Universities",
   },
   {
-    id: "uptime",
-    value: 99.9,
-    maxValue: 100,
-    suffix: "%",
-    label: "UPTIME",
-    sublabel: "PLATFORM",
-    unit: "SLA",
+    id: "arenas",
+    value: 12,
+    maxValue: 15,
+    suffix: "+",
+    label: "COMPETITIVE",
+    sublabel: "ARENAS",
+    unit: "GAMES",
     glow: "#ffd700",
     glowRgb: "255,215,0",
     glowSecondary: "#ff9900",
     tickColor: "#ffcc00",
-    size: "medium",
+    size: "large",
     delay: 500,
-    detail: "99.9%",
-    subdetail: "Guaranteed SLA",
+    detail: "12+ Events",
+    subdetail: "Hackathons · Gaming · Tech",
   },
 ];
 
@@ -222,10 +224,8 @@ function Speedometer({
 
   return (
     <svg
-      width={size}
-      height={size * 0.78}
       viewBox={`0 0 ${size} ${size * 0.78}`}
-      style={{ overflow: "visible", display: "block" }}
+      style={{ overflow: "visible", display: "block", width: "100%", height: "auto" }}
     >
       <defs>
         {/* Arc glow filter */}
@@ -444,7 +444,7 @@ function GaugeCard({ gauge }: { gauge: GaugeConfig }) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: isHero ? "32px 28px 28px" : "24px 20px 20px",
+        padding: "24px clamp(12px, 4vw, 20px) 20px",
         overflow: "hidden",
         cursor: "default",
       }}>
@@ -503,21 +503,21 @@ function GaugeCard({ gauge }: { gauge: GaugeConfig }) {
 
         {/* ── Label header ── */}
         <div style={{
-          display: "flex", alignItems: "center", gap: 8,
-          marginBottom: isHero ? 10 : 8,
+          display: "flex", alignItems: "center", gap: 6,
+          marginBottom: "4px",
           zIndex: 2,
         }}>
           <div style={{
-            width: 6, height: 6, borderRadius: "50%",
+            width: 5, height: 5, borderRadius: "50%",
             background: gauge.glow,
-            boxShadow: `0 0 8px ${gauge.glow}, 0 0 16px rgba(${gauge.glowRgb},0.5)`,
+            boxShadow: `0 0 6px ${gauge.glow}, 0 0 12px rgba(${gauge.glowRgb},0.5)`,
             animation: "gaugePulse 2s ease-in-out infinite",
           }} />
           <span style={{
             fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: isHero ? "11px" : "10px",
+            fontSize: "10px",
             fontWeight: 800,
-            letterSpacing: "0.28em",
+            letterSpacing: "0.22em",
             textTransform: "uppercase",
             color: `rgba(${gauge.glowRgb},0.9)`,
           }}>
@@ -526,7 +526,7 @@ function GaugeCard({ gauge }: { gauge: GaugeConfig }) {
           <span style={{
             fontFamily: "'Space Grotesk', sans-serif",
             fontSize: "9px", fontWeight: 700,
-            letterSpacing: "0.2em",
+            letterSpacing: "0.18em",
             color: "rgba(255,255,255,0.3)",
             textTransform: "uppercase",
           }}>
@@ -534,27 +534,48 @@ function GaugeCard({ gauge }: { gauge: GaugeConfig }) {
           </span>
         </div>
 
-        {/* ── Speedometer SVG ── */}
-        <div style={{ position: "relative", zIndex: 2, marginBottom: isHero ? -8 : -4 }}>
-          <Speedometer
-            gauge={gauge}
-            progress={animProgress}
-            animated={visible}
-            hovered={hovered}
-            size={svgSize}
-          />
-        </div>
-
-        {/* ── Big value display ── */}
+        {/* ── Subdetail ── */}
         <div style={{
           position: "relative", zIndex: 2,
           textAlign: "center",
-          marginTop: isHero ? 4 : 2,
+          marginBottom: "14px",
+        }}>
+          <div style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontSize: "11px",
+            fontWeight: 600,
+            letterSpacing: "0.12em",
+            color: "rgba(255,255,255,0.4)",
+            textTransform: "uppercase",
+          }}>
+            {gauge.subdetail}
+          </div>
+        </div>
+
+        {/* ── Speedometer SVG (Lazy Loaded) ── */}
+        <div style={{ position: "relative", zIndex: 2, marginBottom: "10px", minHeight: svgSize * 0.78 }}>
+          {visible ? (
+            <Speedometer
+              gauge={gauge}
+              progress={animProgress}
+              animated={visible}
+              hovered={hovered}
+              size={svgSize}
+            />
+          ) : (
+            <div style={{ width: "100%", height: svgSize * 0.78 }} />
+          )}
+        </div>
+
+        {/* ── Value Count ── */}
+        <div style={{
+          position: "relative", zIndex: 2,
+          textAlign: "center",
         }}>
           <div style={{
             fontFamily: "'Space Grotesk', sans-serif",
             fontWeight: 900,
-            fontSize: isHero ? "clamp(52px,7vw,72px)" : isLarge ? "clamp(40px,5vw,54px)" : "clamp(32px,4vw,44px)",
+            fontSize: "clamp(24px, 4.2vw, 36px)",
             lineHeight: 1,
             letterSpacing: "-1px",
             color: "#ffffff",
@@ -563,6 +584,16 @@ function GaugeCard({ gauge }: { gauge: GaugeConfig }) {
               : `0 0 20px rgba(${gauge.glowRgb},0.5)`,
             transition: "text-shadow 0.4s ease",
           }}>
+            {gauge.prefix && (
+              <span style={{
+                fontSize: "70%",
+                color: gauge.glow,
+                marginRight: "2px",
+                textShadow: `0 0 15px rgba(${gauge.glowRgb},0.8)`,
+              }}>
+                {gauge.prefix}
+              </span>
+            )}
             {displayVal}
             <span style={{
               fontSize: "55%",
@@ -571,52 +602,6 @@ function GaugeCard({ gauge }: { gauge: GaugeConfig }) {
               textShadow: `0 0 15px rgba(${gauge.glowRgb},0.8)`,
             }}>{gauge.suffix}</span>
           </div>
-
-          <div style={{
-            marginTop: 6,
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: isHero ? "13px" : "11px",
-            fontWeight: 600,
-            letterSpacing: "0.14em",
-            color: "rgba(255,255,255,0.4)",
-            textTransform: "uppercase",
-          }}>
-            {gauge.subdetail}
-          </div>
-        </div>
-
-        {/* ── Progress bar strip ── */}
-        <div style={{
-          position: "relative", zIndex: 2,
-          width: "85%", height: "3px",
-          borderRadius: "2px",
-          background: "rgba(255,255,255,0.06)",
-          marginTop: isHero ? 14 : 10,
-          overflow: "hidden",
-        }}>
-          <motion.div
-            initial={{ width: "0%" }}
-            animate={visible ? { width: `${valueProgress * 100}%` } : {}}
-            transition={{ duration: 2.4, ease: [0.22, 1, 0.36, 1], delay: (gauge.delay + 200) / 1000 }}
-            style={{
-              height: "100%",
-              borderRadius: "2px",
-              background: `linear-gradient(90deg, ${gauge.glowSecondary}, ${gauge.glow}, rgba(255,255,255,0.9))`,
-              boxShadow: `0 0 8px rgba(${gauge.glowRgb},0.8)`,
-            }}
-          />
-        </div>
-
-        {/* Percentage fraction label */}
-        <div style={{
-          marginTop: 5, zIndex: 2,
-          fontFamily: "'Space Grotesk', sans-serif",
-          fontSize: "9px", fontWeight: 700,
-          letterSpacing: "0.18em",
-          color: `rgba(${gauge.glowRgb},0.5)`,
-          textTransform: "uppercase",
-        }}>
-          {Math.round(valueProgress * 100)}% OF TARGET
         </div>
       </div>
     </motion.div>
@@ -724,25 +709,44 @@ function Header({ visible }: { visible: boolean }) {
         animate={visible ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
         style={{
-          margin: "0 0 12px",
-          fontFamily: "'Space Grotesk', sans-serif",
-          fontWeight: 900,
-          fontSize: "clamp(52px, 8vw, 96px)",
-          letterSpacing: "0.06em",
+          margin: "0 auto",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexWrap: "wrap",
           lineHeight: 0.92,
           textTransform: "uppercase",
-          color: "#ffffff",
-          textShadow: "0 0 40px rgba(0,212,255,0.3)",
         }}
       >
-        OUR{" "}
+        {/* OUR (IGNITIA Style) */}
         <span style={{
-          background: "linear-gradient(90deg, #00d4ff 0%, #0099ff 40%, #a78bfa 80%, #00d4ff 100%)",
-          backgroundSize: "200% auto",
+          fontFamily: '"Orbitron", "Rajdhani", system-ui, sans-serif',
+          fontWeight: 900,
+          fontSize: "clamp(3.6rem, 8vw, 7.8rem)",
+          letterSpacing: "-0.08em",
+          color: "transparent",
+          background: "linear-gradient(180deg, #ffffff 0%, #dce9ff 38%, #8f9bb8 72%, #ffffff 100%)",
           WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
           backgroundClip: "text",
-          animation: "shimmerText 4s linear infinite",
+          filter: "drop-shadow(0 10px 20px rgba(0, 0, 0, 0.75))",
+          textShadow: "0 0 16px rgba(255, 255, 255, 0.16), 0 0 40px rgba(0, 245, 255, 0.12)",
+          display: "inline-block",
+        }}>
+          OUR
+        </span>
+
+        {/* IMPACT ('26 Style) */}
+        <span style={{
+          fontFamily: '"Orbitron", "Rajdhani", system-ui, sans-serif',
+          fontWeight: 900,
+          fontSize: "clamp(3.6rem, 8vw, 7.8rem)",
+          letterSpacing: "-0.06em",
+          marginLeft: "clamp(0.6rem, 1.5vw, 1.5rem)",
+          color: "transparent",
+          background: "linear-gradient(135deg, #b45cff 0%, #a855f7 38%, #e879f9 68%, #ffffff 100%)",
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          textShadow: "0 0 22px rgba(168, 85, 247, 0.38), 0 0 45px rgba(0, 245, 255, 0.12)",
           display: "inline-block",
         }}>
           IMPACT
@@ -850,39 +854,25 @@ export default function StatsDark() {
         .stats-dark * { box-sizing: border-box; }
 
         /* ── Responsive grid ── */
-        .gauge-grid-hero {
+        .gauge-grid-uniform {
           display: grid;
-          grid-template-columns: 1.1fr 1fr 1fr 1fr;
+          grid-template-columns: repeat(4, 1fr);
           gap: 20px;
           width: 100%;
           max-width: 1080px;
         }
-        .gauge-hero-cell { grid-column: 1; grid-row: 1; }
-        .gauge-right-col {
-          grid-column: 2 / 5;
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 20px;
-        }
 
         @media (max-width: 900px) {
-          .gauge-grid-hero {
-            grid-template-columns: 1fr 1fr;
-          }
-          .gauge-hero-cell { grid-column: 1 / 3; }
-          .gauge-right-col {
-            grid-column: 1 / 3;
-            grid-template-columns: 1fr 1fr 1fr;
+          .gauge-grid-uniform {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
           }
         }
+
         @media (max-width: 600px) {
-          .gauge-grid-hero {
-            grid-template-columns: 1fr;
-          }
-          .gauge-hero-cell { grid-column: 1; }
-          .gauge-right-col {
-            grid-column: 1;
-            grid-template-columns: 1fr;
+          .gauge-grid-uniform {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 12px;
           }
         }
       `}</style>
@@ -945,17 +935,12 @@ export default function StatsDark() {
         <Header visible={sectionVisible} />
 
         {/* ── Main gauge layout ── */}
-        <div className="gauge-grid-hero" style={{ position: "relative", zIndex: 2 }}>
-          {/* Hero gauge */}
-          <div className="gauge-hero-cell">
-            <GaugeCard gauge={hero} />
-          </div>
-          {/* 3 smaller gauges */}
-          <div className="gauge-right-col">
-            {rest.map(g => (
-              <GaugeCard key={g.id} gauge={g} />
-            ))}
-          </div>
+        <div className="gauge-grid-uniform" style={{ position: "relative", zIndex: 2 }}>
+          {GAUGES.map(g => (
+            <div key={g.id} className="gauge-cell">
+              <GaugeCard gauge={g} />
+            </div>
+          ))}
         </div>
 
       </section>

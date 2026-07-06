@@ -107,7 +107,13 @@ const Index = () => {
     <PageTransition>
       <div className="min-h-screen flex flex-col bg-transparent text-white overflow-x-hidden relative">
         {/* Global Fixed Background Image */}
-        <div className="fixed inset-0 w-full h-full pointer-events-none z-0">
+        <div 
+          className="fixed inset-0 w-full h-full pointer-events-none z-0"
+          style={{
+            maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)"
+          }}
+        >
           <img
             src="/images/tuf.png"
             alt="IGNITIA Background"
@@ -193,6 +199,11 @@ const Index = () => {
                 {/* Left info terminal + buttons */}
                 <div className="space-y-6 max-w-[360px] mb-8 md:absolute md:left-[5%] md:bottom-[11%] md:z-[50] md:mb-0 w-full flex flex-col items-center md:items-start">
                   
+                  {/* Access Pass Card */}
+                  <div className="hidden md:block">
+                    <HeroAcedImage />
+                  </div>
+
                   {/* Mobile-only Timer */}
                   <div className="block md:hidden w-full max-w-[280px] sm:max-w-[320px] mb-2 pointer-events-auto">
                     <Timer targetDate="2026-08-01T00:00:00" />
@@ -201,21 +212,21 @@ const Index = () => {
                   <div className="flex flex-col items-center md:items-start gap-4 pt-3 pointer-events-auto">
 
                     {/* Register and Explore buttons side-by-side (Row 1) */}
-                    <div className="flex items-center gap-2.5 w-[312px]">
+                    <div className="flex items-center gap-2.5 w-full max-w-[340px] pointer-events-auto">
                       <Link
                         to="/events"
-                        className="flex items-center justify-center gap-2 text-sm font-bold text-white w-[151px] h-[46px] rounded-full transition-all border border-white/10 hover:border-cyan-300/40 bg-gradient-to-r from-purple-600/95 to-pink-500/90 shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] active:scale-[0.98] px-2 text-center"
+                        className="flex items-center justify-center gap-2 text-xs sm:text-sm font-bold text-white flex-1 h-[46px] rounded-xl transition-all border border-white/10 register-button-orange active:scale-[0.98] px-3 whitespace-nowrap text-center"
                       >
                         <span>Register Now</span>
-                        <ArrowRight size={13} />
+                        <ArrowRight size={13} className="shrink-0" />
                       </Link>
 
                       <Link
                         to="/events"
-                        className="flex items-center justify-center gap-2 text-sm font-bold text-white w-[151px] h-[46px] rounded-full transition-all border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/30 active:scale-[0.98] px-2 text-center"
+                        className="flex items-center justify-center gap-2 text-xs sm:text-sm font-bold text-white flex-1 h-[46px] rounded-xl transition-all border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/30 active:scale-[0.98] px-3 whitespace-nowrap text-center"
                       >
                         <span>Explore Events</span>
-                        <ArrowRight size={13} />
+                        <ArrowRight size={13} className="shrink-0" />
                       </Link>
                     </div>
 
@@ -263,26 +274,16 @@ const Index = () => {
 
 
 
-            {/* Full-width Deep Mist / Smoke Overlay */}
-            <div className="absolute bottom-0 left-0 right-0 h-[280px] md:h-[460px] pointer-events-none z-[46] overflow-hidden">
-              {/* Soft dark base gradient to blend mist */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-95" />
-
-              {/* Constant uniform baseline white mist layer (ensures no empty gaps) */}
-              <div className="absolute bottom-0 left-0 right-0 h-[100px] md:h-[180px] bg-gradient-to-t from-white/[0.08] to-transparent opacity-95" />
-
-              {/* Natural translucent white mist base layers (Thicker static fog) */}
-              <div className="absolute left-1/2 bottom-[-15%] w-[150%] h-[180px] md:h-[280px] -translate-x-1/2 rounded-full bg-white/[0.11] blur-3xl opacity-95" />
-              <div className="absolute left-1/2 bottom-[-10%] w-[130%] h-[140px] md:h-[240px] -translate-x-1/2 rounded-full bg-white/[0.06] blur-3xl opacity-95" />
-
-              {/* Moving mist layers (Wider gradients with higher spread to make fog continuous and consistent) */}
-              <div className="absolute left-0 bottom-[-8%] w-[200%] h-[160px] md:h-[260px] bg-repeat-x opacity-65 blur-2xl brightness-125 fog-scroll-right-slow" style={{ backgroundImage: "radial-gradient(ellipse at center, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0.08) 55%, transparent 85%)", backgroundSize: "750px 260px" }} />
-              <div className="absolute right-0 bottom-[-8%] w-[200%] h-[160px] md:h-[260px] bg-repeat-x opacity-70 blur-2xl brightness-125 fog-scroll-right" style={{ backgroundImage: "radial-gradient(ellipse at center, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.10) 55%, transparent 85%)", backgroundSize: "900px 260px" }} />
-              <div className="absolute left-1/4 bottom-[-6%] w-[180%] h-[150px] md:h-[240px] bg-repeat-x opacity-60 blur-3xl brightness-125 fog-scroll-right-fast" style={{ backgroundImage: "radial-gradient(ellipse at center, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.06) 55%, transparent 85%)", backgroundSize: "680px 240px" }} />
+            {/* Futuristic glowing gradient divider */}
+            <div className="absolute bottom-0 left-0 right-0 z-50 pointer-events-none">
+              {/* Soft vertical shadow fade to ease transition */}
+              <div className="h-32 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+              {/* 1px glowing cyber line */}
+              <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/20 via-purple-500/25 to-transparent" />
+              {/* Subtle neon bloom/glow behind the line */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[70%] h-12 bg-cyan-500/5 blur-xl rounded-full" />
             </div>
 
-            {/* Bottom fade */}
-            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-50" />
           </section>
 
           {/* Below sections flow up naturally following pin completion */}
