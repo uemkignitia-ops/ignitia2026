@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Instagram } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
-import { TerminalSubheading } from "@/components/TerminalSubheading";
 
 const mapHref =
   "https://www.google.com/maps/place/University+of+Engineering+%26+Management,+Kolkata+(UEM)/@22.5599202,88.4899014,17z/data=!3m1!4b1!4m6!3m5!1s0x3a020b267a3cdc13:0xb3b21d652126f40!8m2!3d22.5599202!4d88.4899014!16s%2Fg%2F11c4pg5gwf?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D";
@@ -16,276 +15,278 @@ const mapEmbedSrc =
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 2000);
+    // Simulate API call
+    setTimeout(() => {
+      setSubmitted(false);
+      setFormData({ name: "", phone: "", email: "", message: "" });
+    }, 2000);
   };
 
   return (
     <PageTransition>
-      <div className="min-h-screen flex flex-col bg-background scanline-overlay overflow-x-hidden">
+      <div className="min-h-screen flex flex-col bg-background overflow-x-hidden">
         <ParticleField />
         <AnimatedBlobs />
         <ScrollProgress />
         <Navbar />
 
-        <main className="flex-1">
-          <section className="relative pt-28 pb-12 overflow-hidden w-full">
-            {/* Radial purple ambient glow behind title */}
-            <div
-              className="absolute inset-x-0 top-0 h-[500px] pointer-events-none"
-              style={{
-                background: "radial-gradient(ellipse 70% 50% at 60% 40%, rgba(139,92,246,0.18) 0%, transparent 70%)",
-              }}
-            />
-
-            {/* Eyebrow */}
-            <motion.p
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-center text-[11px] md:text-xs text-primary uppercase tracking-[0.45em] mb-5 font-semibold font-mono flex items-center justify-center gap-2"
+        <main className="flex-1 pt-32 pb-20">
+          {/* Overlapping Slanted Scrolling Banners */}
+          <div className="relative overflow-visible w-full mb-16 md:mb-20">
+            {/* Banner 1: Negative Tilt */}
+            <div 
+              className="relative w-[110vw] left-[-5vw] overflow-hidden bg-gradient-to-r from-violet-600 to-indigo-600 py-3 md:py-3.5 shadow-[0_10px_30px_rgba(139,92,246,0.35)] z-20"
+              style={{ transform: "rotate(-4.5deg)" }}
             >
-              <Mail size={14} className="text-primary" /> CONTACT US
-            </motion.p>
+              <div className="flex whitespace-nowrap animate-marquee">
+                <span className="text-xs md:text-sm font-heading font-black uppercase tracking-widest text-white mx-4">
+                  ★ IGNITIA '26 IS COMING ★ REGISTER FOR TRACKS NOW ★ SEE YOU AT THE FEST ★ IEM-UEM GROUP ★
+                </span>
+                <span className="text-xs md:text-sm font-heading font-black uppercase tracking-widest text-white mx-4">
+                  ★ IGNITIA '26 IS COMING ★ REGISTER FOR TRACKS NOW ★ SEE YOU AT THE FEST ★ IEM-UEM GROUP ★
+                </span>
+                <span className="text-xs md:text-sm font-heading font-black uppercase tracking-widest text-white mx-4">
+                  ★ IGNITIA '26 IS COMING ★ REGISTER FOR TRACKS NOW ★ SEE YOU AT THE FEST ★ IEM-UEM GROUP ★
+                </span>
+              </div>
+            </div>
 
-            {/* Main Title — full-width, centered, perspective tilt */}
-            <div className="relative w-full" style={{ perspective: "800px" }}>
+            {/* Banner 2: Positive (Opposite) Tilt */}
+            <div 
+              className="relative w-[110vw] left-[-5vw] overflow-hidden bg-gradient-to-r from-fuchsia-600 to-pink-600 py-3 md:py-3.5 shadow-[0_10px_30px_rgba(236,72,153,0.35)] z-10 -mt-14 md:-mt-16"
+              style={{ transform: "rotate(4.5deg)" }}
+            >
+              <div className="flex whitespace-nowrap animate-marquee" style={{ animationDirection: "reverse" }}>
+                <span className="text-xs md:text-sm font-heading font-black uppercase tracking-widest text-white mx-4">
+                  ★ THANKS FOR VISITING ★ EXPLORE GENERAL ENQUIRIES ★ DM FOR QUERIES ON INSTAGRAM ★ IGNITIA '26 ★
+                </span>
+                <span className="text-xs md:text-sm font-heading font-black uppercase tracking-widest text-white mx-4">
+                  ★ THANKS FOR VISITING ★ EXPLORE GENERAL ENQUIRIES ★ DM FOR QUERIES ON INSTAGRAM ★ IGNITIA '26 ★
+                </span>
+                <span className="text-xs md:text-sm font-heading font-black uppercase tracking-widest text-white mx-4">
+                  ★ THANKS FOR VISITING ★ EXPLORE GENERAL ENQUIRIES ★ DM FOR QUERIES ON INSTAGRAM ★ IGNITIA '26 ★
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="container mx-auto px-4 max-w-6xl">
+            {/* Split Section Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-start">
+              {/* Left Column: Glassmorphic Message Card */}
               <motion.div
-                initial={{ opacity: 0, rotateX: 12, y: 30 }}
-                animate={{ opacity: 1, rotateX: 0, y: 0 }}
-                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                style={{ transformStyle: "preserve-3d" }}
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="relative bg-[#0c0b11]/85 border border-white/10 p-8 md:p-10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl"
               >
-                {/* Shadow/depth clone */}
-                <div
-                  aria-hidden
-                  className="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
-                  style={{ transform: "translateZ(-40px) translateY(12px)" }}
-                >
-                  <span
-                    className="font-heading font-black uppercase leading-none tracking-tight text-center w-full"
-                    style={{
-                      fontSize: "clamp(2.5rem, 10vw, 5.5rem)",
-                      color: "rgba(88,28,235,0.25)",
-                      filter: "blur(8px)",
-                    }}
-                  >
-                    GET IN TOUCH
-                  </span>
+                {/* Glow effect at corners */}
+                <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-primary/45 rounded-tl-2xl m-3 pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-primary/45 rounded-br-2xl m-3 pointer-events-none" />
+
+                <h3 className="font-heading font-bold text-2xl text-white tracking-wide mb-6">
+                  Send a message
+                </h3>
+
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-white/70 uppercase tracking-widest">Name</label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-white/20 focus:border-primary/50 focus:bg-white/[0.06] focus:outline-none transition-all duration-300"
+                      placeholder="Name"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-white/70 uppercase tracking-widest">Phone</label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full px-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-white/20 focus:border-primary/50 focus:bg-white/[0.06] focus:outline-none transition-all duration-300"
+                      placeholder="Phone"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-white/70 uppercase tracking-widest">Email ID</label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full px-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-white/20 focus:border-primary/50 focus:bg-white/[0.06] focus:outline-none transition-all duration-300"
+                      placeholder="Email ID"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-white/70 uppercase tracking-widest">Message</label>
+                    <textarea
+                      rows={4}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="w-full px-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-white/20 focus:border-primary/50 focus:bg-white/[0.06] focus:outline-none transition-all duration-300 resize-none"
+                      placeholder="Enter your message"
+                      required
+                    />
+                  </div>
+
+                  <div className="pt-4">
+                    <button
+                      type="submit"
+                      disabled={submitted}
+                      className="glow-button inline-flex items-center justify-center gap-2.5 px-6 py-3 w-fit text-sm font-bold text-white uppercase tracking-wider rounded-full transition-all duration-300 hover:scale-[1.03]"
+                    >
+                      <span>{submitted ? "Message Sent" : "Send"}</span>
+                      <Send size={14} className="opacity-90" />
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+
+              {/* Right Column: "Get in touch" details */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+                className="space-y-8 lg:pt-4"
+              >
+                <div className="space-y-4">
+                  <h1 className="font-heading font-black text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-none uppercase">
+                    Get in <span className="gradient-text">touch</span>
+                  </h1>
+                  <p className="text-sm md:text-base leading-relaxed text-muted-foreground max-w-lg">
+                    Have questions about the hackathon? We’re here to help! Whether it’s about registration, rules, schedules, or anything else, feel free to reach out to us.
+                  </p>
                 </div>
 
-                {/* Actual title */}
-                <h1
-                  className="font-heading font-black uppercase leading-none tracking-tight w-full text-center relative"
-                  style={{ fontSize: "clamp(2.5rem, 10vw, 5.5rem)", transformStyle: "preserve-3d" }}
-                >
-                  {/* GET IN — dimmer, lighter weight */}
-                  <span
-                    className="inline-block mr-[0.15em]"
-                    style={{
-                      color: "rgba(255,255,255,0.28)",
-                      fontWeight: 300,
-                      textShadow: "0 2px 20px rgba(139,92,246,0.1)",
-                    }}
-                  >
-                    GET IN
-                  </span>
-
-                  {/* TOUCH — full white with 3D purple bloom */}
-                  <span
-                    className="inline-block relative"
-                    style={{
-                      color: "#ffffff",
-                      textShadow: [
-                        "0 0 60px rgba(139,92,246,0.9)",
-                        "0 0 120px rgba(139,92,246,0.5)",
-                        "0 2px 0 rgba(88,28,235,0.6)",
-                        "0 4px 0 rgba(68,14,180,0.4)",
-                        "0 8px 20px rgba(0,0,0,0.6)",
-                      ].join(", "),
-                    }}
-                  >
-                    TOUCH
-                  </span>
-                </h1>
-              </motion.div>
-            </div>
-
-            <div className="mt-10 mb-6 flex justify-center w-full px-4 relative z-10">
-              <TerminalSubheading
-                text="We're here to help - for general enquiries, partnerships, or media requests, drop us a message."
-                className="text-muted-foreground text-base md:text-lg font-medium text-center max-w-2xl"
-              />
-            </div>
-          </section>
-
-          <section className="section-padding">
-            <div className="container mx-auto max-w-5xl">
-              <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-                <div className="space-y-5">
-                  <div className="relative overflow-hidden border border-primary/20 bg-black/60 p-5 md:p-6 transition-all duration-300 hover:border-primary/60 group" style={{ clipPath: "polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)" }}>
-                    <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(139,92,246,1)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,1)_1px,transparent_1px)] bg-[size:10px_10px]" />
-                    <div className="absolute left-0 top-0 w-1 h-full bg-primary/40 group-hover:bg-primary transition-colors" />
-                    <div className="flex items-start gap-4 relative z-10">
-                      <div className="w-12 h-12 bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110 shadow-[0_0_15px_rgba(139,92,246,0.2)]">
-                        <Mail size={18} className="text-primary" />
-                      </div>
-                      <div>
-                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Email Address</div>
-                        <a
-                          href="mailto:uemk.ignitia@gmail.com"
-                          className="text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white"
-                        >
-                          uemk.ignitia@gmail.com
-                        </a>
-                      </div>
+                <div className="space-y-8 mt-10">
+                  {/* Address */}
+                  <div className="flex items-start gap-4 group">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(139,92,246,0.15)]">
+                      <MapPin size={18} className="text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-white/40 uppercase tracking-widest font-mono">Location</h4>
+                      <a
+                        href={mapHref}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-base font-medium text-white/90 hover:text-primary transition-colors block mt-1"
+                      >
+                        University of Engineering & Management, Kolkata
+                        <span className="block text-xs md:text-sm text-muted-foreground mt-0.5">
+                          New Town, Action Area III, Kolkata - 700160
+                        </span>
+                      </a>
                     </div>
                   </div>
 
-                  <div className="relative overflow-hidden border border-primary/20 bg-black/60 p-5 md:p-6 transition-all duration-300 hover:border-primary/60 group" style={{ clipPath: "polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)" }}>
-                    <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(139,92,246,1)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,1)_1px,transparent_1px)] bg-[size:10px_10px]" />
-                    <div className="absolute left-0 top-0 w-1 h-full bg-primary/40 group-hover:bg-primary transition-colors" />
-                    <div className="flex items-start gap-4 relative z-10">
-                      <div className="w-12 h-12 bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110 shadow-[0_0_15px_rgba(139,92,246,0.2)]">
-                        <Phone size={18} className="text-primary" />
-                      </div>
+                  {/* Instagram DM */}
+                  <div className="flex items-start gap-4 group">
+                    <div className="w-10 h-10 rounded-full bg-pink-500/10 border border-pink-500/20 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(236,72,153,0.15)]">
+                      <Instagram size={18} className="text-pink-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-white/40 uppercase tracking-widest font-mono">Instagram</h4>
+                      <a
+                        href="https://www.instagram.com/ignitia2k26"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-base font-semibold text-pink-400 hover:text-pink-350 transition-colors block mt-1"
+                      >
+                        Join Instagram / DM for queries
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Email */}
+                  <div className="flex items-start gap-4 group">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(139,92,246,0.15)]">
+                      <Mail size={18} className="text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-white/40 uppercase tracking-widest font-mono">Email Address</h4>
+                      <a
+                        href="mailto:uemk.ignitia@gmail.com"
+                        className="text-base font-medium text-white/90 hover:text-primary transition-colors block mt-1 font-mono"
+                      >
+                        uemk.ignitia@gmail.com
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Organizers Contacts */}
+                  <div className="flex items-start gap-4 group">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(139,92,246,0.15)]">
+                      <Phone size={18} className="text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-white/40 uppercase tracking-widest font-mono mb-2">Support Hotlines</h4>
                       <div className="flex flex-col gap-3">
-                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Contact</div>
                         <a
                           href="tel:+917439115647"
-                          className="text-xs md:text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white flex flex-col sm:flex-row sm:items-baseline sm:gap-3"
+                          className="text-sm font-mono text-white/70 hover:text-white transition-colors flex items-center gap-2"
                         >
-                          <span className="text-white/80 min-w-[160px]">Snehashish Das:</span>
-                          <span className="whitespace-nowrap">+91 74391 15647</span>
+                          <span className="text-white/40 text-xs">Snehashish Das:</span>
+                          <span className="font-semibold">+91 74391 15647</span>
                         </a>
                         <a
                           href="tel:+917439223022"
-                          className="text-xs md:text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white flex flex-col sm:flex-row sm:items-baseline sm:gap-3"
+                          className="text-sm font-mono text-white/70 hover:text-white transition-colors flex items-center gap-2"
                         >
-                          <span className="text-white/80 min-w-[160px]">Priyanshu Mitra:</span>
-                          <span className="whitespace-nowrap">+91 74392 23022</span>
-                        </a>
-                        <a
-                          href="tel:+918274090864"
-                          className="text-xs md:text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white flex flex-col sm:flex-row sm:items-baseline sm:gap-3"
-                        >
-                          <span className="text-white/80 min-w-[160px]">Aranya Rath:</span>
-                          <span className="whitespace-nowrap">+91 82740 90864</span>
+                          <span className="text-white/40 text-xs">Priyanshu Mitra:</span>
+                          <span className="font-semibold">+91 74392 23022</span>
                         </a>
                       </div>
                     </div>
                   </div>
-
-                  <div className="relative overflow-hidden border border-primary/20 bg-black/60 p-5 md:p-6 transition-all duration-300 hover:border-primary/60 group" style={{ clipPath: "polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)" }}>
-                    <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(139,92,246,1)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,1)_1px,transparent_1px)] bg-[size:10px_10px]" />
-                    <div className="absolute left-0 top-0 w-1 h-full bg-primary/40 group-hover:bg-primary transition-colors" />
-                    <div className="flex items-start gap-4 relative z-10">
-                      <div className="w-12 h-12 bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110 shadow-[0_0_15px_rgba(139,92,246,0.2)]">
-                        <MapPin size={18} className="text-primary" />
-                      </div>
-                      <div>
-                        <div className="text-xs font-mono uppercase tracking-[0.2em] text-primary mb-1">Location</div>
-                        <a
-                          href={mapHref}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-sm font-mono text-white/70 transition-colors duration-200 hover:text-white"
-                        >
-                          UEM Kolkata, New Town
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="group relative mt-4 hidden overflow-hidden border-2 border-primary/30 bg-black/80 h-64 transition-all duration-300 hover:border-primary/80 lg:block shadow-[0_0_30px_rgba(139,92,246,0.15)]" style={{ clipPath: "polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)" }}>
-                    <div className="absolute inset-0 pointer-events-none bg-primary/10 animate-pulse z-10" />
-
-                    <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary z-20 m-2" />
-                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary z-20 m-2" />
-
-                    <iframe
-                      src={mapEmbedSrc}
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) sepia(50%)" }}
-                      loading="lazy"
-                      title="UEM Kolkata Location"
-                      className="opacity-80 mix-blend-screen"
-                    />
-                    <a
-                      href={mapHref}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="Open UEM Kolkata map"
-                      className="absolute right-4 top-4 z-30 font-mono border border-primary/50 bg-black/80 px-4 py-1.5 text-xs font-bold text-primary backdrop-blur-md transition-all hover:bg-primary/20 shadow-[0_0_10px_rgba(139,92,246,0.3)] uppercase tracking-widest"
-                    >
-                      [ Get Directions ]
-                    </a>
-                  </div>
                 </div>
-
-                <div className="relative border border-primary/20 bg-black/80 p-6 md:p-8 lg:min-h-[100%] shadow-[0_0_30px_rgba(139,92,246,0.1)] group" style={{ clipPath: "polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 0 100%)" }}>
-                  <div className="absolute top-0 right-0 w-[42.4px] h-[42.4px] bg-primary/20 origin-bottom-left rotate-45 -translate-y-full" />
-
-                  <div className="mb-8">
-                    <TerminalSubheading
-                      text="Send us a message"
-                      className="font-mono text-xl md:text-2xl font-bold text-primary uppercase"
-                    />
-                  </div>
-
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                      <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Full Name</label>
-                      <input className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-white focus:outline-none focus:bg-primary/5 transition-colors duration-500" placeholder="ENTER NAME" required />
-                    </div>
-                    <div>
-                      <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Email Address</label>
-                      <input type="email" className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-white focus:outline-none focus:bg-primary/5 transition-colors duration-500" placeholder="ENTER EMAIL" required />
-                    </div>
-                    <div>
-                      <label className="text-xs font-mono text-primary/70 uppercase tracking-[0.2em] mb-2 block">&gt; Message</label>
-                      <textarea rows={5} className="w-full px-4 py-3 bg-white/[0.02] border-b-2 border-primary/30 text-white font-mono placeholder:text-white/20 focus:border-white focus:outline-none focus:bg-primary/5 transition-colors duration-500 resize-none" placeholder="ENTER MESSAGE" required />
-                    </div>
-                    <div className="pt-8">
-                      <button type="submit" className="w-full font-mono font-bold uppercase tracking-widest text-sm inline-flex items-center justify-center gap-3 px-6 py-4 border border-primary text-primary hover:bg-primary hover:text-black transition-colors shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(139,92,246,0.6)]">
-                        <Send size={16} /> {submitted ? "MESSAGE SENT" : "SEND MESSAGE"}
-                      </button>
-                    </div>
-                  </form>
-                </div>
-
-                <div className="group relative mt-8 overflow-hidden border-2 border-primary/30 bg-black/80 h-72 transition-all duration-300 hover:border-primary/80 shadow-[0_0_30px_rgba(139,92,246,0.15)] lg:hidden" style={{ clipPath: "polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)" }}>
-                  <div className="absolute inset-0 pointer-events-none bg-primary/10 animate-pulse z-10" />
-
-                  <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary z-20 m-2" />
-                  <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary z-20 m-2" />
-
-                  <iframe
-                    src={mapEmbedSrc}
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) sepia(50%)" }}
-                    loading="lazy"
-                    title="UEM Kolkata Location"
-                    className="opacity-80 mix-blend-screen"
-                  />
-                  <a
-                    href={mapHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="Open UEM Kolkata map"
-                    className="absolute right-4 top-4 z-30 font-mono border border-primary/50 bg-black/80 px-3 py-1 text-[10px] md:px-4 md:py-1.5 md:text-xs font-bold text-primary backdrop-blur-md transition-all hover:bg-primary/20 shadow-[0_0_10px_rgba(139,92,246,0.3)] uppercase tracking-widest"
-                  >
-                    [ Directions ]
-                  </a>
-                </div>
-              </div>
+              </motion.div>
             </div>
-          </section>
+
+            {/* Google Map Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+              className="mt-16 md:mt-24 border border-white/10 rounded-2xl overflow-hidden h-80 w-full relative shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+            >
+              <iframe
+                src={mapEmbedSrc}
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) sepia(50%)" }}
+                loading="lazy"
+                title="UEM Kolkata Location"
+                className="opacity-70 mix-blend-screen"
+              />
+              <a
+                href={mapHref}
+                target="_blank"
+                rel="noreferrer"
+                className="absolute right-4 top-4 font-mono border border-white/15 bg-background/90 px-4 py-2 text-xs font-bold text-white rounded-lg backdrop-blur-md transition-all hover:bg-white/10 uppercase tracking-widest"
+              >
+                [ Get Directions ]
+              </a>
+            </motion.div>
+          </div>
         </main>
 
         <Footer />
