@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
+import BackgroundEffects from "@/components/BackgroundEffects";
 import ScrollProgress from "@/components/ScrollProgress";
 import SphereGallery from "@/components/SphereGallery";
 import { TerminalSubheading } from "@/components/TerminalSubheading";
@@ -21,9 +22,9 @@ import { PhotoGallery } from "@/components/ui/gallery";
 
 // Gallery category definitions — images are derived dynamically from the live gallery data
 const CATEGORY_DEFS = [
-  { text: "Events",   category: "Events"   },
-  { text: "Coding",   category: "Coding"   },
-  { text: "Gaming",   category: "Gaming"   },
+  { text: "Events", category: "Events" },
+  { text: "Coding", category: "Coding" },
+  { text: "Gaming", category: "Gaming" },
   { text: "Cultural", category: "Cultural" },
   { text: "Robotics", category: "Robotics" },
 ];
@@ -63,84 +64,62 @@ const Gallery = () => {
       : [];
 
   return (
-    <PageTransition>
-      <div className="min-h-screen bg-background scanline-overlay relative">
-        <ParticleField />
-        <AnimatedBlobs />
+    <div className="min-h-screen bg-transparent relative citadel-theme">
+      <BackgroundEffects />
+      <PageTransition>
         <ScrollProgress />
         <Navbar />
 
         {/* Hero Header Section */}
-        <section className="relative pt-24 pb-12 flex items-center justify-center min-h-[40vh]">
-          <div className="container mx-auto px-4 text-center relative z-10 w-full overflow-hidden">
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
+        <section className="relative pt-28 pb-0 overflow-hidden w-full">
+          {/* Radial ambient glow */}
+          <div
+            className="absolute inset-x-0 top-0 h-[400px] pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse 70% 50% at 50% 40%, rgba(168,85,247,0.15) 0%, transparent 70%)",
+            }}
+          />
+
+          {/* Eyebrow label */}
+          <motion.p
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center text-[10px] md:text-xs text-primary uppercase tracking-[0.2em] md:tracking-[0.45em] mb-5 font-semibold font-mono flex flex-wrap items-center justify-center gap-x-2 gap-y-1 px-4"
+          >
+            <ZoomIn size={12} className="text-primary shrink-0" />
+            <span>MEMORIES &amp; MOMENTS</span>
+          </motion.p>
+
+          {/* Main GALLERY title */}
+          <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-20">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-[10px] md:text-xs text-primary uppercase tracking-[0.4em] mb-5 font-semibold font-mono flex items-center justify-center gap-2"
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             >
-              <ZoomIn size={14} className="text-primary" /> MEMORIES & MOMENTS
-            </motion.p>
-
-            <div className="relative w-full" style={{ perspective: "800px" }}>
-              <div style={{ transformStyle: "preserve-3d" }}>
-                {/* Shadow/depth clone */}
-                <div
-                  aria-hidden
-                  className="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
-                  style={{ transform: "translateZ(-40px) translateY(12px)" }}
-                >
-                  <span
-                    className="font-heading font-black uppercase leading-none tracking-tight text-center w-full"
-                    style={{
-                      fontSize: "clamp(2.5rem, 10vw, 5.5rem)",
-                      color: "rgba(88,28,235,0.25)",
-                      filter: "blur(8px)",
-                    }}
-                  >
-                    OUR GALLERY
-                  </span>
-                </div>
-
-                {/* Actual title */}
-                <h1
-                  className="font-heading font-black uppercase leading-none tracking-tight w-full text-center relative"
-                  style={{ fontSize: "clamp(2.5rem, 10vw, 5.5rem)", transformStyle: "preserve-3d" }}
-                >
-                  <span
-                    className="inline-block mr-[0.15em]"
-                    style={{
-                      color: "rgba(255,255,255,0.28)",
-                      fontWeight: 300,
-                      textShadow: "0 2px 20px rgba(139,92,246,0.1)",
-                    }}
-                  >
-                    OUR
-                  </span>
-
-                  <span
-                    className="inline-block relative"
-                    style={{
-                      color: "#ffffff",
-                      textShadow: [
-                        "0 0 60px rgba(139,92,246,0.9)",
-                        "0 0 120px rgba(139,92,246,0.5)",
-                        "0 2px 0 rgba(88,28,235,0.6)",
-                        "0 4px 0 rgba(68,14,180,0.4)",
-                        "0 8px 20px rgba(0,0,0,0.6)",
-                      ].join(", "),
-                    }}
-                  >
-                    GALLERY
+              <div className="w-full flex justify-center z-[36] pointer-events-none text-center mb-4">
+                <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">
+                  <span className="ignitia-citadel-title mx-auto" data-text="GALLERY">
+                    <span>G</span>
+                    <span>A</span>
+                    <span>L</span>
+                    <span>L</span>
+                    <span>E</span>
+                    <span>R</span>
+                    <span>Y</span>
                   </span>
                 </h1>
               </div>
-            </div>
+            </motion.div>
+          </div>
 
-            <div className="w-full flex justify-center px-4 mb-12 relative z-10">
+          {/* Subheading + toggle */}
+          <div className="mt-6 mb-0 flex flex-col items-center gap-6 relative z-10 pb-12 px-4">
+            <div className="w-full flex justify-center">
               <TerminalSubheading
                 text="Highlighted moments from IGNITIA"
-                className="text-muted-foreground text-sm font-medium text-center max-w-xl"
+                className="text-muted-foreground text-sm md:text-base font-medium text-center"
               />
             </div>
 
@@ -148,15 +127,14 @@ const Gallery = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
+              transition={{ delay: 0.5 }}
               className="relative inline-flex p-1.5 bg-white/5 border border-white/10 rounded-full backdrop-blur-md"
             >
               {["sphere", "explore"].map((view) => (
                 <button
                   key={view}
                   onClick={() => setActiveView(view as "sphere" | "explore")}
-                  className={`relative px-6 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-full transition-colors z-10 ${activeView === view ? "text-white" : "text-muted-foreground hover:text-white"
-                    }`}
+                  className={`relative px-4 sm:px-6 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded-full transition-colors z-10 ${activeView === view ? "text-white" : "text-muted-foreground hover:text-white"}`}
                 >
                   {activeView === view && (
                     <motion.div
@@ -287,8 +265,8 @@ const Gallery = () => {
         </AnimatePresence>
 
         <Footer />
-      </div>
-    </PageTransition>
+      </PageTransition>
+    </div>
   );
 };
 

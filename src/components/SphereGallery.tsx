@@ -6,7 +6,7 @@ import React from 'react';
 // ==========================================
 
 // Neutral dark fallback placeholders (no text labels) used when no gallery images exist yet
-const FALLBACK_IMAGES: ImageData[] = Array.from({ length: 60 }).map((_, i) => ({
+const FALLBACK_IMAGES: ImageData[] = Array.from({ length: 48 }).map((_, i) => ({
   id: `img-${i + 1}`,
   src: `https://placehold.co/400x400/0c0b10/1a1a2e`,
   alt: `Gallery image ${i + 1}`,
@@ -29,12 +29,12 @@ interface SphereConfig {
 }
 
 const CONFIG: SphereConfig = {
-  containerSize: 950,          // Container size in pixels
-  sphereRadius: 340,           // Virtual sphere radius
+  containerSize: 1050,          // Container size in pixels
+  sphereRadius: 430,           // Virtual sphere radius (bigger)
   dragSensitivity: 0.8,        // Mouse drag sensitivity (0.1 - 2.0)
   momentumDecay: 0.96,         // How fast momentum fades (0.8 - 0.99)
   maxRotationSpeed: 6,         // Maximum rotation speed (1 - 10)
-  baseImageScale: 0.16,        // Base image size
+  baseImageScale: 0.21,        // Base image size (larger to fill gaps)
   hoverScale: 1.3,             // Hover scale multiplier
   perspective: 1200,           // CSS perspective value
   autoRotate: true,            // Enable/disable auto rotation
@@ -51,7 +51,7 @@ export default function SphereGallery() {
       m.getGallery().then((galleryItems) => {
         if (galleryItems && galleryItems.length > 0) {
           // Build ImageData from real gallery items, repeat to fill 60 slots
-          const liveImages: ImageData[] = Array.from({ length: 60 }).map((_, i) => {
+          const liveImages: ImageData[] = Array.from({ length: 48 }).map((_, i) => {
             const item = galleryItems[i % galleryItems.length];
             return {
               id: `img-${i + 1}`,
@@ -83,9 +83,9 @@ export default function SphereGallery() {
 
   const dynamicConfig = {
     ...CONFIG,
-    containerSize: isMobile ? mobileContainerSize : isTablet ? 650 : CONFIG.containerSize,
-    sphereRadius: isMobile ? mobileSphereRadius : isTablet ? 250 : CONFIG.sphereRadius,
-    baseImageScale: isMobile ? 0.15 : isTablet ? 0.13 : CONFIG.baseImageScale,
+    containerSize: isMobile ? mobileContainerSize : isTablet ? 720 : CONFIG.containerSize,
+    sphereRadius: isMobile ? mobileSphereRadius : isTablet ? 310 : CONFIG.sphereRadius,
+    baseImageScale: isMobile ? 0.19 : isTablet ? 0.17 : CONFIG.baseImageScale,
   };
 
   return (

@@ -104,7 +104,21 @@ const Index = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen flex flex-col bg-background text-white overflow-x-hidden">
+      {/* Full-page tuf.png background — fixed so it covers every section */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <img
+          src="/images/tuf.png"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+          draggable={false}
+        />
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-black/60" />
+        {/* Cinematic gradient */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,245,255,0.08)_0%,rgba(0,0,0,0.1)_38%,rgba(0,0,0,0.75)_100%)] pointer-events-none" />
+      </div>
+
+      <div className="min-h-screen flex flex-col text-white overflow-x-hidden relative z-10">
         
         
         <ScrollProgress />
@@ -114,21 +128,8 @@ const Index = () => {
           {/* New Video Hero Section */}
 <section
   id="hero-showcase-section"
-  className="relative min-h-screen w-full overflow-hidden bg-black"
+  className="relative min-h-screen w-full overflow-hidden"
 >
-  {/* Looping video background */}
-  <img
-    src="/images/tuf.png"
-    alt="IGNITIA Background"
-    className="absolute inset-0 h-full w-full object-cover"
-    draggable={false}
-  />
-
-  {/* Dark overlay */}
-  <div className="absolute inset-0 bg-black/55 z-10" />
-
-  {/* Cinematic gradient */}
-  <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_center,rgba(0,245,255,0.10)_0%,rgba(0,0,0,0.15)_38%,rgba(0,0,0,0.85)_100%)] pointer-events-none" />
 
 {/* Center IGNITIA title above mascot */}
 <div className="absolute top-[10%] left-1/2 z-[36] -translate-x-1/2 pointer-events-none text-center">
@@ -180,15 +181,15 @@ const Index = () => {
 
     {/* Floor glow / smoke */}
     {/* Thick floor smoke cloud */}
-<div className="absolute left-1/2 bottom-[-2%] h-20 w-[110%] -translate-x-1/2 rounded-full bg-cyan-300/20 blur-3xl opacity-90" />
+<div className="absolute left-1/2 bottom-[-2%] h-20 w-[110%] -translate-x-1/2 rounded-full bg-fuchsia-300/20 blur-3xl opacity-90" />
 
 <div className="absolute left-[28%] bottom-[1%] h-16 w-[55%] -translate-x-1/2 rounded-full bg-purple-400/25 blur-2xl animate-smoke-left" />
 
 <div className="absolute left-[48%] bottom-[-1%] h-20 w-[70%] -translate-x-1/2 rounded-full bg-white/15 blur-3xl animate-smoke-center" />
 
-<div className="absolute left-[68%] bottom-[1%] h-16 w-[55%] -translate-x-1/2 rounded-full bg-cyan-300/25 blur-2xl animate-smoke-right" />
+<div className="absolute left-[68%] bottom-[1%] h-16 w-[55%] -translate-x-1/2 rounded-full bg-fuchsia-300/25 blur-2xl animate-smoke-right" />
 
-<div className="absolute left-[38%] bottom-[8%] h-10 w-[45%] -translate-x-1/2 rounded-full bg-cyan-200/15 blur-xl animate-smoke-small-left" />
+<div className="absolute left-[38%] bottom-[8%] h-10 w-[45%] -translate-x-1/2 rounded-full bg-fuchsia-200/15 blur-xl animate-smoke-small-left" />
 
 <div className="absolute left-[62%] bottom-[8%] h-10 w-[45%] -translate-x-1/2 rounded-full bg-purple-300/15 blur-xl animate-smoke-small-right" />
   </div>

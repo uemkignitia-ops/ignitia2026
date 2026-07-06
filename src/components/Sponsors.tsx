@@ -83,7 +83,7 @@ const Sponsors = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <p className="text-sm text-neon-cyan uppercase tracking-widest mb-2">
+          <p className="text-sm text-neon-fuchsia uppercase tracking-widest mb-2">
             Backed By The Best
           </p>
           <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground">
