@@ -161,7 +161,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Left aligned Section: Lock, IEM/UEM Logos, Left Links, IGNITIA Brand, Right Links */}
-          <div className="hidden lg:flex items-center gap-4 xl:gap-5 flex-1 justify-start">
+          <div className="hidden lg:flex items-center gap-2.5 xl:gap-4.5 flex-1 justify-start pr-12 lg:pr-16 xl:pr-20">
             {/* Admin Lock Access Icon */}
             <Link
               to="/admin/login"
