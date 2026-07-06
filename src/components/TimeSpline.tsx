@@ -7,11 +7,11 @@ export default function TimeSpline() {
       className="time-spline-wrap hidden md:block"
       style={{
         position: "absolute",
-        right: "2.5%",
-        top: "35%",
-        transform: "translateY(-50%)",
-        width: "520px",
-        height: "430px",
+        right: "5%",
+        bottom: "36%",
+        top: "auto",
+        width: "430px",
+        height: "355px",
         zIndex: 25,
         pointerEvents: "none",
       }}
@@ -25,6 +25,7 @@ export default function TimeSpline() {
           width: "100%",
           height: "100%",
           zIndex: 1,
+          transform: "scale(0.68) translateY(65px)",
         }}
       />
 
@@ -33,14 +34,14 @@ export default function TimeSpline() {
         style={{
           position: "absolute",
           left: "50%",
-          top: "104%",
+          top: "112%",
           transform: "translate(-50%, -50%)",
           width: "92%",
           zIndex: 2,
           pointerEvents: "auto",
         }}
       >
-        <Timer embedded targetDate="2026-09-15T09:00:00" />
+        <Timer embedded targetDate="2026-08-01T00:00:00" />
       </div>
     </div>
   );

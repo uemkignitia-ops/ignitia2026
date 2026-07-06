@@ -57,17 +57,17 @@ const themes = {
     line: "bg-purple-500/25",
     arrowHover: "hover:bg-purple-500/10 hover:border-purple-500/50",
   },
-  purple: {
-    border: "border-white/5 hover:border-purple-500/50",
+  teal: {
+    border: "border-white/5 hover:border-teal-500/50",
     shadow: "hover:shadow-[0_0_40px_rgba(20,184,166,0.12)]",
-    iconBg: "bg-purple-500/10 border-purple-500/20",
-    iconText: "text-purple-400",
-    textGlow: "text-purple-400 drop-shadow-[0_0_8px_rgba(20,184,166,0.5)]",
-    beam: "via-purple-500/10 to-purple-500/5",
-    badge: "border-purple-500/30 text-purple-400 bg-purple-500/5",
-    accentGlow: "bg-purple-500/5",
-    line: "bg-purple-500/25",
-    arrowHover: "hover:bg-purple-500/10 hover:border-purple-500/50",
+    iconBg: "bg-teal-500/10 border-teal-500/20",
+    iconText: "text-teal-400",
+    textGlow: "text-teal-400 drop-shadow-[0_0_8px_rgba(20,184,166,0.5)]",
+    beam: "via-teal-500/10 to-teal-500/5",
+    badge: "border-teal-500/30 text-teal-400 bg-teal-500/5",
+    accentGlow: "bg-teal-500/5",
+    line: "bg-teal-500/25",
+    arrowHover: "hover:bg-teal-500/10 hover:border-teal-500/50",
   },
   yellow: {
     border: "border-white/5 hover:border-amber-500/50",
@@ -581,13 +581,7 @@ const Events = () => {
                     rel={selectedEvent.registrationUrl ? "noopener noreferrer" : undefined}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`w-full sm:w-auto relative overflow-hidden font-mono font-semibold uppercase tracking-wider px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl transition-all duration-300 text-center text-sm ${selectedEvent.theme === "orange" ? "bg-orange-500 text-white shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_30px_rgba(249,115,22,0.5)]" :
-                      selectedEvent.theme === "purple" ? "bg-purple-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]" :
-                        selectedEvent.theme === "purple" ? "bg-purple-500 text-white shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.5)]" :
-                          selectedEvent.theme === "yellow" ? "bg-amber-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_30px_rgba(245,158,11,0.5)]" :
-                            selectedEvent.theme === "pink" ? "bg-pink-500 text-white shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:shadow-[0_0_30px_rgba(236,72,153,0.5)]" :
-                              "bg-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)]"
-                      }`}
+                    className="w-full sm:w-auto relative overflow-hidden font-semibold uppercase tracking-wider px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl transition-all duration-300 text-center text-sm register-button-orange"
                   >
                     Register Now
                   </motion.a>

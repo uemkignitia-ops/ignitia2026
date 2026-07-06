@@ -302,7 +302,7 @@ export default function AboutSection3() {
                 animationNum={15}
                 timelineRef={heroRef}
                 customVariants={revealVariants}
-                className="bg-orange-500 hover:bg-orange-600 shadow-[0_0_20px_rgba(249,115,22,0.3)] border border-orange-400 flex w-fit ml-auto gap-2 hover:gap-4 transition-all duration-300 ease-in-out text-white px-5 py-3 rounded-lg cursor-pointer font-semibold text-sm tracking-wider"
+                className="register-button-orange flex w-fit ml-auto gap-2 hover:gap-4 transition-all duration-300 ease-in-out text-white px-5 py-3 rounded-lg cursor-pointer font-semibold text-sm tracking-wider"
               >
                 REGISTER NOW <ArrowRight size={18} />
               </TimelineContent>

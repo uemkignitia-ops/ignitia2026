@@ -103,7 +103,7 @@ const About = () => {
               </div>
 
               <div className="flex flex-wrap gap-3 pt-1">
-                <Link to="/events" className="bg-primary hover:bg-primary shadow-[0_0_15px_rgba(168,85,247,0.3)] hover:shadow-[0_0_25px_rgba(168,85,247,0.5)] border border-primary flex items-center gap-2 transition-all text-white px-5 py-2.5 rounded-lg font-semibold text-xs tracking-wider">
+                <Link to="/events" className="register-button-orange flex items-center gap-2 transition-all text-white px-5 py-2.5 rounded-lg font-semibold text-xs tracking-wider">
                   REGISTER NOW <ArrowRight size={14} />
                 </Link>
                 <Link to="/events" className="border border-white/10 hover:border-white/30 bg-black/20 flex items-center justify-center text-white px-5 py-2.5 rounded-lg font-semibold text-xs tracking-wider transition-all">
@@ -194,7 +194,7 @@ const About = () => {
                     { label: "PRIZE POOL", value: "₹2,00,000+", pct: 90, color: "from-primary to-pink-500" },
                     { label: "EXPECTED FOOTFALL", value: "1000+ Participants", pct: 85, color: "from-purple-500 to-indigo-500" },
                     { label: "COLLABORATING COLLEGES", value: "50+ Colleges", pct: 75, color: "from-fuchsia-400 to-purple-400" },
-                    { label: "COMPETITIVE ARENAS", value: "7+ Events", pct: 60, color: "from-yellow-500 to-primary" },
+                    { label: "COMPETITIVE ARENAS", value: "12+ Events", pct: 60, color: "from-yellow-500 to-primary" },
                   ].map((stat, i) => (
                     <div key={i} className="space-y-1">
                       <div className="flex justify-between text-[10px] md:text-xs">

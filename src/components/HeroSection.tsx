@@ -278,7 +278,7 @@ const HeroSection = () => {
 
               {/* CTAs — left-aligned, not centred */}
               <div className="flex flex-wrap gap-4 pt-2">
-                <Link to="/events" className="hero-primary-button pulse-cta flex items-center gap-3 text-sm">
+                <Link to="/events" className="register-button-orange pulse-cta flex items-center gap-3 text-sm">
                   Register Now
                   <ArrowRight size={16} />
                 </Link>

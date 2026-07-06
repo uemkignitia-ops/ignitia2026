@@ -71,8 +71,8 @@
     --hover-text-color-3: #0c0d0e;
     --font-family: 'Roboto Mono', monospace;
     --rtl-font-family: 'Montserrat', sans-serif;
-    --pattern-color1: rgba(200,200,200,0.05);
-    --pattern-color2: rgba(220,220,220,0.05);
+    --pattern-color1: rgba(200, 200, 200, 0.05);
+    --pattern-color2: rgba(220, 220, 220, 0.05);
   }
 
   .citadel-theme {
@@ -859,12 +859,15 @@
     transform: translate(0, 0);
     opacity: 0;
   }
+
   15% {
     opacity: 1;
   }
+
   70% {
     opacity: 0.6;
   }
+
   100% {
     transform: translate(30vw, 30vh);
     opacity: 0;
@@ -1046,13 +1049,11 @@
 
   color: transparent;
   background:
-    linear-gradient(
-      180deg,
+    linear-gradient(180deg,
       #ffffff 0%,
       #dce9ff 38%,
       #8f9bb8 72%,
-      #ffffff 100%
-    );
+      #ffffff 100%);
   -webkit-background-clip: text;
   background-clip: text;
 
@@ -1072,8 +1073,7 @@
 
   color: transparent;
   background:
-    linear-gradient(
-      105deg,
+    linear-gradient(105deg,
       transparent 0%,
       transparent 35%,
       rgba(255, 255, 255, 0.08) 42%,
@@ -1081,8 +1081,7 @@
       rgba(0, 245, 255, 0.85) 52%,
       rgba(255, 255, 255, 0.12) 58%,
       transparent 66%,
-      transparent 100%
-    );
+      transparent 100%);
 
   -webkit-background-clip: text;
   background-clip: text;
@@ -1103,14 +1102,12 @@
   height: 10px;
 
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       transparent,
       rgba(255, 255, 255, 0.12),
       rgba(0, 245, 255, 0.38),
       rgba(255, 255, 255, 0.18),
-      transparent
-    );
+      transparent);
 
   transform: skewX(-22deg);
   opacity: 0.85;
@@ -1131,13 +1128,11 @@
 
   color: transparent;
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #b45cff 0%,
       #a855f7 38%,
       #e879f9 68%,
-      #ffffff 100%
-    );
+      #ffffff 100%);
   -webkit-background-clip: text;
   background-clip: text;
 
@@ -1178,9 +1173,7 @@
   object-fit: contain;
 
   filter:
-    drop-shadow(0 0 20px rgba(0, 245, 255, 0.32))
-    drop-shadow(0 0 55px rgba(168, 85, 247, 0.22))
-    drop-shadow(0 28px 38px rgba(0, 0, 0, 0.85));
+    drop-shadow(0 0 20px rgba(0, 245, 255, 0.32)) drop-shadow(0 0 55px rgba(168, 85, 247, 0.22)) drop-shadow(0 28px 38px rgba(0, 0, 0, 0.85));
 
   transform-origin: bottom center;
 }
@@ -1196,12 +1189,10 @@
   bottom: 18%;
 
   background:
-    radial-gradient(
-      circle,
+    radial-gradient(circle,
       rgba(0, 245, 255, 0.20),
       rgba(168, 85, 247, 0.12) 38%,
-      transparent 70%
-    );
+      transparent 70%);
 
   filter: blur(28px);
   opacity: 0.9;
@@ -1219,12 +1210,10 @@
   bottom: 6%;
 
   background:
-    radial-gradient(
-      ellipse,
+    radial-gradient(ellipse,
       rgba(0, 0, 0, 0.9),
       rgba(0, 245, 255, 0.12) 38%,
-      transparent 72%
-    );
+      transparent 72%);
 
   filter: blur(10px);
 }
@@ -1241,12 +1230,10 @@
   border-radius: 999px;
 
   background:
-    radial-gradient(
-      ellipse,
+    radial-gradient(ellipse,
       rgba(220, 240, 255, 0.22),
       rgba(120, 150, 180, 0.10) 45%,
-      transparent 72%
-    );
+      transparent 72%);
 
   filter: blur(14px);
   opacity: 0.75;
@@ -1276,35 +1263,27 @@
   0% {
     opacity: 0;
     transform:
-      translateY(95px)
-      translateZ(-220px)
-      scale(0.28)
-      rotateX(14deg);
+      translateY(95px) translateZ(-220px) scale(0.28) rotateX(14deg);
     filter: blur(10px);
   }
 
   55% {
     opacity: 1;
     transform:
-      translateY(-8px)
-      translateZ(40px)
-      scale(1.06)
-      rotateX(0deg);
+      translateY(-8px) translateZ(40px) scale(1.06) rotateX(0deg);
     filter: blur(0px);
   }
 
   100% {
     opacity: 1;
     transform:
-      translateY(0)
-      translateZ(0)
-      scale(1)
-      rotateX(0deg);
+      translateY(0) translateZ(0) scale(1) rotateX(0deg);
     filter: blur(0px);
   }
 }
 
 @keyframes mascot-float {
+
   0%,
   100% {
     transform: translateY(0) scale(1);
@@ -1316,6 +1295,7 @@
 }
 
 @keyframes mascot-core-glow {
+
   0%,
   100% {
     opacity: 0.55;
@@ -1329,6 +1309,7 @@
 }
 
 @keyframes smoke-drift-left {
+
   0%,
   100% {
     transform: translateX(0) translateY(0) scale(1);
@@ -1342,6 +1323,7 @@
 }
 
 @keyframes smoke-drift-center {
+
   0%,
   100% {
     transform: translateX(0) translateY(0) scale(1.05);
@@ -1355,6 +1337,7 @@
 }
 
 @keyframes smoke-drift-right {
+
   0%,
   100% {
     transform: translateX(0) translateY(0) scale(1);
@@ -1368,6 +1351,7 @@
 }
 
 @keyframes ignitia-glass-sweep {
+
   0%,
   38% {
     transform: translateX(-120%);
@@ -1380,6 +1364,7 @@
 }
 
 @keyframes ignitia-slab-move {
+
   0%,
   40% {
     opacity: 0.25;
@@ -1428,6 +1413,7 @@
     display: none;
   }
 }
+
 @keyframes mascot-float {
   0% {
     opacity: 0;
@@ -1469,6 +1455,7 @@
 }
 
 @keyframes mascot-bob {
+
   0%,
   100% {
     transform: translateY(0) scale(1);
@@ -1480,6 +1467,7 @@
 }
 
 @keyframes smoke-left {
+
   0%,
   100% {
     transform: translateX(-50%) translateY(0) scale(1);
@@ -1493,6 +1481,7 @@
 }
 
 @keyframes smoke-right {
+
   0%,
   100% {
     transform: translateX(-50%) translateY(0) scale(1);
@@ -1512,6 +1501,7 @@
 .animate-smoke-right {
   animation: smoke-right 5.5s ease-in-out infinite;
 }
+
 .ignitia-citadel-title {
   position: relative;
   display: block;
@@ -1523,13 +1513,11 @@
 
   color: transparent;
   background:
-    linear-gradient(
-      180deg,
+    linear-gradient(180deg,
       #ffffff 0%,
       #dce9ff 38%,
       #8f9bb8 72%,
-      #ffffff 100%
-    );
+      #ffffff 100%);
   -webkit-background-clip: text;
   background-clip: text;
 
@@ -1540,6 +1528,7 @@
   filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.75));
   overflow: hidden;
 }
+
 /* ================================
    Mascot hand floating buttons
 ================================ */
@@ -1595,14 +1584,12 @@
   border-radius: inherit;
 
   background:
-    linear-gradient(
-      110deg,
+    linear-gradient(110deg,
       transparent 0%,
       transparent 35%,
       rgba(255, 255, 255, 0.35) 48%,
       transparent 62%,
-      transparent 100%
-    );
+      transparent 100%);
 
   transform: translateX(-120%);
   transition: transform 0.55s ease;
@@ -1641,6 +1628,7 @@
 }
 
 @keyframes hand-button-bob {
+
   0%,
   100% {
     transform: translateY(0) scale(1);
@@ -1676,6 +1664,7 @@
     display: none;
   }
 }
+
 .mascot-hand-button-left {
   left: 2%;
   top: 38%;
@@ -1689,4 +1678,46 @@
     linear-gradient(135deg, rgba(0, 245, 255, 0.82), rgba(168, 85, 247, 0.92)),
     rgba(0, 0, 0, 0.35);
   animation-delay: 0.35s;
+}
+
+/* Infinite scrolling mist animation (Left to Right) */
+.fog-scroll-right {
+  animation: fogScrollRight 25s linear infinite;
+}
+
+.fog-scroll-right-fast {
+  animation: fogScrollRight 16s linear infinite;
+}
+
+.fog-scroll-right-slow {
+  animation: fogScrollRight 35s linear infinite;
+}
+
+@keyframes fogScrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+/* Custom style for Register Now buttons across the site (Solid Violet) */
+.register-button-orange {
+  background: #a855f7 !important;
+  color: #ffffff !important;
+  border-color: rgba(168, 85, 247, 0.4) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.35), 0 0 35px rgba(168, 85, 247, 0.15) !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.register-button-orange:hover {
+  background: #b45cff !important;
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.55), 0 0 50px rgba(168, 85, 247, 0.25) !important;
+  transform: translateY(-2px) scale(1.01) !important;
+}
+
+.register-button-orange:active {
+  transform: translateY(0) scale(0.98) !important;
 }

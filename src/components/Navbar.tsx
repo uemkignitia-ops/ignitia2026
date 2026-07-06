@@ -161,7 +161,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Left aligned Section: Lock, IEM/UEM Logos, Left Links, IGNITIA Brand, Right Links */}
-          <div className="hidden lg:flex items-center gap-4 xl:gap-5 flex-1 justify-start">
+          <div className="hidden lg:flex items-center gap-2.5 xl:gap-4.5 flex-1 justify-start pr-12 lg:pr-16 xl:pr-20">
             {/* Admin Lock Access Icon */}
             <Link
               to="/admin/login"
@@ -220,7 +220,7 @@ const Navbar = () => {
             {/* Register Now Button inline with extra left margin for visual emphasis */}
             <Link
               to="/events"
-              className="glow-button text-xs xl:text-sm !px-4.5 !py-2 inline-flex items-center gap-2 pulse-cta shrink-0 font-['Orbitron'] font-extrabold ml-2 tracking-wider"
+              className="glow-button register-button-orange text-xs xl:text-sm !px-5 !py-2 inline-flex items-center gap-2 pulse-cta shrink-0 font-['Orbitron'] font-extrabold ml-2 tracking-wider"
             >
               Register
               <ArrowRight size={13} />
@@ -355,7 +355,7 @@ const Navbar = () => {
                 <Link
                   to="/events"
                   onClick={() => setIsOpen(false)}
-                  className="glow-button text-center text-sm !px-6 !py-3 w-full inline-flex items-center justify-center gap-2 mb-8 mt-4 shrink-0 font-['Orbitron'] font-bold tracking-wider"
+                  className="glow-button register-button-orange text-center text-sm !px-6 !py-3 w-full inline-flex items-center justify-center gap-2 mb-8 mt-4 shrink-0 font-['Orbitron'] font-bold tracking-wider"
                 >
                   Register Now
                   <ArrowRight size={14} />
