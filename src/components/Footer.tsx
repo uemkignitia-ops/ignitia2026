@@ -1,12 +1,8 @@
 import { motion } from "framer-motion";
 import {
-  ArrowRight,
   Facebook,
   Instagram,
   Linkedin,
-  Mail,
-  MapPin,
-  Phone,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -30,200 +26,87 @@ const stagger = {
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  hidden: { opacity: 0, y: 15 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
 const Footer = () => (
-  <footer className="relative z-[100] overflow-visible border-t border-white/10 bg-background/85 backdrop-blur-xl">
-    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(168,85,247,0.15),transparent_28%),radial-gradient(circle_at_top_right,rgba(255,215,0,0.06),transparent_24%)] overflow-hidden" />
+  <footer className="relative z-[100] overflow-visible border-t border-white/10 bg-background/85 backdrop-blur-xl py-6 md:py-8">
+    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(168,85,247,0.08),transparent_35%),radial-gradient(circle_at_top_right,rgba(255,215,0,0.04),transparent_30%)] overflow-hidden" />
 
     {/* Character standing on the footer line */}
-    <div className="absolute bottom-full left-4 md:left-12 z-20 pointer-events-none translate-y-6 md:translate-y-10">
+    <div className="absolute bottom-full left-4 md:left-12 z-20 pointer-events-none translate-y-4 md:translate-y-6">
       <img
         src="/footer-character-transparent.gif"
         alt="IGNITIA Character"
-        className="h-[80px] md:h-[280px] w-auto object-contain opacity-90 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]"
+        className="h-[60px] md:h-[180px] w-auto object-contain opacity-90 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]"
       />
     </div>
 
-    <div className="container relative z-10 mx-auto px-4 py-16 md:py-20">
+    <div className="container relative z-10 mx-auto px-4">
       <motion.div
         variants={stagger}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.7fr_0.7fr_1.2fr_0.8fr] lg:gap-x-10 xl:gap-x-14"
+        className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between border-b border-white/5 pb-6"
       >
-        <motion.div variants={fadeUp} className="space-y-5">
+        {/* Left Side: Logo & Description */}
+        <motion.div variants={fadeUp} className="space-y-3 max-w-md">
           <Link to="/" className="inline-flex items-center gap-3">
             <img
               src="/ignitia-2d.png"
               alt="IGNITIA logo"
-              className="h-12 w-12 rounded-full object-cover shadow-[0_0_30px_hsl(270_70%_60%/0.22)]"
+              className="h-10 w-10 rounded-full object-cover shadow-[0_0_20px_hsl(270_70%_60%/0.22)]"
             />
             <div>
-              <span className="block font-heading text-2xl font-bold gradient-text">
+              <span className="block font-['Orbitron'] text-xl font-bold gradient-text tracking-wider">
                 IGNITIA '26
               </span>
-              <span className="text-xs uppercase tracking-[0.26em] text-muted-foreground">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground block -mt-0.5">
                 IEM-UEM group, UEM Kolkata
               </span>
             </div>
           </Link>
-          <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
+          <p className="text-xs leading-relaxed text-muted-foreground font-['Orbitron'] tracking-wide font-medium">
             A flagship multi-domain celebration of technology, creativity, and
             student innovation.
           </p>
-          <div className="flex flex-wrap gap-3 sm:gap-4 pt-2">
-            {[
-              { icon: DiscordIcon, label: "Discord", url: "https://discord.gg/shUKTMPMTj" },
-              { icon: Instagram, label: "ignitia2k26", url: "https://www.instagram.com/ignitia2k26" },
-              { icon: Facebook, label: "Ignitia", url: "https://www.facebook.com/people/Ignitia/61573281091277/" },
-              { icon: Linkedin, label: "Ignitia2k26", url: "https://www.linkedin.com/company/ignitia2k26" },
-            ].map((social, i) => (
-              <motion.a
-                key={i}
-                href={social.url}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={social.label}
-                whileHover={{ scale: 1.1, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-card/60 text-muted-foreground transition-colors hover:text-white hover:border-white/20"
-              >
-                <social.icon size={20} />
-              </motion.a>
-            ))}
-          </div>
         </motion.div>
 
-        <motion.div variants={fadeUp} className="space-y-4">
-          <h4 className="font-heading text-sm font-semibold uppercase tracking-[0.24em] text-foreground">
-            Quick Links
-          </h4>
-          <div className="flex flex-col gap-3">
-            {[
-              { label: "About", to: "/about" },
-              { label: "Events", to: "/events" },
-              { label: "Schedule", to: "/schedule" },
-              { label: "Gallery", to: "/gallery" },
-              { label: "FAQ", to: "/faq" },
-              { label: "Sponsors", to: "/sponsors" },
-              { label: "Team", to: "/team" },
-            ].map((link) => (
-              <motion.div key={link.label} whileHover={{ x: 4 }}>
-                <Link
-                  to={link.to}
-                  className="inline-flex w-fit items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
-                >
-                  <ArrowRight size={14} />
-                  {link.label}
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div variants={fadeUp} className="space-y-4">
-          <h4 className="font-heading text-sm font-semibold uppercase tracking-[0.24em] text-foreground">
-            Events
-          </h4>
-          <div className="flex flex-col gap-3">
-            {[
-              "IGNISYS",
-              "Quizophonia",
-              "Battlegrounds Mobile India",
-              "Evade-X",
-              "Pixel Prophecy",
-              "Circuit Crawl",
-            ].map((event) => (
-              <motion.div key={event} whileHover={{ x: 4 }}>
-                <Link
-                  to="/events"
-                  className="inline-flex w-fit items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
-                >
-                  <ArrowRight size={14} />
-                  {event}
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div variants={fadeUp} className="space-y-4">
-          <h4 className="font-heading text-sm font-semibold uppercase tracking-[0.24em] text-foreground">
-            Contact
-          </h4>
-          <div className="flex flex-col gap-3">
+        {/* Right Side: Social Media Handles side-by-side */}
+        <motion.div variants={fadeUp} className="flex gap-3">
+          {[
+            { icon: DiscordIcon, label: "Discord", url: "https://discord.gg/shUKTMPMTj" },
+            { icon: Instagram, label: "ignitia2k26", url: "https://www.instagram.com/ignitia2k26" },
+            { icon: Facebook, label: "Ignitia", url: "https://www.facebook.com/people/Ignitia/61573281091277/" },
+            { icon: Linkedin, label: "Ignitia2k26", url: "https://www.linkedin.com/company/ignitia2k26" },
+          ].map((social, i) => (
             <motion.a
-              whileHover={{ x: 4 }}
-              href="mailto:uemk.ignitia@gmail.com"
-              className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              key={i}
+              href={social.url}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={social.label}
+              whileHover={{ scale: 1.1, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-card/60 text-muted-foreground transition-colors hover:text-white hover:border-white/20"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-card/60 text-primary">
-                <Mail size={14} />
-              </span>
-              <span>uemk.ignitia@gmail.com</span>
+              <social.icon className="h-4 w-4" />
             </motion.a>
-            <motion.div
-              whileHover={{ x: 4 }}
-              className="flex items-start gap-3"
-            >
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-card/60 text-primary shrink-0">
-                <Phone size={14} />
-              </span>
-              <div className="flex flex-col gap-2.5 pt-1.5">
-                <a href="tel:+917439115647" className="text-xs sm:text-sm text-muted-foreground transition-colors hover:text-foreground flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
-                  <span className="text-white/80 min-w-[120px]">Snehashish Das:</span>
-                  <span className="whitespace-nowrap">+91 74391 15647</span>
-                </a>
-                <a href="tel:+917439223022" className="text-xs sm:text-sm text-muted-foreground transition-colors hover:text-foreground flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
-                  <span className="text-white/80 min-w-[120px]">Priyanshu Mitra:</span>
-                  <span className="whitespace-nowrap">+91 74392 23022</span>
-                </a>
-                <a href="tel:+918274090864" className="text-xs sm:text-sm text-muted-foreground transition-colors hover:text-foreground flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
-                  <span className="text-white/80 min-w-[120px]">Aranya Rath:</span>
-                  <span className="whitespace-nowrap">+91 82740 90864</span>
-                </a>
-              </div>
-            </motion.div>
-            <motion.div
-              whileHover={{ x: 4 }}
-              className="flex items-start gap-3 text-sm text-muted-foreground"
-            >
-              <span className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-card/60 text-primary">
-                <MapPin size={14} />
-              </span>
-              <span>University of Engineering & Management, Kolkata</span>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        <motion.div variants={fadeUp} className="space-y-4">
-          <h4 className="font-heading text-sm font-semibold uppercase tracking-[0.24em] text-foreground">
-            <span className="text-primary">*</span> Web Dev Team
-          </h4>
-          <ul className="flex flex-col gap-2.5 text-sm text-muted-foreground font-mono">
-            <li><span className="text-primary/50 mr-1">1.</span> <a href="https://www.linkedin.com/in/diptodeep-biswas/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Diptodeep Biswas</a></li>
-            <li><span className="text-primary/50 mr-1">2.</span> <a href="https://www.linkedin.com/in/aranya-rath-275a5628a/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Aranya Rath</a></li>
-            <li><span className="text-primary/50 mr-1">3.</span> <a href="https://www.linkedin.com/in/tridibesh-sen/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Tridibesh Sen</a></li>
-            <li><span className="text-primary/50 mr-1">4.</span> <a href="https://www.linkedin.com/in/rony-roy-813bb5335/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Rony Roy</a></li>
-            <li><span className="text-primary/50 mr-1">5.</span> <a href="https://www.linkedin.com/in/daliya-paul-4b80393a9/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Daliya Paul</a></li>
-            <li><span className="text-primary/50 mr-1">6.</span> <a href="https://www.linkedin.com/in/harsit-kedia/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Harsit Kedia</a></li>
-          </ul>
+          ))}
         </motion.div>
       </motion.div>
 
+      {/* Copyright Bottom Section */}
       <motion.div
-        initial={{ opacity: 0, scaleX: 0 }}
-        whileInView={{ opacity: 1, scaleX: 1 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        className="mt-12 border-t border-white/10 pt-6 text-center text-xs text-muted-foreground origin-center"
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="mt-6 text-center text-[10px] text-muted-foreground font-['Orbitron'] tracking-wider"
       >
-        © 2026 IGNITIA '26 · Built for students, powered by the IEM-UEM group,
-        UEM Kolkata. <span className="text-primary">*</span>
+        © 2026 IGNITIA '26 · Built for students, powered by the IEM-UEM group, UEM Kolkata.
       </motion.div>
     </div>
   </footer>

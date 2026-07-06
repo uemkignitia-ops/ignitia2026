@@ -453,7 +453,7 @@ const EventsPanel = ({
                 onChange={(e) => setForm({ ...form, theme: e.target.value as any })}
                 className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white"
               >
-                {["orange", "purple", "teal", "yellow", "pink", "blue"].map((t) => (
+                {["orange", "purple", "purple", "yellow", "pink", "blue"].map((t) => (
                   <option key={t} value={t}>{t}</option>
                 ))}
               </select>

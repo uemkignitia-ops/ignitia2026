@@ -6,14 +6,14 @@ const blobs = [
   { color: "bg-primary/10", size: "w-[620px] h-[620px]", x: "50%", y: "48%", duration: 18, centered: true },
   { color: "bg-secondary/6", size: "w-[420px] h-[420px]", x: "60%", y: "52%", duration: 25 },
   { color: "bg-neon-pink/5", size: "w-[320px] h-[320px]", x: "32%", y: "66%", duration: 22 },
-  { color: "bg-neon-cyan/6", size: "w-[280px] h-[280px]", x: "58%", y: "18%", duration: 18 },
+  { color: "bg-neon-fuchsia/6", size: "w-[280px] h-[280px]", x: "58%", y: "18%", duration: 18 },
 ];
 
 const blobStyles: Record<string, string> = {
   "bg-primary/10": "radial-gradient(circle, hsl(var(--primary) / 0.10) 0%, transparent 70%)",
   "bg-secondary/6": "radial-gradient(circle, hsl(var(--secondary) / 0.06) 0%, transparent 70%)",
   "bg-neon-pink/5": "radial-gradient(circle, hsl(var(--neon-pink) / 0.05) 0%, transparent 70%)",
-  "bg-neon-cyan/6": "radial-gradient(circle, hsl(var(--neon-cyan) / 0.06) 0%, transparent 70%)",
+  "bg-neon-fuchsia/6": "radial-gradient(circle, hsl(var(--neon-fuchsia) / 0.06) 0%, transparent 70%)",
 };
 
 const AnimatedBlobs = () => {

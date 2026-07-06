@@ -71,7 +71,7 @@ const defaultEventsBackups: EventType[] = [
     duration: "Offline",
     day: "Aug 1",
     entryFee: "central registration",
-    theme: "teal",
+    theme: "purple",
     rulebookUrl: "https://drive.google.com/file/d/1Wm5bkO3E1O1Cjxj4V99rU0eLSNkVCwOb/preview",
     registrationUrl: "https://forms.gle/Qx8e4z2EFhR9o5Gj6",
     watermark: "02",
@@ -129,7 +129,7 @@ const defaultEventsBackups: EventType[] = [
     duration: "Offline",
     day: "Aug 1 & 2",
     entryFee: "central registration",
-    theme: "teal",
+    theme: "purple",
     rulebookUrl: "https://drive.google.com/file/d/1qP0vC3Mh1cPQHH7fvBk3qjN0_y2g0MeP/preview",
     registrationUrl: "https://forms.gle/cQ8pTgYf5S7zVwNA9",
     watermark: "04",
@@ -300,7 +300,7 @@ const defaultEventsBackups: EventType[] = [
     duration: "Offline",
     day: "Aug 1 & 2",
     entryFee: "central registration",
-    theme: "teal",
+    theme: "purple",
     rulebookUrl: "https://drive.google.com/file/d/19qHWLouS6_GdrPjQ9205eXye4osJx2T9/preview",
     registrationUrl: "https://forms.gle/t43HNV1NcbjPrnPBA",
     watermark: "10",
@@ -526,6 +526,36 @@ export const uploadImageFile = async (file: File, folder: string): Promise<strin
   }
 };
 
+// Helper functions to map camelCase key objects to snake_case column names and vice versa
+const camelToSnake = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+const snakeToCamel = (str: string) => str.replace(/(_\w)/g, match => match[1].toUpperCase());
+
+const toSnakeCase = (obj: any): any => {
+  if (Array.isArray(obj)) {
+    return obj.map(v => toSnakeCase(v));
+  } else if (obj !== null && obj !== undefined && obj.constructor === Object) {
+    return Object.keys(obj).reduce((result, key) => {
+      const snakeKey = camelToSnake(key);
+      result[snakeKey] = toSnakeCase(obj[key]);
+      return result;
+    }, {} as any);
+  }
+  return obj;
+};
+
+const toCamelCase = (obj: any): any => {
+  if (Array.isArray(obj)) {
+    return obj.map(v => toCamelCase(v));
+  } else if (obj !== null && obj !== undefined && obj.constructor === Object) {
+    return Object.keys(obj).reduce((result, key) => {
+      const camelKey = snakeToCamel(key);
+      result[camelKey] = toCamelCase(obj[key]);
+      return result;
+    }, {} as any);
+  }
+  return obj;
+};
+
 // ─── Events Datastore ──────────────────────────────────────────────────────────
 export const getEvents = async (): Promise<EventType[]> => {
   if (isSupabaseEnabled && supabase) {
@@ -537,8 +567,9 @@ export const getEvents = async (): Promise<EventType[]> => {
       if (error) throw error;
       
       if (data && data.length > 0) {
-        localStorage.setItem("ignitia_events", JSON.stringify(data));
-        return data as EventType[];
+        const camelData = toCamelCase(data);
+        localStorage.setItem("ignitia_events", JSON.stringify(camelData));
+        return camelData as EventType[];
       }
     } catch (e) {
       console.warn("Supabase error reading events. Checking cache...", e);
@@ -559,7 +590,7 @@ export const saveEvent = async (event: EventType): Promise<void> => {
   if (isSupabaseEnabled && supabase) {
     const { error } = await supabase
       .from("events")
-      .upsert(event);
+      .upsert(toSnakeCase(event));
     if (error) throw error;
     await getEvents();
   } else {
@@ -839,7 +870,7 @@ export const seedInitialData = async (): Promise<void> => {
 
     // Seed events
     for (const event of defaultEventsBackups) {
-      const { error } = await supabase.from("events").insert(event);
+      const { error } = await supabase.from("events").insert(toSnakeCase(event));
       if (error) console.error("Error seeding event:", error);
     }
 

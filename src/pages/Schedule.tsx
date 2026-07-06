@@ -7,6 +7,7 @@ import PageTransition from "@/components/PageTransition";
 import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
+import BackgroundEffects from "@/components/BackgroundEffects";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { TerminalSubheading } from "@/components/TerminalSubheading";
 
@@ -22,7 +23,7 @@ const schedule = {
       time: "10:00 AM",
       title: "Ideathon Kickoff",
       venue: "Hall A",
-      color: "bg-neon-cyan",
+      color: "bg-neon-fuchsia",
     },
     {
       time: "10:30 AM",
@@ -46,7 +47,7 @@ const schedule = {
       time: "03:00 PM",
       title: "Game Dev Hackathon Starts",
       venue: "Innovation Lab",
-      color: "bg-neon-cyan",
+      color: "bg-neon-fuchsia",
     },
     {
       time: "05:00 PM",
@@ -72,7 +73,7 @@ const schedule = {
       time: "10:00 AM",
       title: "Ideathon Presentations",
       venue: "Hall A",
-      color: "bg-neon-cyan",
+      color: "bg-neon-fuchsia",
     },
     {
       time: "11:00 AM",
@@ -96,7 +97,7 @@ const schedule = {
       time: "03:00 PM",
       title: "Game Dev Submissions",
       venue: "Innovation Lab",
-      color: "bg-neon-cyan",
+      color: "bg-neon-fuchsia",
     },
     {
       time: "04:00 PM",
@@ -502,10 +503,9 @@ const Schedule = () => {
   }, [activeDay, itemCount, layoutConfig]);
 
   return (
-    <PageTransition>
-      <div className="min-h-screen bg-background scanline-overlay overflow-x-hidden">
-        <ParticleField />
-        <AnimatedBlobs />
+    <div className="min-h-screen bg-transparent overflow-x-hidden citadel-theme">
+      <BackgroundEffects />
+      <PageTransition>
         <ScrollProgress />
         <Navbar />
 
@@ -536,58 +536,20 @@ const Schedule = () => {
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               style={{ transformStyle: "preserve-3d" }}
             >
-              {/* Shadow/depth clone */}
-              <div
-                aria-hidden
-                className="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
-                style={{ transform: "translateZ(-40px) translateY(12px)" }}
-              >
-                <span
-                  className="font-heading font-black uppercase leading-none tracking-tight text-center w-full"
-                  style={{
-                    fontSize: "clamp(2.5rem, 10vw, 5.5rem)",
-                    color: "rgba(88,28,235,0.25)",
-                    filter: "blur(8px)",
-                  }}
-                >
-                  EVENT SCHEDULE
-                </span>
-              </div>
-
-              {/* Actual title */}
-              <h1
-                className="font-heading font-black uppercase leading-none tracking-tight w-full text-center relative"
-                style={{ fontSize: "clamp(2.5rem, 10vw, 5.5rem)", transformStyle: "preserve-3d" }}
-              >
-                {/* EVENT — dimmer, lighter weight */}
-                <span
-                  className="inline-block mr-[0.15em]"
-                  style={{
-                    color: "rgba(255,255,255,0.28)",
-                    fontWeight: 300,
-                    textShadow: "0 2px 20px rgba(139,92,246,0.1)",
-                  }}
-                >
-                  EVENT
-                </span>
-
-                {/* SCHEDULE — full white with 3D purple bloom */}
-                <span
-                  className="inline-block relative"
-                  style={{
-                    color: "#ffffff",
-                    textShadow: [
-                      "0 0 60px rgba(139,92,246,0.9)",
-                      "0 0 120px rgba(139,92,246,0.5)",
-                      "0 2px 0 rgba(88,28,235,0.6)",
-                      "0 4px 0 rgba(68,14,180,0.4)",
-                      "0 8px 20px rgba(0,0,0,0.6)",
-                    ].join(", "),
-                  }}
-                >
-                  SCHEDULE
+            <div className="w-full flex justify-center z-[36] pointer-events-none text-center mt-8 mb-4">
+              <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">
+                <span className="ignitia-citadel-title mx-auto" data-text="SCHEDULE">
+                  <span>S</span>
+                  <span>C</span>
+                  <span>H</span>
+                  <span>E</span>
+                  <span>D</span>
+                  <span>U</span>
+                  <span>L</span>
+                  <span>E</span>
                 </span>
               </h1>
+            </div>
             </motion.div>
           </div>
 
@@ -666,8 +628,8 @@ const Schedule = () => {
           </div>
         </section>
         <Footer />
-      </div>
-    </PageTransition>
+      </PageTransition>
+    </div>
   );
 };
 

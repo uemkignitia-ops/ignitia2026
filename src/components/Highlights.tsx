@@ -20,8 +20,8 @@ const stats = [
     icon: Users,
     value: "1000+",
     label: "Expected Footfall",
-    color: "text-neon-cyan",
-    bg: "bg-neon-cyan/20",
+    color: "text-neon-fuchsia",
+    bg: "bg-neon-fuchsia/20",
   },
   {
     icon: School,

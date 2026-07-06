@@ -18,6 +18,7 @@ import PageTransition from "@/components/PageTransition";
 import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
+import BackgroundEffects from "@/components/BackgroundEffects";
 import { TerminalSubheading } from "@/components/TerminalSubheading";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -65,10 +66,10 @@ const CATEGORY_TEMPLATES = [
   {
     key: "hosting",
     masterHeading: "Hosting Partner",
-    accent: "from-blue-500 to-cyan-400",
+    accent: "from-blue-500 to-fuchsia-400",
     accentRgb: "59,130,246",
     icon: Server,
-    color: "from-blue-500 to-cyan-400",
+    color: "from-blue-500 to-fuchsia-400",
     benefits: [
       "Logo on website",
       "Hosting credits for participants",
@@ -207,13 +208,12 @@ const SponsorsPage = () => {
   }, [sponsorsList]);
 
   return (
-    <PageTransition>
       <div
-        className="min-h-screen bg-background scanline-overlay overflow-x-hidden"
+        className="min-h-screen bg-transparent overflow-x-hidden citadel-theme relative"
         ref={containerRef}
       >
-        <ParticleField />
-        <AnimatedBlobs />
+        <BackgroundEffects />
+        <PageTransition>
         <ScrollProgress />
         <Navbar />
 
@@ -246,57 +246,20 @@ const SponsorsPage = () => {
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               style={{ transformStyle: "preserve-3d" }}
             >
-              {/* Depth clone */}
-              <div
-                aria-hidden
-                className="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
-                style={{ transform: "translateZ(-40px) translateY(12px)" }}
-              >
-                <span
-                  className="font-heading font-black uppercase leading-none tracking-tight text-center w-full"
-                  style={{
-                    fontSize: "clamp(2.5rem, 10vw, 5.5rem)",
-                    color: "rgba(88,28,235,0.25)",
-                    filter: "blur(8px)",
-                  }}
-                >
-                  OUR SPONSORS
-                </span>
-              </div>
-
-              <h1
-                className="font-heading font-black uppercase leading-none tracking-tight w-full text-center relative"
-                style={{
-                  fontSize: "clamp(2.5rem, 10vw, 5.5rem)",
-                  transformStyle: "preserve-3d",
-                }}
-              >
-                <span
-                  className="inline-block mr-[0.15em]"
-                  style={{
-                    color: "rgba(255,255,255,0.28)",
-                    fontWeight: 300,
-                    textShadow: "0 2px 20px rgba(139,92,246,0.1)",
-                  }}
-                >
-                  OUR
-                </span>
-                <span
-                  className="inline-block relative"
-                  style={{
-                    color: "#ffffff",
-                    textShadow: [
-                      "0 0 60px rgba(139,92,246,0.9)",
-                      "0 0 120px rgba(139,92,246,0.5)",
-                      "0 2px 0 rgba(88,28,235,0.6)",
-                      "0 4px 0 rgba(68,14,180,0.4)",
-                      "0 8px 20px rgba(0,0,0,0.6)",
-                    ].join(", "),
-                  }}
-                >
-                  SPONSORS
+            <div className="w-full flex justify-center z-[36] pointer-events-none text-center mt-8 mb-4">
+              <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">
+                <span className="ignitia-citadel-title mx-auto" data-text="SPONSORS">
+                  <span>S</span>
+                  <span>P</span>
+                  <span>O</span>
+                  <span>N</span>
+                  <span>S</span>
+                  <span>O</span>
+                  <span>R</span>
+                  <span>S</span>
                 </span>
               </h1>
+            </div>
             </motion.div>
           </div>
 
@@ -534,8 +497,8 @@ const SponsorsPage = () => {
         </section>
 
         <Footer />
+        </PageTransition>
       </div>
-    </PageTransition>
   );
 };
 

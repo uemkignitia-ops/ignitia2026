@@ -934,7 +934,7 @@ export default function StatsDark() {
         className="stats-dark"
         style={{
           position: "relative",
-          background: "linear-gradient(160deg, #010308 0%, #030b1a 35%, #040d20 65%, #010308 100%)",
+          background: "transparent",
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",

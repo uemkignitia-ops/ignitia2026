@@ -140,7 +140,7 @@ export const CharacterHeroScene = ({ scrollProgressRef }: CharacterHeroSceneProp
         {/* Ambient fill light with violet/blue tint */}
         <ambientLight intensity={0.9} color="#151324" />
 
-        {/* Bright cyan key light representing high-tech theme */}
+        {/* Bright fuchsia key light representing high-tech theme */}
         <directionalLight
           position={[5, 5, 4]}
           intensity={2.2}
