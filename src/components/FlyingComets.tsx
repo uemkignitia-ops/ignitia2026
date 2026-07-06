@@ -30,6 +30,8 @@ const FlyingComets = () => {
 
     let animId: number;
     const comets: Comet[] = [];
+    const FRAME_INTERVAL = 1000 / 30; // throttle to ~30fps
+    let lastTime = 0;
 
     // Diagonal angle: top-left → bottom-right ≈ 40° from horizontal
     const ANGLE = (40 * Math.PI) / 180;
@@ -47,7 +49,7 @@ const FlyingComets = () => {
     ro.observe(parent);
 
     const spawn = () => {
-      if (comets.length < 8 && Math.random() < 0.05) {
+      if (comets.length < 4 && Math.random() < 0.04) {
         let startX: number, startY: number;
 
         // 60% of comets spawn near the center (around the GLB model)
@@ -75,7 +77,7 @@ const FlyingComets = () => {
       }
     };
 
-    const draw = () => {
+    const innerDraw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       spawn();
 
@@ -120,10 +122,14 @@ const FlyingComets = () => {
         ctx.fillStyle = `hsla(205, 90%, 85%, ${c.opacity * 0.95})`;
         ctx.fill();
       }
-
-      animId = requestAnimationFrame(draw);
     };
-    draw();
+    const draw = (timestamp: number) => {
+      animId = requestAnimationFrame(draw);
+      if (timestamp - lastTime < FRAME_INTERVAL) return;
+      lastTime = timestamp;
+      innerDraw();
+    };
+    animId = requestAnimationFrame(draw);
 
     return () => {
       cancelAnimationFrame(animId);

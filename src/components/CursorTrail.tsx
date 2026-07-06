@@ -1,14 +1,20 @@
 import { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 const CursorTrail = () => {
+  const location = useLocation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isAdmin = location.pathname.startsWith("/admin");
 
   useEffect(() => {
+    if (isAdmin) return;
+    
     // Skip entirely on touch devices
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -130,7 +136,9 @@ const CursorTrail = () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMove);
     };
-  }, []);
+  }, [isAdmin]);
+
+  if (isAdmin) return null;
 
   return (
     <canvas

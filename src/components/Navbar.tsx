@@ -6,7 +6,7 @@ import {
   useTransform,
   useSpring,
 } from "framer-motion";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X, Lock } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -152,10 +152,10 @@ const Navbar = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="pointer-events-none"
         >
-          <div className="hidden md:flex fixed top-6 left-10 md:top-[2.75rem] md:left-[4.5rem] z-[150] pointer-events-auto">
+          <div className="hidden md:flex fixed top-6 left-10 md:top-[2.75rem] md:left-[4.5rem] z-[150] pointer-events-none">
             <img src="/iem-logo.png" alt="IEM Logo" className="h-24 md:h-[8rem] w-auto object-contain drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]" />
           </div>
-          <div className="hidden md:flex fixed top-6 right-10 md:top-[2.75rem] md:right-[4.5rem] z-[150] pointer-events-auto">
+          <div className="hidden md:flex fixed top-6 right-10 md:top-[2.75rem] md:right-[4.5rem] z-[150] pointer-events-none">
             <img src="/uem-logo.png" alt="UEM Logo" className="h-24 md:h-[8rem] w-auto object-contain drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]" />
           </div>
         </motion.div>
@@ -176,6 +176,15 @@ const Navbar = () => {
           style={{ height: isHome ? navHeight : 64 }}
           className="flex items-center justify-between px-6 w-full relative"
         >
+          {/* Admin Lock Access Icon (Left Side) */}
+          <Link
+            to="/admin/login"
+            className="flex items-center justify-center text-white/40 hover:text-primary active:scale-95 transition-all duration-200 p-2.5 mr-3 border border-white/5 hover:border-primary/30 rounded-lg hover:bg-primary/5 hover:shadow-[0_0_10px_rgba(139,92,246,0.15)] z-[120] min-w-[36px] min-h-[36px]"
+            title="Admin Login"
+          >
+            <Lock size={16} />
+          </Link>
+
           {/* Mobile Logo (left-aligned) */}
           <div className="flex lg:hidden items-center shrink-0">
             <Link to="/" className="flex items-center gap-2">
@@ -377,6 +386,15 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex-1 min-h-[24px]" />
+
+                <Link
+                  to="/admin/login"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center gap-2 text-xs font-mono text-muted-foreground hover:text-primary active:scale-98 transition-colors py-2.5 border border-white/5 bg-white/[0.02] rounded-xl hover:bg-primary/5 hover:border-primary/20 mb-3 shrink-0"
+                >
+                  <Lock size={14} />
+                  <span>Admin Terminal</span>
+                </Link>
 
                 <Link
                   to="/events"

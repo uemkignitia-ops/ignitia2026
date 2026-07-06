@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Network, Zap, Award, Handshake, PartyPopper } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,7 +11,8 @@ const reasons = [
   {
     icon: Network,
     title: "Unrivaled Networking",
-    description: "Connect with thousands of brilliant minds, visionary mentors, and top-tier industry professionals from over 50 leading institutions.",
+    description:
+      "Connect with thousands of brilliant minds, visionary mentors, and top-tier industry professionals from over 50 leading institutions.",
     color: "text-primary",
     bg: "bg-primary/10",
     border: "group-hover:border-primary/40",
@@ -21,7 +22,8 @@ const reasons = [
   {
     icon: Zap,
     title: "Skill Evolution",
-    description: "Sharpen your coding and design prowess through intense, real-world hackathons.",
+    description:
+      "Sharpen your coding and design prowess through intense, real-world hackathons.",
     color: "text-neon-cyan",
     bg: "bg-neon-cyan/10",
     border: "group-hover:border-neon-cyan/40",
@@ -31,7 +33,8 @@ const reasons = [
   {
     icon: Award,
     title: "₹2L+ Prize Pool",
-    description: "Compete for massive cash prizes, exclusive swags, and prestigious certificates.",
+    description:
+      "Compete for massive cash prizes, exclusive swags, and prestigious certificates.",
     color: "text-secondary",
     bg: "bg-secondary/10",
     border: "group-hover:border-secondary/40",
@@ -41,7 +44,8 @@ const reasons = [
   {
     icon: Handshake,
     title: "Industry Exposure",
-    description: "Get noticed by tech giants. Present your innovative ideas directly to hiring partners looking for fresh talent.",
+    description:
+      "Get noticed by tech giants. Present your innovative ideas directly to hiring partners looking for fresh talent.",
     color: "text-neon-pink",
     bg: "bg-neon-pink/10",
     border: "group-hover:border-neon-pink/40",
@@ -51,7 +55,8 @@ const reasons = [
   {
     icon: PartyPopper,
     title: "Cultural Extravaganza",
-    description: "Experience two days of electrifying music, thrilling games, and unforgettable memories.",
+    description:
+      "Experience two days of electrifying music, thrilling games, and unforgettable memories.",
     color: "text-neon-purple",
     bg: "bg-neon-purple/10",
     border: "group-hover:border-neon-purple/40",
@@ -64,13 +69,6 @@ const WhyAttend = () => {
   const isMobile = useIsMobile();
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-  
-  const orbY1 = useTransform(scrollYProgress, [0, 1], [-50, 100]);
-  const orbY2 = useTransform(scrollYProgress, [0, 1], [50, -100]);
 
   useLayoutEffect(() => {
     if (isMobile) return;
@@ -90,7 +88,8 @@ const WhyAttend = () => {
             trigger: gridRef.current,
             start: "top 75%",
             end: "top 35%",
-            scrub: 0.8,
+            scrub: 0.4,
+            invalidateOnRefresh: true,
           },
         },
       );
@@ -100,15 +99,18 @@ const WhyAttend = () => {
   }, [isMobile]);
 
   return (
-    <section ref={sectionRef} className="relative pt-20 pb-32 overflow-hidden bg-[#050406]">
-      {/* Decorative Orbs */}
-      <motion.div
-        style={isMobile ? undefined : { y: orbY1 }}
+    <section
+      ref={sectionRef}
+      className="relative pt-20 pb-32 overflow-hidden bg-[#050406]"
+    >
+      {/* Decorative Orbs — static, no scroll parallax (avoids repainting blur on every scroll frame) */}
+      <div
         className="absolute top-0 right-[-10%] w-[500px] h-[500px] rounded-full bg-primary/10 blur-[150px] pointer-events-none"
+        style={{ willChange: "transform", transform: "translateZ(0)" }}
       />
-      <motion.div
-        style={isMobile ? undefined : { y: orbY2 }}
+      <div
         className="absolute bottom-0 left-[-10%] w-[400px] h-[400px] rounded-full bg-secondary/10 blur-[150px] pointer-events-none"
+        style={{ willChange: "transform", transform: "translateZ(0)" }}
       />
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
@@ -127,11 +129,12 @@ const WhyAttend = () => {
             Why <span className="gradient-text">Attend?</span>
           </h2>
           <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
-            Discover what makes IGNITIA the most anticipated multi-domain fest of the year.
+            Discover what makes IGNITIA the most anticipated multi-domain fest
+            of the year.
           </p>
         </motion.div>
 
-        <div 
+        <div
           ref={gridRef}
           className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto"
         >
@@ -142,16 +145,18 @@ const WhyAttend = () => {
             >
               {/* Card Background Gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+
               <div className="relative z-10 h-full flex flex-col">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 ${r.bg} border border-white/5 group-hover:scale-110 transition-transform duration-500`}>
+                <div
+                  className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 ${r.bg} border border-white/5 group-hover:scale-110 transition-transform duration-500`}
+                >
                   <r.icon size={26} className={r.color} />
                 </div>
-                
+
                 <h3 className="font-heading text-2xl font-bold text-foreground mb-3 tracking-tight">
                   {r.title}
                 </h3>
-                
+
                 <p className="text-muted-foreground leading-relaxed mt-auto font-light">
                   {r.description}
                 </p>

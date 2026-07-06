@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,6 +10,7 @@ import {
   Star,
   Gem,
   Hexagon,
+  Users,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -20,132 +21,86 @@ import ScrollProgress from "@/components/ScrollProgress";
 import { TerminalSubheading } from "@/components/TerminalSubheading";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-// ─── Real sponsor data ────────────────────────────────────────────────────────
-const sponsorCategories = [
+// ─── Real sponsor data templates ──────────────────────────────────────────────
+const CATEGORY_TEMPLATES = [
   {
-    masterHeading: "Hosting Partners of IGNITIA",
-    accent: "from-blue-500 to-cyan-400",
-    accentRgb: "59,130,246",
-    tiers: [
-      {
-        tier: "Hosting Partner",
-        icon: Server,
-        color: "from-blue-500 to-cyan-400",
-        accentRgb: "59,130,246",
-        benefits: [
-          "Logo on website",
-          "Hosting credits for participants",
-          "Social media mention",
-        ],
-        sponsors: [
-          { name: "Microsoft Student Society UEMK", logo: "/sponsors/MSS.jpeg" },
-        ],
-      },
-      {
-        tier: "Hackathon Partner",
-        icon: Terminal,
-        color: "from-emerald-500 to-green-400",
-        accentRgb: "16,185,129",
-        benefits: [
-          "API access for hackers",
-          "Dedicated prize track",
-          "Mentorship during hackathon",
-        ],
-        sponsors: [
-          { name: "Crelynex", logo: "/sponsors/CrelyneX.jpg" },
-        ],
-      },
-    ],
-  },
-  {
-    masterHeading: "Event Collaborators",
-    accent: "from-violet-500 to-purple-400",
-    accentRgb: "139,92,246",
-    tiers: [
-      {
-        tier: "Platform Partners",
-        icon: Award,
-        color: "from-violet-500 to-purple-400",
-        accentRgb: "139,92,246",
-        benefits: [
-          "Logo on website",
-          "Social media shoutout",
-          "Community engagement booth",
-        ],
-        sponsors: [
-          { name: "Devfolio", alt: "DEVFOLIO LOGO", logo: "/sponsors/Devfolio_Logo-Colored.png" },
-          { name: "Unstop", logo: "/sponsors/unstop.png" },
-          { name: "Hack2skills", logo: "/sponsors/hack2skill.jpeg" },
-          { name: "Go Daddy", logo: "/sponsors/GoDaddy.jpg" },
-          { name: "Crelynex", logo: "/sponsors/CrelyneX.jpg" },
-        ],
-      },
-    ],
-  },
-  {
-    masterHeading: "Sponsors",
+    key: "gold",
+    masterHeading: "Gold Sponsors",
     accent: "from-amber-500 to-yellow-400",
     accentRgb: "245,158,11",
-    tiers: [
-      {
-        tier: "Gold Sponsors",
-        icon: Star,
-        color: "from-amber-500 to-yellow-400",
-        accentRgb: "245,158,11",
-        benefits: [
-          "Logo on website & posters",
-          "Booth space",
-          "Social media mention",
-          "Certificate branding",
-        ],
-        sponsors: [
-          { name: "Crelynex", logo: "/sponsors/CrelyneX.jpg" },
-          { name: "Microsoft Student Society UEMK", logo: "/sponsors/MSS.jpeg" },
-        ],
-      },
-      {
-        tier: "Title Sponsors",
-        icon: Gem,
-        color: "from-primary to-purple-400",
-        accentRgb: "139,92,246",
-        benefits: [
-          "Logo on all materials",
-          "Main stage branding",
-          "Dedicated booth",
-          "Social media features",
-          "Opening ceremony mention",
-        ],
-        sponsors: [
-          { name: "Robo Mellotikos", logo: "/sponsors/robo_mellontikos.jpeg" },
-          { name: "UGG UEMK", logo: "/sponsors/UGG.jpg" },
-          { name: "DS UEMK", logo: "/sponsors/Dsu.png" },
-          { name: "Rangrez", logo: "/sponsors/Rangrez.jpeg" },
-          { name: "GDG UEMK", logo: "/sponsors/GDG.jpeg" },
-          { name: "Innofusion", logo: "/sponsors/Innofusion_updated.jpg" },
-          { name: "Diversion", logo: "/sponsors/Diversion.png" },
-          { name: "Oratoria", logo: "/sponsors/Oratoria.jpg" },
-          { name: "Technologia", logo: "/sponsors/technologia.jpeg" },
-          { name: "Symphony", logo: "/sponsors/Symphony.jpg" },
-          { name: "Pragya", logo: "/sponsors/Pragya.jpg" },
-          { name: "GFG UEMK", logo: "/sponsors/Gfg.jpg" },
-          { name: "Driveblaze", logo: "/sponsors/Driveblaze.jpg" },
-        ],
-      },
-    ],
+    icon: Star,
+    color: "from-amber-500 to-yellow-400",
+    benefits: [
+      "Logo on website & posters",
+      "Booth space",
+      "Social media mention",
+      "Certificate branding",
+    ]
   },
+  {
+    key: "silver",
+    masterHeading: "Silver Sponsors",
+    accent: "from-slate-400 to-slate-500",
+    accentRgb: "148,163,184",
+    icon: Award,
+    color: "from-slate-400 to-slate-500",
+    benefits: [
+      "Logo on website",
+      "Banner space",
+      "Social media shoutout",
+    ]
+  },
+  {
+    key: "bronze",
+    masterHeading: "Bronze Sponsors",
+    accent: "from-orange-600 to-orange-800",
+    accentRgb: "194,65,12",
+    icon: Hexagon,
+    color: "from-orange-600 to-orange-800",
+    benefits: [
+      "Logo on website",
+      "Social media thank you",
+    ]
+  },
+  {
+    key: "hosting",
+    masterHeading: "Hosting Partner",
+    accent: "from-blue-500 to-cyan-400",
+    accentRgb: "59,130,246",
+    icon: Server,
+    color: "from-blue-500 to-cyan-400",
+    benefits: [
+      "Logo on website",
+      "Hosting credits for participants",
+      "Social media mention",
+    ]
+  },
+  {
+    key: "community",
+    masterHeading: "Community Partner",
+    accent: "from-violet-500 to-purple-400",
+    accentRgb: "139,92,246",
+    icon: Users,
+    color: "from-violet-500 to-purple-400",
+    benefits: [
+      "Community outreach",
+      "Platform access",
+      "Joint promotion",
+    ]
+  },
+  {
+    key: "ongoing",
+    masterHeading: "Ongoing Sponsors",
+    accent: "from-pink-500 to-rose-400",
+    accentRgb: "236,72,153",
+    icon: Gem,
+    color: "from-pink-500 to-rose-400",
+    benefits: [
+      "Active engagement",
+      "Brand visibility",
+    ]
+  }
 ];
-
-// ─── Marquee — all unique sponsors ───────────────────────────────────────────
-const allSponsorsUnique = (() => {
-  const seen = new Set<string>();
-  return sponsorCategories
-    .flatMap((c) => c.tiers.flatMap((t) => t.sponsors))
-    .filter((s) => {
-      if (seen.has(s.name)) return false;
-      seen.add(s.name);
-      return true;
-    });
-})();
 
 // ─── Sponsor card ─────────────────────────────────────────────────────────────
 const SponsorCard = ({
@@ -188,13 +143,12 @@ const SponsorCard = ({
 
       {/* Logo */}
       <div
-        className={`w-full flex items-center justify-center bg-white/5 rounded-xl mb-4
-                    transition-colors group-hover:bg-white/10 ${large ? "h-36 p-4" : "h-24 p-3"}`}
+        className="flex-1 flex items-center justify-center p-3 w-full aspect-square max-h-24 sm:max-h-28 mb-4 overflow-hidden rounded-xl bg-white/[0.01]"
       >
         <img
           src={sponsor.logo}
-          alt={(sponsor as any).alt || sponsor.name}
-          className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
+          alt={sponsor.name}
+          className="max-w-full max-h-full object-contain filter group-hover:scale-[1.05] transition-transform duration-500"
         />
       </div>
 
@@ -214,6 +168,43 @@ const SponsorsPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const [sponsorsList, setSponsorsList] = useState<any[]>([]);
+
+  useEffect(() => {
+    import("@/lib/datastore").then((m) => {
+      m.getSponsors().then(setSponsorsList);
+    });
+  }, []);
+
+  const dynamicCategories = useMemo(() => {
+    return CATEGORY_TEMPLATES.map((tpl) => {
+      const items = sponsorsList.filter((s) => s.category === tpl.key);
+      return {
+        masterHeading: tpl.masterHeading,
+        accent: tpl.accent,
+        accentRgb: tpl.accentRgb,
+        tiers: [
+          {
+            tier: tpl.masterHeading,
+            icon: tpl.icon,
+            color: tpl.color,
+            accentRgb: tpl.accentRgb,
+            benefits: tpl.benefits,
+            sponsors: items,
+          }
+        ]
+      };
+    }).filter(cat => cat.tiers[0].sponsors.length > 0);
+  }, [sponsorsList]);
+
+  const allSponsorsUnique = useMemo(() => {
+    const seen = new Set<string>();
+    return sponsorsList.filter((s) => {
+      if (seen.has(s.name)) return false;
+      seen.add(s.name);
+      return true;
+    });
+  }, [sponsorsList]);
 
   return (
     <PageTransition>
@@ -345,7 +336,7 @@ const SponsorsPage = () => {
         {/* ── Category Sections ───────────────────────────────────────────── */}
         <section className="relative z-20 py-24 px-4 md:px-8">
           <div className="max-w-7xl mx-auto space-y-36">
-            {sponsorCategories.map((category, catIdx) => (
+            {dynamicCategories.map((category, catIdx) => (
               <div key={catIdx} className="space-y-20">
                 {/* Category heading */}
                 <motion.div

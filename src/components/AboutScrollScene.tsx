@@ -1,6 +1,11 @@
 import { useRef, useEffect, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF, useAnimations, OrbitControls, Sparkles } from "@react-three/drei";
+import {
+  useGLTF,
+  useAnimations,
+  OrbitControls,
+  Sparkles,
+} from "@react-three/drei";
 import * as THREE from "three";
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -29,7 +34,9 @@ const AboutModel = ({ scrollProgressRef }: AboutModelProps) => {
       mesh.castShadow = true;
       mesh.receiveShadow = true;
 
-      const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      const mats = Array.isArray(mesh.material)
+        ? mesh.material
+        : [mesh.material];
       mats.forEach((mat: any) => {
         if (mat.map) mat.map.colorSpace = THREE.SRGBColorSpace;
         if (mat.emissiveMap) mat.emissiveMap.colorSpace = THREE.SRGBColorSpace;
@@ -83,19 +90,39 @@ const AboutModel = ({ scrollProgressRef }: AboutModelProps) => {
       const p = progress / 0.3; // 0 to 1
       targetX = THREE.MathUtils.lerp(0, isMobile ? 0 : viewportWidth * 0.22, p);
       targetRotY = THREE.MathUtils.lerp(0.5, Math.PI / 4, p);
-      targetScale = THREE.MathUtils.lerp(isMobile ? 1.3 : 2.0, isMobile ? 1.0 : 1.4, p);
+      targetScale = THREE.MathUtils.lerp(
+        isMobile ? 1.3 : 2.0,
+        isMobile ? 1.0 : 1.4,
+        p,
+      );
     } else if (progress < 0.7) {
       // Phase 2: Vision/Clubs Section -> Mascot shifts from Right to Left
       const p = (progress - 0.3) / 0.4; // 0 to 1
-      targetX = THREE.MathUtils.lerp(isMobile ? 0 : viewportWidth * 0.22, isMobile ? 0 : -viewportWidth * 0.22, p);
+      targetX = THREE.MathUtils.lerp(
+        isMobile ? 0 : viewportWidth * 0.22,
+        isMobile ? 0 : -viewportWidth * 0.22,
+        p,
+      );
       targetRotY = THREE.MathUtils.lerp(Math.PI / 4, -Math.PI / 3, p);
-      targetScale = THREE.MathUtils.lerp(isMobile ? 1.0 : 1.4, isMobile ? 1.15 : 1.6, p);
+      targetScale = THREE.MathUtils.lerp(
+        isMobile ? 1.0 : 1.4,
+        isMobile ? 1.15 : 1.6,
+        p,
+      );
     } else {
       // Phase 3: IEM-UEM Section -> Mascot does a full 3D sweep back to center
       const p = (progress - 0.7) / 0.3; // 0 to 1
-      targetX = THREE.MathUtils.lerp(isMobile ? 0 : -viewportWidth * 0.22, 0, p);
+      targetX = THREE.MathUtils.lerp(
+        isMobile ? 0 : -viewportWidth * 0.22,
+        0,
+        p,
+      );
       targetRotY = THREE.MathUtils.lerp(-Math.PI / 3, Math.PI * 2, p);
-      targetScale = THREE.MathUtils.lerp(isMobile ? 1.15 : 1.6, isMobile ? 1.4 : 2.1, p);
+      targetScale = THREE.MathUtils.lerp(
+        isMobile ? 1.15 : 1.6,
+        isMobile ? 1.4 : 2.1,
+        p,
+      );
     }
 
     // 3. Mouse pointer tracking (X and Y offsets) for active hover feel
@@ -103,12 +130,32 @@ const AboutModel = ({ scrollProgressRef }: AboutModelProps) => {
     const targetMouseY = state.pointer.y * 0.08;
 
     // Smoothly interpolate positions, rotations, and scales
-    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, baseTranslateY + hoverOffset, 0.05);
-    group.current.position.x = THREE.MathUtils.lerp(group.current.position.x, targetX, 0.05);
-    group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetRotY + targetMouseX, 0.05);
-    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetMouseY, 0.05);
+    group.current.position.y = THREE.MathUtils.lerp(
+      group.current.position.y,
+      baseTranslateY + hoverOffset,
+      0.05,
+    );
+    group.current.position.x = THREE.MathUtils.lerp(
+      group.current.position.x,
+      targetX,
+      0.05,
+    );
+    group.current.rotation.y = THREE.MathUtils.lerp(
+      group.current.rotation.y,
+      targetRotY + targetMouseX,
+      0.05,
+    );
+    group.current.rotation.x = THREE.MathUtils.lerp(
+      group.current.rotation.x,
+      targetMouseY,
+      0.05,
+    );
 
-    const nextScale = THREE.MathUtils.lerp(group.current.scale.x, targetScale, 0.05);
+    const nextScale = THREE.MathUtils.lerp(
+      group.current.scale.x,
+      targetScale,
+      0.05,
+    );
     group.current.scale.setScalar(nextScale);
   });
 
@@ -144,7 +191,9 @@ interface AboutScrollSceneProps {
   scrollProgressRef: React.MutableRefObject<number>;
 }
 
-export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) => {
+export const AboutScrollScene = ({
+  scrollProgressRef,
+}: AboutScrollSceneProps) => {
   const isMobile = useIsMobile();
   return (
     <div className="absolute inset-0 w-full h-full z-10 pointer-events-auto">
@@ -152,7 +201,7 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.04)_0%,rgba(0,0,0,0)_70%)] pointer-events-none z-[1]" />
 
       <Canvas
-        shadows
+        shadows={{ type: THREE.PCFShadowMap }}
         gl={{
           antialias: !isMobile,
           toneMapping: THREE.ACESFilmicToneMapping,
@@ -185,11 +234,28 @@ export const AboutScrollScene = ({ scrollProgressRef }: AboutScrollSceneProps) =
         />
 
         {/* Cyan side rim light */}
-        <pointLight position={[3, -1, 3]} intensity={1.5} color="#06b6d4" distance={8} />
+        <pointLight
+          position={[3, -1, 3]}
+          intensity={1.5}
+          color="#06b6d4"
+          distance={8}
+        />
 
         {/* Floating cyber particles */}
-        <Sparkles count={isMobile ? 15 : 40} scale={6} size={2.5} speed={0.4} color="#a855f7" />
-        <Sparkles count={isMobile ? 10 : 30} scale={6} size={1.8} speed={0.6} color="#06b6d4" />
+        <Sparkles
+          count={isMobile ? 15 : 40}
+          scale={6}
+          size={2.5}
+          speed={0.4}
+          color="#a855f7"
+        />
+        <Sparkles
+          count={isMobile ? 10 : 30}
+          scale={6}
+          size={1.8}
+          speed={0.6}
+          color="#06b6d4"
+        />
 
         <Suspense fallback={null}>
           <AboutModel scrollProgressRef={scrollProgressRef} />

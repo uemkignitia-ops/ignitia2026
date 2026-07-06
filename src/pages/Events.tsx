@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import { getEvents } from "@/lib/datastore";
+
 import {
   motion,
   AnimatePresence,
@@ -108,6 +110,7 @@ export type EventType = {
   id: string;
   icon: any;
   image?: string;
+  coverPhotoUrl?: string;
   title: string;
   category: string;
   prize?: string;
@@ -133,383 +136,24 @@ export type EventType = {
 
 const CENTRAL_REGISTRATION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfvs3XKBQYwTZUh95ci5k6urZkY5ODUBswVJKpR8jplK3odvw/viewform";
 
-const events: EventType[] = [
-  {
-    id: "ignisys",
-    icon: Zap,
-    title: "IGNISYS",
-    category: "TECHNICAL",
-    prize: "₹30,000",
-    teamSize: "1-4",
-    duration: "24 Hours",
-    day: "Aug 1 & 2",
-    entryFee: "Free",
-    theme: "orange",
-    rulebookUrl: "https://drive.google.com/file/d/1x0szLJB-k8JGOt1MozE0S5vgDmxHTci2/preview",
-    registrationUrl: "https://ignisys-ignitia.devfolio.co/",
-    isWide: true,
-    arrowTop: true,
-    isTopEvent: true,
-    watermark: "01",
-    description: "\"Build it, break it, ship it — real problems, real pressure, real glory.\"",
-    overview: "A hybrid hackathon where teams solve real-world problem statements through innovation and collaboration. Online prelims followed by an offline finale before a jury panel.",
-    rules: [
-      "The hackathon is a 24-hour non-stop building and innovation event.",
-      "Teams must consist of a minimum of 1 and a maximum of 4 participants.",
-      "Registration is completely free and open to students from any department of any registered college or university.",
-      "Inter-college and cross-branch teams are permitted.",
-      "A student cannot be a part of more than one team.",
-      "Internet usage for research is allowed, but direct plagiarism or copied solutions will result in immediate disqualification."
-    ],
-    criteria: [
-      "Innovation & Originality: How creative and unique is the solution?",
-      "Technical Execution: Quality of the code structure, functional prototype, and complexity.",
-      "Presentation: Pitch effectively to the jury (7-minute presentation + 3-minute Q&A)."
-    ],
-    contacts: [
-      { name: "Rony Roy", phone: "6297403940" },
-      { name: "Daliya Paul", phone: "9748753104" }
-    ]
-  },
-  {
-    id: "efootball",
-    icon: Gamepad2,
-    title: "E-Football Ultimate 11",
-    category: "GAMING",
-    prize: "₹4,000",
-    teamSize: "Solo",
-    teamSizeLabel: "FORMAT",
-    duration: "Online",
-    day: "July 28 - Aug 1",
-    entryFee: "₹70 / person",
-    theme: "purple",
-    rulebookUrl: "https://drive.google.com/file/d/1R8xPidpPx2p1QltAYp4CHPAa5jWi2mys/preview",
-    registrationUrl: "https://forms.gle/Wi9oDmLXYsb4jPQ48",
-    watermark: "02",
-    description: "\"One player, eleven decisions — be the manager and the match-winner.\"",
-    overview: "A fast-paced knockout mobile football tournament. Tactical awareness and game management decide who claims the Ultimate Champion title.",
-    rules: [
-      "Solo participation requires a ₹70 non-refundable entry fee.",
-      "Extra time and penalties must be set to ON, while \"Smart Assist\" must be turned OFF.",
-      "Players are limited to a maximum of 8 long balls and 8 back passes per match.",
-      "Dream Teams and Model Teams are allowed, but team changes during the tournament are prohibited."
-    ],
-    criteria: [
-      "Participants advance through a single-elimination knockout format.",
-      "If a match is tied, the winner is determined through penalties.",
-      "The Top 3 players will receive cash prizes."
-    ],
-  },
-  {
-    id: "bgmi",
-    icon: Gamepad2,
-    title: "BGMI Battle Royale",
-    category: "GAMING",
-    prize: "₹8,500",
-    teamSize: "4 + 1",
-    teamSizeLabel: "SQUAD",
-    duration: "Hybrid Mode",
-    day: "July 29, 30 & Aug 2",
-    entryFee: "₹200 / squad",
-    theme: "pink",
-    rulebookUrl: "https://drive.google.com/file/d/1lLt8tuXtGmcSJPXT94Mpcs_o9Rxtt3SM/preview",
-    registrationUrl: "https://forms.gle/ZiiFZj74nrBVgjUR7",
-    watermark: "03",
-    description: "\"Zone in, squad up — the last circle crowns the legend.\"",
-    overview: "Competitive esports squad battles with online qualifiers leading to an offline finale. Strategy, teamwork, and clutch decision-making — all tested.",
-    rules: [
-      "Teams require a squad of 4 players + 1 optional substitute (4+1 format).",
-      "All players must use iOS or Android mobile devices; iPads, tablets, emulators, triggers, or external controllers are strictly prohibited.",
-      "The tournament uses a points-based Battle Royale system.",
-      "The use of any third-party application, hacks, or cheats results in an instant disqualification and ban.",
-      "Tournament dates: 29th & 30th July (Online Qualifiers 7:30 PM onwards) and 2nd August (Offline Finals)."
-    ],
-    criteria: [
-      "Evaluation and ranking are strictly points-based according to placement and finishes (kills).",
-      "Standard competitive BGIS scoring and ties resolution mechanisms apply."
-    ],
-    contacts: [
-      { name: "Soham Roy", phone: "8906014314" },
-      { name: "Sudeshna Sarkar", phone: "9867621693" },
-      { name: "Debangshu Sarkar", phone: "7074919071" },
-      { name: "Arpayan Chakraborty", phone: "8509068265" }
-    ]
-  },
-  {
-    id: "blind-coding",
-    icon: Code,
-    title: "Blind Coding",
-    category: "TECHNICAL",
-    prize: "Recognitions",
-    teamSize: "Solo",
-    teamSizeLabel: "SOLO",
-    duration: "Offline",
-    day: "Aug 2",
-    entryFee: "central registration",
-    theme: "teal",
-    rulebookUrl: "https://drive.google.com/file/d/19BRSzJ3Rxb9QDE9D9jui0kho0kjiF1z9/preview",
-    registrationUrl: "https://forms.gle/ZkJRwg9KPY2PbXNC6",
-    watermark: "04",
-    description: "\"Code in the dark — where logic speaks louder than the screen.\"",
-    overview: "An individual coding challenge across Python, Java, and C — where precision, logic, and speed under a blind-coding environment determine the winner.",
-    rules: [
-      "This competition is strictly for individual participants.",
-      "Once the timer starts, participants cannot view their own screen or any other participant's screen.",
-      "No typing or changes can be made once the time limit ends.",
-      "Internet usage and AI tools are strictly prohibited."
-    ],
-    criteria: [
-      "Evaluation is based on how much correct and functional code is completed within the time limit.",
-      "The number of errors present in the code will also be judged.",
-      "The best 10 participants advance to Round 2, from which the top 3 finalists are chosen."
-    ],
-  },
-  {
-    id: "guess-who",
-    icon: HelpCircle,
-    title: "Guess Who?",
-    category: "NON-TECH",
-    prize: "Recognitions",
-    teamSize: "Solo",
-    teamSizeLabel: "FORMAT",
-    duration: "Offline (15-20 mins)",
-    day: "Aug 2",
-    entryFee: "central registration",
-    theme: "yellow",
-    rulebookUrl: "https://drive.google.com/file/d/187w12QZWolU72Lj1Uh8OWfvteZfv65R2/preview",
-    registrationUrl: "https://forms.gle/ygHrQS7rNjHhpBMMA",
-    watermark: "05",
-    description: "\"Eyes, smiles, and accessories — Bollywood in a blink.\"",
-    overview: "A fast-paced Bollywood celebrity guessing game using zoomed-in visuals of eyes, smiles, hairstyles, and accessories. Quick thinking wins here!",
-    rules: [
-      "This is an individual event; no teams, collaboration, or discussion is allowed.",
-      "Participants must raise their hand or follow the host's instructions, as only the first valid answer will be considered.",
-      "No use of mobile phones or internet access is permitted."
-    ],
-    criteria: [
-      "Correct answers earn points.",
-      "The participant with the highest score wins.",
-      "In the event of a tie, a tie-breaker round will be conducted."
-    ],
-  },
-  {
-    id: "quizophonia",
-    icon: Brain,
-    title: "Quizophonia",
-    category: "NON-TECH",
-    prize: "₹1,100",
-    teamSize: "1 - 2",
-    teamSizeLabel: "TEAM / SOLO",
-    duration: "Offline",
-    day: "Aug 1",
-    entryFee: "₹50 / person",
-    theme: "blue",
-    rulebookUrl: "https://drive.google.com/file/d/1-h3tIhTGEJRQPEHFksjzG500BSpr6wab/preview",
-    registrationUrl: "https://forms.gle/uMaviLsz1iBkQ3G47",
-    isWide: true,
-    leftPoolLayout: true,
-    watermark: "06",
-    description: "\"From reel to rocket science — know a little of everything, win it all.\"",
-    overview: "A dynamic multi-domain quiz spanning Music, Cinema, Technology, Space, Olympics, Food, Online Trends, and more — open to solo participants and 2-member teams.",
-    rules: [
-      "Teams can consist of a maximum of 2 members, but individual participation is also allowed.",
-      "Participants must carry a valid identity card.",
-      "The use of electronic devices like phones, tablets, or smartwatches is strictly prohibited during the quiz."
-    ],
-    criteria: [
-      "Questions will be evaluated based on accuracy and response time.",
-      "Teams or participants with the highest scores in the preliminary rounds will qualify for the next round.",
-      "A tie-breaker round will be conducted in case of a tie."
-    ],
-  },
-  {
-    id: "pixel-prophecy",
-    icon: Palette,
-    title: "Pixel Prophecy",
-    category: "NON-TECH",
-    prize: "Recognitions",
-    teamSize: "Solo",
-    teamSizeLabel: "FORMAT",
-    duration: "Offline (50 mins - 1.5 hrs)",
-    day: "Aug 2",
-    entryFee: "central registration",
-    theme: "pink",
-    rulebookUrl: "https://drive.google.com/file/d/1ssMOPgn2USMshSZ7Byw7_b3mpMOQuQW2/preview",
-    registrationUrl: "https://forms.gle/8uAevZEg7TrJMnbFA",
-    watermark: "07",
-    description: "\"One celebrity, infinite frames — design their world in pixels.\"",
-    overview: "A celebrity-inspired poster design challenge. Participants draw a celebrity at random and transform their persona into a visually compelling work of art.",
-    rules: [
-      "This is strictly an individual competition with no pre-designed templates or external work permitted.",
-      "Participants must bring their own charged devices (laptop/iPad/tablet) and designing tools.",
-      "The rulebook specifies an event duration of 50 minutes, but also notes a total time limit of 1 hour and 30 minutes for submission."
-    ],
-    criteria: [
-      "Shortlisting will be based on creativity and originality.",
-      "Judges will look for visual appeal, design quality, and concept storytelling.",
-      "The accurate representation of the assigned celebrity's aura is a key evaluation metric."
-    ],
-  },
-  {
-    id: "cineverse",
-    icon: Palette,
-    title: "Cineverse",
-    category: "NON-TECH",
-    prize: "₹3,000",
-    teamSize: "Any Size",
-    teamSizeLabel: "FORMAT",
-    duration: "Offline Finals",
-    day: "Aug 2",
-    entryFee: "₹120 / team",
-    theme: "orange",
-    rulebookUrl: "https://drive.google.com/file/d/1cgB9s2y6E7ivKWrTNvh7DYowvz7QxoAU/preview",
-    registrationUrl: "https://forms.gle/uk5wkzEHTi75Ac359",
-    watermark: "08",
-    description: "\"Lights, camera, 5 minutes — tell a story the world needs to see.\"",
-    overview: "A filmmaking competition celebrating cinematic storytelling. Create an original short film and compete for recognition among fellow aspiring creators.",
-    rules: [
-      "Teams can consist of any number of members with a flat ₹120 registration fee per team.",
-      "The film's duration must be strictly between 4 and 5 minutes.",
-      "All participants are required to join the event lobby at least 15 minutes before it starts.",
-      "Late submissions will not be considered."
-    ],
-    criteria: [
-      "Shortlisting and evaluation will be based on the film's story, concept, and creativity.",
-      "Judges will also score the acting performance and overall presentation/impact."
-    ],
-  },
-  {
-    id: "circuit-crawl",
-    icon: Zap,
-    title: "Circuit Crawl",
-    category: "ROBOTICS",
-    prize: "Recognitions",
-    teamSize: "Min 5",
-    teamSizeLabel: "FORMAT",
-    duration: "Offline",
-    day: "Aug 1 & 2",
-    entryFee: "central registration",
-    theme: "purple",
-    rulebookUrl: "https://drive.google.com/file/d/1WV0U7e-uMVoG4X5nUR5wMHY_aB06ZwLf/preview",
-    registrationUrl: "https://forms.gle/f2hkHxVqczkKmH927",
-    watermark: "09",
-    description: "\"Navigate every twist without missing a beat — precision is the engine.\"",
-    overview: "A robot navigation challenge through twists, turns, and obstacles — testing engineering accuracy, reliability, and strategic race design.",
-    rules: [
-      "Each team must have a minimum of 5 members.",
-      "The robot must be strictly autonomous with no Wi-Fi or Bluetooth communication allowed.",
-      "Robot dimensions are restricted to 25 x 25 x 25 cm, and weight must not exceed 1 kg.",
-      "Two physical touches are allowed per round; subsequent touches result in a 10-second penalty each."
-    ],
-    criteria: [
-      "Participants are shortlisted in Round 1 based on the completion time of a basic track.",
-      "The winner is the team finishing the complex track of Round 2 in the shortest time.",
-      "Time bonuses are awarded for checkpoint indications, line inversion indications, and stopping at the end of the track."
-    ],
-  },
-  {
-    id: "evadex",
-    icon: Swords,
-    title: "Evade-X",
-    category: "ROBOTICS",
-    prize: "Recognitions",
-    teamSize: "2 - 4",
-    teamSizeLabel: "FORMAT",
-    duration: "Offline",
-    day: "Aug 1 & 2",
-    entryFee: "central registration",
-    theme: "teal",
-    rulebookUrl: "https://drive.google.com/file/d/19qHWLouS6_GdrPjQ9205eXye4osJx2T9/preview",
-    registrationUrl: "https://forms.gle/t43HNV1NcbjPrnPBA",
-    watermark: "10",
-    description: "\"Engineer the fastest machine — obstacles are just opportunities in disguise.\"",
-    overview: "An obstacle-track robotics challenge where speed, precision, and engineering intelligence determine the victor.",
-    rules: [
-      "Teams must consist of 2 to 4 participants with a registration fee of ₹120 per team.",
-      "Robots must not exceed 25 x 25 x 25 cm dimensions or 3.0 kg in weight (with a 10% tolerance allowed for both).",
-      "The machine must be electrically powered with a maximum operating voltage of 16.8 volts; Lego kits and IC engines are prohibited.",
-      "Only one driver is permitted per bot during a single event."
-    ],
-    criteria: [
-      "The robot that successfully completes the specified task and track in the least amount of time will be declared the winner."
-    ],
-  },
-  {
-    id: "ai-argumentarium",
-    icon: Brain,
-    title: "The AI Argumentarium",
-    category: "NON-TECH",
-    prize: "Recognitions",
-    teamSize: "Solo",
-    teamSizeLabel: "FORMAT",
-    duration: "Offline",
-    day: "Aug 2",
-    entryFee: "central registration",
-    theme: "yellow",
-    rulebookUrl: "https://drive.google.com/file/d/1xODG1S779xIJxol8Jbk3Q8wOxFwdI91t/preview",
-    registrationUrl: "https://forms.gle/rJ5bxnGSUyPXw6kr5",
-    isWide: true,
-    leftPoolLayout: true,
-    watermark: "11",
-    description: "\"The sharpest argument wins — let reason, not rhetoric, rule the floor.\"",
-    overview: "An intellectually engaging debate competition celebrating critical thinking, persuasion, and the art of constructing well-reasoned arguments.",
-    rules: [
-      "The speaking order alternates between FOR and AGAINST the motion.",
-      "Preliminary rounds consist of a 2-minute main speech and a 1-minute rebuttal, while final rounds extend the main speech to 3 minutes.",
-      "Prelims motion is released 48 hours prior, and Finals motion is tentatively released 1 hour prior to commencement.",
-      "Overreliance on AI-generated content or plagiarism is prohibited and may result in disqualification."
-    ],
-    criteria: [
-      "Marking and qualification will be assessed based on individual performances.",
-      "The top 30% of speakers from each stance (FOR and AGAINST) will qualify for the Finals based on their individual scores."
-    ],
-  },
-  {
-    id: "cultural-program",
-    icon: Sparkles,
-    title: "Cultural Program",
-    category: "NON-TECH",
-    prize: "TBD",
-    teamSize: "TBA",
-    teamSizeLabel: "FORMAT",
-    duration: "TBA",
-    day: "TBA",
-    entryFee: "TBD",
-    theme: "pink",
-    rulebookUrl: "",
-    watermark: "12",
-    description: "\"Take the stage — your talent is the only ticket you need.\"",
-    overview: "A stage for performers to showcase their artistic talents in a celebration of youth, energy, and creativity.",
-    rules: [
-      "Rule 1 Placeholder",
-      "Rule 2 Placeholder"
-    ],
-    criteria: [
-      "Criteria 1 Placeholder",
-      "Criteria 2 Placeholder"
-    ],
-  },
-];
-
-
-
 const getBorderColor = (theme: string) => {
   if (theme === "orange" || theme === "yellow") return "var(--border-color-1)";
   if (theme === "purple" || theme === "pink") return "var(--border-color-2)";
   return "var(--border-color-3)";
-}
+};
 
 const getHoverTextColor = (theme: string) => {
   if (theme === "orange" || theme === "yellow") return "var(--hover-text-color-1)";
   if (theme === "purple" || theme === "pink") return "var(--hover-text-color-2)";
   return "var(--hover-text-color-3)";
-}
+};
 
-const getEventImage = (id: string) => {
+const getEventImage = (event: EventType) => {
   return "/event-bg.png";
 };
 
-const getEventOverlayImage = (id: string) => {
+const getEventOverlayImage = (event: EventType) => {
+  if (event.coverPhotoUrl) return event.coverPhotoUrl;
   const overlayMap: Record<string, string> = {
     "ignisys": "/ignisys.png",
     "quizophonia": "/quizophonia.png",
@@ -524,17 +168,35 @@ const getEventOverlayImage = (id: string) => {
     "pixel-prophecy": "/pixel-prophecy.png",
     "circuit-crawl": "/Untitled design (1).png",
   };
-  return overlayMap[id] || undefined;
+  return overlayMap[event.id] || undefined;
+};
+
+// Lucide icon mapping dictionary
+const IconMap: Record<string, any> = {
+  Zap,
+  Code,
+  Brain,
+  Gamepad2,
+  HelpCircle,
+  MessageSquare,
+  Palette,
+  Swords,
+  Sparkles,
 };
 
 const Events = () => {
   const [activeFilter, setActiveFilter] = useState<string>("ALL");
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
   const [showRulebook, setShowRulebook] = useState<boolean>(false);
+  const [eventsList, setEventsList] = useState<EventType[]>([]);
+
+  useEffect(() => {
+    getEvents().then(setEventsList);
+  }, []);
 
   const filteredEvents = activeFilter === "ALL"
-    ? events
-    : events.filter(e => e.category === activeFilter);
+    ? eventsList
+    : eventsList.filter(e => e.category === activeFilter);
 
   return (
     <PageTransition>
@@ -758,8 +420,8 @@ const Events = () => {
                   )}
                   <div onClick={() => event.id !== "cultural-program" && setSelectedEvent(event)} className="w-full h-full min-h-[300px]">
                     <InfoCard
-                      image={getEventImage(event.id)}
-                      overlayImage={getEventOverlayImage(event.id)}
+                      image={getEventImage(event)}
+                      overlayImage={getEventOverlayImage(event)}
                       title={event.title}
                       description={event.description}
                       prize={event.prize}
@@ -823,11 +485,11 @@ const Events = () => {
                   <div className="flex gap-3 md:gap-4 items-center min-w-0 flex-1">
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center border shrink-0 overflow-hidden ${themes[selectedEvent.theme].iconBg}`}>
                       {(() => {
-                        const overlayImg = getEventOverlayImage(selectedEvent.id);
+                        const overlayImg = getEventOverlayImage(selectedEvent);
                         if (overlayImg) {
                           return <img src={overlayImg} alt={`${selectedEvent.title} logo`} className="w-full h-full object-contain p-1.5" />;
                         }
-                        const Icon = selectedEvent.icon;
+                        const Icon = IconMap[selectedEvent.icon as string] || Zap;
                         return <Icon className={themes[selectedEvent.theme].iconText} size={24} />;
                       })()}
                     </div>

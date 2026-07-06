@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -19,133 +19,47 @@ import { ImageGallery } from "@/components/ui/image-gallery";
 import { CircularGallery, type GalleryItem } from "@/components/ui/circular-gallery-2";
 import { PhotoGallery } from "@/components/ui/gallery";
 
-const galleryItems = [
-  // Events
-  {
-    title: "Opening Ceremony 2025",
-    category: "Events",
-    src: "https://placehold.co/1920x1080/1e1e24/a2a2a2?text=Events+1",
-  },
-  {
-    title: "Prize Distribution",
-    category: "Events",
-    src: "https://placehold.co/1080x1920/222233/a2a2a2?text=Events+2",
-  },
-  {
-    title: "Audience at Main Stage",
-    category: "Events",
-    src: "https://placehold.co/1920x1080/1a1a2e/a2a2a2?text=Events+3",
-  },
-  {
-    title: "Guest Speaker Session",
-    category: "Events",
-    src: "https://placehold.co/1080x1920/1e1e24/a2a2a2?text=Events+4",
-  },
-  {
-    title: "Closing Ceremony",
-    category: "Events",
-    src: "https://placehold.co/1920x1080/2a2a35/a2a2a2?text=Events+5",
-  },
-
-  // Coding
-  {
-    title: "Hackathon in Progress",
-    category: "Coding",
-    src: "https://placehold.co/1920x1080/16213e/a2a2a2?text=Coding+1",
-  },
-  {
-    title: "Workshop Session",
-    category: "Coding",
-    src: "https://placehold.co/1080x1920/0f3460/a2a2a2?text=Coding+2",
-  },
-  {
-    title: "Late Night Debugging",
-    category: "Coding",
-    src: "https://placehold.co/1920x1080/1a1a2e/a2a2a2?text=Coding+3",
-  },
-  {
-    title: "Code Review",
-    category: "Coding",
-    src: "https://placehold.co/1080x1920/222233/a2a2a2?text=Coding+4",
-  },
-  {
-    title: "Project Presentation",
-    category: "Coding",
-    src: "https://placehold.co/1920x1080/1e1e24/a2a2a2?text=Coding+5",
-  },
-
-  // Gaming
-  {
-    title: "Gaming Tournament",
-    category: "Gaming",
-    src: "https://placehold.co/1920x1080/2a0944/a2a2a2?text=Gaming+1",
-  },
-  {
-    title: "Esports Arena",
-    category: "Gaming",
-    src: "https://placehold.co/1080x1920/3b185f/a2a2a2?text=Gaming+2",
-  },
-  {
-    title: "VR Experience",
-    category: "Gaming",
-    src: "https://placehold.co/1920x1080/a12568/a2a2a2?text=Gaming+3",
-  },
-  {
-    title: "Console Freeplay",
-    category: "Gaming",
-    src: "https://placehold.co/1080x1920/1e1e24/a2a2a2?text=Gaming+4",
-  },
-  {
-    title: "Final Showdown",
-    category: "Gaming",
-    src: "https://placehold.co/1920x1080/222233/a2a2a2?text=Gaming+5",
-  },
-
-  // Cultural
-  {
-    title: "Cultural Night",
-    category: "Cultural",
-    src: "https://placehold.co/1920x1080/3f0071/a2a2a2?text=Cultural+1",
-  },
-  {
-    title: "Team Spirit",
-    category: "Cultural",
-    src: "https://placehold.co/1080x1920/fb3640/a2a2a2?text=Cultural+2",
-  },
-  {
-    title: "Dance Performance",
-    category: "Cultural",
-    src: "https://placehold.co/1920x1080/1a1a2e/a2a2a2?text=Cultural+3",
-  },
-  {
-    title: "Music Band Live",
-    category: "Cultural",
-    src: "https://placehold.co/1080x1920/222233/a2a2a2?text=Cultural+4",
-  },
-  {
-    title: "Art Exhibition",
-    category: "Cultural",
-    src: "https://placehold.co/1920x1080/0f3460/a2a2a2?text=Cultural+5",
-  },
+// Gallery category definitions — images are derived dynamically from the live gallery data
+const CATEGORY_DEFS = [
+  { text: "Events",   category: "Events"   },
+  { text: "Coding",   category: "Coding"   },
+  { text: "Gaming",   category: "Gaming"   },
+  { text: "Cultural", category: "Cultural" },
+  { text: "Robotics", category: "Robotics" },
 ];
 
-const galleryCategories: GalleryItem[] = [
-  { image: "https://placehold.co/800x600/1e1e24/a2a2a2?text=Events", text: "Events", category: "Events" },
-  { image: "https://placehold.co/800x600/16213e/a2a2a2?text=Coding", text: "Coding", category: "Coding" },
-  { image: "https://placehold.co/800x600/2a0944/a2a2a2?text=Gaming", text: "Gaming", category: "Gaming" },
-  { image: "https://placehold.co/800x600/3f0071/a2a2a2?text=Cultural", text: "Cultural", category: "Cultural" },
-  { image: "https://placehold.co/800x600/0f3460/a2a2a2?text=Robotics", text: "Robotics", category: "Robotics" },
-];
+// Neutral dark placeholder used when a category has no images yet
+const PLACEHOLDER = "https://placehold.co/800x600/0c0b10/1a1a2e";
 
 const Gallery = () => {
   const [activeView, setActiveView] = useState<"sphere" | "explore">("sphere");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selected, setSelected] = useState<(typeof galleryItems)[0] | null>(null);
+  const [galleryList, setGalleryList] = useState<any[]>([]);
+  const [galleryCategories, setGalleryCategories] = useState<GalleryItem[]>(
+    // Initial fallback: all neutral dark placeholders
+    CATEGORY_DEFS.map((c) => ({ image: PLACEHOLDER, text: c.text, category: c.category }))
+  );
+  const [selected, setSelected] = useState<any | null>(null);
+
+  useEffect(() => {
+    import("@/lib/datastore").then((m) => {
+      m.getGallery().then((items) => {
+        setGalleryList(items);
+        // Build category cards: use first real image per category, else neutral placeholder
+        setGalleryCategories(
+          CATEGORY_DEFS.map((c) => {
+            const match = items.find((i: any) => i.category === c.category);
+            return { image: match ? match.src : PLACEHOLDER, text: c.text, category: c.category };
+          })
+        );
+      });
+    });
+  }, []);
 
   const filtered = selectedCategory === "All Stories"
-    ? galleryItems
+    ? galleryList
     : selectedCategory
-      ? galleryItems.filter((i) => i.category === selectedCategory)
+      ? galleryList.filter((i) => i.category === selectedCategory)
       : [];
 
   return (

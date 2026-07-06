@@ -5,25 +5,14 @@ import React from 'react';
 // EASY CONFIGURATION - Edit these values to customize the component
 // ==========================================
 
-// Image data using project assets - placeholders for now
-const BASE_IMAGES: Omit<ImageData, 'id'>[] = Array.from({ length: 12 }).map((_, i) => ({
-  src: `https://placehold.co/400x400/1e1e24/a2a2a2?text=Image+${i + 1}`,
-  alt: `Placeholder ${i + 1}`,
-  title: `Placeholder Image ${i + 1}`,
-  description: "This is a placeholder image. Replace with actual gallery photo later."
+// Neutral dark fallback placeholders (no text labels) used when no gallery images exist yet
+const FALLBACK_IMAGES: ImageData[] = Array.from({ length: 60 }).map((_, i) => ({
+  id: `img-${i + 1}`,
+  src: `https://placehold.co/400x400/0c0b10/1a1a2e`,
+  alt: `Gallery image ${i + 1}`,
+  title: "",
+  description: "",
 }));
-
-// Generate more images by repeating the base set
-const IMAGES: ImageData[] = [];
-for (let i = 0; i < 60; i++) {
-  const baseIndex = i % BASE_IMAGES.length;
-  const baseImage = BASE_IMAGES[baseIndex];
-  IMAGES.push({
-    id: `img-${i + 1}`,
-    ...baseImage,
-    alt: `${baseImage.alt} (${Math.floor(i / BASE_IMAGES.length) + 1})`
-  });
-}
 
 // Component configuration - easily adjustable
 interface SphereConfig {
@@ -40,20 +29,44 @@ interface SphereConfig {
 }
 
 const CONFIG: SphereConfig = {
-  containerSize: 950,          // Container size in pixels (increased slightly)
-  sphereRadius: 340,           // Virtual sphere radius (increased slightly)
+  containerSize: 950,          // Container size in pixels
+  sphereRadius: 340,           // Virtual sphere radius
   dragSensitivity: 0.8,        // Mouse drag sensitivity (0.1 - 2.0)
   momentumDecay: 0.96,         // How fast momentum fades (0.8 - 0.99)
   maxRotationSpeed: 6,         // Maximum rotation speed (1 - 10)
   baseImageScale: 0.16,        // Base image size
   hoverScale: 1.3,             // Hover scale multiplier
-  perspective: 1200,           // CSS perspective value (adjusted for larger size)
+  perspective: 1200,           // CSS perspective value
   autoRotate: true,            // Enable/disable auto rotation
   autoRotateSpeed: 0.2         // Auto rotation speed
 };
 
 export default function SphereGallery() {
   const [windowWidth, setWindowWidth] = React.useState(typeof window !== "undefined" ? window.innerWidth : 1200);
+  const [images, setImages] = React.useState<ImageData[]>(FALLBACK_IMAGES);
+
+  // Load real images from the datastore
+  React.useEffect(() => {
+    import("@/lib/datastore").then((m) => {
+      m.getGallery().then((galleryItems) => {
+        if (galleryItems && galleryItems.length > 0) {
+          // Build ImageData from real gallery items, repeat to fill 60 slots
+          const liveImages: ImageData[] = Array.from({ length: 60 }).map((_, i) => {
+            const item = galleryItems[i % galleryItems.length];
+            return {
+              id: `img-${i + 1}`,
+              src: item.src,
+              alt: item.title || `Gallery image ${i + 1}`,
+              title: item.title || "",
+              description: item.category || "",
+            };
+          });
+          setImages(liveImages);
+        }
+        // If gallery is empty, keep neutral FALLBACK_IMAGES
+      });
+    });
+  }, []);
 
   React.useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -78,7 +91,7 @@ export default function SphereGallery() {
   return (
     <div className="w-full flex justify-center items-center overflow-hidden relative px-0">
       <SphereImageGrid
-        images={IMAGES}
+        images={images}
         {...dynamicConfig}
       />
     </div>

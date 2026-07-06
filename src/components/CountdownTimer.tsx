@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const TARGET_DATE = new Date("2026-08-01T09:00:00+05:30").getTime();
@@ -8,7 +8,7 @@ interface TimeUnit {
   label: string;
 }
 
-const FlipDigit = ({ value, label }: { value: number; label: string }) => {
+const FlipDigit = memo(({ value, label }: { value: number; label: string }) => {
   const prev = useRef(value);
   const changed = prev.current !== value;
   prev.current = value;
@@ -37,7 +37,8 @@ const FlipDigit = ({ value, label }: { value: number; label: string }) => {
       </p>
     </div>
   );
-};
+});
+FlipDigit.displayName = "FlipDigit";
 
 const CountdownTimer = ({ embedded = false }: { embedded?: boolean }) => {
   const [timeLeft, setTimeLeft] = useState<TimeUnit[]>([]);

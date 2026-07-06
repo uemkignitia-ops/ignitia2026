@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Trophy, Users, School, Gamepad2, Code } from "lucide-react";
 import { useCountUp } from "@/hooks/useCountUp";
 import gsap from "gsap";
@@ -9,20 +9,26 @@ import { useIsMobile } from "@/hooks/use-mobile";
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { icon: Gamepad2, value: "7+", label: "Competitions", color: "text-primary", bg: "bg-primary/20" },
+  {
+    icon: Gamepad2,
+    value: "7+",
+    label: "Competitions",
+    color: "text-primary",
+    bg: "bg-primary/20",
+  },
   {
     icon: Users,
     value: "1000+",
     label: "Expected Footfall",
     color: "text-neon-cyan",
-    bg: "bg-neon-cyan/20"
+    bg: "bg-neon-cyan/20",
   },
   {
     icon: School,
     value: "50+",
     label: "Colleges Invited",
     color: "text-neon-purple",
-    bg: "bg-neon-purple/20"
+    bg: "bg-neon-purple/20",
   },
   {
     icon: Trophy,
@@ -30,18 +36,24 @@ const stats = [
     rawDisplay: "₹2L+",
     label: "Prize Pool",
     color: "text-secondary",
-    bg: "bg-secondary/20"
+    bg: "bg-secondary/20",
   },
   {
     icon: Code,
     value: "10+",
     label: "Societies Involved",
     color: "text-primary",
-    bg: "bg-primary/20"
+    bg: "bg-primary/20",
   },
 ];
 
-const StatCard = ({ stat, index }: { stat: (typeof stats)[0]; index: number }) => {
+const StatCard = ({
+  stat,
+  index,
+}: {
+  stat: (typeof stats)[0];
+  index: number;
+}) => {
   const { ref, display } = useCountUp(stat.value);
 
   return (
@@ -69,21 +81,22 @@ const StatCard = ({ stat, index }: { stat: (typeof stats)[0]; index: number }) =
         >
           {stat.rawDisplay || display}
         </p>
-        <p className="text-sm uppercase tracking-widest text-muted-foreground font-semibold">{stat.label}</p>
+        <p className="text-sm uppercase tracking-widest text-muted-foreground font-semibold">
+          {stat.label}
+        </p>
       </div>
     </motion.div>
   );
 };
 
-const Highlights = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) => {
+const Highlights = ({
+  centerOnMobile = false,
+}: {
+  centerOnMobile?: boolean;
+}) => {
   const isMobile = useIsMobile();
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-  const gridY = useTransform(scrollYProgress, [0, 1], [40, -20]);
 
   useLayoutEffect(() => {
     if (isMobile) return;
@@ -103,7 +116,8 @@ const Highlights = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) =>
             trigger: sectionRef.current,
             start: "top 80%",
             end: "top 40%",
-            scrub: 1,
+            scrub: 0.4,
+            invalidateOnRefresh: true,
           },
         },
       );
@@ -113,12 +127,18 @@ const Highlights = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) =>
   }, [isMobile]);
 
   return (
-    <section ref={sectionRef} className="relative pt-8 pb-20 md:py-28 overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative pt-8 pb-20 md:py-28 overflow-hidden"
+    >
       {/* Top gradient divider */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-64 bg-primary/10 blur-[120px] pointer-events-none rounded-full" />
+      {/* Background glow — promoted to GPU layer so it never repaints on scroll */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-64 bg-primary/10 blur-[120px] pointer-events-none rounded-full"
+        style={{ willChange: "transform", transform: "translateZ(0)" }}
+      />
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div
@@ -139,22 +159,24 @@ const Highlights = ({ centerOnMobile = false }: { centerOnMobile?: boolean }) =>
           /* Mobile: Horizontal scroll */
           <div className="-mx-4 px-4 pb-8 overflow-x-auto flex gap-4 snap-x snap-mandatory custom-scrollbar">
             {stats.map((stat, i) => (
-              <div key={stat.label} className="snap-center first:pl-4 last:pr-4">
+              <div
+                key={stat.label}
+                className="snap-center first:pl-4 last:pr-4"
+              >
                 <StatCard stat={stat} index={i} />
               </div>
             ))}
           </div>
         ) : (
           /* Desktop: Grid */
-          <motion.div
+          <div
             ref={gridRef}
-            style={{ y: gridY }}
             className="grid grid-cols-2 md:grid-cols-5 gap-6 justify-items-stretch"
           >
             {stats.map((stat, i) => (
               <StatCard key={stat.label} stat={stat} index={i} />
             ))}
-          </motion.div>
+          </div>
         )}
       </div>
     </section>
