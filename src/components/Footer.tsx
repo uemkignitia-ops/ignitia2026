@@ -60,7 +60,7 @@ const Footer = () => (
               className="h-10 w-10 rounded-full object-cover shadow-[0_0_20px_hsl(270_70%_60%/0.22)]"
             />
             <div>
-              <span className="block font-heading text-xl font-bold gradient-text">
+              <span className="block font-['Orbitron'] text-xl font-bold gradient-text tracking-wider">
                 IGNITIA '26
               </span>
               <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground block -mt-0.5">
@@ -68,7 +68,7 @@ const Footer = () => (
               </span>
             </div>
           </Link>
-          <p className="text-xs leading-relaxed text-muted-foreground">
+          <p className="text-xs leading-relaxed text-muted-foreground font-['Orbitron'] tracking-wide font-medium">
             A flagship multi-domain celebration of technology, creativity, and
             student innovation.
           </p>
@@ -104,7 +104,7 @@ const Footer = () => (
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="mt-6 text-center text-[10px] text-muted-foreground"
+        className="mt-6 text-center text-[10px] text-muted-foreground font-['Orbitron'] tracking-wider"
       >
         © 2026 IGNITIA '26 · Built for students, powered by the IEM-UEM group, UEM Kolkata.
       </motion.div>

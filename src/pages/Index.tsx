@@ -119,7 +119,6 @@ const Index = () => {
           {/* Cinematic gradient overlay */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,245,255,0.06)_0%,rgba(0,0,0,0.12)_38%,rgba(0,0,0,0.8)_100%)]" />
         </div>
-
         <ScrollProgress />
         <Navbar />
 

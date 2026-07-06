@@ -118,7 +118,7 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
           <div className="htc-scanline" aria-hidden="true" />
           <div className="htc-sweep" aria-hidden="true" />
           <span className="htc-accent-dot htc-accent-dot-yellow" aria-hidden="true" />
-          <span className="htc-accent-dot htc-accent-dot-cyan" aria-hidden="true" />
+          <span className="htc-accent-dot htc-accent-dot-fuchsia" aria-hidden="true" />
           <span className="htc-bracket htc-bracket-tl" aria-hidden="true" />
           <span className="htc-bracket htc-bracket-tr" aria-hidden="true" />
           <span className="htc-bracket htc-bracket-bl" aria-hidden="true" />
@@ -188,8 +188,8 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
                 {!dateDone && <span className="htc-cursor" />}
               </div>
               <div className="htc-mono flex items-center gap-2 text-[10px] sm:text-[11px]">
-                <span className="htc-diamond htc-diamond-cyan" />
-                <span className="htc-tag htc-tag-cyan">{locParts.label}</span>
+                <span className="htc-diamond htc-diamond-fuchsia" />
+                <span className="htc-tag htc-tag-fuchsia">{locParts.label}</span>
                 <span className="htc-tag-value">{locParts.value}</span>
                 {!locDone && <span className="htc-cursor" />}
               </div>
@@ -209,8 +209,8 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
         @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
         .htc-root {
-          --htc-cyan: #2be8ff;
-          --htc-cyan-dim: rgba(43, 232, 255, 0.5);
+          --htc-fuchsia: #2be8ff;
+          --htc-fuchsia-dim: rgba(43, 232, 255, 0.5);
           --htc-violet: #c39bff;
           --htc-violet-dim: rgba(195, 155, 255, 0.5);
           --htc-yellow: #eeff5c;
@@ -318,8 +318,8 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
         .htc-bracket-tr {
           top: 8px;
           right: 8px;
-          border-top: 2px solid var(--htc-cyan);
-          border-right: 2px solid var(--htc-cyan);
+          border-top: 2px solid var(--htc-fuchsia);
+          border-right: 2px solid var(--htc-fuchsia);
         }
         .htc-bracket-bl {
           bottom: 8px;
@@ -351,11 +351,11 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
           box-shadow: 0 0 6px rgba(238, 255, 92, 0.8);
           opacity: 0.9;
         }
-        .htc-accent-dot-cyan {
+        .htc-accent-dot-fuchsia {
           bottom: 6%;
           right: 50%;
           margin-right: -30px;
-          background: var(--htc-cyan);
+          background: var(--htc-fuchsia);
           box-shadow: 0 0 6px rgba(43, 232, 255, 0.8);
           opacity: 0.9;
         }
@@ -392,9 +392,9 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
           gap: 5px;
           padding: 2px 8px;
           border-radius: 3px;
-          border: 1px solid var(--htc-cyan-dim);
+          border: 1px solid var(--htc-fuchsia-dim);
           background: rgba(43, 232, 255, 0.09);
-          color: var(--htc-cyan);
+          color: var(--htc-fuchsia);
           font-weight: 700;
         }
 
@@ -403,8 +403,8 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: var(--htc-cyan);
-          box-shadow: 0 0 8px var(--htc-cyan);
+          background: var(--htc-fuchsia);
+          box-shadow: 0 0 8px var(--htc-fuchsia);
           animation: htc-pulse 1.4s ease-in-out infinite;
         }
         @keyframes htc-pulse {
@@ -421,7 +421,7 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
         .htc-signal-bars i {
           width: 2px;
           display: block;
-          background: var(--htc-cyan);
+          background: var(--htc-fuchsia);
           box-shadow: 0 0 4px rgba(43, 232, 255, 0.7);
           animation: htc-signal 1.6s ease-in-out infinite;
         }
@@ -438,7 +438,7 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
           height: 1px;
           background-image: repeating-linear-gradient(
             90deg,
-            var(--htc-cyan-dim) 0 6px,
+            var(--htc-fuchsia-dim) 0 6px,
             transparent 6px 9px,
             var(--htc-violet-dim) 9px 15px,
             transparent 15px 18px
@@ -462,8 +462,8 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
           background: var(--htc-violet);
           box-shadow: 0 0 6px rgba(195, 155, 255, 0.85);
         }
-        .htc-diamond-cyan {
-          background: var(--htc-cyan);
+        .htc-diamond-fuchsia {
+          background: var(--htc-fuchsia);
           box-shadow: 0 0 6px rgba(43, 232, 255, 0.85);
         }
 
@@ -479,8 +479,8 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
           background: rgba(195, 155, 255, 0.12);
           border: 1px solid rgba(195, 155, 255, 0.4);
         }
-        .htc-tag-cyan {
-          color: var(--htc-cyan);
+        .htc-tag-fuchsia {
+          color: var(--htc-fuchsia);
           background: rgba(43, 232, 255, 0.1);
           border: 1px solid rgba(43, 232, 255, 0.4);
         }
@@ -513,7 +513,7 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
           pointer-events: none;
         }
         .htc-panel:hover .htc-glitch::before {
-          color: var(--htc-cyan);
+          color: var(--htc-fuchsia);
           transform: translate(-2px, -1px);
           opacity: 0.65;
           mix-blend-mode: screen;
@@ -539,7 +539,7 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
           width: 6px;
           height: 12px;
           margin-left: 2px;
-          background: var(--htc-cyan);
+          background: var(--htc-fuchsia);
           box-shadow: 0 0 6px rgba(43, 232, 255, 0.8);
           animation: htc-blink 0.85s steps(1) infinite;
           vertical-align: -2px;
@@ -561,7 +561,7 @@ function HeroInfoTerminalCard({ typedText }: HeroInfoTerminalCardProps) {
           display: inline-block;
           animation: htc-tick 2.4s ease-in-out infinite;
         }
-        .htc-ticks i:nth-child(3n+1) { background: var(--htc-cyan); }
+        .htc-ticks i:nth-child(3n+1) { background: var(--htc-fuchsia); }
         .htc-ticks i:nth-child(3n+2) { background: var(--htc-violet); }
         .htc-ticks i:nth-child(3n) { background: var(--htc-yellow); }
         @keyframes htc-tick {

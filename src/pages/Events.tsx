@@ -27,6 +27,7 @@ import PageTransition from "@/components/PageTransition";
 import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
+import BackgroundEffects from "@/components/BackgroundEffects";
 import { TerminalSubheading } from "@/components/TerminalSubheading";
 import { InfoCard } from "@/components/ui/info-card";
 import { MeshGradientSVG } from "@/components/ui/shader-svg";
@@ -56,17 +57,17 @@ const themes = {
     line: "bg-purple-500/25",
     arrowHover: "hover:bg-purple-500/10 hover:border-purple-500/50",
   },
-  teal: {
-    border: "border-white/5 hover:border-teal-500/50",
+  purple: {
+    border: "border-white/5 hover:border-purple-500/50",
     shadow: "hover:shadow-[0_0_40px_rgba(20,184,166,0.12)]",
-    iconBg: "bg-teal-500/10 border-teal-500/20",
-    iconText: "text-teal-400",
-    textGlow: "text-teal-400 drop-shadow-[0_0_8px_rgba(20,184,166,0.5)]",
-    beam: "via-teal-500/10 to-teal-500/5",
-    badge: "border-teal-500/30 text-teal-400 bg-teal-500/5",
-    accentGlow: "bg-teal-500/5",
-    line: "bg-teal-500/25",
-    arrowHover: "hover:bg-teal-500/10 hover:border-teal-500/50",
+    iconBg: "bg-purple-500/10 border-purple-500/20",
+    iconText: "text-purple-400",
+    textGlow: "text-purple-400 drop-shadow-[0_0_8px_rgba(20,184,166,0.5)]",
+    beam: "via-purple-500/10 to-purple-500/5",
+    badge: "border-purple-500/30 text-purple-400 bg-purple-500/5",
+    accentGlow: "bg-purple-500/5",
+    line: "bg-purple-500/25",
+    arrowHover: "hover:bg-purple-500/10 hover:border-purple-500/50",
   },
   yellow: {
     border: "border-white/5 hover:border-amber-500/50",
@@ -199,10 +200,9 @@ const Events = () => {
     : eventsList.filter(e => e.category === activeFilter);
 
   return (
-    <PageTransition>
-      <div className="min-h-screen bg-background scanline-overlay overflow-x-hidden">
-        <ParticleField />
-        <AnimatedBlobs />
+    <div className="min-h-screen bg-transparent text-white overflow-x-hidden relative citadel-theme">
+      <BackgroundEffects />
+      <PageTransition>
         <ScrollProgress />
         <Navbar />
 
@@ -243,58 +243,18 @@ const Events = () => {
                 transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 style={{ transformStyle: "preserve-3d" }}
               >
-                {/* Shadow/depth clone */}
-                <div
-                  aria-hidden
-                  className="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
-                  style={{ transform: "translateZ(-40px) translateY(12px)" }}
-                >
-                  <span
-                    className="font-heading font-black uppercase leading-none tracking-tight text-center w-full"
-                    style={{
-                      fontSize: "clamp(2.5rem, 10vw, 5.5rem)",
-                      color: "rgba(88,28,235,0.25)",
-                      filter: "blur(8px)",
-                    }}
-                  >
-                    ALL EVENTS
-                  </span>
-                </div>
-
-                {/* Actual title */}
-                <h1
-                  className="font-heading font-black uppercase leading-none tracking-tight w-full text-center relative"
-                  style={{ fontSize: "clamp(2.5rem, 10vw, 5.5rem)", transformStyle: "preserve-3d" }}
-                >
-                  {/* ALL — dimmer, lighter weight */}
-                  <span
-                    className="inline-block mr-[0.15em]"
-                    style={{
-                      color: "rgba(255,255,255,0.28)",
-                      fontWeight: 300,
-                      textShadow: "0 2px 20px rgba(139,92,246,0.1)",
-                    }}
-                  >
-                    ALL
-                  </span>
-
-                  {/* EVENTS — full white with 3D purple bloom */}
-                  <span
-                    className="inline-block relative"
-                    style={{
-                      color: "#ffffff",
-                      textShadow: [
-                        "0 0 60px rgba(139,92,246,0.9)",
-                        "0 0 120px rgba(139,92,246,0.5)",
-                        "0 2px 0 rgba(88,28,235,0.6)",
-                        "0 4px 0 rgba(68,14,180,0.4)",
-                        "0 8px 20px rgba(0,0,0,0.6)",
-                      ].join(", "),
-                    }}
-                  >
-                    EVENTS
-                  </span>
-                </h1>
+            <div className="w-full flex justify-center z-[36] pointer-events-none text-center mt-8 mb-4">
+              <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">
+                <span className="ignitia-citadel-title mx-auto" data-text="EVENTS">
+                  <span>E</span>
+                  <span>V</span>
+                  <span>E</span>
+                  <span>N</span>
+                  <span>T</span>
+                  <span>S</span>
+                </span>
+              </h1>
+            </div>
               </motion.div>
             </div>
 
@@ -623,7 +583,7 @@ const Events = () => {
                     whileTap={{ scale: 0.98 }}
                     className={`w-full sm:w-auto relative overflow-hidden font-mono font-semibold uppercase tracking-wider px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl transition-all duration-300 text-center text-sm ${selectedEvent.theme === "orange" ? "bg-orange-500 text-white shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_30px_rgba(249,115,22,0.5)]" :
                       selectedEvent.theme === "purple" ? "bg-purple-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]" :
-                        selectedEvent.theme === "teal" ? "bg-teal-500 text-white shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.5)]" :
+                        selectedEvent.theme === "purple" ? "bg-purple-500 text-white shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.5)]" :
                           selectedEvent.theme === "yellow" ? "bg-amber-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_30px_rgba(245,158,11,0.5)]" :
                             selectedEvent.theme === "pink" ? "bg-pink-500 text-white shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:shadow-[0_0_30px_rgba(236,72,153,0.5)]" :
                               "bg-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)]"
@@ -705,8 +665,8 @@ const Events = () => {
         </AnimatePresence>
 
         <Footer />
-      </div>
-    </PageTransition>
+      </PageTransition>
+    </div>
   );
 };
 

@@ -16,16 +16,16 @@
     --popover: 270 30% 4%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 270 70% 60%;
+    --primary: 330 100% 60%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 45 95% 55%;
+    --secondary: 270 100% 60%;
     --secondary-foreground: 0 0% 4%;
 
     --muted: 270 20% 12%;
     --muted-foreground: 270 10% 65%;
 
-    --accent: 280 80% 65%;
+    --accent: 210 100% 60%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
@@ -33,22 +33,22 @@
 
     --border: 270 20% 14%;
     --input: 270 20% 14%;
-    --ring: 270 70% 60%;
+    --ring: 330 100% 60%;
 
     --radius: 0.85rem;
 
-    --neon-blue: 270 70% 60%;
-    --neon-cyan: 45 95% 55%;
-    --neon-purple: 280 80% 65%;
-    --neon-pink: 50 95% 60%;
+    --neon-blue: 210 100% 60%;
+    --neon-fuchsia: 330 100% 60%;
+    --neon-purple: 270 100% 60%;
+    --neon-pink: 320 100% 70%;
 
     --glass-bg: 270 30% 4%;
     --glass-border: 270 20% 14%;
 
-    --glow-blue: 0 0 30px hsl(270 70% 60% / 0.25);
-    --glow-cyan: 0 0 30px hsl(45 95% 55% / 0.25);
-    --glow-purple: 0 0 30px hsl(280 80% 65% / 0.25);
-    --glow-pink: 0 0 30px hsl(50 95% 60% / 0.25);
+    --glow-blue: 0 0 30px hsl(210 100% 60% / 0.25);
+    --glow-fuchsia: 0 0 30px hsl(330 100% 60% / 0.25);
+    --glow-purple: 0 0 30px hsl(270 100% 60% / 0.25);
+    --glow-pink: 0 0 30px hsl(320 100% 70% / 0.25);
 
     --sidebar-background: 0 0% 5%;
     --sidebar-foreground: 0 0% 98%;
@@ -59,9 +59,9 @@
     --sidebar-border: 0 0% 14%;
     --sidebar-ring: 0 95% 60%;
 
-    --border-color-1: #FF5613;
-    --border-color-2: #9F4EFF;
-    --border-color-3: #2196F3;
+    --border-color-1: #ff1493;
+    --border-color-2: #8a2be2;
+    --border-color-3: #1e90ff;
     --border-bg-color: #0c0d0e;
     --card-bg-color: #0c0d0e;
     --shadow-color: #0c0d0e;
@@ -73,6 +73,19 @@
     --rtl-font-family: 'Montserrat', sans-serif;
     --pattern-color1: rgba(200, 200, 200, 0.05);
     --pattern-color2: rgba(220, 220, 220, 0.05);
+  }
+
+  .citadel-theme {
+    --primary: 330 100% 60%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 270 100% 60%;
+    
+    --glow-blue: 0 0 30px hsl(210 100% 60% / 0.35);
+    --glow-purple: 0 0 30px hsl(270 100% 60% / 0.35);
+    
+    --border-color-1: #ff1493;
+    --border-color-2: #8a2be2;
+    --border-color-3: #1e90ff;
   }
 }
 
@@ -122,8 +135,8 @@
     box-shadow: var(--glow-purple);
   }
 
-  .neon-glow-cyan {
-    box-shadow: var(--glow-cyan);
+  .neon-glow-fuchsia {
+    box-shadow: var(--glow-fuchsia);
   }
 
   .neon-glow-pink {
@@ -131,7 +144,7 @@
   }
 
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-neon-cyan to-secondary;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-neon-fuchsia to-secondary;
   }
 
   .gradient-border {

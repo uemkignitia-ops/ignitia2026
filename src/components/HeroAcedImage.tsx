@@ -35,7 +35,7 @@ export default function HeroAcedImage() {
           className="w-full h-auto object-contain drop-shadow-[0_0_35px_rgba(43,232,255,0.35)]"
         />
 
-        <div className="absolute left-1/2 bottom-4 h-[2px] w-[65%] -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent blur-[1px]" />
+        <div className="absolute left-1/2 bottom-4 h-[2px] w-[65%] -translate-x-1/2 bg-gradient-to-r from-transparent via-fuchsia-300/70 to-transparent blur-[1px]" />
       </motion.div>
     </motion.div>
   );

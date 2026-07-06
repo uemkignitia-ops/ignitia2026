@@ -227,7 +227,7 @@ export default function Timer({
           width: min(100%, 520px);
           font-family: "Share Tech Mono", "Space Mono", ui-monospace, monospace;
 
-          --cyber-cyan: #05f7ff;
+          --cyber-fuchsia: #05f7ff;
           --cyber-magenta: #ff2168;
           --cyber-yellow: #fcee0a;
           --cyber-text: #eafcff;
@@ -244,7 +244,7 @@ export default function Timer({
           padding: 2px;
           cursor: default;
           background:
-            linear-gradient(120deg, var(--cyber-cyan), transparent 24%),
+            linear-gradient(120deg, var(--cyber-fuchsia), transparent 24%),
             linear-gradient(300deg, var(--cyber-magenta), transparent 28%),
             #060812;
           clip-path: polygon(7% 0, 100% 0, 100% 78%, 91% 100%, 0 100%, 0 18%);
@@ -325,7 +325,7 @@ export default function Timer({
           align-items: center;
           gap: 9px;
           margin-top: 6px;
-          color: var(--cyber-cyan);
+          color: var(--cyber-fuchsia);
           font-family: "Orbitron", sans-serif;
           font-size: 10px;
           font-weight: 700;
@@ -349,9 +349,9 @@ export default function Timer({
           width: 8px;
           height: 8px;
           flex-shrink: 0;
-          background: var(--cyber-cyan);
+          background: var(--cyber-fuchsia);
           border-radius: 50%;
-          box-shadow: 0 0 14px var(--cyber-cyan);
+          box-shadow: 0 0 14px var(--cyber-fuchsia);
           animation: cyber-pulse 1.3s ease-in-out infinite;
         }
 
@@ -421,7 +421,7 @@ export default function Timer({
           font-size: 8px;
           font-weight: 700;
           letter-spacing: 0.05em;
-          color: var(--cyber-cyan);
+          color: var(--cyber-fuchsia);
           opacity: 0.32;
         }
 
@@ -506,7 +506,7 @@ export default function Timer({
           bottom: 0;
           left: -40%;
           width: 35%;
-          background: linear-gradient(90deg, transparent, var(--cyber-cyan), var(--cyber-magenta), transparent);
+          background: linear-gradient(90deg, transparent, var(--cyber-fuchsia), var(--cyber-magenta), transparent);
           box-shadow: 0 0 14px rgba(5, 247, 255, 0.7);
           animation: cyber-sweep 2.4s linear infinite;
         }
@@ -522,8 +522,8 @@ export default function Timer({
         .cyber-corner-tl {
           top: 6px;
           left: 6px;
-          border-top: 2px solid var(--cyber-cyan);
-          border-left: 2px solid var(--cyber-cyan);
+          border-top: 2px solid var(--cyber-fuchsia);
+          border-left: 2px solid var(--cyber-fuchsia);
         }
 
         .cyber-corner-tr {
@@ -543,8 +543,8 @@ export default function Timer({
         .cyber-corner-br {
           bottom: 6px;
           right: 6px;
-          border-bottom: 2px solid var(--cyber-cyan);
-          border-right: 2px solid var(--cyber-cyan);
+          border-bottom: 2px solid var(--cyber-fuchsia);
+          border-right: 2px solid var(--cyber-fuchsia);
         }
 
         .cyber-rain {
@@ -559,11 +559,11 @@ export default function Timer({
         .cyber-rain span {
           position: absolute;
           top: -20px;
-          color: var(--cyber-cyan);
+          color: var(--cyber-fuchsia);
           font-family: "Share Tech Mono", monospace;
           font-size: 12px;
           font-weight: 700;
-          text-shadow: 0 0 10px var(--cyber-cyan);
+          text-shadow: 0 0 10px var(--cyber-fuchsia);
           animation-name: cyber-fall;
           animation-timing-function: linear;
           animation-iteration-count: infinite;
@@ -574,7 +574,7 @@ export default function Timer({
           z-index: 1;
           pointer-events: none;
           height: 2px;
-          background: linear-gradient(90deg, transparent, var(--cyber-cyan), var(--cyber-magenta), transparent);
+          background: linear-gradient(90deg, transparent, var(--cyber-fuchsia), var(--cyber-magenta), transparent);
           opacity: 0.55;
           transform: skewX(-26deg);
           filter: drop-shadow(0 0 8px rgba(5, 247, 255, 0.8));
