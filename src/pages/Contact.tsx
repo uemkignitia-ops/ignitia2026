@@ -7,6 +7,7 @@ import PageTransition from "@/components/PageTransition";
 import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
+import BackgroundEffects from "@/components/BackgroundEffects";
 
 const mapHref =
   "https://www.google.com/maps/place/University+of+Engineering+%26+Management,+Kolkata+(UEM)/@22.5599202,88.4899014,17z/data=!3m1!4b1!4m6!3m5!1s0x3a020b267a3cdc13:0xb3b21d652126f40!8m2!3d22.5599202!4d88.4899014!16s%2Fg%2F11c4pg5gwf?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D";
@@ -33,10 +34,9 @@ const Contact = () => {
   };
 
   return (
-    <PageTransition>
-      <div className="min-h-screen flex flex-col bg-background overflow-x-hidden">
-        <ParticleField />
-        <AnimatedBlobs />
+    <div className="min-h-screen flex flex-col bg-transparent overflow-x-hidden relative citadel-theme">
+      <BackgroundEffects />
+      <PageTransition>
         <ScrollProgress />
         <Navbar />
 
@@ -167,9 +167,17 @@ const Contact = () => {
                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
                 className="space-y-8 lg:pt-4"
               >
-                <div className="space-y-4">
-                  <h1 className="font-heading font-black text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-none uppercase">
-                    Get in <span className="gradient-text">touch</span>
+                <div className="space-y-4 min-w-0">
+                  <h1 className="leading-[0.82] select-none text-left mb-0" style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}>
+                    <span className="ignitia-citadel-title text-left" data-text="CONTACT" style={{ fontSize: "inherit" }}>
+                      <span>C</span>
+                      <span>O</span>
+                      <span>N</span>
+                      <span>T</span>
+                      <span>A</span>
+                      <span>C</span>
+                      <span>T</span>
+                    </span>
                   </h1>
                   <p className="text-sm md:text-base leading-relaxed text-muted-foreground max-w-lg">
                     Have questions about the hackathon? We’re here to help! Whether it’s about registration, rules, schedules, or anything else, feel free to reach out to us.
@@ -290,8 +298,8 @@ const Contact = () => {
         </main>
 
         <Footer />
-      </div>
-    </PageTransition>
+      </PageTransition>
+    </div>
   );
 };
 

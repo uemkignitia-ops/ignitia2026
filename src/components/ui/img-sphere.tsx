@@ -146,7 +146,7 @@ const SphereImageGrid: React.FC<SphereImageGridProps> = ({
   // ==========================================
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
-  const [rotation, setRotation] = useState<RotationState>({ x: 15, y: 15, z: 0 });
+  const [rotation, setRotation] = useState<RotationState>({ x: 0, y: 15, z: 0 });
   const [velocity, setVelocity] = useState<VelocityState>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<ImageData | null>(null);
@@ -217,7 +217,6 @@ const SphereImageGrid: React.FC<SphereImageGridProps> = ({
       // Apply rotation using proper 3D rotation matrices
       const thetaRad = SPHERE_MATH.degreesToRadians(pos.theta);
       const phiRad = SPHERE_MATH.degreesToRadians(pos.phi);
-      const rotXRad = SPHERE_MATH.degreesToRadians(rotation.x);
       const rotYRad = SPHERE_MATH.degreesToRadians(rotation.y);
 
       // Initial position on sphere
@@ -225,17 +224,11 @@ const SphereImageGrid: React.FC<SphereImageGridProps> = ({
       let y = pos.radius * Math.cos(phiRad);
       let z = pos.radius * Math.sin(phiRad) * Math.sin(thetaRad);
 
-      // Apply Y-axis rotation (horizontal drag)
+      // Apply Y-axis rotation only (horizontal spin — no X/Z tilt)
       const x1 = x * Math.cos(rotYRad) + z * Math.sin(rotYRad);
       const z1 = -x * Math.sin(rotYRad) + z * Math.cos(rotYRad);
       x = x1;
       z = z1;
-
-      // Apply X-axis rotation (vertical drag)
-      const y2 = y * Math.cos(rotXRad) - z * Math.sin(rotXRad);
-      const z2 = y * Math.sin(rotXRad) + z * Math.cos(rotXRad);
-      y = y2;
-      z = z2;
 
       const worldPos: Position3D = { x, y, z };
 
@@ -301,8 +294,8 @@ const SphereImageGrid: React.FC<SphereImageGridProps> = ({
         const dy = pos.y - other.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
-        // Minimum distance to prevent overlap (with more generous padding)
-        const minDistance = (imageSize + otherSize) / 2 + 25;
+        // Minimum distance to prevent overlap (tight packing — minimal gap)
+        const minDistance = (imageSize + otherSize) / 2 + 4;
 
         if (distance < minDistance && distance > 0) {
           // More aggressive scale reduction to prevent overlap
@@ -349,18 +342,18 @@ const SphereImageGrid: React.FC<SphereImageGridProps> = ({
     setRotation(prev => {
       let newY = prev.y;
 
-      // Add auto-rotation to Y axis (horizontal rotation)
+      // Add auto-rotation to Y axis (horizontal rotation only)
       if (autoRotate) {
         newY += autoRotateSpeed;
       }
 
-      // Add momentum-based rotation
+      // Add momentum-based rotation (Y-axis only)
       newY += clampRotationSpeed(velocity.y);
 
       return {
-        x: SPHERE_MATH.normalizeAngle(prev.x + clampRotationSpeed(velocity.x)),
+        x: 0, // X-axis locked — no tilt
         y: SPHERE_MATH.normalizeAngle(newY),
-        z: prev.z
+        z: 0  // Z-axis locked
       };
     });
   }, [isDragging, momentumDecay, velocity, clampRotationSpeed, autoRotate, autoRotateSpeed]);
@@ -383,19 +376,19 @@ const SphereImageGrid: React.FC<SphereImageGridProps> = ({
     const deltaY = e.clientY - lastMousePos.current.y;
 
     const rotationDelta = {
-      x: -deltaY * dragSensitivity,
+      x: 0, // X-axis locked — ignore vertical drag
       y: deltaX * dragSensitivity
     };
 
     setRotation(prev => ({
-      x: SPHERE_MATH.normalizeAngle(prev.x + clampRotationSpeed(rotationDelta.x)),
+      x: 0, // locked
       y: SPHERE_MATH.normalizeAngle(prev.y + clampRotationSpeed(rotationDelta.y)),
-      z: prev.z
+      z: 0  // locked
     }));
 
-    // Update velocity for momentum
+    // Update velocity for momentum (Y-axis only)
     setVelocity({
-      x: clampRotationSpeed(rotationDelta.x),
+      x: 0,
       y: clampRotationSpeed(rotationDelta.y)
     });
 
@@ -423,18 +416,18 @@ const SphereImageGrid: React.FC<SphereImageGridProps> = ({
     const deltaY = touch.clientY - lastMousePos.current.y;
 
     const rotationDelta = {
-      x: -deltaY * dragSensitivity,
+      x: 0, // X-axis locked — ignore vertical drag
       y: deltaX * dragSensitivity
     };
 
     setRotation(prev => ({
-      x: SPHERE_MATH.normalizeAngle(prev.x + clampRotationSpeed(rotationDelta.x)),
+      x: 0, // locked
       y: SPHERE_MATH.normalizeAngle(prev.y + clampRotationSpeed(rotationDelta.y)),
-      z: prev.z
+      z: 0  // locked
     }));
 
     setVelocity({
-      x: clampRotationSpeed(rotationDelta.x),
+      x: 0,
       y: clampRotationSpeed(rotationDelta.y)
     });
 

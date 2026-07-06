@@ -24,9 +24,9 @@ const reasons = [
     title: "Skill Evolution",
     description:
       "Sharpen your coding and design prowess through intense, real-world hackathons.",
-    color: "text-neon-cyan",
-    bg: "bg-neon-cyan/10",
-    border: "group-hover:border-neon-cyan/40",
+    color: "text-neon-fuchsia",
+    bg: "bg-neon-fuchsia/10",
+    border: "group-hover:border-neon-fuchsia/40",
     glow: "group-hover:shadow-[0_0_30px_rgba(45,245,255,0.15)]",
     className: "md:col-span-1 md:row-span-1",
   },

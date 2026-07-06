@@ -148,7 +148,7 @@ const Navbar = () => {
           <div className="flex lg:hidden items-center shrink-0">
             <Link to="/" className="flex items-center gap-2">
               <img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
-              <span className="font-heading text-lg font-bold gradient-text whitespace-nowrap">
+              <span className="font-['Orbitron'] text-lg font-bold gradient-text whitespace-nowrap tracking-wider">
                 IGNITIA '26
               </span>
             </Link>
@@ -183,7 +183,7 @@ const Navbar = () => {
                 key={link.href}
                 to={link.href}
                 className={cn(
-                  "relative py-1 text-xs xl:text-sm font-bold transition-colors duration-200 nav-link-underline whitespace-nowrap",
+                  "relative py-1 text-xs xl:text-sm font-bold font-['Orbitron'] tracking-wider transition-colors duration-200 nav-link-underline whitespace-nowrap",
                   location.pathname === link.href
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground",
@@ -196,7 +196,7 @@ const Navbar = () => {
             {/* IGNITIA Brand Logo & Text inline with same padding */}
             <Link to="/" className="flex items-center gap-2 shrink-0 mx-1">
               <img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-8 w-8 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
-              <span className="font-heading text-sm xl:text-base font-black gradient-text inline-block tracking-wide">
+              <span className="font-['Orbitron'] text-sm xl:text-base font-black gradient-text inline-block tracking-widest">
                 IGNITIA '26
               </span>
             </Link>
@@ -207,7 +207,7 @@ const Navbar = () => {
                 key={link.href}
                 to={link.href}
                 className={cn(
-                  "relative py-1 text-xs xl:text-sm font-bold transition-colors duration-200 nav-link-underline whitespace-nowrap",
+                  "relative py-1 text-xs xl:text-sm font-bold font-['Orbitron'] tracking-wider transition-colors duration-200 nav-link-underline whitespace-nowrap",
                   location.pathname === link.href
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground",
@@ -220,7 +220,7 @@ const Navbar = () => {
             {/* Register Now Button inline with extra left margin for visual emphasis */}
             <Link
               to="/events"
-              className="glow-button text-xs xl:text-sm !px-4.5 !py-2 inline-flex items-center gap-2 pulse-cta shrink-0 font-extrabold ml-2"
+              className="glow-button text-xs xl:text-sm !px-4.5 !py-2 inline-flex items-center gap-2 pulse-cta shrink-0 font-['Orbitron'] font-extrabold ml-2 tracking-wider"
             >
               Register
               <ArrowRight size={13} />
@@ -304,7 +304,7 @@ const Navbar = () => {
               >
                 <div className="flex items-center justify-between pb-4 border-b border-white/10">
                   <div>
-                    <span className="font-heading text-base font-semibold gradient-text">IGNITIA '26</span>
+                    <span className="font-['Orbitron'] text-base font-bold gradient-text tracking-wider">IGNITIA '26</span>
                     <p className="text-[11px] text-muted-foreground uppercase tracking-[0.28em] mt-1">Menu</p>
                   </div>
                   <button
@@ -328,7 +328,7 @@ const Navbar = () => {
                         to={link.href}
                         onClick={() => setIsOpen(false)}
                         className={cn(
-                          "flex items-center justify-between rounded-xl border px-4 py-3 transition-colors",
+                          "flex items-center justify-between rounded-xl border px-4 py-3 transition-colors font-['Orbitron'] font-semibold tracking-wider",
                           location.pathname === link.href
                             ? "border-primary/25 bg-primary/12 text-primary"
                             : "border-white/8 bg-white/[0.02] text-muted-foreground hover:border-primary/15 hover:bg-white/[0.04] hover:text-foreground",
@@ -355,7 +355,7 @@ const Navbar = () => {
                 <Link
                   to="/events"
                   onClick={() => setIsOpen(false)}
-                  className="glow-button text-center text-sm !px-6 !py-3 w-full inline-flex items-center justify-center gap-2 mb-8 mt-4 shrink-0"
+                  className="glow-button text-center text-sm !px-6 !py-3 w-full inline-flex items-center justify-center gap-2 mb-8 mt-4 shrink-0 font-['Orbitron'] font-bold tracking-wider"
                 >
                   Register Now
                   <ArrowRight size={14} />

@@ -324,7 +324,7 @@ export const UnifiedHeroScene = ({ scrollProgressRef }: UnifiedHeroSceneProps) =
         {/* Neon Visor glow helper */}
         <pointLight position={[0, 0.4, 1.4]} intensity={6.0} color="#e9d5ff" distance={8} decay={2} />
 
-        {/* Subtle cyan rim highlight */}
+        {/* Subtle fuchsia rim highlight */}
         <pointLight position={[3, -1, 3]} intensity={1.5} color="#06b6d4" distance={8} />
 
         {/* Floating cyber particles */}
