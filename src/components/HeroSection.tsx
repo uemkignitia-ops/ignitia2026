@@ -261,18 +261,7 @@ const HeroSection = () => {
               </div>
 
               {/* Asymmetric stacked title */}
-              <div className="relative">
-                <h1 className="font-heading leading-[0.85] tracking-tighter">
-                  <span className="block text-[clamp(4rem,12vw,9rem)] font-black bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 select-none">
-                    IGNITIA
-                  </span>
-                  <span className="block text-[clamp(2rem,7vw,5.5rem)] font-black bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-400 to-secondary ml-2 md:ml-6">
-                    2K26
-                  </span>
-                </h1>
-                {/* Vertical accent line */}
-                <div className="absolute left-[-1.5rem] top-0 bottom-0 w-px bg-gradient-to-b from-primary/0 via-primary/60 to-primary/0" />
-              </div>
+              
 
               {/* Terminal-style tagline */}
               <p className="font-mono text-sm md:text-base text-white/60 tracking-wide">

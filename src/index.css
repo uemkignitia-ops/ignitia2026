@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -1004,4 +1005,675 @@
 
 .animate-shimmer {
   animation: shimmer 2.5s ease-in-out infinite;
+}
+
+/* ================================
+   IGNITIA HERO REDESIGN
+   Mascot + Heading + Smoke
+================================ */
+
+/* Optional: import sci-fi fonts */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@600;700&display=swap");
+
+.hero-title-block {
+  position: relative;
+  font-family: "Orbitron", "Rajdhani", system-ui, sans-serif;
+  text-transform: uppercase;
+}
+
+/* Main IGNITIA heading */
+.ignitia-citadel-title {
+  position: relative;
+  display: block;
+  width: max-content;
+
+  font-size: clamp(4.4rem, 12vw, 9.8rem);
+  font-weight: 900;
+  letter-spacing: -0.08em;
+
+  color: transparent;
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #dce9ff 38%,
+      #8f9bb8 72%,
+      #ffffff 100%
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  text-shadow:
+    0 0 16px rgba(255, 255, 255, 0.16),
+    0 0 40px rgba(0, 245, 255, 0.12);
+
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.75));
+  overflow: hidden;
+}
+
+/* Moving glass strip through IGNITIA */
+.ignitia-citadel-title::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+
+  color: transparent;
+  background:
+    linear-gradient(
+      105deg,
+      transparent 0%,
+      transparent 35%,
+      rgba(255, 255, 255, 0.08) 42%,
+      rgba(255, 255, 255, 0.95) 48%,
+      rgba(0, 245, 255, 0.85) 52%,
+      rgba(255, 255, 255, 0.12) 58%,
+      transparent 66%,
+      transparent 100%
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  transform: translateX(-120%);
+  animation: ignitia-glass-sweep 3.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Thin cutting slab through the middle */
+.ignitia-citadel-title::before {
+  content: "";
+  position: absolute;
+  left: 2%;
+  right: 4%;
+  top: 49%;
+
+  height: 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.12),
+      rgba(0, 245, 255, 0.38),
+      rgba(255, 255, 255, 0.18),
+      transparent
+    );
+
+  transform: skewX(-22deg);
+  opacity: 0.85;
+  filter: blur(0.2px);
+  mix-blend-mode: screen;
+  animation: ignitia-slab-move 4.5s ease-in-out infinite;
+}
+
+/* 2K26 text */
+.ignitia-year-title {
+  display: block;
+  margin-left: clamp(0.8rem, 2vw, 2rem);
+
+  font-family: "Orbitron", "Rajdhani", system-ui, sans-serif;
+  font-size: clamp(2.4rem, 6.5vw, 5.8rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+
+  color: transparent;
+  background:
+    linear-gradient(
+      135deg,
+      #b45cff 0%,
+      #a855f7 38%,
+      #e879f9 68%,
+      #ffffff 100%
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  text-shadow:
+    0 0 22px rgba(168, 85, 247, 0.38),
+    0 0 45px rgba(0, 245, 255, 0.12);
+}
+
+/* Mascot stage */
+.hero-mascot-stage {
+  perspective: 1200px;
+}
+
+/* Controls mascot position */
+.hero-mascot-wrap {
+  position: relative;
+
+  width: clamp(260px, 30vw, 520px);
+  height: clamp(320px, 42vw, 680px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform-origin: bottom center;
+  animation:
+    mascot-emerge 1.25s cubic-bezier(0.16, 1, 0.3, 1) both,
+    mascot-float 4.8s ease-in-out 1.25s infinite;
+}
+
+/* Mascot image */
+.hero-mascot-img {
+  position: relative;
+  z-index: 3;
+
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 0 20px rgba(0, 245, 255, 0.32))
+    drop-shadow(0 0 55px rgba(168, 85, 247, 0.22))
+    drop-shadow(0 28px 38px rgba(0, 0, 0, 0.85));
+
+  transform-origin: bottom center;
+}
+
+/* Glow behind mascot */
+.hero-mascot-wrap::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+
+  width: 72%;
+  height: 58%;
+  bottom: 18%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(0, 245, 255, 0.20),
+      rgba(168, 85, 247, 0.12) 38%,
+      transparent 70%
+    );
+
+  filter: blur(28px);
+  opacity: 0.9;
+  animation: mascot-core-glow 3.6s ease-in-out infinite;
+}
+
+/* Ground shadow below mascot */
+.hero-mascot-wrap::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+
+  width: 70%;
+  height: 34px;
+  bottom: 6%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(0, 0, 0, 0.9),
+      rgba(0, 245, 255, 0.12) 38%,
+      transparent 72%
+    );
+
+  filter: blur(10px);
+}
+
+/* Smoke clouds */
+.mascot-smoke {
+  position: absolute;
+  z-index: 2;
+  bottom: 5%;
+
+  width: 170px;
+  height: 55px;
+
+  border-radius: 999px;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(220, 240, 255, 0.22),
+      rgba(120, 150, 180, 0.10) 45%,
+      transparent 72%
+    );
+
+  filter: blur(14px);
+  opacity: 0.75;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.smoke-one {
+  left: 17%;
+  animation: smoke-drift-left 5.2s ease-in-out infinite;
+}
+
+.smoke-two {
+  left: 37%;
+  bottom: 3%;
+  width: 210px;
+  animation: smoke-drift-center 6s ease-in-out infinite;
+}
+
+.smoke-three {
+  right: 15%;
+  animation: smoke-drift-right 5.6s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes mascot-emerge {
+  0% {
+    opacity: 0;
+    transform:
+      translateY(95px)
+      translateZ(-220px)
+      scale(0.28)
+      rotateX(14deg);
+    filter: blur(10px);
+  }
+
+  55% {
+    opacity: 1;
+    transform:
+      translateY(-8px)
+      translateZ(40px)
+      scale(1.06)
+      rotateX(0deg);
+    filter: blur(0px);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      translateY(0)
+      translateZ(0)
+      scale(1)
+      rotateX(0deg);
+    filter: blur(0px);
+  }
+}
+
+@keyframes mascot-float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-12px) scale(1.015);
+  }
+}
+
+@keyframes mascot-core-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.96);
+  }
+
+  50% {
+    opacity: 0.95;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes smoke-drift-left {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0) scale(1);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: translateX(-28px) translateY(-8px) scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes smoke-drift-center {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0) scale(1.05);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translateX(10px) translateY(-12px) scale(1.28);
+    opacity: 0.85;
+  }
+}
+
+@keyframes smoke-drift-right {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0) scale(1);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: translateX(28px) translateY(-8px) scale(1.18);
+    opacity: 0.78;
+  }
+}
+
+@keyframes ignitia-glass-sweep {
+  0%,
+  38% {
+    transform: translateX(-120%);
+  }
+
+  70%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes ignitia-slab-move {
+  0%,
+  40% {
+    opacity: 0.25;
+    transform: translateX(-18px) skewX(-22deg);
+  }
+
+  60% {
+    opacity: 0.9;
+    transform: translateX(18px) skewX(-22deg);
+  }
+
+  100% {
+    opacity: 0.25;
+    transform: translateX(-18px) skewX(-22deg);
+  }
+}
+
+/* Mobile safety */
+@media (max-width: 1024px) {
+  .hero-mascot-stage {
+    opacity: 0.45;
+  }
+
+  .hero-mascot-wrap {
+    width: clamp(260px, 48vw, 420px);
+    height: clamp(320px, 60vw, 560px);
+    transform: translateX(18%);
+  }
+
+  .ignitia-citadel-title {
+    font-size: clamp(4rem, 13vw, 7rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-mascot-stage {
+    opacity: 0.28;
+    justify-content: flex-end;
+  }
+
+  .hero-mascot-wrap {
+    transform: translateX(28%);
+  }
+
+  .mascot-smoke {
+    display: none;
+  }
+}
+@keyframes mascot-float {
+  0% {
+    opacity: 0;
+    transform: translateY(90px) scale(0.55);
+    filter: blur(10px);
+  }
+
+  18% {
+    opacity: 1;
+    transform: translateY(0) scale(1.05);
+    filter: blur(0);
+  }
+
+  32% {
+    transform: translateY(8px) scale(1);
+  }
+
+  50% {
+    transform: translateY(-18px) scale(1.015);
+  }
+
+  70% {
+    transform: translateY(6px) scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.animate-mascot-float {
+  animation:
+    mascot-float 1.35s cubic-bezier(0.16, 1, 0.3, 1) both,
+    mascot-bob 4.2s ease-in-out 1.35s infinite;
+  transform-origin: bottom center;
+  will-change: transform;
+}
+
+@keyframes mascot-bob {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-18px) scale(1.015);
+  }
+}
+
+@keyframes smoke-left {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: translateX(-70%) translateY(-8px) scale(1.25);
+    opacity: 0.75;
+  }
+}
+
+@keyframes smoke-right {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: translateX(-30%) translateY(-8px) scale(1.25);
+    opacity: 0.75;
+  }
+}
+
+.animate-smoke-left {
+  animation: smoke-left 5s ease-in-out infinite;
+}
+
+.animate-smoke-right {
+  animation: smoke-right 5.5s ease-in-out infinite;
+}
+.ignitia-citadel-title {
+  position: relative;
+  display: block;
+  width: max-content;
+
+  font-size: clamp(4.4rem, 12vw, 9.8rem);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+
+  color: transparent;
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #dce9ff 38%,
+      #8f9bb8 72%,
+      #ffffff 100%
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  text-shadow:
+    0 0 16px rgba(255, 255, 255, 0.16),
+    0 0 40px rgba(0, 245, 255, 0.12);
+
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.75));
+  overflow: hidden;
+}
+/* ================================
+   Mascot hand floating buttons
+================================ */
+
+.mascot-hand-button {
+  position: absolute;
+  z-index: 80;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-width: 155px;
+  height: 46px;
+  padding: 0 18px;
+
+  color: white;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+
+  background:
+    linear-gradient(135deg, rgba(168, 85, 247, 0.96), rgba(217, 70, 239, 0.9)),
+    rgba(0, 0, 0, 0.35);
+
+  box-shadow:
+    0 0 22px rgba(168, 85, 247, 0.42),
+    0 0 48px rgba(0, 245, 255, 0.12),
+    inset 0 0 18px rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  transform-origin: center;
+  animation: hand-button-bob 3.8s ease-in-out infinite;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    filter 0.22s ease;
+}
+
+.mascot-hand-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      110deg,
+      transparent 0%,
+      transparent 35%,
+      rgba(255, 255, 255, 0.35) 48%,
+      transparent 62%,
+      transparent 100%
+    );
+
+  transform: translateX(-120%);
+  transition: transform 0.55s ease;
+  pointer-events: none;
+}
+
+.mascot-hand-button:hover {
+  filter: saturate(1.2);
+  border-color: rgba(0, 245, 255, 0.45);
+
+  box-shadow:
+    0 0 30px rgba(168, 85, 247, 0.62),
+    0 0 65px rgba(0, 245, 255, 0.22),
+    inset 0 0 26px rgba(255, 255, 255, 0.12);
+}
+
+.mascot-hand-button:hover::before {
+  transform: translateX(120%);
+}
+
+/* Left hand button */
+.mascot-hand-button-left {
+  left: -20%;
+  top: 47%;
+  animation-delay: 0s;
+}
+
+/* Right hand button */
+.mascot-hand-button-right {
+  right: -24%;
+  top: 48%;
+  background:
+    linear-gradient(135deg, rgba(0, 245, 255, 0.82), rgba(168, 85, 247, 0.92)),
+    rgba(0, 0, 0, 0.35);
+  animation-delay: 0.35s;
+}
+
+@keyframes hand-button-bob {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-10px) scale(1.035);
+  }
+}
+
+/* Mobile/tablet safety */
+@media (max-width: 1024px) {
+  .mascot-hand-button {
+    min-width: 130px;
+    height: 40px;
+    font-size: 11px;
+    padding: 0 14px;
+  }
+
+  .mascot-hand-button-left {
+    left: -14%;
+    top: 48%;
+  }
+
+  .mascot-hand-button-right {
+    right: -16%;
+    top: 49%;
+  }
+}
+
+@media (max-width: 768px) {
+  .mascot-hand-button {
+    display: none;
+  }
+}
+.mascot-hand-button-left {
+  left: 2%;
+  top: 38%;
+  animation-delay: 0s;
+}
+
+.mascot-hand-button-right {
+  right: 2%;
+  top: 38%;
+  background:
+    linear-gradient(135deg, rgba(0, 245, 255, 0.82), rgba(168, 85, 247, 0.92)),
+    rgba(0, 0, 0, 0.35);
+  animation-delay: 0.35s;
 }

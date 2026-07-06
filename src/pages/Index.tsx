@@ -1,23 +1,20 @@
-import { Suspense, lazy, useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import CTABanner from "@/components/CTABanner";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import PageTransition from "@/components/PageTransition";
-import ParticleField from "@/components/ParticleField";
-import AnimatedBlobs from "@/components/AnimatedBlobs";
-import { useIsMobile } from "@/hooks/use-mobile";
-import CharacterHeroScene from "@/components/CharacterHeroScene";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import StatsDark from "@/components/StatsDark";
+
+
+
 import { ArrowRight } from "lucide-react";
-import CountdownTimer from "@/components/CountdownTimer";
-import { TerminalSubheading } from "@/components/TerminalSubheading";
+import TimeSpline from "@/components/TimeSpline";
+import HeroAcedImage from "@/components/HeroAcedImage";
+
 import { Link } from "react-router-dom";
 
-gsap.registerPlugin(ScrollTrigger);
 
-const HomeEffects = lazy(() => import("@/components/HomeEffects"));
 const mapEmbedSrc =
   "https://www.google.com/maps?q=University+of+Engineering+%26+Management,+Kolkata+(UEM)&z=17&output=embed";
 const mapHref =
@@ -26,11 +23,10 @@ const mapHref =
 const tagline = "Igniting Innovation, Creativity & Competition";
 
 const Index = () => {
-  const isMobile = useIsMobile();
+  
   const [isLoaded, setIsLoaded] = useState(false);
   const [typedText, setTypedText] = useState("");
-  const indexRef = useRef<HTMLDivElement>(null);
-  const characterScrollProgressRef = useRef(0);
+  
   const [showSdk, setShowSdk] = useState(false);
  
   // Load Devfolio SDK — only load on production, keep fallback on localhost/local IPs
@@ -104,475 +100,176 @@ const Index = () => {
   }, [isLoaded]);
 
   // Combined ScrollTrigger timeline
-  useEffect(() => {
-    if (!isLoaded) return;
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: "#hero-showcase-section",
-          start: "top top",
-          end: isMobile ? "+=1500" : "+=2500",
-          pin: true,
-          pinSpacing: true,
-          scrub: 0.5,
-          fastScrollEnd: true,
-          preventOverlaps: true,
-          onUpdate: (self) => {
-            characterScrollProgressRef.current = self.progress;
-          },
-        },
-      });
-
-      // 1. Fade out the landing Hero UI overlays as user scrolls down
-      tl.to("#hero-overlay-ui", {
-        opacity: 0,
-        y: -50,
-        duration: 0.6,
-        ease: "power2.inOut",
-        pointerEvents: "none",
-      });
-
-      // 2. Fade in the About Fest details panel
-      tl.fromTo(
-        "#showcase-overlay-about",
-        { opacity: 0, y: 50, pointerEvents: "none" },
-        {
-          opacity: 1,
-          y: 0,
-          pointerEvents: "auto",
-          duration: 0.8,
-          ease: "power2.out",
-        },
-      );
-    }, indexRef);
-
-    return () => ctx.revert();
-  }, [isLoaded, isMobile]);
+  
 
   return (
     <PageTransition>
-      <div
-        ref={indexRef}
-        className="min-h-screen flex flex-col bg-background scanline-overlay text-white overflow-x-hidden"
-      >
-        <ParticleField />
-        <AnimatedBlobs />
-        <Suspense fallback={null}>
-          {isLoaded && !isMobile && <HomeEffects />}
-        </Suspense>
+      <div className="min-h-screen flex flex-col bg-background text-white overflow-x-hidden">
+        
+        
         <ScrollProgress />
         <Navbar />
 
         <main className="flex-1 relative z-10">
-          {/* Unified Pinned Hero & About Section */}
-          <section
-            id="hero-showcase-section"
-            className="relative h-screen w-full overflow-hidden"
+          {/* New Video Hero Section */}
+<section
+  id="hero-showcase-section"
+  className="relative min-h-screen w-full overflow-hidden bg-black"
+>
+  {/* Looping video background */}
+  <img
+    src="/images/tuf.png"
+    alt="IGNITIA Background"
+    className="absolute inset-0 h-full w-full object-cover"
+    draggable={false}
+  />
+
+  {/* Dark overlay */}
+  <div className="absolute inset-0 bg-black/55 z-10" />
+
+  {/* Cinematic gradient */}
+  <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_center,rgba(0,245,255,0.10)_0%,rgba(0,0,0,0.15)_38%,rgba(0,0,0,0.85)_100%)] pointer-events-none" />
+
+{/* Center IGNITIA title above mascot */}
+<div className="absolute top-[10%] left-1/2 z-[36] -translate-x-1/2 pointer-events-none text-center">
+  <h1 className="hero-title-block leading-[0.82] select-none">
+    <span className="ignitia-citadel-title mx-auto" data-text="IGNITIA">
+  <span>I</span>
+  <span>G</span>
+  <span>N</span>
+  <span>I</span>
+  <span>T</span>
+  <span>I</span>
+  <span>A</span>
+</span>
+
+    <span className="ignitia-year-title mx-auto">
+      2K26
+    </span>
+  </h1>
+</div>
+  {/* Center mascot PNG */}
+  {/* Center mascot floating from corridor */}
+<div className="absolute inset-0 z-[45] flex items-center justify-center pointer-events-none">
+  <div className="relative w-[260px] md:w-[340px] lg:w-[430px] xl:w-[480px] translate-x-[6%] translate-y-[175px]">
+    <div className="animate-mascot-float">
+      <img
+        src="/images/Mascot.png"
+        alt="IGNITIA Mascot"
+        className="w-full h-auto object-contain select-none drop-shadow-[0_0_35px_rgba(0,245,255,0.38)] drop-shadow-[0_0_55px_rgba(168,85,247,0.22)]"
+        draggable={false}
+      />
+    </div>
+    {/* Floating hand buttons */}
+  <Link
+    to="/events"
+    className="mascot-hand-button mascot-hand-button-left pointer-events-auto"
+  >
+    <span>Register Now</span>
+    <ArrowRight size={15} />
+  </Link>
+
+  <Link
+    to="/events"
+    className="mascot-hand-button mascot-hand-button-right pointer-events-auto"
+  >
+    <span>Explore Events</span>
+    <ArrowRight size={15} />
+  </Link>
+
+
+    {/* Floor glow / smoke */}
+    {/* Thick floor smoke cloud */}
+<div className="absolute left-1/2 bottom-[-2%] h-20 w-[110%] -translate-x-1/2 rounded-full bg-cyan-300/20 blur-3xl opacity-90" />
+
+<div className="absolute left-[28%] bottom-[1%] h-16 w-[55%] -translate-x-1/2 rounded-full bg-purple-400/25 blur-2xl animate-smoke-left" />
+
+<div className="absolute left-[48%] bottom-[-1%] h-20 w-[70%] -translate-x-1/2 rounded-full bg-white/15 blur-3xl animate-smoke-center" />
+
+<div className="absolute left-[68%] bottom-[1%] h-16 w-[55%] -translate-x-1/2 rounded-full bg-cyan-300/25 blur-2xl animate-smoke-right" />
+
+<div className="absolute left-[38%] bottom-[8%] h-10 w-[45%] -translate-x-1/2 rounded-full bg-cyan-200/15 blur-xl animate-smoke-small-left" />
+
+<div className="absolute left-[62%] bottom-[8%] h-10 w-[45%] -translate-x-1/2 rounded-full bg-purple-300/15 blur-xl animate-smoke-small-right" />
+  </div>
+</div>
+
+  {/* HUD frame */}
+  <div className="absolute inset-6 md:inset-10 border border-white/[0.05] pointer-events-none z-30">
+    <div className="absolute top-0 left-0 w-6 h-6 border-t border-l border-secondary/70" />
+    <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-secondary/70" />
+    <div className="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-secondary/70" />
+    <div className="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-secondary/70" />
+  </div>
+
+  {/* Landing content */}
+  <div className="relative z-40 min-h-screen flex items-center pointer-events-none">
+    <div className="w-full px-8 md:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-center pointer-events-auto">
+      {/* Left title block */}
+      {/* Left info terminal + buttons */}
+<div className="space-y-6 max-w-[360px] mt-28">
+  <HeroAcedImage />
+
+  <div className="flex flex-col items-start gap-6 pt-3"></div>
+
+        <div className="flex flex-col items-start gap-6 pt-3">
+          
+          <div
+            className="relative"
+            style={{ height: "44px", width: "312px" }}
           >
-            {/* Full-bleed 3D Character Canvas as background */}
-            <Suspense
-              fallback={
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-transparent z-10">
-                  <div className="w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin mb-4" />
-                  <span className="text-xs tracking-widest text-muted-foreground uppercase animate-pulse font-mono">
-                    Loading Experience...
-                  </span>
-                </div>
-              }
-            >
-              <CharacterHeroScene
-                scrollProgressRef={characterScrollProgressRef}
-              />
-            </Suspense>
-
-            {/* Vignette overlay — darkens edges for cinematic feel */}
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_50%,#050406_100%)] z-10" />
-
-            {/* HUD Frame corner brackets */}
-            <div className="absolute inset-6 md:inset-10 border border-white/[0.03] pointer-events-none z-20">
-              <div className="absolute top-0 left-0 w-6 h-6 border-t border-l border-secondary/60" />
-              <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-secondary/60" />
-              <div className="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-secondary/60" />
-              <div className="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-secondary/60" />
-            </div>
-
-            {/* Overlay 1: Hero UI (fades out on scroll) */}
-            <div
-              id="hero-overlay-ui"
-              className="absolute inset-0 z-20 flex items-center pointer-events-none"
-            >
-              {/* Asymmetric radial glows */}
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_20%_50%,rgba(168,85,247,0.08)_0%,rgba(0,0,0,0)_70%)] pointer-events-none" />
-
-              {/* Floating code/binary particles */}
+            {showSdk ? (
               <div
-                className="absolute inset-0 pointer-events-none select-none overflow-hidden"
-                aria-hidden
+                className="apply-button w-full h-full"
+                data-hackathon-slug="ignisys-ignitia"
+                data-button-theme="dark"
+                style={{ height: "44px", width: "312px" }}
+              />
+            ) : (
+              <a
+                href="https://ignisys-ignitia.devfolio.co/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="devfolio-apply-button flex items-center justify-center gap-3 text-sm h-full w-full"
               >
-                {[
-                  "01",
-                  "//",
-                  "0x",
-                  "{}",
-                  "1A",
-                  "if",
-                  "fn",
-                  "10",
-                  "AI",
-                  "∑",
-                  "λ",
-                  ">>",
-                  "0b",
-                  "∞",
-                  "==",
-                ].map((char, i) => (
-                  <span
-                    key={i}
-                    className="absolute font-mono text-white/[0.04] text-xs animate-float-particle"
-                    style={{
-                      left: `${(i * 6.5 + 3) % 95}%`,
-                      top: `${(i * 13 + 7) % 90}%`,
-                      animationDelay: `${i * 0.4}s`,
-                      animationDuration: `${6 + (i % 4)}s`,
-                      fontSize: i % 3 === 0 ? "1.5rem" : "0.7rem",
-                    }}
-                  >
-                    {char}
-                  </span>
-                ))}
-              </div>
-
-              {/* Main Landing content layout */}
-              <div className="w-full px-8 md:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-center pointer-events-auto">
-                {/* Title block */}
-                <div className="space-y-5">
-                  <div className="flex items-center gap-3">
-                    <span className="block w-8 h-px bg-primary/60" />
-                    <span className="font-mono text-[10px] text-primary/80 uppercase tracking-[0.3em]">
-                      IEM-UEM Group × UEM Kolkata
-                    </span>
-                  </div>
-
-                  <div className="relative">
-                    <h1 className="font-heading leading-[0.85] tracking-tighter">
-                      <span className="block text-[clamp(4rem,12vw,9rem)] font-black bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 select-none">
-                        IGNITIA
-                      </span>
-                      <span className="block text-[clamp(2rem,7vw,5.5rem)] font-black bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-400 to-secondary ml-2 md:ml-6">
-                        2K26
-                      </span>
-                    </h1>
-                    <div className="absolute left-[-1.5rem] top-0 bottom-0 w-px bg-gradient-to-b from-primary/0 via-primary/60 to-primary/0" />
-                  </div>
-
-                  <p className="font-mono text-sm md:text-base text-white/60 tracking-wide min-h-[1.5em]">
-                    <span className="text-primary/70 mr-2">&gt;</span>
-                    {typedText}
-                    <span className="animate-blink text-primary">_</span>
-                  </p>
-
-                  <div className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-white/40">
-                    <span>
-                      <span className="text-secondary/70">DATE</span>:
-                      01–02.AUG.2026
-                    </span>
-                    <span>
-                      <span className="text-neon-cyan/70">LOC</span>: UEM
-                      Kolkata, WB
-                    </span>
-                  </div>
-
-                  <div className="flex flex-col items-start gap-6 pt-3">
-                    <Link
-                      to="/events"
-                      className="hero-primary-button pulse-cta flex items-center gap-3 text-sm"
-                    >
-                      Register Now
-                      <ArrowRight size={16} />
-                    </Link>
-                    {/* Devfolio apply button — SDK renders on production; fallback shown on localhost */}
-                    <div
-                      className="relative"
-                      style={{ height: "44px", width: "312px" }}
-                    >
-                      {showSdk ? (
-                        /* Official SDK target div */
-                        <div
-                          className="apply-button w-full h-full"
-                          data-hackathon-slug="ignisys-ignitia"
-                          data-button-theme="dark"
-                          style={{ height: "44px", width: "312px" }}
-                        />
-                      ) : (
-                        /* Fallback — visible when SDK is not loaded (like on localhost) */
-                        <a
-                          href="https://ignisys-ignitia.devfolio.co/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="devfolio-apply-button flex items-center justify-center gap-3 text-sm h-full w-full"
-                        >
-                          <img
-                            src="/devfolio.png"
-                            alt="Devfolio"
-                            width={20}
-                            height={20}
-                            className="w-5 h-5 object-contain brightness-0 invert"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display =
-                                "none";
-                            }}
-                          />
-                          Apply on Devfolio
-                          <ArrowRight size={14} />
-                        </a>
-                      )}
-                    </div>
-                    <Link
-                      to="/events"
-                      className="hero-secondary-button glow-button-secondary flex items-center gap-3 text-sm"
-                    >
-                      Explore Events
-                      <ArrowRight size={16} />
-                    </Link>
-                  </div>
-                </div>
-
-                {/* T-MINUS countdown box */}
-                <div className="w-full lg:w-auto lg:min-w-[320px]">
-                  <div
-                    className="relative border border-white/10 bg-black/60 p-5 md:p-7 overflow-hidden"
-                    style={{
-                      clipPath:
-                        "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))",
-                    }}
-                  >
-                    <div
-                      className="absolute top-0 right-0 w-4 h-4 bg-primary/50"
-                      style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }}
-                    />
-                    <div
-                      className="absolute bottom-0 left-0 w-4 h-4 bg-secondary/50"
-                      style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%)" }}
-                    />
-
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                      <span className="font-mono text-[9px] tracking-[0.35em] text-white/40 uppercase">
-                        Event Launch Countdown
-                      </span>
-                    </div>
-
-                    <CountdownTimer embedded />
-
-                    <div className="mt-4 space-y-1">
-                      <div className="flex justify-between font-mono text-[8px] text-white/30 uppercase tracking-widest">
-                        <span>Event window open</span>
-                        <span>Launch</span>
-                      </div>
-                      <div className="relative h-[2px] bg-white/10 overflow-hidden">
-                        <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary to-secondary w-[82%]" />
-                        <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Overlay 2: About Panel (fades in on scroll) */}
-            <div
-              id="showcase-overlay-about"
-              className="absolute inset-0 flex items-center pointer-events-none z-20 opacity-0"
-            >
-              <svg
-                className="absolute inset-0 w-full h-full pointer-events-none"
-                aria-hidden
-              >
-                <line
-                  x1="75%"
-                  y1="30%"
-                  x2="52%"
-                  y2="20%"
-                  stroke="rgba(168,85,247,0.15)"
-                  strokeWidth="1"
-                  strokeDasharray="4 6"
-                />
-                <line
-                  x1="78%"
-                  y1="55%"
-                  x2="52%"
-                  y2="55%"
-                  stroke="rgba(0,255,200,0.1)"
-                  strokeWidth="1"
-                  strokeDasharray="3 8"
-                />
-                <line
-                  x1="72%"
-                  y1="75%"
-                  x2="52%"
-                  y2="80%"
-                  stroke="rgba(197,160,89,0.12)"
-                  strokeWidth="1"
-                  strokeDasharray="4 6"
-                />
-                <circle cx="75%" cy="30%" r="3" fill="rgba(168,85,247,0.3)" />
-                <circle cx="78%" cy="55%" r="3" fill="rgba(0,255,200,0.2)" />
-                <circle cx="72%" cy="75%" r="3" fill="rgba(197,160,89,0.25)" />
-              </svg>
-
-              <div className="container mx-auto px-8 md:px-16 lg:px-20">
-                <div
-                  className="max-w-xl space-y-5 border border-white/10 bg-black/70 backdrop-blur-md p-6 md:p-8 relative"
-                  style={{
-                    clipPath:
-                      "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))",
+                <img
+                  src="/devfolio.png"
+                  alt="Devfolio"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5 object-contain brightness-0 invert"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = "none";
                   }}
-                >
-                  <div
-                    className="absolute top-0 right-0 w-5 h-5 bg-primary/40"
-                    style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }}
-                  />
-                  <div
-                    className="absolute bottom-0 left-0 w-5 h-5 bg-secondary/40"
-                    style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%)" }}
-                  />
-                  <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-primary/50" />
-                  <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-secondary/50" />
+                />
+                Apply on Devfolio
+                <ArrowRight size={14} />
+              </a>
+            )}
+          </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-neon-cyan animate-ping" />
-                    <span className="font-mono text-[9px] tracking-[0.3em] text-neon-cyan/60 uppercase">
-                      Event Overview: Quick Stats
-                    </span>
-                  </div>
+          
+        </div>
+      </div>
 
-                  <div>
-                    <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight leading-tight">
-                      About the{" "}
-                      <span className="bg-clip-text text-transparent bg-gradient-to-r from-neon-cyan to-primary">
-                        Fest &amp; Initiative
-                      </span>
-                    </h2>
-                  </div>
+      {/* Right timer */}
+      <TimeSpline />
+    </div>
+  </div>
 
-                  <TerminalSubheading
-                    text="IGNITIA 2K26 brings together the brightest coders, designers, gamers, and roboticists. A crucible of competitive spirit and technical mastery — 2 days of adrenaline and innovation."
-                    className="text-xs md:text-sm text-white/50 leading-relaxed border-l-2 border-primary/30 pl-3"
-                  />
 
-                  <div className="space-y-3 pt-1">
-                    {[
-                      {
-                        label: "PRIZE POOL",
-                        value: "₹2,00,000+",
-                        pct: 90,
-                        color: "from-secondary to-yellow-400",
-                      },
-                      {
-                        label: "FOOTFALL",
-                        value: "5000+",
-                        pct: 85,
-                        color: "from-primary to-purple-400",
-                      },
-                      {
-                        label: "COLLABORATORS",
-                        value: "50+ Colleges",
-                        pct: 75,
-                        color: "from-neon-cyan to-teal-400",
-                      },
-                      {
-                        label: "ARENAS",
-                        value: "7+",
-                        pct: 55,
-                        color: "from-pink-500 to-primary",
-                      },
-                    ].map(({ label, value, pct, color }) => (
-                      <div key={label} className="space-y-1">
-                        <div className="flex justify-between items-baseline">
-                          <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest">
-                            {label}
-                          </span>
-                          <span className="font-mono text-xs font-bold text-white/80">
-                            {value}
-                          </span>
-                        </div>
-                        <div className="relative h-[3px] bg-white/[0.06] overflow-hidden">
-                          <div
-                            className={`absolute inset-y-0 left-0 bg-gradient-to-r ${color}`}
-                            style={{ width: `${pct}%` }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
 
-                  <div className="flex flex-wrap gap-3 pt-2">
-                    <Link
-                      to="/events"
-                      className="glow-button flex items-center gap-2 text-xs py-2 px-5"
-                    >
-                      <span>Access Portal</span>
-                      <span className="font-mono opacity-70">&gt;&gt;</span>
-                    </Link>
-                    <Link
-                      to="/schedule"
-                      className="glow-button-secondary border-white/10 text-white hover:border-white/30 text-xs py-2 px-5"
-                    >
-                      Fest Schedule
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Gradient fade to seamlessly blend into next section */}
-            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-30" />
-          </section>
+  {/* Bottom fade */}
+  <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-50" />
+</section>
 
           {/* Below sections flow up naturally following pin completion */}
           <div className="relative bg-transparent z-20">
+            <StatsDark />
             <CTABanner />
 
             {/* Event Map Location Embed */}
-            <section className="section-padding py-16">
-              <div className="container mx-auto max-w-5xl px-4">
-                <div
-                  className="group relative overflow-hidden border-2 border-primary/30 bg-black/80 h-72 transition-all duration-300 hover:border-primary/80 shadow-[0_0_30px_rgba(139,92,246,0.15)]"
-                  style={{
-                    clipPath:
-                      "polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)",
-                  }}
-                >
-                  <div className="absolute inset-0 pointer-events-none bg-primary/10 animate-pulse z-10" />
-
-                  <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary z-20 m-2" />
-                  <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary z-20 m-2" />
-
-                  <iframe
-                    src={mapEmbedSrc}
-                    width="100%"
-                    height="100%"
-                    style={{
-                      border: 0,
-                      filter: "invert(90%) hue-rotate(180deg) sepia(50%)",
-                    }}
-                    loading="lazy"
-                    title="UEM Kolkata Location"
-                    className="opacity-80 mix-blend-screen"
-                  />
-                  <a
-                    href={mapHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="Open UEM Kolkata map"
-                    className="absolute right-4 top-4 z-30 font-mono border border-primary/50 bg-black/80 px-4 py-1.5 text-xs font-bold text-primary backdrop-blur-md transition-all hover:bg-primary/20 shadow-[0_0_10px_rgba(139,92,246,0.3)] uppercase tracking-widest"
-                  >
-                    [ Get Directions ]
-                  </a>
-                </div>
-              </div>
-            </section>
+            
           </div>
         </main>
 

@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
-import NeonFlicker from "./NeonFlicker";
 import { Link } from "react-router-dom";
 
 // Pre-generated star positions to avoid Math.random() on every render
@@ -19,9 +18,196 @@ const STARS = [
 
 const CTABanner = () => (
   <section
+  
     id="register"
     className="relative py-32 overflow-hidden bg-transparent"
   >
+    <style>{`
+  .ignite-heading {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.9;
+    text-align: center;
+  }
+
+  .ignite-ready {
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: clamp(3rem, 7vw, 6.8rem);
+    font-weight: 900;
+    letter-spacing: -0.06em;
+    color: rgba(255,255,255,0.96);
+    text-shadow: 0 0 28px rgba(255,255,255,0.16);
+  }
+
+  .ignite-word-wrap {
+    position: relative;
+    display: inline-block;
+    margin-top: 0.08em;
+  }
+
+  .ignite-word {
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    font-family: "Orbitron", "Audiowide", system-ui, sans-serif;
+    font-size: clamp(4.4rem, 12vw, 12rem);
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    color: transparent;
+    background:
+      linear-gradient(
+        180deg,
+        #fff7c2 0%,
+        #ffb347 18%,
+        #ff4d00 44%,
+        #d41414 67%,
+        #6d1cff 100%
+      );
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter:
+      drop-shadow(0 0 12px rgba(255, 94, 0, 0.55))
+      drop-shadow(0 0 34px rgba(168, 85, 247, 0.35));
+    animation: ignite-lava 3.2s ease-in-out infinite;
+  }
+
+  .ignite-word::after {
+    content: "IGNITE";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    color: rgba(255, 72, 0, 0.28);
+    filter: blur(18px);
+    transform: translateY(8px);
+  }
+
+  .ignite-word-wrap::after {
+    content: "";
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: -12px;
+    height: 5px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, #ff4d00, #ffd166, #a855f7, transparent);
+    box-shadow:
+      0 0 18px rgba(255, 94, 0, 0.75),
+      0 0 38px rgba(168, 85, 247, 0.5);
+    animation: ember-line 2.4s ease-in-out infinite;
+  }
+
+  .ignite-flame {
+    position: absolute;
+    bottom: 88%;
+    width: 18px;
+    height: 46px;
+    border-radius: 50% 50% 45% 45%;
+    background: radial-gradient(circle at 50% 80%, #fff7c2 0%, #ffb347 28%, #ff4d00 58%, transparent 72%);
+    filter: blur(1px) drop-shadow(0 0 18px rgba(255, 94, 0, 0.8));
+    opacity: 0.85;
+    transform-origin: bottom center;
+    animation: flame-flicker 1.35s ease-in-out infinite;
+  }
+
+  .ignite-flame-1 {
+    left: 18%;
+    animation-delay: 0s;
+  }
+
+  .ignite-flame-2 {
+    left: 49%;
+    height: 58px;
+    width: 22px;
+    animation-delay: 0.22s;
+  }
+
+  .ignite-flame-3 {
+    right: 18%;
+    animation-delay: 0.44s;
+  }
+
+  .ignite-spark {
+    position: absolute;
+    z-index: 3;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: #ffd166;
+    box-shadow:
+      0 0 8px #ffd166,
+      0 0 18px rgba(255, 94, 0, 0.9);
+    animation: spark-rise 2s ease-in-out infinite;
+  }
+
+  .spark-1 { left: 8%; bottom: 25%; animation-delay: 0s; }
+  .spark-2 { left: 25%; bottom: 50%; animation-delay: 0.45s; }
+  .spark-3 { right: 18%; bottom: 42%; animation-delay: 0.9s; }
+  .spark-4 { right: 6%; bottom: 20%; animation-delay: 1.25s; }
+  .spark-5 { left: 52%; bottom: 62%; animation-delay: 1.55s; }
+
+  @keyframes ignite-lava {
+    0%, 100% {
+      filter:
+        drop-shadow(0 0 12px rgba(255, 94, 0, 0.55))
+        drop-shadow(0 0 34px rgba(168, 85, 247, 0.35));
+      transform: translateY(0);
+    }
+    50% {
+      filter:
+        drop-shadow(0 0 20px rgba(255, 125, 0, 0.85))
+        drop-shadow(0 0 54px rgba(255, 45, 85, 0.5));
+      transform: translateY(-2px);
+    }
+  }
+
+  @keyframes flame-flicker {
+    0%, 100% {
+      transform: scaleY(0.85) rotate(-4deg);
+      opacity: 0.55;
+    }
+    50% {
+      transform: scaleY(1.25) rotate(5deg);
+      opacity: 1;
+    }
+  }
+
+  @keyframes spark-rise {
+    0% {
+      transform: translateY(0) scale(0.6);
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-70px) translateX(20px) scale(0.1);
+      opacity: 0;
+    }
+  }
+
+  @keyframes ember-line {
+    0%, 100% {
+      opacity: 0.65;
+      transform: scaleX(0.92);
+    }
+    50% {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ignite-word {
+      letter-spacing: 0.01em;
+    }
+
+    .ignite-flame {
+      height: 32px;
+    }
+  }
+`}</style>
     {/* Full-width gradient mesh background */}
     <div
       className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10"
@@ -77,14 +263,27 @@ const CTABanner = () => (
           </span>
         </motion.div>
 
-        <h2 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-none filter drop-shadow-2xl mb-6">
-          Ready to <NeonFlicker className="gradient-text">Ignite?</NeonFlicker>
-        </h2>
+        <h2 className="ignite-heading mb-7">
+  <span className="ignite-ready">Ready to</span>
 
-        <p className="text-lg md:text-2xl text-white/80 max-w-2xl mx-auto mb-10 font-light tracking-wide">
-          Join thousands of students competing, creating, and connecting at the
-          biggest multi-domain event of 2026.
-        </p>
+  <span className="ignite-word-wrap">
+    <span className="ignite-word">IGNITE</span>
+
+    {/* flame layer */}
+    
+
+    {/* sparks */}
+    <span className="ignite-spark spark-1" />
+    <span className="ignite-spark spark-2" />
+    <span className="ignite-spark spark-3" />
+    <span className="ignite-spark spark-4" />
+    <span className="ignite-spark spark-5" />
+  </span>
+</h2>
+        <p className="text-lg md:text-2xl text-white/75 max-w-3xl mx-auto mb-10 font-light tracking-wide leading-relaxed">
+  Step into Ignitia 2K26 — where tech battles, creative arenas, innovation, 
+  and campus energy collide into one unforgettable experience.
+</p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
