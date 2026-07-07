@@ -24,6 +24,7 @@ export interface Member {
 // Dynamic data hooks will load conenvors dynamically from getTeam()
 
 // Ornate card holder component matching the Citadel design theme
+// Ornate card holder component matching the Citadel design theme
 const TeamCard = memo(({ member, theme }: { member: Member; theme: "red" | "blue" | "green" | "purple" }) => {
   const themeMap = {
     red: {
@@ -51,7 +52,7 @@ const TeamCard = memo(({ member, theme }: { member: Member; theme: "red" | "blue
   const style = themeMap[theme];
 
   return (
-    <div className="group relative w-64 h-[380px] rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 select-none border border-purple-500/20 cursor-pointer"
+    <div className="group relative w-full aspect-[256/380] sm:w-64 sm:h-[380px] rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 select-none border border-purple-500/20 cursor-pointer"
       style={{
         background: `radial-gradient(circle at center, rgba(17,17,22,0.98) 30%, ${style.glowColor} 100%)`,
         boxShadow: `0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6)`,
@@ -111,8 +112,8 @@ const TeamCard = memo(({ member, theme }: { member: Member; theme: "red" | "blue
       </svg>
 
       {/* Decorative Gold Inner Borders */}
-      <div className="absolute inset-1.5 border border-amber-500/25 rounded-lg pointer-events-none z-10" />
-      <div className="absolute inset-3.5 border-2 border-amber-500/40 rounded-lg pointer-events-none z-10" />
+      <div className="absolute inset-1 sm:inset-1.5 border border-amber-500/25 rounded-lg pointer-events-none z-10" />
+      <div className="absolute inset-2 sm:inset-3.5 border-2 border-amber-500/40 rounded-lg pointer-events-none z-10" />
 
       {/* Lightning Hover Glow Overlay */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0">
@@ -123,35 +124,35 @@ const TeamCard = memo(({ member, theme }: { member: Member; theme: "red" | "blue
       </div>
 
       {/* Top Ornate Lightning Deco */}
-      <div className="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-8 text-amber-500/80 group-hover:text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] transition-colors duration-300 z-10">
+      <div className="absolute top-2 left-1/2 -translate-x-1/2 w-6 h-6 sm:w-8 sm:h-8 text-amber-500/80 group-hover:text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] transition-colors duration-300 z-10">
         <svg viewBox="0 0 24 24" className="w-full h-full fill-current">
           <polygon points="12,1 6,13 11,13 9,23 18,11 13,11" />
         </svg>
       </div>
 
       {/* Bottom Ornate Lightning Deco */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-8 h-8 text-amber-500/80 group-hover:text-amber-400 rotate-180 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] transition-colors duration-300 z-10">
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 sm:w-8 sm:h-8 text-amber-500/80 group-hover:text-amber-400 rotate-180 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] transition-colors duration-300 z-10">
         <svg viewBox="0 0 24 24" className="w-full h-full fill-current">
           <polygon points="12,1 6,13 11,13 9,23 18,11 13,11" />
         </svg>
       </div>
 
       {/* Corner Corner Accents (Cyberpunk / Fantasy corners) */}
-      <div className="absolute top-3.5 left-3.5 w-3 h-3 border-t-2 border-l-2 border-amber-500/80 z-10" />
-      <div className="absolute top-3.5 right-3.5 w-3 h-3 border-t-2 border-r-2 border-amber-500/80 z-10" />
-      <div className="absolute bottom-3.5 left-3.5 w-3 h-3 border-b-2 border-l-2 border-amber-500/80 z-10" />
-      <div className="absolute bottom-3.5 right-3.5 w-3 h-3 border-b-2 border-r-2 border-amber-500/80 z-10" />
+      <div className="absolute top-2 left-2 sm:top-3.5 sm:left-3.5 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-l-2 border-amber-500/80 z-10" />
+      <div className="absolute top-2 right-2 sm:top-3.5 sm:right-3.5 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-r-2 border-amber-500/80 z-10" />
+      <div className="absolute bottom-2 left-2 sm:bottom-3.5 sm:left-3.5 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-l-2 border-amber-500/80 z-10" />
+      <div className="absolute bottom-2 right-2 sm:bottom-3.5 sm:right-3.5 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-r-2 border-amber-500/80 z-10" />
 
       {/* Profile Photo in Gold Circle */}
-      <div className="flex justify-center mt-12">
-        <div className={`relative w-28 h-28 rounded-full border-4 border-amber-500/90 p-1 overflow-hidden flex items-center justify-center transition-all duration-300 group-hover:scale-105 ${style.circleGlow}`}
+      <div className="flex justify-center mt-8 sm:mt-12">
+        <div className={`relative w-20 h-20 sm:w-28 sm:h-28 rounded-full border-2 sm:border-4 border-amber-500/90 p-0.5 sm:p-1 overflow-hidden flex items-center justify-center transition-all duration-300 group-hover:scale-105 ${style.circleGlow}`}
           style={{ background: style.circleBg }}
         >
           {member.photoUrl ? (
             <img src={member.photoUrl} alt={member.name} className="w-full h-full rounded-full object-cover" />
           ) : (
             <div className="w-full h-full rounded-full flex items-center justify-center bg-black/60">
-              <span className="font-heading font-black text-2xl text-white/90 tracking-normal select-none">
+              <span className="font-heading font-black text-lg sm:text-2xl text-white/90 tracking-normal select-none">
                 {member.initials}
               </span>
             </div>
@@ -160,17 +161,17 @@ const TeamCard = memo(({ member, theme }: { member: Member; theme: "red" | "blue
       </div>
 
       {/* Banner / Plaque box */}
-      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-[85%]">
-        <div className="relative py-2 px-3 bg-[#0d0a0e] border-2 border-amber-500/70 rounded-md flex flex-col justify-center items-center shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+      <div className="absolute bottom-11 sm:bottom-16 left-1/2 -translate-x-1/2 w-[90%] sm:w-[85%]">
+        <div className="relative py-1 sm:py-2 px-2 sm:px-3 bg-[#0d0a0e] border sm:border-2 border-amber-500/70 rounded-md flex flex-col justify-center items-center shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
           {/* Plaque side tabs */}
-          <div className="absolute -left-1.5 top-1/2 -translate-y-1/2 w-1 h-3 bg-amber-500/80 border-r border-black" />
-          <div className="absolute -right-1.5 top-1/2 -translate-y-1/2 w-1 h-3 bg-amber-500/80 border-l border-black" />
+          <div className="absolute -left-1 sm:-left-1.5 top-1/2 -translate-y-1/2 w-0.5 sm:w-1 h-2 sm:h-3 bg-amber-500/80 border-r border-black" />
+          <div className="absolute -right-1 sm:-right-1.5 top-1/2 -translate-y-1/2 w-0.5 sm:w-1 h-2 sm:h-3 bg-amber-500/80 border-l border-black" />
 
-          <h4 className="font-heading font-bold text-xs tracking-wider text-white uppercase text-center w-full truncate drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+          <h4 className="font-heading font-bold text-[10px] sm:text-xs tracking-wider text-white uppercase text-center w-full truncate drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
             {member.name}
           </h4>
           {member.role && (
-            <span className="font-mono text-[9px] text-amber-500 uppercase tracking-widest font-semibold mt-0.5 text-center truncate w-full">
+            <span className="font-mono text-[7px] sm:text-[9px] text-amber-500 uppercase tracking-widest font-semibold mt-0.5 text-center truncate w-full">
               {member.role}
             </span>
           )}
@@ -179,15 +180,15 @@ const TeamCard = memo(({ member, theme }: { member: Member; theme: "red" | "blue
 
       {/* LinkedIn Link */}
       {member.linkedin && member.linkedin !== "#" && (
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10" onClick={(e) => e.stopPropagation()}>
+        <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-10" onClick={(e) => e.stopPropagation()}>
           <a
             href={member.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-7 h-7 rounded-full border border-amber-500/50 bg-[#0e0c0f] hover:bg-amber-500/90 text-amber-500 hover:text-black flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-[0_0_10px_rgba(245,158,11,0.15)] hover:shadow-[0_0_15px_rgba(245,158,11,0.4)]"
+            className="w-5.5 h-5.5 sm:w-7 sm:h-7 rounded-full border border-amber-500/50 bg-[#0e0c0f] hover:bg-amber-500/90 text-amber-500 hover:text-black flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-[0_0_10px_rgba(245,158,11,0.15)] hover:shadow-[0_0_15px_rgba(245,158,11,0.4)]"
             title="LinkedIn Profile"
           >
-            <Linkedin className="w-3.5 h-3.5" />
+            <Linkedin className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5" />
           </a>
         </div>
       )}
@@ -425,9 +426,13 @@ const Team = () => {
                 </h2>
                 <div className="w-16 h-0.5 bg-amber-500/60 mt-2 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
               </div>
-              <div className="flex flex-wrap justify-center gap-8 md:gap-14 w-full">
+              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-14 w-full">
                 {leadConvenors.map((member) => (
-                  <div key={member.name} onClick={() => handleOpenCard(member, "0 100% 50%")}>
+                  <div 
+                    key={member.name} 
+                    onClick={() => handleOpenCard(member, "0 100% 50%")}
+                    className="w-[calc(50%-8px)] sm:w-64 max-w-[256px]"
+                  >
                     <TeamCard member={member} theme="red" />
                   </div>
                 ))}
@@ -445,9 +450,13 @@ const Team = () => {
                 </h2>
                 <div className="w-16 h-0.5 bg-amber-500/60 mt-2 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
               </div>
-              <div className="flex flex-wrap justify-center gap-8 md:gap-14 w-full">
+              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-14 w-full">
                 {organizers.map((member) => (
-                  <div key={member.name} onClick={() => handleOpenCard(member, "217 91% 60%")}>
+                  <div 
+                    key={member.name} 
+                    onClick={() => handleOpenCard(member, "217 91% 60%")}
+                    className="w-[calc(50%-8px)] sm:w-64 max-w-[256px]"
+                  >
                     <TeamCard member={member} theme="blue" />
                   </div>
                 ))}
@@ -465,9 +474,13 @@ const Team = () => {
                 </h2>
                 <div className="w-16 h-0.5 bg-amber-500/60 mt-2 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
               </div>
-              <div className="flex flex-wrap justify-center gap-8 md:gap-12 w-full">
+              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-12 w-full">
                 {coreMembers.map((member) => (
-                  <div key={member.name} onClick={() => handleOpenCard(member, "142 71% 45%")}>
+                  <div 
+                    key={member.name} 
+                    onClick={() => handleOpenCard(member, "142 71% 45%")}
+                    className="w-[calc(50%-8px)] sm:w-64 max-w-[256px]"
+                  >
                     <TeamCard member={member} theme="green" />
                   </div>
                 ))}
@@ -485,9 +498,13 @@ const Team = () => {
                 </h2>
                 <div className="w-16 h-0.5 bg-amber-500/60 mt-2 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
               </div>
-              <div className="flex flex-wrap justify-center gap-8 md:gap-14 w-full">
+              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-14 w-full">
                 {domainLeads.map((member) => (
-                  <div key={member.name} onClick={() => handleOpenCard(member, "270 70% 60%")}>
+                  <div 
+                    key={member.name} 
+                    onClick={() => handleOpenCard(member, "270 70% 60%")}
+                    className="w-[calc(50%-8px)] sm:w-64 max-w-[256px]"
+                  >
                     <TeamCard member={member} theme="purple" />
                   </div>
                 ))}

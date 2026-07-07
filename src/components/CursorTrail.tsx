@@ -20,8 +20,8 @@ const CursorTrail = () => {
 
     let animId: number;
 
-    // Trail points: position + remaining life
-    const trail: { x: number; y: number; life: number }[] = [];
+    // Trail points: position + remaining life + velocity
+    const trail: { x: number; y: number; vx: number; vy: number; life: number }[] = [];
 
     // Direct cursor position — updated instantly, no lerp
     let cursorX = window.innerWidth / 2;
@@ -68,12 +68,14 @@ const CursorTrail = () => {
 
       if (dist > 2) {
         // Interpolate points along the path for smooth trails
-        const steps = Math.min(Math.ceil(dist / 4), 8);
+        const steps = Math.min(Math.ceil(dist / 3), 12);
         for (let i = 0; i < steps; i++) {
           const t = (i + 1) / steps;
           trail.push({
             x: prevX + dx * t,
             y: prevY + dy * t,
+            vx: (Math.random() - 0.5) * 0.7,
+            vy: (Math.random() - 0.5) * 0.7 - 0.25, // upward thermal drift
             life: 1.0,
           });
         }
@@ -83,26 +85,29 @@ const CursorTrail = () => {
       prevY = cursorY;
 
       // Cap trail length
-      while (trail.length > 28) trail.shift();
+      while (trail.length > 45) trail.shift();
 
       // Draw trail particles
       for (let i = 0; i < trail.length; i++) {
         const p = trail[i];
-        p.life *= 0.88;
+        
+        // Update physics
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life *= 0.89;
 
         if (p.life < 0.01) continue;
 
         const progress = i / Math.max(1, trail.length - 1);
-        const alpha = p.life * (0.5 - progress * 0.35);
-        const size = 4 - progress * 2.8;
+        const alpha = p.life * (0.6 - progress * 0.4);
+        const size = 3.8 - progress * 2.6;
 
         if (alpha <= 0 || size <= 0) continue;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
-        // Purple hue range: 265–280 to match theme primary (270)
-        const hue = 265 + progress * 15;
-        ctx.fillStyle = `hsla(${hue}, 80%, 68%, ${Math.max(0, alpha)})`;
+        
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0, alpha)})`;
         ctx.fill();
       }
 
@@ -112,19 +117,18 @@ const CursorTrail = () => {
       }
 
       // Main cursor glow — drawn directly at mouse position (zero lag)
-      const glow = ctx.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, 14);
-      glow.addColorStop(0, "hsla(270, 85%, 72%, 0.85)");
-      glow.addColorStop(0.4, "hsla(275, 75%, 65%, 0.35)");
-      glow.addColorStop(1, "hsla(280, 70%, 60%, 0)");
+      const glow = ctx.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, 15);
+      glow.addColorStop(0, "rgba(255, 255, 255, 0.35)"); 
+      glow.addColorStop(1, "rgba(255, 255, 255, 0)");
       ctx.fillStyle = glow;
       ctx.beginPath();
-      ctx.arc(cursorX, cursorY, 14, 0, Math.PI * 2);
+      ctx.arc(cursorX, cursorY, 15, 0, Math.PI * 2);
       ctx.fill();
 
       // Tiny bright core dot
       ctx.beginPath();
-      ctx.arc(cursorX, cursorY, 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = "hsla(270, 90%, 88%, 0.9)";
+      ctx.arc(cursorX, cursorY, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
       ctx.fill();
 
       animId = requestAnimationFrame(draw);

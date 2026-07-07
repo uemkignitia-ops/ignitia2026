@@ -134,22 +134,26 @@ const Navbar = () => {
         animate={{ y: hidden || !isLoaded ? -100 : 16, opacity: isLoaded ? 1 : 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
         className={cn(
-          "fixed top-0 left-0 right-0 mx-auto z-[110] w-[95%] max-w-7xl border border-white/10 bg-[#050406]/75 backdrop-blur-xl rounded-full shadow-[0_12px_32px_rgba(0,0,0,0.5)] transition-[width,background-color,border-color,box-shadow] duration-300",
+          "fixed top-0 left-0 right-0 mx-auto z-[110] w-[96%] max-w-[1440px] border border-white/10 bg-[#050406]/75 backdrop-blur-xl rounded-full shadow-[0_12px_32px_rgba(0,0,0,0.5)] transition-[width,background-color,border-color,box-shadow] duration-300",
           isScrolled
-            ? "w-[90%] bg-[#050406]/90 border-white/15 shadow-[0_16px_40px_rgba(0,0,0,0.6)]"
-            : "w-[94%]"
+            ? "w-[92%] bg-[#050406]/90 border-white/15 shadow-[0_16px_40px_rgba(0,0,0,0.6)]"
+            : "w-[96%]"
         )}
       >
         <motion.div
           style={{ height: isHome ? navHeight : 76 }}
           className="flex items-center justify-between px-6 w-full relative"
         >
+          {/* Subtle bottom gradient underline running along the inside bottom edge */}
+          <div className="absolute bottom-[2px] left-1/4 right-1/4 h-[1.5px] bg-gradient-to-r from-transparent via-orange-500/40 via-purple-600/40 to-transparent pointer-events-none blur-[0.5px]" />
+
           {/* Mobile Logo (left-aligned) */}
           <div className="flex lg:hidden items-center shrink-0">
             <Link to="/" className="flex items-center gap-2">
-              <img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
-              <span className="font-['Orbitron'] text-lg font-bold gradient-text whitespace-nowrap tracking-wider">
-                IGNITIA '26
+              <img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-7 w-7 rounded-full object-cover shadow-[0_0_24px_rgba(249,115,22,0.28)]" />
+              <span className="font-['Orbitron'] text-lg font-bold whitespace-nowrap tracking-wider">
+                <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-amber-300 bg-clip-text text-transparent">IGNITIA</span>{" "}
+                <span className="bg-gradient-to-r from-pink-400 to-purple-500 bg-clip-text text-transparent">&apos;26</span>
               </span>
             </Link>
           </div>
@@ -160,71 +164,87 @@ const Navbar = () => {
             <img src="/uem-logo.png" alt="UEM" className="h-12 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]" />
           </div>
 
-          {/* Desktop Left aligned Section: Lock, IEM/UEM Logos, Left Links, IGNITIA Brand, Right Links */}
-          <div className="hidden lg:flex items-center gap-2.5 xl:gap-4.5 flex-1 justify-start pr-12 lg:pr-16 xl:pr-20">
-            {/* Admin Lock Access Icon */}
-            <Link
-              to="/admin/login"
-              className="flex items-center justify-center text-white/40 hover:text-primary active:scale-95 transition-all duration-200 p-2 border border-white/5 hover:border-primary/30 rounded-lg hover:bg-primary/5 hover:shadow-[0_0_10px_rgba(139,92,246,0.15)] min-w-[32px] min-h-[32px] shrink-0"
-              title="Admin Login"
-            >
-              <Lock size={14} />
-            </Link>
-
-            {/* Desktop IEM & UEM Logos (side-by-side) */}
-            <div className="flex items-center gap-2 shrink-0 border-r border-white/10 pr-4 mr-1">
-              <img src="/iem-logo.png" alt="IEM Logo" className="h-14 w-auto object-contain drop-shadow-[0_0_8px_rgba(255,215,0,0.25)]" />
-              <img src="/uem-logo.png" alt="UEM Logo" className="h-14 w-auto object-contain drop-shadow-[0_0_8px_rgba(255,215,0,0.25)]" />
+          {/* Desktop 5-Part Flex Layout for Perfect Symmetry */}
+          <div className="hidden lg:flex w-full items-center">
+            
+            {/* 1. Left bumpers: Lock (admin link) and IEM / UEM logos (flex-1 pushes links to center) */}
+            <div className="flex items-center flex-1 gap-4">
+              <Link
+                to="/admin/login"
+                className="flex items-center justify-center text-white/40 hover:text-primary active:scale-95 transition-all duration-200 p-2 border border-white/5 hover:border-primary/30 rounded-lg hover:bg-primary/5 hover:shadow-[0_0_10px_rgba(249,115,22,0.15)] min-w-[28px] min-h-[28px] shrink-0"
+                title="Admin Login"
+              >
+                <Lock size={13} />
+              </Link>
+              <div className="flex items-center gap-1.5 xl:gap-2 shrink-0 border-r border-white/10 pr-2 xl:pr-4 mr-0.5 xl:mr-1">
+                <img src="/iem-logo.png" alt="IEM Logo" className="h-10 xl:h-12 w-auto object-contain drop-shadow-[0_0_8px_rgba(255,215,0,0.25)]" />
+                <img src="/uem-logo.png" alt="UEM Logo" className="h-10 xl:h-12 w-auto object-contain drop-shadow-[0_0_8px_rgba(255,215,0,0.25)]" />
+              </div>
             </div>
 
-            {/* First 4 quick links */}
-            {leftLinks.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className={cn(
-                  "relative py-1 text-xs xl:text-sm font-bold font-['Orbitron'] tracking-wider transition-colors duration-200 nav-link-underline whitespace-nowrap",
-                  location.pathname === link.href
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
-              >
-                {link.label}
+            {/* 2. Left Links: Hugging the center logo */}
+            <div className="flex items-center shrink-0 justify-end">
+              {leftLinks.map((link) => {
+                const isActive = location.pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className={cn(
+                      "relative py-1 mx-1.5 xl:mx-2.5 text-[11px] xl:text-sm font-bold font-['Orbitron'] tracking-wider transition-colors duration-200 nav-link-underline whitespace-nowrap",
+                      isActive
+                        ? "text-primary nav-link-active"
+                        : "text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* 3. Absolute Center: IGNITIA Brand */}
+            <div className="flex items-center justify-center px-6 xl:px-10 shrink-0">
+              <Link to="/" className="flex items-center gap-2">
+                <img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-8 w-8 rounded-full object-cover shadow-[0_0_24px_rgba(249,115,22,0.28)]" />
+                <span className="font-['Orbitron'] text-sm xl:text-base font-black inline-block tracking-widest whitespace-nowrap">
+                  <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-amber-300 bg-clip-text text-transparent">IGNITIA</span>{" "}
+                  <span className="bg-gradient-to-r from-pink-400 to-purple-500 bg-clip-text text-transparent">&apos;26</span>
+                </span>
               </Link>
-            ))}
+            </div>
 
-            {/* IGNITIA Brand Logo & Text inline with same padding */}
-            <Link to="/" className="flex items-center gap-2 shrink-0 mx-1">
-              <img src="/ignitia-2d.png" alt="IGNITIA logo" className="h-8 w-8 rounded-full object-cover shadow-[0_0_24px_hsl(270_70%_60%/0.28)]" />
-              <span className="font-['Orbitron'] text-sm xl:text-base font-black gradient-text inline-block tracking-widest">
-                IGNITIA '26
-              </span>
-            </Link>
+            {/* 4. Right Links: Hugging the center logo */}
+            <div className="flex items-center shrink-0 justify-start">
+              {rightLinks.map((link) => {
+                const isActive = location.pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className={cn(
+                      "relative py-1 mx-1.5 xl:mx-2.5 text-[11px] xl:text-sm font-bold font-['Orbitron'] tracking-wider transition-colors duration-200 nav-link-underline whitespace-nowrap",
+                      isActive
+                        ? "text-primary nav-link-active"
+                        : "text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </div>
 
-            {/* Remaining quick links */}
-            {rightLinks.map((link) => (
+            {/* 5. Extreme Right: Register Button (flex-1 pushes everything else to center) */}
+            <div className="flex items-center flex-1 justify-end">
               <Link
-                key={link.href}
-                to={link.href}
-                className={cn(
-                  "relative py-1 text-xs xl:text-sm font-bold font-['Orbitron'] tracking-wider transition-colors duration-200 nav-link-underline whitespace-nowrap",
-                  location.pathname === link.href
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
+                to="/events"
+                className="glow-button register-button-orange text-[11px] xl:text-sm !px-4 xl:!px-5 !py-1.5 xl:!py-2 inline-flex items-center gap-1.5 xl:gap-2 pulse-cta shrink-0 font-['Orbitron'] font-extrabold tracking-wider"
               >
-                {link.label}
+                Register
+                <ArrowRight size={12} className="xl:w-[13px] xl:h-[13px]" />
               </Link>
-            ))}
-
-            {/* Register Now Button inline with extra left margin for visual emphasis */}
-            <Link
-              to="/events"
-              className="glow-button register-button-orange text-xs xl:text-sm !px-5 !py-2 inline-flex items-center gap-2 pulse-cta shrink-0 font-['Orbitron'] font-extrabold ml-2 tracking-wider"
-            >
-              Register
-              <ArrowRight size={13} />
-            </Link>
+            </div>
           </div>
 
           {/* Mobile: Hamburger menu button */}
@@ -261,20 +281,7 @@ const Navbar = () => {
             </AnimatePresence>
           </button>
 
-          {/* Static Character GIF sticking out on the right side */}
-          {location.pathname !== "/faq" && (
-            <motion.div
-              animate={{ opacity: hidden ? 0 : 1, y: hidden ? -20 : 0 }}
-              transition={{ duration: 0.2 }}
-              className="hidden md:block absolute top-[-5px] md:top-[0px] right-[-15px] lg:right-[-25px] pointer-events-none z-10"
-            >
-              <img
-                src="/Transparent_gif_flipped.gif"
-                alt="Navbar Character"
-                className="w-28 md:w-40 lg:w-48 h-auto brightness-110 drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]"
-              />
-            </motion.div>
-          )}
+          {/* Mascot removed from here */}
         </motion.div>
       </motion.nav>
 
@@ -349,7 +356,7 @@ const Navbar = () => {
                   className="flex items-center justify-center gap-2 text-xs font-mono text-muted-foreground hover:text-primary active:scale-98 transition-colors py-2.5 border border-white/5 bg-white/[0.02] rounded-xl hover:bg-primary/5 hover:border-primary/20 mb-3 shrink-0"
                 >
                   <Lock size={14} />
-                  <span>Admin Terminal</span>
+                  <span>Admin Portal</span>
                 </Link>
 
                 <Link

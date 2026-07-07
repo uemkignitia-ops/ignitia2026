@@ -16,7 +16,7 @@
     --popover: 270 30% 4%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 330 100% 60%;
+    --primary: 24 95% 53%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 270 100% 60%;
@@ -33,22 +33,22 @@
 
     --border: 270 20% 14%;
     --input: 270 20% 14%;
-    --ring: 330 100% 60%;
+    --ring: 24 95% 53%;
 
     --radius: 0.85rem;
 
     --neon-blue: 210 100% 60%;
-    --neon-fuchsia: 330 100% 60%;
+    --neon-fuchsia: 24 95% 53%;
     --neon-purple: 270 100% 60%;
-    --neon-pink: 320 100% 70%;
+    --neon-pink: 32 95% 60%;
 
     --glass-bg: 270 30% 4%;
     --glass-border: 270 20% 14%;
 
     --glow-blue: 0 0 30px hsl(210 100% 60% / 0.25);
-    --glow-fuchsia: 0 0 30px hsl(330 100% 60% / 0.25);
+    --glow-fuchsia: 0 0 30px hsl(24 95% 53% / 0.25);
     --glow-purple: 0 0 30px hsl(270 100% 60% / 0.25);
-    --glow-pink: 0 0 30px hsl(320 100% 70% / 0.25);
+    --glow-pink: 0 0 30px hsl(32 95% 60% / 0.25);
 
     --sidebar-background: 0 0% 5%;
     --sidebar-foreground: 0 0% 98%;
@@ -59,7 +59,7 @@
     --sidebar-border: 0 0% 14%;
     --sidebar-ring: 0 95% 60%;
 
-    --border-color-1: #ff1493;
+    --border-color-1: #f97316;
     --border-color-2: #8a2be2;
     --border-color-3: #1e90ff;
     --border-bg-color: #0c0d0e;
@@ -76,14 +76,14 @@
   }
 
   .citadel-theme {
-    --primary: 330 100% 60%;
+    --primary: 24 95% 53%;
     --primary-foreground: 0 0% 9%;
     --secondary: 270 100% 60%;
-    
+
     --glow-blue: 0 0 30px hsl(210 100% 60% / 0.35);
     --glow-purple: 0 0 30px hsl(270 100% 60% / 0.35);
-    
-    --border-color-1: #ff1493;
+
+    --border-color-1: #f97316;
     --border-color-2: #8a2be2;
     --border-color-3: #1e90ff;
   }
@@ -435,13 +435,14 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background: hsl(var(--primary));
+    background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--secondary)));
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s ease;
   }
 
-  .nav-link-underline:hover::after {
+  .nav-link-underline:hover::after,
+  .nav-link-underline.nav-link-active::after {
     transform: scaleX(1);
     transform-origin: left;
   }
@@ -501,7 +502,8 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar {
-    width: 4px;
+    width: 6px;
+    height: 6px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
@@ -509,12 +511,14 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(to bottom, hsl(var(--primary)), hsl(var(--secondary))) content-box;
+    background-color: transparent;
+    border: 1.5px solid transparent;
     border-radius: 99px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: linear-gradient(to bottom, hsl(var(--primary)) 20%, hsl(var(--secondary)) 100%) content-box;
   }
 }
 
@@ -673,20 +677,24 @@
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(240 20% 6%);
+  background: #060408;
+  border-left: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary) / 0.3);
-  border-radius: 3px;
+  background: linear-gradient(to bottom, hsl(var(--primary)), hsl(var(--secondary))) content-box;
+  background-color: transparent;
+  border: 3px solid transparent;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.5);
+  background: linear-gradient(to bottom, hsl(var(--primary)) 20%, hsl(var(--secondary)) 100%) content-box;
 }
 
 /* Particle canvas */
@@ -1042,10 +1050,11 @@
   position: relative;
   display: block;
   width: max-content;
+  max-width: 95vw;
 
-  font-size: clamp(4.4rem, 12vw, 9.8rem);
+  font-size: clamp(2.2rem, 11vw, 9.8rem);
   font-weight: 900;
-  letter-spacing: -0.08em;
+  letter-spacing: -0.06em;
 
   color: transparent;
   background:
@@ -1061,8 +1070,11 @@
     0 0 16px rgba(255, 255, 255, 0.16),
     0 0 40px rgba(0, 245, 255, 0.12);
 
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.75));
+  /* Removed filter: drop-shadow() — causes constant GPU repaints when
+     combined with ::after sweep animation and background-clip: text */
   overflow: hidden;
+  will-change: auto;
+  contain: layout style;
 }
 
 /* Moving glass strip through IGNITIA */
@@ -1395,7 +1407,8 @@
   }
 
   .ignitia-citadel-title {
-    font-size: clamp(4rem, 13vw, 7rem);
+    font-size: clamp(3rem, 11vw, 7rem);
+    letter-spacing: -0.05em;
   }
 }
 
@@ -1412,7 +1425,25 @@
   .mascot-smoke {
     display: none;
   }
+
+  /* Ensure long titles (SCHEDULE, SPONSORS) never overshoot on mobile */
+  .ignitia-citadel-title {
+    font-size: clamp(2.4rem, 11vw, 5.5rem);
+    letter-spacing: -0.06em;
+    max-width: 95vw;
+  }
 }
+
+@media (max-width: 480px) {
+
+  /* Very small phones — tighten even further */
+  .ignitia-citadel-title {
+    font-size: clamp(2.1rem, 10.5vw, 4.5rem);
+    letter-spacing: -0.07em;
+    max-width: 95vw;
+  }
+}
+
 
 @keyframes mascot-float {
   0% {
@@ -1452,6 +1483,9 @@
     mascot-bob 4.2s ease-in-out 1.35s infinite;
   transform-origin: bottom center;
   will-change: transform;
+  /* Force GPU layer to prevent paint jitter */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 @keyframes mascot-bob {
@@ -1496,20 +1530,23 @@
 
 .animate-smoke-left {
   animation: smoke-left 5s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-smoke-right {
   animation: smoke-right 5.5s ease-in-out infinite;
+  will-change: transform;
 }
 
 .ignitia-citadel-title {
   position: relative;
   display: block;
   width: max-content;
+  max-width: 95vw;
 
-  font-size: clamp(4.4rem, 12vw, 9.8rem);
+  font-size: clamp(2.2rem, 11vw, 9.8rem);
   font-weight: 900;
-  letter-spacing: 0.03em;
+  letter-spacing: -0.06em;
 
   color: transparent;
   background:
@@ -1525,8 +1562,9 @@
     0 0 16px rgba(255, 255, 255, 0.16),
     0 0 40px rgba(0, 245, 255, 0.12);
 
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.75));
   overflow: hidden;
+  will-change: auto;
+  contain: layout style;
 }
 
 /* ================================
@@ -1697,6 +1735,7 @@
   0% {
     transform: translateX(-50%);
   }
+
   100% {
     transform: translateX(0%);
   }
@@ -1720,4 +1759,104 @@
 
 .register-button-orange:active {
   transform: translateY(0) scale(0.98) !important;
+}
+
+/* ================================
+   PERFORMANCE: Smoke clouds on mobile
+   Reduce blur to cut GPU paint cost
+================================ */
+@keyframes smoke-center {
+
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translateX(-50%) scale(1.15);
+    opacity: 0.65;
+  }
+}
+
+.animate-smoke-center {
+  animation: smoke-center 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-smoke-small-left,
+.animate-smoke-small-right {
+  will-change: transform;
+}
+
+/* On mobile, disable expensive blur animations to prevent jitter */
+@media (max-width: 767px) {
+
+  .animate-smoke-left,
+  .animate-smoke-right,
+  .animate-smoke-center,
+  .animate-smoke-small-left,
+  .animate-smoke-small-right {
+    display: none;
+  }
+}
+
+/* Below-fold content renders lazily on mobile for faster initial paint */
+@media (max-width: 767px) {
+  .below-fold-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+  }
+}
+
+/* ================================
+   PERFORMANCE: Downgrade backdrop-blur on mobile
+   Heavy blur radii (xl=24px, 2xl=40px, 3xl=64px) cause severe
+   GPU paint thrashing on mobile compositors. Cards already have
+   near-opaque dark backgrounds, so the blur is barely visible.
+================================ */
+@media (max-width: 1024px) {
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl,
+  .backdrop-blur-3xl {
+    --tw-backdrop-blur: blur(4px) !important;
+  }
+}
+
+/* Promote all animated smoke/float layers to GPU compositing */
+.animate-smoke-left,
+.animate-smoke-right,
+.animate-smoke-center,
+.animate-smoke-small-left,
+.animate-smoke-small-right {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Section-level paint containment for scroll perf */
+.section-padding {
+  contain: layout style;
+}
+
+/* Home Page Hero Title Mobile Scale Up */
+@media (max-width: 768px) {
+  #hero-showcase-section .ignitia-citadel-title {
+    font-size: clamp(4.8rem, 18vw, 7rem) !important;
+    letter-spacing: 0.04em !important;
+  }
+  #hero-showcase-section .ignitia-year-title {
+    font-size: clamp(2rem, 8vw, 3rem) !important;
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #hero-showcase-section .ignitia-citadel-title {
+    font-size: clamp(4rem, 19vw, 6rem) !important;
+    letter-spacing: 0.03em !important;
+  }
+  #hero-showcase-section .ignitia-year-title {
+    font-size: clamp(1.8rem, 8.5vw, 2.6rem) !important;
+  }
 }

@@ -359,15 +359,7 @@ const Events = () => {
                         : "md:col-span-1 relative overflow-visible"
                   }
                 >
-                  {event.id === "hackathon" && (
-                    <div className="hidden md:block absolute bottom-full left-[20px] md:left-[50px] -z-10 pointer-events-none -mb-[10px] md:-mb-[15px]">
-                      <img
-                        src="/download.gif"
-                        alt="Sci-Fi Hologram"
-                        className="w-28 md:w-40 h-auto"
-                      />
-                    </div>
-                  )}
+
                   <div onClick={() => event.id !== "cultural-program" && setSelectedEvent(event)} className="w-full h-full min-h-[300px]">
                     <InfoCard
                       image={getEventImage(event)}

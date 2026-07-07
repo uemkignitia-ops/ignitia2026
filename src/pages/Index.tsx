@@ -1,21 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
-import CTABanner from "@/components/CTABanner";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import PageTransition from "@/components/PageTransition";
-import StatsDark from "@/components/StatsDark";
-
-
-
-import { ArrowRight } from "lucide-react";
-import TimeSpline from "@/components/TimeSpline";
 import HeroAcedImage from "@/components/HeroAcedImage";
-
-import { Link } from "react-router-dom";
 import Timer from "@/components/Timer";
 
-
+const TimeSpline = lazy(() => import("@/components/TimeSpline"));
+const StatsDark = lazy(() => import("@/components/StatsDark"));
+const CTABanner = lazy(() => import("@/components/CTABanner"));
 const mapEmbedSrc =
   "https://www.google.com/maps?q=University+of+Engineering+%26+Management,+Kolkata+(UEM)&z=17&output=embed";
 const mapHref =
@@ -107,7 +102,7 @@ const Index = () => {
     <PageTransition>
       <div className="min-h-screen flex flex-col bg-transparent text-white overflow-x-hidden relative">
         {/* Global Fixed Background Image */}
-        <div 
+        <div
           className="fixed inset-0 w-full h-full pointer-events-none z-0"
           style={{
             maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
@@ -119,6 +114,9 @@ const Index = () => {
             alt="IGNITIA Background"
             className="w-full h-full object-cover"
             draggable={false}
+            fetchPriority="high"
+            loading="eager"
+            decoding="sync"
           />
           {/* Dark overlay */}
           <div className="absolute inset-0 bg-black/60" />
@@ -163,6 +161,8 @@ const Index = () => {
                     alt="IGNITIA Mascot"
                     className="w-full h-auto object-contain select-none drop-shadow-[0_0_35px_rgba(0,245,255,0.38)] drop-shadow-[0_0_55px_rgba(168,85,247,0.22)]"
                     draggable={false}
+                    fetchPriority="high"
+                    loading="eager"
                   />
                 </div>
                 {/* Mascot hand buttons moved to left panel */}
@@ -198,7 +198,7 @@ const Index = () => {
                 {/* Left title block */}
                 {/* Left info terminal + buttons */}
                 <div className="space-y-6 max-w-[360px] mb-8 md:absolute md:left-[5%] md:bottom-[11%] md:z-[50] md:mb-0 w-full flex flex-col items-center md:items-start">
-                  
+
                   {/* Access Pass Card */}
                   <div className="hidden md:block">
                     <HeroAcedImage />
@@ -268,7 +268,9 @@ const Index = () => {
                 </div>
 
                 {/* Right timer */}
-                <TimeSpline />
+                <Suspense fallback={null}>
+                  <TimeSpline />
+                </Suspense>
               </div>
             </div>
 
@@ -287,9 +289,11 @@ const Index = () => {
           </section>
 
           {/* Below sections flow up naturally following pin completion */}
-          <div className="relative bg-transparent z-20">
-            <StatsDark />
-            <CTABanner />
+          <div className="relative bg-transparent z-20 below-fold-section">
+            <Suspense fallback={<div className="h-40" />}>
+              <StatsDark />
+              <CTABanner />
+            </Suspense>
 
             {/* Event Map Location Embed */}
 

@@ -19,19 +19,27 @@ const ParticleField = () => {
 
     let animId: number;
     const particles: { x: number; y: number; vx: number; vy: number; size: number; opacity: number }[] = [];
-    const count = 52;
+    const count = 35; // Reduced from 52 — cuts O(n²) connection checks by ~55%
+    const connectionDist = 90; // Reduced from 120 — further limits expensive line draws
+    const connectionDistSq = connectionDist * connectionDist; // Pre-compute squared distance
 
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
     window.addEventListener("resize", resize);
 
+    const w = window.innerWidth;
+    const h = window.innerHeight;
     for (let i = 0; i < count; i++) {
       particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
+        x: Math.random() * w,
+        y: Math.random() * h,
         vx: (Math.random() - 0.5) * 0.3,
         vy: (Math.random() - 0.5) * 0.3,
         size: Math.random() * 2 + 0.5,
@@ -39,33 +47,42 @@ const ParticleField = () => {
       });
     }
 
+    const cw = () => window.innerWidth;
+    const ch = () => window.innerHeight;
+
     const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p) => {
+      const currentW = cw();
+      const currentH = ch();
+      ctx.clearRect(0, 0, currentW, currentH);
+
+      // Update positions
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
+        if (p.x < 0) p.x = currentW;
+        if (p.x > currentW) p.x = 0;
+        if (p.y < 0) p.y = currentH;
+        if (p.y > currentH) p.y = 0;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `hsla(199, 89%, 48%, ${p.opacity})`;
         ctx.fill();
-      });
+      }
 
-      // Draw connections
+      // Draw connections — use squared distance to avoid sqrt
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
+          const distSq = dx * dx + dy * dy;
+          if (distSq < connectionDistSq) {
+            const dist = Math.sqrt(distSq);
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `hsla(199, 89%, 48%, ${0.08 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `hsla(199, 89%, 48%, ${0.08 * (1 - dist / connectionDist)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }

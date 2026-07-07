@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
-      react(), 
+      react(),
       mode === "development" && componentTagger(),
       {
         name: "api-middleware",

@@ -502,7 +502,7 @@ export const uploadImageFile = async (file: File, folder: string): Promise<strin
     try {
       const cleanName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
       const filePath = `${folder}/${cleanName}`;
-      
+
       const { error } = await supabase.storage
         .from("ignitia")
         .upload(filePath, file, {
@@ -563,9 +563,9 @@ export const getEvents = async (): Promise<EventType[]> => {
       const { data, error } = await supabase
         .from("events")
         .select("*");
-      
+
       if (error) throw error;
-      
+
       if (data && data.length > 0) {
         const camelData = toCamelCase(data);
         localStorage.setItem("ignitia_events", JSON.stringify(camelData));
@@ -806,7 +806,7 @@ export const saveGalleryItem = async (item: { id?: string; title: string; catego
     const { error } = await supabase
       .from("gallery")
       .upsert(data);
-    
+
     if (error) {
       // Graceful schema fallback: if the public_id column hasn't been created yet in the database,
       // save the metadata without public_id to keep the app functional.

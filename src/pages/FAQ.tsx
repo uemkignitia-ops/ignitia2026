@@ -151,18 +151,18 @@ const FAQ = () => {
 
 
 
-            <div className="w-full flex justify-center z-[36] pointer-events-none text-center mt-8 mb-4">
-              <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">
-                <span className="ignitia-citadel-title mx-auto" data-text="FAQ">
-                  <span>F</span>
-                  <span>A</span>
-                  <span>Q</span>
-                </span>
-              </h1>
-            </div>
+          <div className="w-full flex justify-center z-[36] pointer-events-none text-center mt-8 mb-4">
+            <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">
+              <span className="ignitia-citadel-title mx-auto" data-text="FAQ">
+                <span>F</span>
+                <span>A</span>
+                <span>Q</span>
+              </span>
+            </h1>
+          </div>
 
           <div className="mt-10 mb-6 flex justify-center w-full px-4 relative z-10">
-            <TerminalSubheading 
+            <TerminalSubheading
               text="Frequently asked questions and details about the event."
               className="text-muted-foreground text-base md:text-lg font-medium text-center max-w-2xl"
             />
@@ -177,7 +177,7 @@ const FAQ = () => {
             <div className="relative w-full lg:w-[600px] z-10 shrink-0">
 
               {/* Glowing Neon Border Wrapper matching the image */}
-              <div className="relative p-[2px] rounded-xl bg-gradient-to-r from-fuchsia-400 via-purple-500 to-red-500 shadow-[10px_0_40px_-10px_rgba(239,68,68,0.5)]">
+              <div className="relative p-[2px] rounded-xl bg-gradient-to-r from-orange-500 via-purple-500 to-red-500 shadow-[10px_0_40px_-10px_rgba(239,68,68,0.5)]">
                 <div className="bg-[#0b0614] rounded-[10px] p-5 sm:p-6 h-full relative overflow-hidden group font-mono text-[#CCCCCC]">
 
                   {/* Windows CMD Header */}
@@ -377,7 +377,7 @@ const FAQ = () => {
                         >
                           <AccordionItem
                             value={faq.id}
-                            className={`relative overflow-hidden bg-card/40 backdrop-blur-3xl px-1 sm:px-4 border transition-all duration-300 rounded-lg group`}
+                            className={`relative overflow-hidden bg-card/40 backdrop-blur-sm px-1 sm:px-4 border transition-all duration-300 rounded-lg group`}
                             style={{
                               borderColor: isActive ? `hsl(${color} / 0.5)` : "rgba(255,255,255,0.1)",
                               backgroundColor: isActive ? `hsl(${color} / 0.05)` : undefined,
@@ -447,7 +447,7 @@ const FAQ = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="relative bg-black/40 border border-[#9333ea]/30 rounded-lg p-8 sm:p-12 backdrop-blur-xl shadow-[0_0_30px_rgba(147,51,234,0.15)] text-center mt-12 overflow-hidden group"
+              className="relative bg-black/40 border border-[#9333ea]/30 rounded-lg p-8 sm:p-12 backdrop-blur-sm shadow-[0_0_30px_rgba(147,51,234,0.15)] text-center mt-12 overflow-hidden group"
             >
               {/* Cyber UI Details */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#ffd700]/50 to-transparent opacity-50" />
