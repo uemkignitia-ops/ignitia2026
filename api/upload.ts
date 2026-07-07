@@ -46,7 +46,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: "Unauthorized: Invalid token" });
   }
 
-  if (user.email !== "uemk.ignitia@gmail.com") {
+  if (user.email?.toLowerCase() !== "uemk.ignitia@gmail.com") {
     return res.status(403).json({ error: "Forbidden: Access denied to this operator" });
   }
 
