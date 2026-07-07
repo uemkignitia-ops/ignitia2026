@@ -57,11 +57,12 @@ const Footer = () => (
             <img
               src="/ignitia-2d.png"
               alt="IGNITIA logo"
-              className="h-10 w-10 rounded-full object-cover shadow-[0_0_20px_hsl(270_70%_60%/0.22)]"
+              className="h-10 w-10 rounded-full object-cover shadow-[0_0_20px_rgba(249,115,22,0.25)]"
             />
             <div>
-              <span className="block font-['Orbitron'] text-xl font-bold gradient-text tracking-wider">
-                IGNITIA '26
+              <span className="block font-['Orbitron'] text-xl font-bold tracking-wider">
+                <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-amber-300 bg-clip-text text-transparent">IGNITIA</span>{" "}
+                <span className="bg-gradient-to-r from-pink-400 to-purple-500 bg-clip-text text-transparent">&apos;26</span>
               </span>
               <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground block -mt-0.5">
                 IEM-UEM group, UEM Kolkata

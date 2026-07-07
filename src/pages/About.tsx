@@ -4,14 +4,14 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import ScrollProgress from "@/components/ScrollProgress";
 import BackgroundEffects from "@/components/BackgroundEffects";
-import { Cpu, Globe, Lightbulb, Users, Facebook, Instagram, Linkedin, ArrowRight } from "lucide-react";
+import { Cpu, Terminal, Lightbulb, Users, Facebook, Instagram, Linkedin, ArrowRight } from "lucide-react";
 import { TerminalSubheading } from "@/components/TerminalSubheading";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const clubs = [
   { name: "IEM-UEM group", role: "Lead Organizer", icon: Cpu },
-  { name: "Microsoft Student Society UEMK", role: "Hosting Partner", icon: Globe },
+  { name: "Microsoft Student Society UEMK", role: "Hosting Partner", icon: Terminal },
   { name: "Department of CSE (IOT,CS,BT)", role: "Knowledge Partner", icon: Lightbulb },
 ];
 
@@ -61,8 +61,8 @@ const About = () => {
 
 
               <h1 className="hero-title-block leading-[0.82] select-none">
-                <span 
-                  className="ignitia-citadel-title" 
+                <span
+                  className="ignitia-citadel-title"
                   data-text="ABOUT US"
                   style={{ fontSize: "clamp(3.2rem, 9.5vw, 9.8rem)" }}
                 >
@@ -122,160 +122,175 @@ const About = () => {
                   />
                 </div>
                 {/* Floor glow */}
-                <div className="absolute left-1/2 bottom-[-2%] h-20 w-[110%] -translate-x-1/2 rounded-full bg-fuchsia-300/20 blur-3xl opacity-90" />
+                <div className="absolute left-1/2 bottom-[-2%] h-20 w-[110%] -translate-x-1/2 rounded-full bg-orange-300/20 blur-3xl opacity-90" />
                 <div className="absolute left-[28%] bottom-[1%] h-16 w-[55%] -translate-x-1/2 rounded-full bg-purple-400/25 blur-2xl animate-smoke-left" />
                 <div className="absolute left-[48%] bottom-[-1%] h-20 w-[70%] -translate-x-1/2 rounded-full bg-white/15 blur-3xl animate-smoke-center" />
-                <div className="absolute left-[68%] bottom-[1%] h-16 w-[55%] -translate-x-1/2 rounded-full bg-fuchsia-300/25 blur-2xl animate-smoke-right" />
+                <div className="absolute left-[68%] bottom-[1%] h-16 w-[55%] -translate-x-1/2 rounded-full bg-orange-300/25 blur-2xl animate-smoke-right" />
               </div>
             </div>
           </div>
 
-          {/* Bottom fade */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-50" />
+
         </section>
 
-        {/* Vision panel */}
+        {/* Vision & Metrics Panel */}
         <section className="section-padding relative z-30 bg-transparent">
-          <div className="container mx-auto">
-            <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-              <div className="border border-white/10 bg-black/50 backdrop-blur-md p-6 md:p-8 relative"
-                style={{ clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))" }}
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="grid md:grid-cols-[1.1fr_0.9fr] gap-8 md:gap-12 items-stretch">
+
+              {/* Vision Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="border border-white/[0.08] bg-[#09080d]/65 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-3xl flex flex-col justify-between shadow-[0_30px_60px_rgba(0,0,0,0.4)]"
               >
-                <div className="absolute top-0 right-0 w-5 h-5 bg-primary/40" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }} />
-                <div className="absolute bottom-0 left-0 w-5 h-5 bg-primary/40" style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%)" }} />
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span className="font-sans font-semibold text-xs tracking-[0.2em] text-primary uppercase">Our Vision</span>
+                  </div>
 
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
-                  <span className="font-mono text-[9px] tracking-[0.3em] text-primary uppercase">Our Vision</span>
+                  <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">
+                    Igniting the Next Generation of Innovators.
+                  </h2>
+
+                  <div className="space-y-4 text-xs sm:text-sm text-white/60 leading-relaxed font-sans">
+                    <p>
+                      IGNITIA &apos;26 aims to create a vibrant ecosystem where students
+                      from diverse backgrounds come together to learn, compete, and
+                      innovate.
+                    </p>
+                    <p>
+                      From high-stakes coding battles to creative cultural
+                      showcases, every event is designed to push boundaries and
+                      inspire the next wave of tech leaders.
+                    </p>
+                  </div>
                 </div>
+              </motion.div>
 
-                <TerminalSubheading
-                  text="Igniting the Next Generation of Innovators."
-                  className="font-mono text-xl md:text-2xl font-bold tracking-tight mb-4 text-white"
-                />
-
-                <div className="grid md:grid-cols-1 gap-4 text-xs text-white/60 leading-relaxed font-mono">
-                  <p className="border-l border-primary/20 pl-2">
-                    IGNITIA &apos;26 aims to create a vibrant ecosystem where students
-                    from diverse backgrounds come together to learn, compete, and
-                    innovate.
-                  </p>
-                  <p className="border-l border-primary/20 pl-2">
-                    From high-stakes coding battles to creative cultural
-                    showcases, every event is designed to push boundaries and
-                    inspire the next wave of tech leaders.
-                  </p>
-                </div>
-              </div>
-
-              {/* Stats panel */}
-              <div className="border border-white/10 bg-black/50 backdrop-blur-md p-6 md:p-8 relative"
-                style={{ clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))" }}
+              {/* Key Metrics Grid */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.15 }}
+                className="border border-white/[0.08] bg-[#09080d]/65 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-3xl flex flex-col justify-between shadow-[0_30px_60px_rgba(0,0,0,0.4)]"
               >
-                <div className="absolute top-0 right-0 w-5 h-5 bg-fuchsia-500/40" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }} />
-                <div className="absolute bottom-0 left-0 w-5 h-5 bg-fuchsia-500/40" style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%)" }} />
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+                    <span className="font-sans font-semibold text-xs tracking-[0.2em] text-orange-400 uppercase">Key Metrics</span>
+                  </div>
 
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-400 animate-ping" />
-                  <span className="font-mono text-[9px] tracking-[0.3em] text-fuchsia-400/80 uppercase">Key Metrics</span>
-                </div>
+                  <h2 className="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-6 md:mb-8">
+                    By The Numbers
+                  </h2>
 
-                <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight mb-4">
-                  By The{" "}
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-fuchsia-400">
-                    Numbers
-                  </span>
-                </h2>
-
-                <div className="space-y-3 font-mono">
-                  {[
-                    { label: "PRIZE POOL", value: "₹2,00,000+", pct: 90, color: "from-primary to-pink-500" },
-                    { label: "EXPECTED FOOTFALL", value: "1000+ Participants", pct: 85, color: "from-purple-500 to-indigo-500" },
-                    { label: "COLLABORATING COLLEGES", value: "50+ Colleges", pct: 75, color: "from-fuchsia-400 to-purple-400" },
-                    { label: "COMPETITIVE ARENAS", value: "12+ Events", pct: 60, color: "from-yellow-500 to-primary" },
-                  ].map((stat, i) => (
-                    <div key={i} className="space-y-1">
-                      <div className="flex justify-between text-[10px] md:text-xs">
-                        <span className="text-white/45">{stat.label}</span>
-                        <span className="text-white font-bold">{stat.value}</span>
+                  <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+                    {[
+                      { label: "PRIZE POOL", value: "₹2.0L+", color: "text-primary" },
+                      { label: "EXPECTED FOOTFALL", value: "1000+", color: "text-orange-400" },
+                      { label: "COLLABORATING COLLEGES", value: "50+", color: "text-purple-400" },
+                      { label: "COMPETITIVE ARENAS", value: "12+", color: "text-amber-500" },
+                    ].map((stat, i) => (
+                      <div key={i} className="space-y-1">
+                        <span className="block text-[9px] sm:text-[10px] font-sans font-semibold tracking-wider text-white/40 uppercase">
+                          {stat.label}
+                        </span>
+                        <span className={`block text-2xl sm:text-3xl font-black tracking-tight ${stat.color}`}>
+                          {stat.value}
+                        </span>
                       </div>
-                      <div className="h-[3px] bg-white/10 w-full overflow-hidden">
-                        <div
-                          className={`h-full bg-gradient-to-r ${stat.color} transition-all duration-1000`}
-                          style={{ width: `${stat.pct}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </motion.div>
+
             </div>
           </div>
         </section>
 
-        {/* Clubs */}
+        {/* Collaborating Societies */}
         <section className="section-padding relative z-30 bg-transparent">
-          <div className="container mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-xs text-primary uppercase tracking-[0.3em] font-mono mb-2">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="text-center mb-12 sm:mb-16 space-y-3">
+              <p className="text-xs text-primary uppercase tracking-[0.3em] font-sans font-semibold">
                 COLLABORATING SOCIETIES
               </p>
-              <TerminalSubheading
-                text="Powered by Community"
-                className="font-mono text-2xl md:text-3xl font-bold text-foreground"
-              />
+              <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+                Powered by Community
+              </h2>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {clubs.map((club) => {
+            <div className="grid md:grid-cols-3 gap-6">
+              {clubs.map((club, idx) => {
                 const Icon = club.icon;
+                const descriptions = [
+                  "Leading the coordination, scheduling, and overall execution of IGNITIA '26.",
+                  "Fostering technological innovation, workshops, and technical support.",
+                  "Providing domain expertise, knowledge tracks, and academic alignment."
+                ];
                 return (
-                  <div
+                  <motion.div
                     key={club.name}
-                    className="relative group bg-card/40 backdrop-blur-md p-6 text-center border border-white/10 hover:border-primary/50 transition-all duration-300 overflow-hidden cursor-pointer"
-                    style={{ clipPath: "polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px))" }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.1 }}
+                    className="relative group bg-[#09080d]/50 backdrop-blur-md p-6 sm:p-8 border border-white/[0.06] hover:border-primary/45 rounded-2xl transition-all duration-300 flex flex-col justify-between text-center"
                   >
-                    <div className="absolute top-0 right-0 w-4 h-4 bg-primary/20 group-hover:bg-primary/40 transition-colors" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }} />
-                    <div className="absolute bottom-0 left-0 w-4 h-4 bg-primary/20 group-hover:bg-primary/40 transition-colors" style={{ clipPath: "polygon(0 0, 0 100%, 100% 100%)" }} />
-
-                    <div className="w-14 h-14 mx-auto mb-4 rounded-lg bg-black/40 border border-white/5 flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300">
-                      <Icon size={24} className="text-primary/70 group-hover:text-primary transition-colors" />
+                    <div>
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center mb-5 sm:mb-6 mx-auto group-hover:scale-105 group-hover:border-primary/30 transition-all duration-300">
+                        <Icon size={20} className="text-primary/80 group-hover:text-primary transition-colors" />
+                      </div>
+                      <h3 className="font-heading text-sm sm:text-base font-bold text-white mb-1.5 sm:mb-2 tracking-wide">
+                        {club.name}
+                      </h3>
+                      <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-primary/70 font-sans font-semibold mb-3 sm:mb-4">{club.role}</p>
+                      <p className="text-xs text-white/55 leading-relaxed font-sans">{descriptions[idx]}</p>
                     </div>
-                    <h3 className="font-mono text-base font-bold text-white/90 mb-1 tracking-wide relative z-10">
-                      {club.name}
-                    </h3>
-                    <p className="text-[10px] uppercase tracking-widest text-primary/60 font-mono relative z-10">{club.role}</p>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
           </div>
         </section>
 
-        {/* IEM-UEM group */}
+        {/* IEM-UEM group Editorial Block */}
         <section className="section-padding relative z-30 bg-transparent">
-          <div className="container mx-auto">
-            <div className="glass-card bg-card/75 backdrop-blur-2xl p-8 md:p-12 max-w-4xl mx-auto text-center shimmer-card border border-white/5 relative">
-              <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-primary/30" />
-              <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-primary/30" />
-              <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-primary/30" />
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-primary/30" />
+          <div className="container mx-auto px-4 max-w-5xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="border border-white/[0.08] bg-[#09080d]/65 backdrop-blur-xl p-6 sm:p-8 md:p-12 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.5)] relative overflow-hidden"
+            >
+              {/* Subtle background glow */}
+              <div className="absolute -right-24 -bottom-24 w-80 h-80 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
 
-              <Users className="text-primary mx-auto mb-4" size={40} />
-              <h2 className="font-heading text-3xl font-bold text-foreground mb-4">
-                IEM-UEM Group
-              </h2>
-              <p className="text-muted-foreground leading-relaxed mb-4 text-sm md:text-base">
-                The IEM-UEM group is a thriving ecosystem of education and
-                innovation, fostering excellence in engineering, management,
-                and science across their various campuses.
-              </p>
-              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-                IGNITIA is their flagship annual event, bringing together the
-                best minds from across the region to compete, learn, and
-                celebrate technology.
-              </p>
-            </div>
+              <div className="relative z-10 max-w-3xl mx-auto text-center space-y-6">
+                <Users className="text-primary/80 mx-auto" size={32} />
+                <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                  IEM-UEM Group
+                </h2>
+                <div className="space-y-4 text-white/70 text-xs sm:text-sm md:text-base leading-relaxed font-sans">
+                  <p>
+                    The IEM-UEM group is a thriving ecosystem of education and
+                    innovation, fostering excellence in engineering, management,
+                    and science across their various campuses.
+                  </p>
+                  <p>
+                    IGNITIA is their flagship annual event, bringing together the
+                    best minds from across the region to compete, learn, and
+                    celebrate technology.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 

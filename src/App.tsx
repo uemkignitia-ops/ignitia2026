@@ -26,7 +26,16 @@ const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,   // 5 minutes — avoid refetching on nav
+      gcTime: 1000 * 60 * 10,     // 10 minutes — keep cache alive
+      retry: 1,
+      refetchOnWindowFocus: false, // no refetch when user alt-tabs back
+    },
+  },
+});
 
 const AnimatedRoutes = () => {
   const location = useLocation();

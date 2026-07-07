@@ -12,7 +12,7 @@ import BackgroundEffects from "@/components/BackgroundEffects";
 const mapHref =
   "https://www.google.com/maps/place/University+of+Engineering+%26+Management,+Kolkata+(UEM)/@22.5599202,88.4899014,17z/data=!3m1!4b1!4m6!3m5!1s0x3a020b267a3cdc13:0xb3b21d652126f40!8m2!3d22.5599202!4d88.4899014!16s%2Fg%2F11c4pg5gwf?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D";
 const mapEmbedSrc =
-  "https://www.google.com/maps?q=University+of+Engineering+%26+Management,+Kolkata+(UEM)&z=17&output=embed";
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.077224214539!2d88.48732647604677!2d22.55992023956461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a020b267a3cdc13%3A0xb3b21d652126f40!2sUniversity%20of%20Engineering%20%26%20Management%2C%20Kolkata%20(UEM)!5e0!3m2!1sen!2sin!4v1717000000000!5m2!1sen!2sin";
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -44,7 +44,7 @@ const Contact = () => {
           {/* Overlapping Slanted Scrolling Banners */}
           <div className="relative overflow-visible w-full mb-16 md:mb-20">
             {/* Banner 1: Negative Tilt */}
-            <div 
+            <div
               className="relative w-[110vw] left-[-5vw] overflow-hidden bg-gradient-to-r from-violet-600 to-indigo-600 py-3 md:py-3.5 shadow-[0_10px_30px_rgba(139,92,246,0.35)] z-20"
               style={{ transform: "rotate(-4.5deg)" }}
             >
@@ -62,7 +62,7 @@ const Contact = () => {
             </div>
 
             {/* Banner 2: Positive (Opposite) Tilt */}
-            <div 
+            <div
               className="relative w-[110vw] left-[-5vw] overflow-hidden bg-gradient-to-r from-fuchsia-600 to-pink-600 py-3 md:py-3.5 shadow-[0_10px_30px_rgba(236,72,153,0.35)] z-10 -mt-14 md:-mt-16"
               style={{ transform: "rotate(4.5deg)" }}
             >
@@ -88,7 +88,7 @@ const Contact = () => {
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="relative bg-[#0c0b11]/85 border border-white/10 p-8 md:p-10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl"
+                className="relative bg-[#0c0b11]/85 border border-white/10 p-8 md:p-10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-md order-2 lg:order-1"
               >
                 {/* Glow effect at corners */}
                 <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-primary/45 rounded-tl-2xl m-3 pointer-events-none" />
@@ -151,10 +151,10 @@ const Contact = () => {
                     <button
                       type="submit"
                       disabled={submitted}
-                      className="glow-button inline-flex items-center justify-center gap-2.5 px-6 py-3 w-fit text-sm font-bold text-white uppercase tracking-wider rounded-full transition-all duration-300 hover:scale-[1.03]"
+                      className="glow-button group w-full sm:w-fit inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-xs sm:text-sm font-['Orbitron'] font-bold text-white uppercase tracking-widest rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.97]"
                     >
-                      <span>{submitted ? "Message Sent" : "Send"}</span>
-                      <Send size={14} className="opacity-90" />
+                      <span>{submitted ? "MESSAGE SENT" : "SEND"}</span>
+                      <Send size={14} className="opacity-90 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                     </button>
                   </div>
                 </form>
@@ -165,7 +165,7 @@ const Contact = () => {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
-                className="space-y-8 lg:pt-4"
+                className="space-y-8 lg:pt-4 order-1 lg:order-2"
               >
                 <div className="space-y-4 min-w-0">
                   <h1 className="leading-[0.82] select-none text-left mb-0" style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}>
@@ -270,30 +270,27 @@ const Contact = () => {
             </div>
 
             {/* Google Map Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-              className="mt-16 md:mt-24 border border-white/10 rounded-2xl overflow-hidden h-80 w-full relative shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+            <div
+              className="mt-16 md:mt-24 border border-white/10 rounded-2xl overflow-hidden h-80 w-full relative shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-auto z-10"
             >
               <iframe
-                src={mapEmbedSrc}
+                src={`${mapEmbedSrc}&gestureHandling=greedy`}
                 width="100%"
                 height="100%"
                 style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) sepia(50%)" }}
                 loading="lazy"
                 title="UEM Kolkata Location"
-                className="opacity-70 mix-blend-screen"
+                className="w-full h-full opacity-90 md:opacity-85 pointer-events-auto"
               />
               <a
                 href={mapHref}
                 target="_blank"
                 rel="noreferrer"
-                className="absolute right-4 top-4 font-mono border border-white/15 bg-background/90 px-4 py-2 text-xs font-bold text-white rounded-lg backdrop-blur-md transition-all hover:bg-white/10 uppercase tracking-widest"
+                className="absolute right-4 top-4 font-mono border border-white/15 bg-background/90 px-4 py-2 text-xs font-bold text-white rounded-lg backdrop-blur-md transition-all hover:bg-white/10 uppercase tracking-widest z-20 pointer-events-auto"
               >
                 [ Get Directions ]
               </a>
-            </motion.div>
+            </div>
           </div>
         </main>
 

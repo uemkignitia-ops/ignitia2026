@@ -66,10 +66,10 @@ const CATEGORY_TEMPLATES = [
   {
     key: "hosting",
     masterHeading: "Hosting Partner",
-    accent: "from-blue-500 to-fuchsia-400",
+    accent: "from-blue-500 to-orange-400",
     accentRgb: "59,130,246",
     icon: Server,
-    color: "from-blue-500 to-fuchsia-400",
+    color: "from-blue-500 to-orange-400",
     benefits: [
       "Logo on website",
       "Hosting credits for participants",
@@ -208,12 +208,12 @@ const SponsorsPage = () => {
   }, [sponsorsList]);
 
   return (
-      <div
-        className="min-h-screen bg-transparent overflow-x-hidden citadel-theme relative"
-        ref={containerRef}
-      >
-        <BackgroundEffects />
-        <PageTransition>
+    <div
+      className="min-h-screen bg-transparent overflow-x-hidden citadel-theme relative"
+      ref={containerRef}
+    >
+      <BackgroundEffects />
+      <PageTransition>
         <ScrollProgress />
         <Navbar />
 
@@ -238,25 +238,25 @@ const SponsorsPage = () => {
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               style={{ transformStyle: "preserve-3d" }}
             >
-            <div className="w-full flex justify-center z-[36] pointer-events-none text-center mt-8 mb-4">
-              <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">
-                <span className="ignitia-citadel-title mx-auto" data-text="SPONSORS">
-                  <span>S</span>
-                  <span>P</span>
-                  <span>O</span>
-                  <span>N</span>
-                  <span>S</span>
-                  <span>O</span>
-                  <span>R</span>
-                  <span>S</span>
-                </span>
-              </h1>
-            </div>
+              <div className="w-full flex justify-center z-[36] pointer-events-none text-center mt-8 mb-4">
+                <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">
+                  <span className="ignitia-citadel-title mx-auto" data-text="SPONSORS">
+                    <span>S</span>
+                    <span>P</span>
+                    <span>O</span>
+                    <span>N</span>
+                    <span>S</span>
+                    <span>O</span>
+                    <span>R</span>
+                    <span>S</span>
+                  </span>
+                </h1>
+              </div>
             </motion.div>
           </div>
 
           <div className="mt-10 mb-6 flex justify-center w-full px-4 relative z-10">
-            <TerminalSubheading 
+            <TerminalSubheading
               text="The visionaries and industry leaders powering the future of technology at Ignitia 2k26."
               className="text-muted-foreground text-sm md:text-base font-medium text-center max-w-2xl"
             />
@@ -336,7 +336,7 @@ const SponsorsPage = () => {
                             {/* Left & Right fading shadows */}
                             <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
                             <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-                            
+
                             <motion.div
                               animate={{ x: ["0%", "-50%"] }}
                               transition={{
@@ -356,8 +356,8 @@ const SponsorsPage = () => {
                                   key={bIdx}
                                   className="px-3.5 py-1 mx-3 rounded-full border border-white/5 bg-white/[0.02] text-[10px] font-['Orbitron'] text-muted-foreground uppercase tracking-widest flex items-center gap-2 shrink-0"
                                 >
-                                  <span 
-                                    className="w-1.5 h-1.5 rounded-full animate-pulse" 
+                                  <span
+                                    className="w-1.5 h-1.5 rounded-full animate-pulse"
                                     style={{ backgroundColor: `rgb(${tierData.accentRgb})` }}
                                   />
                                   {benefit}
@@ -369,15 +369,14 @@ const SponsorsPage = () => {
 
                         {/* Sponsor cards flex grid */}
                         <div
-                          className={`flex flex-wrap justify-center gap-5 mx-auto ${
-                            isSingle
+                          className={`flex flex-wrap justify-center gap-5 mx-auto ${isSingle
                               ? "max-w-xs"
                               : isSmall
-                              ? "max-w-xl"
-                              : isMedium
-                              ? "max-w-4xl"
-                              : "max-w-7xl"
-                          }`}
+                                ? "max-w-xl"
+                                : isMedium
+                                  ? "max-w-4xl"
+                                  : "max-w-7xl"
+                            }`}
                         >
                           {tierData.sponsors.map((sponsor, spIdx) => {
                             let cardWidthClass = "";
@@ -472,8 +471,8 @@ const SponsorsPage = () => {
         </section>
 
         <Footer />
-        </PageTransition>
-      </div>
+      </PageTransition>
+    </div>
   );
 };
 
