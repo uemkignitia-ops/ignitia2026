@@ -6,7 +6,7 @@ import {
   useTransform,
   useSpring,
 } from "framer-motion";
-import { X, ZoomIn } from "lucide-react";
+import { X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -80,16 +80,7 @@ const Gallery = () => {
             }}
           />
 
-          {/* Eyebrow label */}
-          <motion.p
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center text-[10px] md:text-xs text-primary uppercase tracking-[0.2em] md:tracking-[0.45em] mb-5 font-semibold font-mono flex flex-wrap items-center justify-center gap-x-2 gap-y-1 px-4"
-          >
-            <ZoomIn size={12} className="text-primary shrink-0" />
-            <span>MEMORIES &amp; MOMENTS</span>
-          </motion.p>
+
 
           {/* Main GALLERY title */}
           <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-20">

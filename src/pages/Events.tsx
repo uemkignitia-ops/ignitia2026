@@ -216,17 +216,7 @@ const Events = () => {
             }}
           />
 
-          {/* Eyebrow */}
-          <motion.p
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center text-[10px] md:text-xs text-primary uppercase tracking-[0.2em] md:tracking-[0.45em] mb-5 font-semibold font-mono flex flex-wrap items-center justify-center gap-x-2 gap-y-1 px-4"
-          >
-            <Swords size={12} className="text-primary shrink-0" />
-            <span>COMPETE &amp; CREATE</span>
-            <Sparkles size={12} className="text-primary shrink-0" />
-          </motion.p>
+
 
           {/* Main Title & Mascot Row */}
           <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-20 flex items-center justify-between" style={{ perspective: "800px" }}>

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Clock, MapPin, Calendar, Sparkles } from "lucide-react";
+import { Clock, MapPin, Calendar } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -518,15 +518,7 @@ const Schedule = () => {
             }}
           />
 
-          {/* Eyebrow */}
-          <motion.p
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center text-[11px] md:text-xs text-primary uppercase tracking-[0.45em] mb-5 font-semibold font-mono flex items-center justify-center gap-2"
-          >
-            <Calendar size={14} className="text-primary" /> MASTER PLAN
-          </motion.p>
+
 
           {/* Main Title — full-width, centered, perspective tilt */}
           <div className="relative w-full" style={{ perspective: "800px" }}>
