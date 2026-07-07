@@ -228,15 +228,7 @@ const SponsorsPage = () => {
             }}
           />
 
-          {/* Eyebrow */}
-          <motion.p
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center text-[11px] md:text-xs text-primary uppercase tracking-[0.45em] mb-5 font-semibold font-mono flex items-center justify-center gap-2"
-          >
-            <Hexagon size={13} className="text-primary shrink-0" /> PARTNERS
-          </motion.p>
+
 
           {/* Main Title — perspective tilt */}
           <div className="relative w-full" style={{ perspective: "800px" }}>
@@ -322,7 +314,6 @@ const SponsorsPage = () => {
                 {/* Tiers within category */}
                 <div className="space-y-20">
                   {category.tiers.map((tierData, tierIdx) => {
-                    const Icon = tierData.icon;
                     const isSingle = tierData.sponsors.length === 1;
                     const isSmall = tierData.sponsors.length <= 2;
                     const isMedium =
@@ -339,32 +330,17 @@ const SponsorsPage = () => {
                           }}
                         />
 
-                        {/* Tier label */}
-                        <motion.div
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          className="flex items-center gap-3 mb-10"
-                        >
-                          <div
-                            className={`p-2 rounded-xl bg-gradient-to-br ${tierData.color} bg-opacity-10 backdrop-blur-sm border border-white/10`}
-                          >
-                            <Icon className="text-white" size={20} />
-                          </div>
-                          <h3
-                            className={`text-lg md:text-xl font-mono font-bold bg-gradient-to-r ${tierData.color} bg-clip-text text-transparent`}
-                          >
-                            {tierData.tier}
-                          </h3>
-
-                          {/* Scrolling benefits ticker */}
-                          <div className="relative overflow-hidden flex-1 h-6 flex items-center ml-4 hidden md:block">
-                            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent z-10" />
-                            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent z-10" />
+                        {/* Continuous loop marquee for benefits description */}
+                        {tierData.benefits && tierData.benefits.length > 0 && (
+                          <div className="relative overflow-hidden w-full max-w-2xl mx-auto mb-10 h-8 flex items-center">
+                            {/* Left & Right fading shadows */}
+                            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+                            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+                            
                             <motion.div
                               animate={{ x: ["0%", "-50%"] }}
                               transition={{
-                                duration: 10,
+                                duration: 15,
                                 ease: "linear",
                                 repeat: Infinity,
                               }}
@@ -373,24 +349,23 @@ const SponsorsPage = () => {
                               {[
                                 ...tierData.benefits,
                                 ...tierData.benefits,
-                              ].map((b, i) => (
+                                ...tierData.benefits,
+                                ...tierData.benefits,
+                              ].map((benefit, bIdx) => (
                                 <span
-                                  key={i}
-                                  className="text-xs text-muted-foreground/60 font-mono flex items-center gap-3 mx-5"
+                                  key={bIdx}
+                                  className="px-3.5 py-1 mx-3 rounded-full border border-white/5 bg-white/[0.02] text-[10px] font-['Orbitron'] text-muted-foreground uppercase tracking-widest flex items-center gap-2 shrink-0"
                                 >
-                                  <span
-                                    style={{
-                                      color: `rgba(${tierData.accentRgb},0.7)`,
-                                    }}
-                                  >
-                                    ✦
-                                  </span>
-                                  {b}
+                                  <span 
+                                    className="w-1.5 h-1.5 rounded-full animate-pulse" 
+                                    style={{ backgroundColor: `rgb(${tierData.accentRgb})` }}
+                                  />
+                                  {benefit}
                                 </span>
                               ))}
                             </motion.div>
                           </div>
-                        </motion.div>
+                        )}
 
                         {/* Sponsor cards flex grid */}
                         <div

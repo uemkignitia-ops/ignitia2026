@@ -58,9 +58,7 @@ const About = () => {
               transition={{ duration: 0.7, ease: "easeOut" }}
               className="space-y-5 max-w-lg w-full flex-1"
             >
-              <p className="text-[10px] md:text-xs text-primary uppercase tracking-[0.4em] font-semibold font-mono flex items-center gap-2">
-                <Cpu size={14} className="text-primary" /> OUR STORY &amp; VISION
-              </p>
+
 
               <h1 className="hero-title-block leading-[0.82] select-none">
                 <span 

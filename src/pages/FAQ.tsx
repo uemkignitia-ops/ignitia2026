@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, Database } from "lucide-react";
+import { Terminal } from "lucide-react";
+
 import {
   Accordion,
   AccordionContent,
@@ -148,15 +149,7 @@ const FAQ = () => {
             }}
           />
 
-          {/* Eyebrow */}
-          <motion.p
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center text-[11px] md:text-xs text-primary uppercase tracking-[0.45em] mb-5 font-semibold font-mono flex items-center justify-center gap-2"
-          >
-            <Database size={14} className="text-primary" /> KNOWLEDGE BASE
-          </motion.p>
+
 
             <div className="w-full flex justify-center z-[36] pointer-events-none text-center mt-8 mb-4">
               <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">

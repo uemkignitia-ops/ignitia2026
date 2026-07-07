@@ -23,7 +23,7 @@ export const TerminalSubheading = ({ text, className = "", speed = 30 }: Termina
   }, [text, speed]);
 
   return (
-    <p className={`font-mono tracking-wide min-h-[1.5em] ${className}`}>
+    <p className={`font-['Orbitron'] tracking-wide min-h-[1.5em] ${className}`}>
       <span className="text-primary/70 mr-2">&gt;</span>
       {typedText}
       <span className="animate-blink text-primary">_</span>

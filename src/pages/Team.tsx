@@ -1,6 +1,6 @@
 import { useState, useCallback, memo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Linkedin, Users, X } from "lucide-react";
+import { Linkedin, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -388,20 +388,7 @@ const Team = () => {
             }}
           />
 
-          {/* Eyebrow pill badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center justify-center gap-2 mb-5"
-          >
-            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/25 bg-primary/5 backdrop-blur-md">
-              <Users size={13} className="text-primary shrink-0" />
-              <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.3em] text-primary/90 font-semibold">
-                Meet The Minds
-              </span>
-            </div>
-          </motion.div>
+
 
             <div className="w-full flex justify-center z-[36] pointer-events-none text-center mt-8 mb-4">
               <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">
