@@ -32,7 +32,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session && session.user && session.user.email === "uemk.ignitia@gmail.com") {
+      if (session && session.user && session.user.email?.toLowerCase() === "uemk.ignitia@gmail.com") {
         setCurrentUser({ email: session.user.email ?? null, uid: session.user.id });
       } else {
         setCurrentUser(null);
@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session && session.user && session.user.email === "uemk.ignitia@gmail.com") {
+      if (session && session.user && session.user.email?.toLowerCase() === "uemk.ignitia@gmail.com") {
         setCurrentUser({ email: session.user.email ?? null, uid: session.user.id });
       } else {
         setCurrentUser(null);
@@ -57,7 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, pass: string) => {
     // Restrict access ONLY to the admin email address
-    if (email !== "uemk.ignitia@gmail.com") {
+    if (email.toLowerCase() !== "uemk.ignitia@gmail.com") {
       throw new Error("Access Denied: Only the official admin email can access this dashboard.");
     }
 

@@ -16,8 +16,9 @@ import {
   Globe,
   PlusCircle,
   XCircle,
+  Pencil,
 } from "lucide-react";
-import { isSupabaseEnabled } from "@/lib/supabase";
+import { isSupabaseEnabled, supabase } from "@/lib/supabase";
 import {
   getEvents,
   saveEvent,
@@ -86,14 +87,53 @@ const Dashboard = () => {
     }
   };
 
+  const handleRefreshCache = async () => {
+    localStorage.removeItem("ignitia_events");
+    localStorage.removeItem("ignitia_sponsors");
+    localStorage.removeItem("ignitia_team");
+    localStorage.removeItem("ignitia_gallery");
+    toast.success("Local cache cleared! Syncing latest data from Supabase & Cloudinary...");
+    await refreshAllData();
+  };
+
   const handleSeed = async () => {
+    const confirmSeed = window.confirm(
+      "WARNING: This will reset the database completely to the hardcoded backups. This should only be used during fallback situations. Are you sure you want to proceed?"
+    );
+    if (!confirmSeed) return;
+
+    const password = window.prompt("Enter Seed Authorization Password:");
+    if (password === null) return; // User cancelled
+    
     setActionLoading(true);
     try {
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+
+      if (isSupabaseEnabled && supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.access_token) {
+          headers["Authorization"] = `Bearer ${session.access_token}`;
+        }
+      }
+
+      const res = await fetch("/api/verify-seed", {
+        method: "POST",
+        body: JSON.stringify({ password }),
+        headers,
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Seeding authorization failed");
+      }
+
       await seedInitialData();
       toast.success("Database seeded successfully with dynamic backups!");
       await refreshAllData();
-    } catch (e) {
-      toast.error("Database seeding failed.");
+    } catch (e: any) {
+      toast.error(e.message || "Database seeding failed.");
     } finally {
       setActionLoading(false);
     }
@@ -179,6 +219,15 @@ const Dashboard = () => {
 
         {/* Sidebar Footer Buttons */}
         <div className="mt-auto pt-6 border-t border-white/10 flex flex-col gap-3">
+          <button
+            onClick={handleRefreshCache}
+            disabled={dbLoading}
+            className="flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-widest text-primary border border-primary/30 hover:border-primary bg-primary/5 hover:bg-primary/10 py-2.5 rounded-lg transition-colors cursor-pointer"
+          >
+            <RefreshCw size={11} className={dbLoading ? "animate-spin" : ""} />
+            Sync Database Cache
+          </button>
+
           <button
             onClick={handleSeed}
             disabled={actionLoading}
@@ -1266,26 +1315,64 @@ const GalleryPanel = ({
   const [category, setCategory] = useState("Events");
   const [srcFile, setSrcFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [existingSrc, setExistingSrc] = useState<string | null>(null);
+  const [existingPublicId, setExistingPublicId] = useState<string | null>(null);
 
   const categoriesList = ["Events", "Coding", "Gaming", "Cultural", "Robotics"];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title || !srcFile) {
-      toast.error("Title and Gallery Image file are required.");
+    if (!title) {
+      toast.error("Picture Title is required.");
+      return;
+    }
+    if (!editingId && !srcFile) {
+      toast.error("Gallery Image file is required for new entries.");
       return;
     }
     setSaving(true);
     try {
-      const { uploadGalleryImage } = await import("@/lib/cloudinary");
-      const { secure_url, public_id } = await uploadGalleryImage(srcFile);
-      await saveGalleryItem({ title, category, src: secure_url, public_id });
-      toast.success("Upload successful: Gallery item card published.");
+      let finalSrc = existingSrc || "";
+      let finalPublicId = existingPublicId || "";
+
+      if (srcFile) {
+        // Upload new image to Cloudinary
+        const { uploadGalleryImage } = await import("@/lib/cloudinary");
+        const { secure_url, public_id } = await uploadGalleryImage(srcFile);
+        finalSrc = secure_url;
+
+        // If in edit mode and there was a previous image, delete it from Cloudinary to reclaim space
+        if (editingId && existingPublicId) {
+          try {
+            const { deleteGalleryImage } = await import("@/lib/cloudinary");
+            await deleteGalleryImage(existingPublicId);
+          } catch (delErr) {
+            console.warn("Failed to delete old Cloudinary image:", delErr);
+          }
+        }
+        finalPublicId = public_id;
+      }
+
+      await saveGalleryItem({
+        id: editingId || undefined,
+        title,
+        category,
+        src: finalSrc,
+        public_id: finalPublicId,
+      });
+
+      toast.success(editingId ? "Gallery item updated successfully." : "Upload successful: Gallery item card published.");
+      
+      // Reset form states
       setTitle("");
       setSrcFile(null);
+      setEditingId(null);
+      setExistingSrc(null);
+      setExistingPublicId(null);
       onUpdate();
     } catch (err: any) {
-      toast.error(err.message || "Failed to upload image.");
+      toast.error(err.message || "Failed to save gallery item.");
     } finally {
       setSaving(false);
     }
@@ -1296,6 +1383,14 @@ const GalleryPanel = ({
       try {
         await deleteGalleryItem(id);
         toast.success("Image removed.");
+        // If we were editing the deleted item, cancel editing
+        if (editingId === id) {
+          setTitle("");
+          setSrcFile(null);
+          setEditingId(null);
+          setExistingSrc(null);
+          setExistingPublicId(null);
+        }
         onUpdate();
       } catch (e) {
         toast.error("Failed to delete gallery item.");
@@ -1313,7 +1408,9 @@ const GalleryPanel = ({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Form container */}
         <form onSubmit={handleSubmit} className="space-y-5 bg-[#0c0b10] border border-white/5 p-6 rounded-xl relative h-fit font-mono text-xs">
-          <h3 className="font-heading font-bold text-lg text-white uppercase mb-2">Publish Picture</h3>
+          <h3 className="font-heading font-bold text-lg text-white uppercase mb-2">
+            {editingId ? "Edit Memory Entry" : "Publish Picture"}
+          </h3>
 
           <div className="space-y-1">
             <label className="text-white/40 block">Picture Title</label>
@@ -1357,7 +1454,7 @@ const GalleryPanel = ({
                 Select Image
               </label>
               <span className="text-white/40 truncate text-[11px] max-w-[120px]">
-                {srcFile ? srcFile.name : "No File Chosen"}
+                {srcFile ? srcFile.name : (editingId ? "Keep current image" : "No File Chosen")}
               </span>
             </div>
           </div>
@@ -1365,17 +1462,33 @@ const GalleryPanel = ({
           <button
             type="submit"
             disabled={saving}
-            className="glow-button w-full !py-3 inline-flex items-center justify-center gap-2 cursor-pointer font-heading font-black tracking-wider text-xs"
+            className="glow-button w-full !py-3 inline-flex items-center justify-center gap-2 cursor-pointer font-heading font-black tracking-wider text-xs uppercase"
           >
             {saving ? (
               <>
                 <Loader2 className="w-4 h-4 text-white animate-spin" />
-                Uploading Image...
+                {editingId ? "Updating Memory..." : "Uploading Image..."}
               </>
             ) : (
-              "Publish Memory"
+              editingId ? "Update Memory" : "Publish Memory"
             )}
           </button>
+
+          {editingId && (
+            <button
+              type="button"
+              onClick={() => {
+                setTitle("");
+                setSrcFile(null);
+                setEditingId(null);
+                setExistingSrc(null);
+                setExistingPublicId(null);
+              }}
+              className="border border-white/10 hover:border-red-500/40 bg-white/[0.02] text-white/70 hover:text-white w-full py-2.5 rounded-lg cursor-pointer font-heading font-black tracking-wider text-xs uppercase transition-colors"
+            >
+              Cancel Edit
+            </button>
+          )}
         </form>
 
         {/* Existing gallery grid list */}
@@ -1399,13 +1512,30 @@ const GalleryPanel = ({
                           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/card:opacity-100 flex flex-col justify-end p-3 transition-opacity duration-300 pointer-events-none">
                             <span className="font-mono text-[10px] text-white font-bold truncate block">{item.title}</span>
                           </div>
-                          <button
-                            onClick={() => handleDelete(idVal)}
-                            className="absolute top-2 right-2 p-1.5 bg-red-500/80 hover:bg-red-500 text-white rounded cursor-pointer transition-colors z-30"
-                            title="Delete Picture"
-                          >
-                            <Trash2 size={12} />
-                          </button>
+                          
+                          {/* Top-right actions overlay */}
+                          <div className="absolute top-2 right-2 flex gap-1.5 z-30">
+                            <button
+                              onClick={() => {
+                                setTitle(item.title);
+                                setCategory(item.category);
+                                setEditingId(item.id);
+                                setExistingSrc(item.src);
+                                setExistingPublicId(item.public_id);
+                              }}
+                              className="p-1.5 bg-primary/80 hover:bg-primary text-white rounded cursor-pointer transition-colors"
+                              title="Edit Picture"
+                            >
+                              <Pencil size={12} />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(idVal)}
+                              className="p-1.5 bg-red-500/80 hover:bg-red-500 text-white rounded cursor-pointer transition-colors"
+                              title="Delete Picture"
+                            >
+                              <Trash2 size={12} />
+                            </button>
+                          </div>
                         </div>
                       );
                     })}
