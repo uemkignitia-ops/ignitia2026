@@ -129,22 +129,27 @@ const SponsorCard = ({
   >
     {/* Glow halo on hover */}
     <div
-      className={`absolute -inset-0.5 rounded-2xl bg-gradient-to-br ${color} opacity-0 group-hover:opacity-25 blur-xl transition-all duration-500`}
+      className={`absolute -inset-0.5 rounded-xl bg-gradient-to-br ${color} opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500`}
     />
 
     <div
-      className="relative h-full border border-white/8 bg-[#0B0A10]/80 backdrop-blur-sm rounded-2xl overflow-hidden
-                 flex flex-col items-center p-5 transition-all duration-300
-                 hover:border-white/20 hover:bg-[#0d0c16]/90"
+      className="relative h-full border border-purple-500/20 bg-[#0B0A10]/80 backdrop-blur-sm rounded-xl overflow-hidden
+                 flex flex-col items-center p-6 pt-8 pb-6 transition-all duration-300
+                 hover:bg-[#0d0c16]/90"
     >
-      {/* Top colour bar */}
-      <div
-        className={`absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r ${color} opacity-60`}
-      />
+      {/* Decorative Gold Inner Borders */}
+      <div className="absolute inset-1 sm:inset-1.5 border border-amber-500/25 rounded-lg pointer-events-none z-10" />
+      <div className="absolute inset-2 sm:inset-3.5 border-2 border-amber-500/40 rounded-lg pointer-events-none z-10" />
+
+      {/* Corner Corner Accents (Cyberpunk / Fantasy corners) */}
+      <div className="absolute top-2 left-2 sm:top-3.5 sm:left-3.5 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-l-2 border-amber-500/80 z-10" />
+      <div className="absolute top-2 right-2 sm:top-3.5 sm:right-3.5 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-r-2 border-amber-500/80 z-10" />
+      <div className="absolute bottom-2 left-2 sm:bottom-3.5 sm:left-3.5 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-l-2 border-amber-500/80 z-10" />
+      <div className="absolute bottom-2 right-2 sm:bottom-3.5 sm:right-3.5 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-r-2 border-amber-500/80 z-10" />
 
       {/* Logo */}
       <div
-        className="flex-1 flex items-center justify-center p-3 w-full aspect-square max-h-24 sm:max-h-28 mb-4 overflow-hidden rounded-xl bg-white/[0.01]"
+        className="flex-1 flex items-center justify-center p-3 w-full aspect-square max-h-24 sm:max-h-28 mb-4 overflow-hidden rounded-xl bg-white/[0.01] z-0"
       >
         <img
           src={sponsor.logo}
@@ -155,7 +160,7 @@ const SponsorCard = ({
 
       {/* Name */}
       <p
-        className={`font-heading font-bold text-center text-white/85 leading-tight w-full break-words
+        className={`font-heading font-bold text-center text-white/85 leading-tight w-full break-words z-0
                     ${large ? "text-base" : "text-xs sm:text-sm"}`}
       >
         {sponsor.name}
@@ -170,33 +175,67 @@ const SponsorsPage = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [sponsorsList, setSponsorsList] = useState<any[]>([]);
+  const [categoryTemplates, setCategoryTemplates] = useState<any[]>([]);
 
   useEffect(() => {
     import("@/lib/datastore").then((m) => {
       m.getSponsors().then(setSponsorsList);
+      m.getSponsorCategories().then(setCategoryTemplates);
     });
   }, []);
 
   const dynamicCategories = useMemo(() => {
-    return CATEGORY_TEMPLATES.map((tpl) => {
+    const iconMap: Record<string, any> = {
+      gold: Star,
+      silver: Award,
+      bronze: Hexagon,
+      hosting: Server,
+      community: Users,
+      ongoing: Gem,
+    };
+    
+    // Parse color HSL or rgb if available, otherwise fallback
+    const rgbMap: Record<string, string> = {
+      gold: "245,158,11",
+      silver: "148,163,184",
+      bronze: "194,65,12",
+      hosting: "59,130,246",
+      community: "139,92,246",
+      ongoing: "236,72,153",
+    };
+
+    const benefitsMap: Record<string, string[]> = {
+      gold: ["Logo on website & posters", "Booth space", "Social media mention", "Certificate branding"],
+      silver: ["Logo on website", "Banner space", "Social media shoutout"],
+      bronze: ["Logo on website", "Social media thank you"],
+      hosting: ["Logo on website", "Hosting credits for participants", "Social media mention"],
+      community: ["Community outreach", "Platform access", "Joint promotion"],
+      ongoing: ["Active engagement", "Brand visibility"]
+    };
+
+    return categoryTemplates.map((tpl) => {
       const items = sponsorsList.filter((s) => s.category === tpl.key);
+      const icon = iconMap[tpl.key] || Hexagon;
+      const rgb = rgbMap[tpl.key] || "168,85,247"; // purple fallback
+      const benefits = tpl.benefits || benefitsMap[tpl.key] || ["Logo on website", "Brand visibility"];
+      
       return {
-        masterHeading: tpl.masterHeading,
-        accent: tpl.accent,
-        accentRgb: tpl.accentRgb,
+        masterHeading: tpl.title || tpl.masterHeading || tpl.key.toUpperCase(),
+        accent: tpl.accent || "from-purple-500 to-indigo-500",
+        accentRgb: rgb,
         tiers: [
           {
-            tier: tpl.masterHeading,
-            icon: tpl.icon,
-            color: tpl.color,
-            accentRgb: tpl.accentRgb,
-            benefits: tpl.benefits,
+            tier: tpl.title || tpl.masterHeading || tpl.key.toUpperCase(),
+            icon,
+            color: tpl.accent || "from-purple-500 to-indigo-500",
+            accentRgb: rgb,
+            benefits,
             sponsors: items,
           }
         ]
       };
     }).filter(cat => cat.tiers[0].sponsors.length > 0);
-  }, [sponsorsList]);
+  }, [sponsorsList, categoryTemplates]);
 
   const allSponsorsUnique = useMemo(() => {
     const seen = new Set<string>();
@@ -370,12 +409,12 @@ const SponsorsPage = () => {
                         {/* Sponsor cards flex grid */}
                         <div
                           className={`flex flex-wrap justify-center gap-5 mx-auto ${isSingle
-                              ? "max-w-xs"
-                              : isSmall
-                                ? "max-w-xl"
-                                : isMedium
-                                  ? "max-w-4xl"
-                                  : "max-w-7xl"
+                            ? "max-w-xs"
+                            : isSmall
+                              ? "max-w-xl"
+                              : isMedium
+                                ? "max-w-4xl"
+                                : "max-w-7xl"
                             }`}
                         >
                           {tierData.sponsors.map((sponsor, spIdx) => {
@@ -422,13 +461,17 @@ const SponsorsPage = () => {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="max-w-2xl mx-auto border border-primary/20 bg-black/40 backdrop-blur-md p-8 md:p-14 rounded-3xl shadow-[0_0_60px_rgba(139,92,246,0.12)]"
+              className="max-w-2xl mx-auto relative border border-purple-500/20 bg-[#0B0A10]/80 backdrop-blur-md p-8 md:p-14 rounded-xl shadow-[0_0_60px_rgba(139,92,246,0.12)]"
             >
-              {/* Corner accents */}
-              <div className="absolute top-0 left-0 w-5 h-5 border-t border-l border-primary/40 rounded-tl-3xl" />
-              <div className="absolute top-0 right-0 w-5 h-5 border-t border-r border-primary/40 rounded-tr-3xl" />
-              <div className="absolute bottom-0 left-0 w-5 h-5 border-b border-l border-primary/40 rounded-bl-3xl" />
-              <div className="absolute bottom-0 right-0 w-5 h-5 border-b border-r border-primary/40 rounded-br-3xl" />
+              {/* Decorative Gold Inner Borders */}
+              <div className="absolute inset-1 sm:inset-1.5 border border-amber-500/25 rounded-lg pointer-events-none z-10" />
+              <div className="absolute inset-2 sm:inset-3.5 border-2 border-amber-500/40 rounded-lg pointer-events-none z-10" />
+
+              {/* Corner Corner Accents (Cyberpunk / Fantasy corners) */}
+              <div className="absolute top-2 left-2 sm:top-3.5 sm:left-3.5 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-l-2 border-amber-500/80 z-10" />
+              <div className="absolute top-2 right-2 sm:top-3.5 sm:right-3.5 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-r-2 border-amber-500/80 z-10" />
+              <div className="absolute bottom-2 left-2 sm:bottom-3.5 sm:left-3.5 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-l-2 border-amber-500/80 z-10" />
+              <div className="absolute bottom-2 right-2 sm:bottom-3.5 sm:right-3.5 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-r-2 border-amber-500/80 z-10" />
 
               <p className="text-xs font-mono uppercase tracking-[0.3em] text-primary/70 mb-4">
                 Partner with us

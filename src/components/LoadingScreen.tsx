@@ -7,8 +7,8 @@ const LoadingScreen = () => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const MIN_LOADER_TIME = 2200; // Allow enough time for animation to complete smoothly
-    const MAX_LOADER_TIME = 4000; // Absolute fallback max time
+    const MIN_LOADER_TIME = 3200; // Allow enough time for animation to complete smoothly
+    const MAX_LOADER_TIME = 5000; // Absolute fallback max time
     const startTime = Date.now();
     let isMounted = true;
 
@@ -84,8 +84,8 @@ const LoadingScreen = () => {
         >
           <style>{`
             @keyframes loaderDrawOutline {
-              from { stroke-dashoffset: 600; }
-              to   { stroke-dashoffset: 0; }
+              from { stroke-dashoffset: 600; transform: translate3d(0,0,0); }
+              to   { stroke-dashoffset: 0; transform: translate3d(0,0,0); }
             }
             @keyframes loaderFillText {
               from { fill: rgba(255,255,255,0); stroke-width: 2px; }
@@ -105,12 +105,14 @@ const LoadingScreen = () => {
               stroke-dasharray: 600;
               stroke-dashoffset: 600;
               will-change: stroke-dashoffset, fill, stroke-width;
+              transform: translate3d(0, 0, 0);
+              backface-visibility: hidden;
             }
 
             .ignitia-loader-text.animate {
               animation:
-                loaderDrawOutline 1.8s ease-in-out forwards,
-                loaderFillText 0.8s ease-in-out 1.2s forwards;
+                loaderDrawOutline 2.6s ease-in-out forwards,
+                loaderFillText 1.0s ease-in-out 1.8s forwards;
             }
 
             /* Bounding HUD Console Border */
@@ -119,23 +121,25 @@ const LoadingScreen = () => {
               inset: 45px;
               pointer-events: none;
               z-index: 50;
+              transform: translate3d(0, 0, 0);
+              backface-visibility: hidden;
             }
 
             @keyframes borderTopDraw {
-              from { transform: scaleX(0); }
-              to { transform: scaleX(1); }
+              from { transform: scaleX(0) translateZ(0); }
+              to { transform: scaleX(1) translateZ(0); }
             }
             @keyframes borderRightDraw {
-              from { transform: scaleY(0); }
-              to { transform: scaleY(1); }
+              from { transform: scaleY(0) translateZ(0); }
+              to { transform: scaleY(1) translateZ(0); }
             }
             @keyframes borderBottomDraw {
-              from { transform: scaleX(0); }
-              to { transform: scaleX(1); }
+              from { transform: scaleX(0) translateZ(0); }
+              to { transform: scaleX(1) translateZ(0); }
             }
             @keyframes borderLeftDraw {
-              from { transform: scaleY(0); }
-              to { transform: scaleY(1); }
+              from { transform: scaleY(0) translateZ(0); }
+              to { transform: scaleY(1) translateZ(0); }
             }
 
             .border-line {
@@ -154,25 +158,25 @@ const LoadingScreen = () => {
               top: 0; bottom: 0; right: 0; width: 1px;
               transform-origin: top;
               animation: borderRightDraw 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s forwards;
-              transform: scaleY(0);
+              transform: scaleY(0) translateZ(0);
             }
             .border-line-bottom {
               bottom: 0; left: 0; right: 0; height: 1px;
               transform-origin: right;
               animation: borderBottomDraw 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards;
-              transform: scaleX(0);
+              transform: scaleX(0) translateZ(0);
             }
             .border-line-left {
               top: 0; bottom: 0; left: 0; width: 1px;
               transform-origin: bottom;
               animation: borderLeftDraw 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.45s forwards;
-              transform: scaleY(0);
+              transform: scaleY(0) translateZ(0);
             }
 
             /* Tech brackets styling (All-white) */
             @keyframes bracketFadeIn {
-              from { opacity: 0; transform: scale(0.92); }
-              to { opacity: 0.75; transform: scale(1); }
+              from { opacity: 0; transform: scale(0.92) translateZ(0); }
+              to { opacity: 0.75; transform: scale(1) translateZ(0); }
             }
             .tech-bracket {
               position: absolute;
@@ -181,6 +185,9 @@ const LoadingScreen = () => {
               border-color: rgba(255, 255, 255, 0.75);
               animation: bracketFadeIn 0.8s ease-out 0.9s forwards;
               opacity: 0;
+              will-change: transform, opacity;
+              transform: translate3d(0, 0, 0);
+              backface-visibility: hidden;
             }
             .bracket-tl { top: 0; left: 0; border-top: 1.5px solid; border-left: 1.5px solid; }
             .bracket-tr { top: 0; right: 0; border-top: 1.5px solid; border-right: 1.5px solid; }
@@ -189,8 +196,8 @@ const LoadingScreen = () => {
 
             /* Glowing white nodes */
             @keyframes nodePulse {
-              0%, 100% { opacity: 0.4; transform: scale(1); }
-              50% { opacity: 0.9; transform: scale(1.2); }
+              0%, 100% { opacity: 0.4; transform: scale(1) translateZ(0); }
+              50% { opacity: 0.9; transform: scale(1.2) translateZ(0); }
             }
             .glow-node {
               position: absolute;
@@ -202,6 +209,9 @@ const LoadingScreen = () => {
               animation: bracketFadeIn 0.5s ease-out 1.1s forwards, nodePulse 2.5s infinite ease-in-out;
               opacity: 0;
               margin: -1.5px;
+              will-change: transform, opacity;
+              transform: translate3d(0, 0, 0);
+              backface-visibility: hidden;
             }
             .node-tl { top: 0; left: 0; }
             .node-tr { top: 0; right: 0; }
@@ -229,17 +239,17 @@ const LoadingScreen = () => {
                 stroke-dashoffset: 600;
               }
               @keyframes loaderDrawOutline {
-                from { stroke-dashoffset: 600; }
-                to   { stroke-dashoffset: 0; }
+                from { stroke-dashoffset: 600; transform: translate3d(0,0,0); }
+                to   { stroke-dashoffset: 0; transform: translate3d(0,0,0); }
               }
             }
           `}</style>
 
           {/* Centered IGNITIA Branding SVG */}
-          <div style={{ width: "90%", maxWidth: 550, padding: "0 16px", zIndex: 10 }}>
+          <div style={{ width: "90%", maxWidth: 550, padding: "0 16px", zIndex: 10, transform: "translate3d(0,0,0)", backfaceVisibility: "hidden", willChange: "transform, opacity" }}>
             <svg
               viewBox="0 0 500 100"
-              style={{ width: "100%", height: "auto", display: "block" }}
+              style={{ width: "100%", height: "auto", display: "block", transform: "translate3d(0,0,0)", willChange: "transform" }}
               aria-label="Loading IGNITIA"
             >
               <text

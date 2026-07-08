@@ -556,6 +556,145 @@ const toCamelCase = (obj: any): any => {
   return obj;
 };
 
+// ─── Default Sponsor Categories and Team Sections Backups ──────────────────────
+const defaultSponsorCategories = [
+  { key: "gold", title: "Gold Sponsors", accent: "from-amber-500 to-yellow-400" },
+  { key: "silver", title: "Silver Sponsors", accent: "from-slate-400 to-slate-500" },
+  { key: "bronze", title: "Bronze Sponsors", accent: "from-orange-600 to-orange-800" },
+  { key: "hosting", title: "Hosting Partner", accent: "from-blue-500 to-orange-400" },
+  { key: "community", title: "Community Partner", accent: "from-violet-500 to-purple-400" },
+  { key: "ongoing", title: "Ongoing Sponsors", accent: "from-pink-500 to-rose-400" }
+];
+
+const defaultTeamSections = [
+  { key: "leads", title: "Lead Convenors", theme: "red", colorHsl: "0 100% 50%" },
+  { key: "organizers", title: "Organizers", theme: "blue", colorHsl: "217 91% 60%" },
+  { key: "core", title: "Core Members", theme: "green", colorHsl: "142 71% 45%" },
+  { key: "domain", title: "Domain Leads", theme: "purple", colorHsl: "270 70% 60%" }
+];
+
+export const getSponsorCategories = async (): Promise<{ key: string; title: string; accent?: string; priority?: number }[]> => {
+  if (isSupabaseEnabled && supabase) {
+    try {
+      const { data, error } = await supabase
+        .from("sponsor_categories")
+        .select("*")
+        .order("priority", { ascending: true });
+      if (!error && data && data.length > 0) {
+        localStorage.setItem("ignitia_sponsor_categories", JSON.stringify(data));
+        return data;
+      }
+    } catch (e) {
+      console.warn("Supabase error reading sponsor_categories, using cache fallback...", e);
+    }
+  }
+  const cached = localStorage.getItem("ignitia_sponsor_categories");
+  const parsed = cached ? JSON.parse(cached) : defaultSponsorCategories;
+  return parsed.sort((a: any, b: any) => (a.priority ?? 0) - (b.priority ?? 0));
+};
+
+export const saveSponsorCategory = async (cat: { key: string; title: string; accent?: string; priority?: number }) => {
+  const categories = await getSponsorCategories();
+  const idx = categories.findIndex(c => c.key === cat.key);
+  if (idx !== -1) categories[idx] = cat;
+  else categories.push(cat);
+  
+  categories.sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0));
+  localStorage.setItem("ignitia_sponsor_categories", JSON.stringify(categories));
+
+  if (isSupabaseEnabled && supabase) {
+    try {
+      const { error } = await supabase.from("sponsor_categories").upsert(cat);
+      if (error) throw error;
+    } catch (e) {
+      console.warn("Supabase error saving sponsor_category:", e);
+    }
+  }
+};
+
+export const deleteSponsorCategory = async (key: string) => {
+  const categories = await getSponsorCategories();
+  const filtered = categories.filter(c => c.key !== key);
+  localStorage.setItem("ignitia_sponsor_categories", JSON.stringify(filtered));
+
+  if (isSupabaseEnabled && supabase) {
+    try {
+      const { error } = await supabase.from("sponsor_categories").delete().eq("key", key);
+      if (error) throw error;
+    } catch (e) {
+      console.warn("Supabase error deleting sponsor_category:", e);
+    }
+  }
+};
+
+export const getTeamSections = async (): Promise<{ key: string; title: string; theme?: string; colorHsl?: string; priority?: number }[]> => {
+  if (isSupabaseEnabled && supabase) {
+    try {
+      const { data, error } = await supabase
+        .from("team_sections")
+        .select("*")
+        .order("priority", { ascending: true });
+      if (!error && data && data.length > 0) {
+        const mapped = data.map((d: any) => ({
+          key: d.key,
+          title: d.title,
+          theme: d.theme,
+          colorHsl: d.color_hsl || d.colorHsl,
+          priority: d.priority ?? 0,
+        }));
+        localStorage.setItem("ignitia_team_sections", JSON.stringify(mapped));
+        return mapped;
+      }
+    } catch (e) {
+      console.warn("Supabase error reading team_sections, using cache fallback...", e);
+    }
+  }
+  const cached = localStorage.getItem("ignitia_team_sections");
+  const parsed = cached ? JSON.parse(cached) : defaultTeamSections;
+  return parsed.sort((a: any, b: any) => (a.priority ?? 0) - (b.priority ?? 0));
+};
+
+export const saveTeamSection = async (sec: { key: string; title: string; theme?: string; colorHsl?: string; priority?: number }) => {
+  const sections = await getTeamSections();
+  const idx = sections.findIndex(s => s.key === sec.key);
+  if (idx !== -1) sections[idx] = sec;
+  else sections.push(sec);
+  
+  sections.sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0));
+  localStorage.setItem("ignitia_team_sections", JSON.stringify(sections));
+
+  if (isSupabaseEnabled && supabase) {
+    try {
+      const payload = {
+        key: sec.key,
+        title: sec.title,
+        theme: sec.theme,
+        color_hsl: sec.colorHsl,
+        priority: sec.priority ?? 0,
+      };
+      const { error } = await supabase.from("team_sections").upsert(payload);
+      if (error) throw error;
+    } catch (e) {
+      console.warn("Supabase error saving team_section:", e);
+    }
+  }
+};
+
+export const deleteTeamSection = async (key: string) => {
+  const sections = await getTeamSections();
+  const filtered = sections.filter(s => s.key !== key);
+  localStorage.setItem("ignitia_team_sections", JSON.stringify(filtered));
+
+  if (isSupabaseEnabled && supabase) {
+    try {
+      const { error } = await supabase.from("team_sections").delete().eq("key", key);
+      if (error) throw error;
+    } catch (e) {
+      console.warn("Supabase error deleting team_section:", e);
+    }
+  }
+};
+
 // ─── Events Datastore ──────────────────────────────────────────────────────────
 export const getEvents = async (): Promise<EventType[]> => {
   if (isSupabaseEnabled && supabase) {

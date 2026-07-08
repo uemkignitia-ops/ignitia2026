@@ -35,6 +35,12 @@ import {
   deleteGalleryItem,
   seedInitialData,
   uploadImageFile,
+  getSponsorCategories,
+  saveSponsorCategory,
+  deleteSponsorCategory,
+  getTeamSections,
+  saveTeamSection,
+  deleteTeamSection,
 } from "@/lib/datastore";
 import { EventType } from "@/pages/Events";
 import { Member } from "@/pages/Team";
@@ -798,18 +804,49 @@ const SponsorsPanel = ({
   validateAndUploadImage: (file: File, folder: string) => Promise<string>;
 }) => {
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("gold");
+  const [category, setCategory] = useState("");
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
 
-  const categoriesMap = [
-    { key: "gold", label: "Gold Sponsors" },
-    { key: "silver", label: "Silver Sponsors" },
-    { key: "bronze", label: "Bronze Sponsors" },
-    { key: "hosting", label: "Hosting Partner" },
-    { key: "community", label: "Community Partner" },
-    { key: "ongoing", label: "Ongoing Sponsors" },
-  ];
+  // Dynamic category editor states
+  const [categoriesList, setCategoriesList] = useState<{ key: string; title: string; accent?: string; priority?: number }[]>([]);
+  const [newCatKey, setNewCatKey] = useState("");
+  const [newCatTitle, setNewCatTitle] = useState("");
+  const [newCatAccent, setNewCatAccent] = useState("from-amber-500 to-yellow-400");
+  const [editingCatKey, setEditingCatKey] = useState<string | null>(null);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+
+  const handleDrop = async (targetIndex: number) => {
+    if (draggedIndex === null || draggedIndex === targetIndex) return;
+    const reordered = [...categoriesList];
+    const [draggedItem] = reordered.splice(draggedIndex, 1);
+    reordered.splice(targetIndex, 0, draggedItem);
+    
+    const updated = reordered.map((item, i) => ({
+      ...item,
+      priority: i,
+    }));
+    
+    setCategoriesList(updated);
+    setDraggedIndex(null);
+
+    for (const cat of updated) {
+      await saveSponsorCategory(cat);
+    }
+    onUpdate();
+  };
+
+  const fetchCategories = async () => {
+    const list = await getSponsorCategories();
+    setCategoriesList(list);
+    if (list.length > 0 && !category) {
+      setCategory(list[0].key);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -820,7 +857,7 @@ const SponsorsPanel = ({
     setSaving(true);
     try {
       const url = await validateAndUploadImage(logoFile, "sponsor_logos");
-      await saveSponsor({ name, logo: url, category });
+      await saveSponsor({ name, logo: url, category: category || "gold" });
       toast.success("Upload successful: Sponsor card added successfully.");
       setName("");
       setLogoFile(null);
@@ -862,81 +899,216 @@ const SponsorsPanel = ({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        {/* Form uploader */}
-        <form onSubmit={handleSubmit} className="space-y-6 bg-[#0c0b10] border border-white/5 p-6 rounded-xl relative h-fit font-mono text-xs">
-          <h3 className="font-heading font-bold text-lg text-white uppercase mb-2">New Sponsor Entry</h3>
+        {/* Left column forms */}
+        <div className="space-y-8 lg:col-span-1">
+          {/* Form uploader */}
+          <form onSubmit={handleSubmit} className="space-y-6 bg-[#0c0b10] border border-white/5 p-6 rounded-xl relative h-fit font-mono text-xs">
+            <h3 className="font-heading font-bold text-lg text-white uppercase mb-2">New Sponsor Entry</h3>
 
-          <div className="space-y-1">
-            <label className="text-white/40 block">Sponsor Brand Name</label>
-            <input
-              type="text"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white font-mono"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-white/40 block">Assign Row Tier</label>
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white"
-            >
-              {categoriesMap.map((c) => (
-                <option key={c.key} value={c.key}>{c.label}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-white/40 block">Logo Image (Only JPG/JPEG/PNG)</label>
-            <div className="flex items-center gap-3">
+            <div className="space-y-1">
+              <label className="text-white/40 block">Sponsor Brand Name</label>
               <input
-                type="file"
-                accept=".jpg,.jpeg,.png,image/png,image/jpeg"
-                onChange={(e) => setLogoFile(e.target.files?.[0] || null)}
-                className="hidden"
-                id="sponsor-logo-file"
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white font-mono"
               />
-              <label
-                htmlFor="sponsor-logo-file"
-                className="flex items-center justify-center gap-2 border border-white/10 hover:border-primary/50 bg-[#111015] p-3 rounded-lg text-white cursor-pointer select-none transition-colors"
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-white/40 block">Assign Row Tier</label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white"
               >
-                <Upload size={14} />
-                Upload Logo
-              </label>
-              <span className="text-white/40 truncate text-[11px] max-w-[120px]">
-                {logoFile ? logoFile.name : "No File Chosen"}
-              </span>
+                {categoriesList.map((c) => (
+                  <option key={c.key} value={c.key}>{c.title}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-white/40 block">Logo Image (Only JPG/JPEG/PNG)</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="file"
+                  accept=".jpg,.jpeg,.png,image/png,image/jpeg"
+                  onChange={(e) => setLogoFile(e.target.files?.[0] || null)}
+                  className="hidden"
+                  id="sponsor-logo-file"
+                />
+                <label
+                  htmlFor="sponsor-logo-file"
+                  className="flex items-center justify-center gap-2 border border-white/10 hover:border-primary/50 bg-[#111015] p-3 rounded-lg text-white cursor-pointer select-none transition-colors"
+                >
+                  <Upload size={14} />
+                  Upload Logo
+                </label>
+                <span className="text-white/40 truncate text-[11px] max-w-[120px]">
+                  {logoFile ? logoFile.name : "No File Chosen"}
+                </span>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={saving}
+              className="glow-button w-full !py-3 inline-flex items-center justify-center gap-2 cursor-pointer font-heading font-black tracking-wider text-xs"
+            >
+              {saving ? (
+                <>
+                  <Loader2 className="w-4 h-4 text-white animate-spin" />
+                  Uploading Assets...
+                </>
+              ) : (
+                "Deploy Sponsor Logo"
+              )}
+            </button>
+          </form>
+
+          {/* Dynamic Categories Editor */}
+          <div className="space-y-6 bg-[#0c0b10] border border-white/5 p-6 rounded-xl relative h-fit font-mono text-xs">
+            <h3 className="font-heading font-bold text-lg text-white uppercase mb-2">Manage Sponsor Tiers</h3>
+            
+            <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+              {categoriesList.map((cat, idx) => (
+                <div 
+                  key={cat.key} 
+                  draggable
+                  onDragStart={() => setDraggedIndex(idx)}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={() => handleDrop(idx)}
+                  className={`flex justify-between items-center bg-[#111015] p-2.5 rounded border border-white/5 text-white/80 cursor-grab active:cursor-grabbing hover:bg-[#15141b] transition-colors ${draggedIndex === idx ? "opacity-30 border-dashed border-primary" : ""}`}
+                >
+                  <div className="truncate pr-2 flex items-center gap-2">
+                    <span className="text-white/20 select-none text-xs">☰</span>
+                    <div className="truncate">
+                      <span className="font-bold block truncate">{cat.title}</span>
+                      <span className="block text-[9px] text-white/40 uppercase tracking-widest mt-0.5">Key: {cat.key}</span>
+                    </div>
+                  </div>
+                  <div className="flex gap-1.5 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingCatKey(cat.key);
+                        setNewCatKey(cat.key);
+                        setNewCatTitle(cat.title);
+                        setNewCatAccent(cat.accent || "from-amber-500 to-yellow-400");
+                      }}
+                      className="text-primary hover:text-primary-foreground font-bold px-1.5 py-0.5 rounded border border-primary/20 bg-primary/5 cursor-pointer text-[9px] uppercase"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        if (window.confirm(`Are you sure you want to delete the "${cat.title}" tier? This does not delete the sponsors in it; they will need to be re-assigned.`)) {
+                          await deleteSponsorCategory(cat.key);
+                          toast.success("Category deleted.");
+                          fetchCategories();
+                        }
+                      }}
+                      className="text-red-400 hover:text-red-500 font-bold px-1.5 py-0.5 rounded border border-red-500/20 bg-red-500/5 cursor-pointer text-[9px] uppercase"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="border-t border-white/5 pt-4 space-y-3">
+              <h4 className="font-bold text-white/80 uppercase">{editingCatKey ? "Edit Tier" : "Create New Tier"}</h4>
+              
+              <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-1">
+                  <label className="text-white/40 block text-[9px]">Tier Key</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. platinum"
+                    value={newCatKey}
+                    onChange={(e) => setNewCatKey(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""))}
+                    disabled={!!editingCatKey}
+                    className="w-full bg-[#111015] border border-white/10 p-2.5 rounded text-white font-mono"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-white/40 block text-[9px]">Display Title</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Platinum Sponsors"
+                    value={newCatTitle}
+                    onChange={(e) => setNewCatTitle(e.target.value)}
+                    className="w-full bg-[#111015] border border-white/10 p-2.5 rounded text-white"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-white/40 block text-[9px]">Gradients Class</label>
+                <input
+                  type="text"
+                  placeholder="e.g. from-purple-500 to-indigo-500"
+                  value={newCatAccent}
+                  onChange={(e) => setNewCatAccent(e.target.value)}
+                  className="w-full bg-[#111015] border border-white/10 p-2.5 rounded text-white font-mono"
+                />
+              </div>
+
+              <div className="flex gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    if (!newCatKey || !newCatTitle) {
+                      toast.error("Key and Display Title are required.");
+                      return;
+                    }
+                    await saveSponsorCategory({
+                      key: newCatKey,
+                      title: newCatTitle,
+                      accent: newCatAccent
+                    });
+                    toast.success(editingCatKey ? "Category tier updated." : "New tier created.");
+                    setNewCatKey("");
+                    setNewCatTitle("");
+                    setNewCatAccent("from-amber-500 to-yellow-400");
+                    setEditingCatKey(null);
+                    fetchCategories();
+                  }}
+                  className="flex-1 bg-primary/20 hover:bg-primary/30 text-white font-mono uppercase px-3 py-2 rounded-lg cursor-pointer text-center font-bold"
+                >
+                  {editingCatKey ? "Save Changes" : "Save Tier"}
+                </button>
+                {editingCatKey && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setNewCatKey("");
+                      setNewCatTitle("");
+                      setNewCatAccent("from-amber-500 to-yellow-400");
+                      setEditingCatKey(null);
+                    }}
+                    className="bg-white/5 hover:bg-white/10 text-white/60 px-3 py-2 rounded-lg cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
             </div>
           </div>
-
-          <button
-            type="submit"
-            disabled={saving}
-            className="glow-button w-full !py-3 inline-flex items-center justify-center gap-2 cursor-pointer font-heading font-black tracking-wider text-xs"
-          >
-            {saving ? (
-              <>
-                <Loader2 className="w-4 h-4 text-white animate-spin" />
-                Uploading Assets...
-              </>
-            ) : (
-              "Deploy Sponsor Logo"
-            )}
-          </button>
-        </form>
+        </div>
 
         {/* Existing sponsors and Shifting Actions */}
         <div className="lg:col-span-2 space-y-8">
-          {categoriesMap.map((cat) => {
+          {categoriesList.map((cat) => {
             const list = sponsors.filter((s) => s.category === cat.key);
             return (
               <div key={cat.key} className="space-y-4">
                 <h3 className="font-heading font-bold text-sm text-amber-500 uppercase tracking-widest border-b border-white/5 pb-2">
-                  {cat.label} ({list.length})
+                  {cat.title} ({list.length})
                 </h3>
                 {list.length === 0 ? (
                   <p className="text-white/20 font-mono text-[10px] uppercase">No partners deployed in this tier.</p>
@@ -959,7 +1131,7 @@ const SponsorsPanel = ({
                               className="bg-[#111015] border border-white/10 px-2.5 py-1.5 rounded text-white text-[10px]"
                               title="Shift Category Section"
                             >
-                              {categoriesMap.map((c) => (
+                              {categoriesList.map((c) => (
                                 <option key={c.key} value={c.key}>{c.key.toUpperCase()}</option>
                               ))}
                             </select>
@@ -1005,19 +1177,53 @@ const TeamPanel = ({
     department: "",
     bio: "",
     expertise: [],
-    section: "leads",
+    section: "",
   });
 
   const [expInput, setExpInput] = useState("");
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
 
-  const sectionsList = [
-    { key: "leads", label: "Lead Convenors (Row 1)" },
-    { key: "organizers", label: "Organizers (Row 2)" },
-    { key: "core", label: "Core Members (Row 3)" },
-    { key: "domain", label: "Domain Leads (Row 4)" },
-  ];
+  // Dynamic section editor states
+  const [sectionsListState, setSectionsListState] = useState<{ key: string; title: string; theme?: string; colorHsl?: string; priority?: number }[]>([]);
+  const [newSecKey, setNewSecKey] = useState("");
+  const [newSecTitle, setNewSecTitle] = useState("");
+  const [newSecTheme, setNewSecTheme] = useState("purple");
+  const [newSecColorHsl, setNewSecColorHsl] = useState("270 70% 60%");
+  const [editingSecKey, setEditingSecKey] = useState<string | null>(null);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+
+  const handleDrop = async (targetIndex: number) => {
+    if (draggedIndex === null || draggedIndex === targetIndex) return;
+    const reordered = [...sectionsListState];
+    const [draggedItem] = reordered.splice(draggedIndex, 1);
+    reordered.splice(targetIndex, 0, draggedItem);
+    
+    const updated = reordered.map((item, i) => ({
+      ...item,
+      priority: i,
+    }));
+    
+    setSectionsListState(updated);
+    setDraggedIndex(null);
+
+    for (const sec of updated) {
+      await saveTeamSection(sec);
+    }
+    onUpdate();
+  };
+
+  const fetchSections = async () => {
+    const list = await getTeamSections();
+    setSectionsListState(list);
+    if (list.length > 0 && !form.section) {
+      setForm((prev) => ({ ...prev, section: list[0].key }));
+    }
+  };
+
+  useEffect(() => {
+    fetchSections();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1034,6 +1240,7 @@ const TeamPanel = ({
       
       const payload = {
         ...form,
+        section: form.section || (sectionsListState[0]?.key || "leads"),
         photoUrl: finalPhoto,
         initials: form.initials || form.name.split(" ").map((n) => n[0]).join("").toUpperCase().substring(0, 2),
       } as any;
@@ -1050,7 +1257,7 @@ const TeamPanel = ({
         department: "",
         bio: "",
         expertise: [],
-        section: "leads",
+        section: sectionsListState[0]?.key || "leads",
       });
       setPhotoFile(null);
       onUpdate();
@@ -1081,175 +1288,329 @@ const TeamPanel = ({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        {/* Form container */}
-        <form onSubmit={handleSubmit} className="lg:col-span-1 space-y-5 bg-[#0c0b10] border border-white/5 p-6 rounded-xl relative h-fit font-mono text-xs">
-          <h3 className="font-heading font-bold text-lg text-white uppercase mb-2">Army Member Profile</h3>
+        {/* Left column forms */}
+        <div className="space-y-8 lg:col-span-1">
+          {/* Form container */}
+          <form onSubmit={handleSubmit} className="space-y-5 bg-[#0c0b10] border border-white/5 p-6 rounded-xl relative h-fit font-mono text-xs">
+            <h3 className="font-heading font-bold text-lg text-white uppercase mb-2">Army Member Profile</h3>
 
-          <div className="space-y-1">
-            <label className="text-white/40 block">Full Name <span className="text-primary/70">*</span></label>
-            <input
-              type="text"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              placeholder="e.g. Snehashish Das"
-              className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white placeholder-white/20"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-white/40 block">Position / Role Label <span className="text-white/20 text-[9px] normal-case">(optional)</span></label>
-            <input
-              type="text"
-              value={form.role}
-              onChange={(e) => setForm({ ...form, role: e.target.value })}
-              placeholder="e.g. Lead Convenor"
-              className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white placeholder-white/20"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-white/40 block">Initials (e.g. SD)</label>
+              <label className="text-white/40 block">Full Name <span className="text-primary/70">*</span></label>
               <input
                 type="text"
-                value={form.initials}
-                onChange={(e) => setForm({ ...form, initials: e.target.value.toUpperCase().substring(0, 2) })}
-                className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                placeholder="e.g. Snehashish Das"
+                className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white placeholder-white/20"
               />
             </div>
+
             <div className="space-y-1">
-              <label className="text-white/40 block">Section Row</label>
-              <select
-                value={form.section}
-                onChange={(e) => setForm({ ...form, section: e.target.value })}
-                className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white"
-              >
-                {sectionsList.map((s) => (
-                  <option key={s.key} value={s.key}>{s.key.toUpperCase()}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-white/40 block">LinkedIn Profile Link</label>
-            <input
-              type="text"
-              value={form.linkedin}
-              onChange={(e) => setForm({ ...form, linkedin: e.target.value })}
-              className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-white/40 block">Department / Team Area</label>
-            <input
-              type="text"
-              value={form.department || ""}
-              onChange={(e) => setForm({ ...form, department: e.target.value })}
-              className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-white/40 block">Profile Picture (Only JPG/JPEG/PNG)</label>
-            <div className="flex items-center gap-3">
-              <input
-                type="file"
-                accept=".jpg,.jpeg,.png,image/png,image/jpeg"
-                onChange={(e) => setPhotoFile(e.target.files?.[0] || null)}
-                className="hidden"
-                id="team-photo-file"
-              />
-              <label
-                htmlFor="team-photo-file"
-                className="flex items-center justify-center gap-2 border border-white/10 hover:border-primary/50 bg-[#111015] p-3 rounded-lg text-white cursor-pointer select-none transition-colors"
-              >
-                <Upload size={14} />
-                Upload Photo
-              </label>
-              <span className="text-white/40 truncate text-[11px] max-w-[120px]">
-                {photoFile ? photoFile.name : (form as any).photoUrl ? "Loaded: Existing URL" : "No File Chosen"}
-              </span>
-            </div>
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-white/40 block">Profile Bio Summary</label>
-            <textarea
-              value={form.bio || ""}
-              onChange={(e) => setForm({ ...form, bio: e.target.value })}
-              className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white h-20 resize-none"
-            />
-          </div>
-
-          {/* Dynamic Expertise list */}
-          <div className="space-y-3 pt-2 border-t border-white/5">
-            <label className="text-white/40 block">Expertise Skills</label>
-            <div className="flex gap-2">
+              <label className="text-white/40 block">Position / Role Label <span className="text-white/20 text-[9px] normal-case">(optional)</span></label>
               <input
                 type="text"
-                placeholder="expertise..."
-                value={expInput}
-                onChange={(e) => setExpInput(e.target.value)}
-                className="flex-1 bg-[#111015] border border-white/10 p-2.5 rounded-lg text-white"
+                value={form.role}
+                onChange={(e) => setForm({ ...form, role: e.target.value })}
+                placeholder="e.g. Lead Convenor"
+                className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white placeholder-white/20"
               />
-              <button
-                type="button"
-                onClick={() => {
-                  if (expInput) {
-                    setForm({ ...form, expertise: [...(form.expertise || []), expInput] });
-                    setExpInput("");
-                  }
-                }}
-                className="bg-primary/20 hover:bg-primary/30 text-white px-3 rounded-lg cursor-pointer"
-              >
-                Add
-              </button>
             </div>
-            <div className="flex flex-wrap gap-1.5 pt-1">
-              {form.expertise?.map((exp, idx) => (
-                <span
-                  key={idx}
-                  className="bg-[#111015] border border-white/5 px-2 py-0.5 rounded text-[10px] text-white flex items-center gap-1.5"
+
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <label className="text-white/40 block">Initials (e.g. SD)</label>
+                <input
+                  type="text"
+                  value={form.initials}
+                  onChange={(e) => setForm({ ...form, initials: e.target.value.toUpperCase().substring(0, 2) })}
+                  className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-white/40 block">Section Row</label>
+                <select
+                  value={form.section}
+                  onChange={(e) => setForm({ ...form, section: e.target.value })}
+                  className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white"
                 >
-                  {exp}
-                  <button
-                    type="button"
-                    onClick={() => setForm({ ...form, expertise: form.expertise?.filter((_, i) => i !== idx) })}
-                    className="text-red-400 font-bold hover:text-red-500 cursor-pointer"
-                  >
-                    ×
-                  </button>
+                  {sectionsListState.map((s) => (
+                    <option key={s.key} value={s.key}>{s.title}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-white/40 block">LinkedIn Profile Link</label>
+              <input
+                type="text"
+                value={form.linkedin}
+                onChange={(e) => setForm({ ...form, linkedin: e.target.value })}
+                className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-white/40 block">Department / Team Area</label>
+              <input
+                type="text"
+                value={form.department || ""}
+                onChange={(e) => setForm({ ...form, department: e.target.value })}
+                className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-white/40 block">Profile Picture (Only JPG/JPEG/PNG)</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="file"
+                  accept=".jpg,.jpeg,.png,image/png,image/jpeg"
+                  onChange={(e) => setPhotoFile(e.target.files?.[0] || null)}
+                  className="hidden"
+                  id="team-photo-file"
+                />
+                <label
+                  htmlFor="team-photo-file"
+                  className="flex items-center justify-center gap-2 border border-white/10 hover:border-primary/50 bg-[#111015] p-3 rounded-lg text-white cursor-pointer select-none transition-colors"
+                >
+                  <Upload size={14} />
+                  Upload Photo
+                </label>
+                <span className="text-white/40 truncate text-[11px] max-w-[120px]">
+                  {photoFile ? photoFile.name : (form as any).photoUrl ? "Loaded: Existing URL" : "No File Chosen"}
                 </span>
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-white/40 block">Profile Bio Summary</label>
+              <textarea
+                value={form.bio || ""}
+                onChange={(e) => setForm({ ...form, bio: e.target.value })}
+                className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white h-20 resize-none"
+              />
+            </div>
+
+            {/* Dynamic Expertise list */}
+            <div className="space-y-3 pt-2 border-t border-white/5">
+              <label className="text-white/40 block">Expertise Skills</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="expertise..."
+                  value={expInput}
+                  onChange={(e) => setExpInput(e.target.value)}
+                  className="flex-1 bg-[#111015] border border-white/10 p-2.5 rounded-lg text-white"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (expInput) {
+                      setForm({ ...form, expertise: [...(form.expertise || []), expInput] });
+                      setExpInput("");
+                    }
+                  }}
+                  className="bg-primary/20 hover:bg-primary/30 text-white px-3 rounded-lg cursor-pointer font-bold"
+                >
+                  Add
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {form.expertise?.map((exp, idx) => (
+                  <span
+                    key={idx}
+                    className="bg-[#111015] border border-white/5 px-2 py-0.5 rounded text-[10px] text-white flex items-center gap-1.5"
+                  >
+                    {exp}
+                    <button
+                      type="button"
+                      onClick={() => setForm({ ...form, expertise: form.expertise?.filter((_, i) => i !== idx) })}
+                      className="text-red-400 font-bold hover:text-red-500 cursor-pointer"
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={saving}
+              className="glow-button w-full !py-3 inline-flex items-center justify-center gap-2 cursor-pointer font-heading font-black tracking-wider text-xs"
+            >
+              {saving ? (
+                <>
+                  <Loader2 className="w-4 h-4 text-white animate-spin" />
+                  Processing data...
+                </>
+              ) : (
+                "Deploy Member Card"
+              )}
+            </button>
+          </form>
+
+          {/* Manage Sections Section */}
+          <div className="space-y-6 bg-[#0c0b10] border border-white/5 p-6 rounded-xl relative h-fit font-mono text-xs">
+            <h3 className="font-heading font-bold text-lg text-white uppercase mb-2">Manage Team Sections</h3>
+            
+            <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+              {sectionsListState.map((sec, idx) => (
+                <div 
+                  key={sec.key} 
+                  draggable
+                  onDragStart={() => setDraggedIndex(idx)}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={() => handleDrop(idx)}
+                  className={`flex justify-between items-center bg-[#111015] p-2.5 rounded border border-white/5 text-white/80 cursor-grab active:cursor-grabbing hover:bg-[#15141b] transition-colors ${draggedIndex === idx ? "opacity-30 border-dashed border-primary" : ""}`}
+                >
+                  <div className="truncate pr-2 flex items-center gap-2">
+                    <span className="text-white/20 select-none text-xs">☰</span>
+                    <div className="truncate">
+                      <span className="font-bold block truncate">{sec.title}</span>
+                      <span className="block text-[9px] text-white/40 uppercase tracking-widest mt-0.5">Key: {sec.key}</span>
+                    </div>
+                  </div>
+                  <div className="flex gap-1.5 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingSecKey(sec.key);
+                        setNewSecKey(sec.key);
+                        setNewSecTitle(sec.title);
+                        setNewSecTheme(sec.theme || "purple");
+                        setNewSecColorHsl(sec.colorHsl || "270 70% 60%");
+                      }}
+                      className="text-primary hover:text-primary-foreground font-bold px-1.5 py-0.5 rounded border border-primary/20 bg-primary/5 cursor-pointer text-[9px] uppercase"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        if (window.confirm(`Are you sure you want to delete the "${sec.title}" section? This does not delete member cards; they will need to be re-assigned.`)) {
+                          await deleteTeamSection(sec.key);
+                          toast.success("Section deleted.");
+                          fetchSections();
+                        }
+                      }}
+                      className="text-red-400 hover:text-red-500 font-bold px-1.5 py-0.5 rounded border border-red-500/20 bg-red-500/5 cursor-pointer text-[9px] uppercase"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
               ))}
             </div>
-          </div>
 
-          <button
-            type="submit"
-            disabled={saving}
-            className="glow-button w-full !py-3 inline-flex items-center justify-center gap-2 cursor-pointer font-heading font-black tracking-wider text-xs"
-          >
-            {saving ? (
-              <>
-                <Loader2 className="w-4 h-4 text-white animate-spin" />
-                Processing data...
-              </>
-            ) : (
-              "Deploy Member Card"
-            )}
-          </button>
-        </form>
+            <div className="border-t border-white/5 pt-4 space-y-3">
+              <h4 className="font-bold text-white/80 uppercase">{editingSecKey ? "Edit Section" : "Create New Section"}</h4>
+              
+              <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-1">
+                  <label className="text-white/40 block text-[9px]">Section Key</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. advisory"
+                    value={newSecKey}
+                    onChange={(e) => setNewSecKey(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""))}
+                    disabled={!!editingSecKey}
+                    className="w-full bg-[#111015] border border-white/10 p-2.5 rounded text-white font-mono"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-white/40 block text-[9px]">Display Title</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Advisory Committee"
+                    value={newSecTitle}
+                    onChange={(e) => setNewSecTitle(e.target.value)}
+                    className="w-full bg-[#111015] border border-white/10 p-2.5 rounded text-white"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-1">
+                  <label className="text-white/40 block text-[9px]">Theme Color</label>
+                  <select
+                    value={newSecTheme}
+                    onChange={(e) => setNewSecTheme(e.target.value)}
+                    className="w-full bg-[#111015] border border-white/10 p-2.5 rounded text-white"
+                  >
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="purple">Purple</option>
+                  </select>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-white/40 block text-[9px]">Glow HSL Value</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 270 70% 60%"
+                    value={newSecColorHsl}
+                    onChange={(e) => setNewSecColorHsl(e.target.value)}
+                    className="w-full bg-[#111015] border border-white/10 p-2.5 rounded text-white font-mono"
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    if (!newSecKey || !newSecTitle) {
+                      toast.error("Key and Display Title are required.");
+                      return;
+                    }
+                    await saveTeamSection({
+                      key: newSecKey,
+                      title: newSecTitle,
+                      theme: newSecTheme,
+                      colorHsl: newSecColorHsl
+                    });
+                    toast.success(editingSecKey ? "Section updated." : "New section created.");
+                    setNewSecKey("");
+                    setNewSecTitle("");
+                    setNewSecTheme("purple");
+                    setNewSecColorHsl("270 70% 60%");
+                    setEditingSecKey(null);
+                    fetchSections();
+                  }}
+                  className="flex-1 bg-primary/20 hover:bg-primary/30 text-white font-mono uppercase px-3 py-2 rounded-lg cursor-pointer text-center font-bold"
+                >
+                  {editingSecKey ? "Save Changes" : "Save Section"}
+                </button>
+                {editingSecKey && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setNewSecKey("");
+                      setNewSecTitle("");
+                      setNewSecTheme("purple");
+                      setNewSecColorHsl("270 70% 60%");
+                      setEditingSecKey(null);
+                    }}
+                    className="bg-white/5 hover:bg-white/10 text-white/60 px-3 py-2 rounded-lg cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Existing team grid list */}
         <div className="lg:col-span-2 space-y-8">
-          {sectionsList.map((sec) => {
+          {sectionsListState.map((sec) => {
             const list = team.filter((m) => m.section === sec.key);
             return (
               <div key={sec.key} className="space-y-4">
                 <h3 className="font-heading font-bold text-sm text-amber-500 uppercase tracking-widest border-b border-white/5 pb-2">
-                  {sec.label} ({list.length})
+                  {sec.title} ({list.length})
                 </h3>
                 {list.length === 0 ? (
                   <p className="text-white/20 font-mono text-[10px] uppercase">No members deployed in this tier.</p>

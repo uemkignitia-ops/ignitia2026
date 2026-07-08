@@ -10,7 +10,7 @@ import { X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
-import ParticleField from "@/components/ParticleField";
+import ParticleField from "@/componencts/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import ScrollProgress from "@/components/ScrollProgress";
