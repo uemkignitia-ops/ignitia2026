@@ -72,7 +72,7 @@ const Index = () => {
 
     const fallbackId = window.setTimeout(() => {
       setIsLoaded(true);
-    }, 3000);
+    }, 4500);
 
     return () => {
       window.removeEventListener("ignitia:loader-complete", onLoaderComplete);

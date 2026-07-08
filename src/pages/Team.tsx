@@ -352,17 +352,14 @@ const Team = () => {
     colorHsl: string;
   } | null>(null);
   const [teamList, setTeamList] = useState<any[]>([]);
+  const [sectionsList, setSectionsList] = useState<any[]>([]);
 
   useEffect(() => {
     import("@/lib/datastore").then((m) => {
       m.getTeam().then(setTeamList);
+      m.getTeamSections().then(setSectionsList);
     });
   }, []);
-
-  const leadConvenors = teamList.filter((m) => m.section === "leads");
-  const organizers = teamList.filter((m) => m.section === "organizers");
-  const coreMembers = teamList.filter((m) => m.section === "core");
-  const domainLeads = teamList.filter((m) => m.section === "domain");
 
   const handleOpenCard = useCallback((member: Member, colorHsl: string) => {
     setActiveCard({ member, colorHsl });
@@ -389,8 +386,6 @@ const Team = () => {
             }}
           />
 
-
-
             <div className="w-full flex justify-center z-[36] pointer-events-none text-center mt-8 mb-4">
               <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">
                 <span className="ignitia-citadel-title mx-auto" data-text="TEAM">
@@ -416,101 +411,36 @@ const Team = () => {
         {/* Team Grid Row Layout */}
         <section className="relative z-10 pb-32 max-w-7xl mx-auto px-4 md:px-8">
           
-          {/* Row 1: LEAD CONVENORS */}
-          {leadConvenors.length > 0 && (
-            <div className="flex flex-col items-center mb-24">
-              <div className="flex flex-col items-center justify-center mb-12 relative">
-                <div className="absolute w-32 h-[1px] bg-gradient-to-r from-transparent via-amber-500/40 to-transparent -top-4" />
-                <h2 className="font-heading font-black text-2xl md:text-3xl tracking-[0.25em] text-center uppercase text-amber-500 drop-shadow-[0_0_10px_rgba(245,158,11,0.45)]">
-                  LEAD CONVENORS
-                </h2>
-                <div className="w-16 h-0.5 bg-amber-500/60 mt-2 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
-              </div>
-              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-14 w-full">
-                {leadConvenors.map((member) => (
-                  <div 
-                    key={member.name} 
-                    onClick={() => handleOpenCard(member, "0 100% 50%")}
-                    className="w-[calc(50%-8px)] sm:w-64 max-w-[256px]"
-                  >
-                    <TeamCard member={member} theme="red" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+          {sectionsList.map((sec) => {
+            const members = teamList.filter((m) => m.section === sec.key);
+            if (members.length === 0) return null;
 
-          {/* Row 2: ORGANIZERS */}
-          {organizers.length > 0 && (
-            <div className="flex flex-col items-center mb-24">
-              <div className="flex flex-col items-center justify-center mb-12 relative">
-                <div className="absolute w-32 h-[1px] bg-gradient-to-r from-transparent via-amber-500/40 to-transparent -top-4" />
-                <h2 className="font-heading font-black text-2xl md:text-3xl tracking-[0.25em] text-center uppercase text-amber-500 drop-shadow-[0_0_10px_rgba(245,158,11,0.45)]">
-                  ORGANIZERS
-                </h2>
-                <div className="w-16 h-0.5 bg-amber-500/60 mt-2 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
-              </div>
-              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-14 w-full">
-                {organizers.map((member) => (
-                  <div 
-                    key={member.name} 
-                    onClick={() => handleOpenCard(member, "217 91% 60%")}
-                    className="w-[calc(50%-8px)] sm:w-64 max-w-[256px]"
-                  >
-                    <TeamCard member={member} theme="blue" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+            const themeColor = sec.theme || "purple";
+            const glowHsl = sec.colorHsl || "270 70% 60%";
 
-          {/* Row 3: CORE MEMBERS */}
-          {coreMembers.length > 0 && (
-            <div className="flex flex-col items-center mb-24">
-              <div className="flex flex-col items-center justify-center mb-12 relative">
-                <div className="absolute w-32 h-[1px] bg-gradient-to-r from-transparent via-amber-500/40 to-transparent -top-4" />
-                <h2 className="font-heading font-black text-2xl md:text-3xl tracking-[0.25em] text-center uppercase text-amber-500 drop-shadow-[0_0_10px_rgba(245,158,11,0.45)]">
-                  CORE MEMBERS
-                </h2>
-                <div className="w-16 h-0.5 bg-amber-500/60 mt-2 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
+            return (
+              <div key={sec.key} className="flex flex-col items-center mb-24">
+                <div className="flex flex-col items-center justify-center mb-12 relative">
+                  <div className="absolute w-32 h-[1px] bg-gradient-to-r from-transparent via-amber-500/40 to-transparent -top-4" />
+                  <h2 className="font-heading font-black text-2xl md:text-3xl tracking-[0.25em] text-center uppercase text-amber-500 drop-shadow-[0_0_10px_rgba(245,158,11,0.45)]">
+                    {sec.title}
+                  </h2>
+                  <div className="w-16 h-0.5 bg-amber-500/60 mt-2 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
+                </div>
+                <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-14 w-full">
+                  {members.map((member) => (
+                    <div 
+                      key={member.name} 
+                      onClick={() => handleOpenCard(member, glowHsl)}
+                      className="w-[calc(50%-8px)] sm:w-64 max-w-[256px]"
+                    >
+                      <TeamCard member={member} theme={themeColor as any} />
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-12 w-full">
-                {coreMembers.map((member) => (
-                  <div 
-                    key={member.name} 
-                    onClick={() => handleOpenCard(member, "142 71% 45%")}
-                    className="w-[calc(50%-8px)] sm:w-64 max-w-[256px]"
-                  >
-                    <TeamCard member={member} theme="green" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Row 4: DOMAIN LEADS */}
-          {domainLeads.length > 0 && (
-            <div className="flex flex-col items-center mb-20">
-              <div className="flex flex-col items-center justify-center mb-12 relative">
-                <div className="absolute w-32 h-[1px] bg-gradient-to-r from-transparent via-amber-500/40 to-transparent -top-4" />
-                <h2 className="font-heading font-black text-2xl md:text-3xl tracking-[0.25em] text-center uppercase text-amber-500 drop-shadow-[0_0_10px_rgba(245,158,11,0.45)]">
-                  DOMAIN LEADS
-                </h2>
-                <div className="w-16 h-0.5 bg-amber-500/60 mt-2 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
-              </div>
-              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-14 w-full">
-                {domainLeads.map((member) => (
-                  <div 
-                    key={member.name} 
-                    onClick={() => handleOpenCard(member, "270 70% 60%")}
-                    className="w-[calc(50%-8px)] sm:w-64 max-w-[256px]"
-                  >
-                    <TeamCard member={member} theme="purple" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+            );
+          })}
 
         </section>
 

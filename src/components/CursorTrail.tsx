@@ -1,13 +1,21 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const CursorTrail = () => {
   const location = useLocation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isAdmin = location.pathname.startsWith("/admin");
+  const [isLoaderDone, setIsLoaderDone] = useState(() => !!(window as any).__IGNITIA_LOADER_DONE__);
 
   useEffect(() => {
-    if (isAdmin) return;
+    if (isLoaderDone) return;
+    const handleComplete = () => setIsLoaderDone(true);
+    window.addEventListener("ignitia:loader-complete", handleComplete);
+    return () => window.removeEventListener("ignitia:loader-complete", handleComplete);
+  }, [isLoaderDone]);
+
+  useEffect(() => {
+    if (isAdmin || !isLoaderDone) return;
     
     // Skip entirely on touch devices
     if (window.matchMedia("(pointer: coarse)").matches) return;
@@ -19,6 +27,8 @@ const CursorTrail = () => {
     if (!ctx) return;
 
     let animId: number;
+    let isLoopActive = false;
+    let lastMoveTime = Date.now();
 
     // Trail points: position + remaining life + velocity
     const trail: { x: number; y: number; vx: number; vy: number; life: number }[] = [];
@@ -30,6 +40,23 @@ const CursorTrail = () => {
     // Track whether cursor has ever entered the window
     let hasEntered = true;
 
+    // Draw main cursor glow & dot
+    const drawCursorGlowAndDot = () => {
+      const glow = ctx.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, 15);
+      glow.addColorStop(0, "rgba(255, 255, 255, 0.35)"); 
+      glow.addColorStop(1, "rgba(255, 255, 255, 0)");
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(cursorX, cursorY, 15, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Tiny bright core dot
+      ctx.beginPath();
+      ctx.arc(cursorX, cursorY, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
+      ctx.fill();
+    };
+
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
       canvas.width = window.innerWidth * dpr;
@@ -37,17 +64,12 @@ const CursorTrail = () => {
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (!isLoopActive) {
+        ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+        drawCursorGlowAndDot();
+      }
     };
     resize();
-
-    const onMove = (e: MouseEvent) => {
-      cursorX = e.clientX;
-      cursorY = e.clientY;
-      hasEntered = true;
-    };
-
-    window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", onMove, { passive: true });
 
     // Previous position for distance-based trail spawning
     let prevX = cursorX;
@@ -57,7 +79,9 @@ const CursorTrail = () => {
       ctx.clearRect(0, 0, canvas.width / (window.devicePixelRatio || 1), canvas.height / (window.devicePixelRatio || 1));
 
       if (!hasEntered) {
-        animId = requestAnimationFrame(draw);
+        if (isLoopActive) {
+          animId = requestAnimationFrame(draw);
+        }
         return;
       }
 
@@ -116,33 +140,54 @@ const CursorTrail = () => {
         if (trail[i].life < 0.01) trail.splice(i, 1);
       }
 
-      // Main cursor glow — drawn directly at mouse position (zero lag)
-      const glow = ctx.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, 15);
-      glow.addColorStop(0, "rgba(255, 255, 255, 0.35)"); 
-      glow.addColorStop(1, "rgba(255, 255, 255, 0)");
-      ctx.fillStyle = glow;
-      ctx.beginPath();
-      ctx.arc(cursorX, cursorY, 15, 0, Math.PI * 2);
-      ctx.fill();
+      // Draw active cursor glow & dot
+      drawCursorGlowAndDot();
 
-      // Tiny bright core dot
-      ctx.beginPath();
-      ctx.arc(cursorX, cursorY, 2.2, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
-      ctx.fill();
+      // If trail has faded completely and mouse is stationary, go idle
+      if (trail.length === 0 && Date.now() - lastMoveTime > 250) {
+        isLoopActive = false;
+        return;
+      }
 
       animId = requestAnimationFrame(draw);
     };
-    draw();
+
+    const startLoop = () => {
+      if (!isLoopActive) {
+        isLoopActive = true;
+        animId = requestAnimationFrame(draw);
+      }
+    };
+
+    const onMove = (e: MouseEvent) => {
+      if (e.clientX === cursorX && e.clientY === cursorY) {
+        return;
+      }
+      if (!isLoopActive) {
+        prevX = e.clientX;
+        prevY = e.clientY;
+      }
+      cursorX = e.clientX;
+      cursorY = e.clientY;
+      hasEntered = true;
+      lastMoveTime = Date.now();
+      startLoop();
+    };
+
+    // Draw the initial static cursor point
+    drawCursorGlowAndDot();
+
+    window.addEventListener("resize", resize);
+    window.addEventListener("mousemove", onMove, { passive: true });
 
     return () => {
-      cancelAnimationFrame(animId);
+      if (animId) cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMove);
     };
-  }, [isAdmin]);
+  }, [isAdmin, isLoaderDone]);
 
-  if (isAdmin) return null;
+  if (isAdmin || !isLoaderDone) return null;
 
   return (
     <canvas
