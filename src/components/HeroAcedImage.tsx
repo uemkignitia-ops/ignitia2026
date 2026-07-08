@@ -8,9 +8,9 @@ export default function HeroAcedImage() {
 
   return (
     <motion.div
-      className="relative w-[410px] sm:w-[510px] lg:w-[650px] max-w-none select-none -ml-20 sm:-ml-28 lg:-ml-44"
-      initial={{ opacity: 0, y: 30, scale: 0.92 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
+      className="relative w-full max-w-[380px] select-none mx-auto mt-32"
+      initial={{ opacity: 0, y: 110, scale: 0.96 }}
+      animate={{ opacity: 1, y: 90, scale: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
     >
 
@@ -30,8 +30,8 @@ export default function HeroAcedImage() {
         className="relative"
       >
         <img
-          src="/images/Terminal.png"
-          alt="ACED Ignitia visual"
+          src="/Home page card -- website.png"
+          alt="Ignitia Access Card"
           className="w-full h-auto object-contain"
         />
       </motion.div>

@@ -510,7 +510,8 @@ const SponsorsPage = () => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <motion.a
-                  href="/brochure.pdf"
+                  href="/IGNITIA SPONSORSHIP BROCHURE_.pdf"
+                  download="IGNITIA SPONSORSHIP BROCHURE_.pdf"
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
                   className="hero-primary-button pulse-cta flex items-center justify-center gap-3"
