@@ -333,22 +333,41 @@ const SponsorsPage = () => {
             {dynamicCategories.map((category, catIdx) => (
               <div key={catIdx} className="space-y-20">
                 {/* Category heading */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="flex items-center gap-5"
-                >
-                  <div
-                    className={`h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent`}
-                  />
-                  <h2 className="font-heading text-xl md:text-2xl font-bold uppercase tracking-[0.18em] text-white/70 text-center px-2">
-                    {category.masterHeading}
-                  </h2>
-                  <div
-                    className={`h-px flex-1 bg-gradient-to-l from-transparent via-white/15 to-transparent`}
-                  />
-                </motion.div>
+                {(() => {
+                  const tierData = category.tiers[0];
+                  const IconComponent = tierData.icon;
+                  return (
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, ease: "easeOut" }}
+                      className="flex flex-col items-center gap-2 w-full"
+                    >
+                      {/* Category heading row with dual lines beside the tier name */}
+                      <div className="flex items-center w-full gap-4 sm:gap-6">
+                        <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-white/15" />
+                        
+                        <h2 
+                          className={`font-heading text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-[0.18em] text-center bg-gradient-to-r ${category.accent} bg-clip-text text-transparent shrink-0 px-2`}
+                        >
+                          {category.masterHeading}
+                        </h2>
+                        
+                        <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-white/5 to-white/15" />
+                      </div>
+                      
+                      {/* Sub-indicator colored dot bar */}
+                      <div 
+                        className="w-16 h-0.5 rounded-full mt-1 opacity-70"
+                        style={{
+                          background: `linear-gradient(90deg, transparent, rgb(${category.accentRgb}), transparent)`,
+                          boxShadow: `0 0 10px rgba(${category.accentRgb}, 0.6)`
+                        }}
+                      />
+                    </motion.div>
+                  );
+                })()}
 
                 {/* Tiers within category */}
                 <div className="space-y-20">

@@ -7,7 +7,7 @@ const toSlug = (str: string) =>
   str.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 // ─── Cache version — bump this any time you change the default data ────────────
-const CACHE_VERSION = "v4_gallery_clean";
+const CACHE_VERSION = "v5_respect_cards";
 
 // On startup: clear any old-format caches that don't match the current version
 const storedCacheVersion = localStorage.getItem("ignitia_cache_version");
@@ -16,6 +16,8 @@ if (storedCacheVersion !== CACHE_VERSION) {
   localStorage.removeItem("ignitia_sponsors");
   localStorage.removeItem("ignitia_team");
   localStorage.removeItem("ignitia_gallery");
+  localStorage.removeItem("ignitia_team_sections");
+  localStorage.removeItem("ignitia_sponsor_categories");
   localStorage.setItem("ignitia_cache_version", CACHE_VERSION);
 }
 
@@ -394,7 +396,7 @@ const defaultSponsorsBackups = [
 const defaultTeamBackups: (Member & { section: "leads" | "organizers" | "core" | "domain" })[] = [
   {
     name: "Snehashish Das",
-    role: "Lead Convenor",
+    role: "Lead Organizer",
     initials: "SD",
     linkedin: "#",
     instagram: "#",
@@ -405,7 +407,7 @@ const defaultTeamBackups: (Member & { section: "leads" | "organizers" | "core" |
   },
   {
     name: "Priyanshu Mitra",
-    role: "Co-lead Convenor",
+    role: "Co-lead Organizer",
     initials: "PM",
     linkedin: "#",
     instagram: "#",
@@ -438,7 +440,7 @@ const defaultTeamBackups: (Member & { section: "leads" | "organizers" | "core" |
   },
   {
     name: "Anamika Mallick",
-    role: "Core Member",
+    role: "Core",
     initials: "AM",
     linkedin: "#",
     instagram: "#",
@@ -449,7 +451,7 @@ const defaultTeamBackups: (Member & { section: "leads" | "organizers" | "core" |
   },
   {
     name: "Anjanika Paul",
-    role: "Core Member",
+    role: "Core",
     initials: "AP",
     linkedin: "#",
     instagram: "#",
@@ -460,7 +462,7 @@ const defaultTeamBackups: (Member & { section: "leads" | "organizers" | "core" |
   },
   {
     name: "Soham Ray",
-    role: "Core Member",
+    role: "Core",
     initials: "SR",
     linkedin: "#",
     instagram: "#",
@@ -471,7 +473,7 @@ const defaultTeamBackups: (Member & { section: "leads" | "organizers" | "core" |
   },
   {
     name: "Subhamita Adhikari",
-    role: "Core Member",
+    role: "Core",
     initials: "SA",
     linkedin: "#",
     instagram: "#",
@@ -567,10 +569,10 @@ const defaultSponsorCategories = [
 ];
 
 const defaultTeamSections = [
-  { key: "leads", title: "Lead Convenors", theme: "red", colorHsl: "0 100% 50%" },
-  { key: "organizers", title: "Organizers", theme: "blue", colorHsl: "217 91% 60%" },
-  { key: "core", title: "Core Members", theme: "green", colorHsl: "142 71% 45%" },
-  { key: "domain", title: "Domain Leads", theme: "purple", colorHsl: "270 70% 60%" }
+  { key: "leads", title: "Lead Organizers", theme: "red", colorHsl: "15 100% 55%" },
+  { key: "organizers", title: "Organizers", theme: "orange", colorHsl: "32 100% 50%" },
+  { key: "core", title: "Cores", theme: "blue", colorHsl: "210 100% 60%" },
+  { key: "domain", title: "Domain Leads", theme: "purple", colorHsl: "275 80% 60%" }
 ];
 
 export const getSponsorCategories = async (): Promise<{ key: string; title: string; accent?: string; priority?: number }[]> => {
@@ -598,7 +600,7 @@ export const saveSponsorCategory = async (cat: { key: string; title: string; acc
   const idx = categories.findIndex(c => c.key === cat.key);
   if (idx !== -1) categories[idx] = cat;
   else categories.push(cat);
-  
+
   categories.sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0));
   localStorage.setItem("ignitia_sponsor_categories", JSON.stringify(categories));
 
@@ -659,7 +661,7 @@ export const saveTeamSection = async (sec: { key: string; title: string; theme?:
   const idx = sections.findIndex(s => s.key === sec.key);
   if (idx !== -1) sections[idx] = sec;
   else sections.push(sec);
-  
+
   sections.sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0));
   localStorage.setItem("ignitia_team_sections", JSON.stringify(sections));
 

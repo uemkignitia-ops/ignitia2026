@@ -110,7 +110,7 @@ const Dashboard = () => {
 
     const password = window.prompt("Enter Seed Authorization Password:");
     if (password === null) return; // User cancelled
-    
+
     setActionLoading(true);
     try {
       const headers: Record<string, string> = {
@@ -149,11 +149,11 @@ const Dashboard = () => {
   const validateAndUploadImage = async (file: File, folder: string): Promise<string> => {
     const validExtensions = ["jpg", "jpeg", "png"];
     const fileExt = file.name.split(".").pop()?.toLowerCase() || "";
-    
+
     if (!validExtensions.includes(fileExt)) {
       throw new Error("Invalid file format. Only JPG, JPEG, and PNG are permitted.");
     }
-    
+
     if (!isSupabaseEnabled) {
       // Offline fallback: convert to base64 for preview storage
       return new Promise((resolve, reject) => {
@@ -210,11 +210,10 @@ const Dashboard = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg font-mono text-xs uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
-                  active
-                    ? "bg-primary/10 border border-primary/30 text-white shadow-[0_0_15px_rgba(168,85,247,0.15)]"
-                    : "border border-transparent text-white/40 hover:text-white/80 hover:bg-white/5"
-                }`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg font-mono text-xs uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${active
+                  ? "bg-primary/10 border border-primary/30 text-white shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+                  : "border border-transparent text-white/40 hover:text-white/80 hover:bg-white/5"
+                  }`}
               >
                 <Icon size={14} />
                 {tab.label}
@@ -242,7 +241,7 @@ const Dashboard = () => {
             <RefreshCw size={11} className={actionLoading ? "animate-spin" : ""} />
             Seed Database
           </button>
-          
+
           <button
             onClick={handleLogout}
             className="flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-widest text-red-400 border border-red-500/30 hover:border-red-400 bg-red-500/5 hover:bg-red-500/10 py-2.5 rounded-lg transition-colors cursor-pointer"
@@ -358,12 +357,12 @@ const EventsPanel = ({
       if (coverFile) {
         finalCover = await validateAndUploadImage(coverFile, "event_covers");
       }
-      
+
       const payload: EventType = {
         ...(form as any),
         coverPhotoUrl: finalCover,
       };
-      
+
       await saveEvent(payload);
       toast.success("Upload successful: Event card saved successfully.");
       setForm({
@@ -451,9 +450,9 @@ const EventsPanel = ({
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
                 className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white"
               >
-              {["TECHNICAL", "NON-TECH", "GAMING", "ROBOTICS"].map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
+                {["TECHNICAL", "NON-TECH", "GAMING", "ROBOTICS"].map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
               </select>
             </div>
             <div className="space-y-1">
@@ -697,7 +696,7 @@ const EventsPanel = ({
 
             {/* Contacts Array Handler */}
             <div className="space-y-3 md:col-span-2 pt-4 border-t border-white/5">
-              <label className="text-white/40 block">Event Organiser Contacts</label>
+              <label className="text-white/40 block">Event Organizer Contacts</label>
               <div className="flex gap-2 flex-wrap sm:flex-nowrap">
                 <input
                   type="text"
@@ -821,12 +820,12 @@ const SponsorsPanel = ({
     const reordered = [...categoriesList];
     const [draggedItem] = reordered.splice(draggedIndex, 1);
     reordered.splice(targetIndex, 0, draggedItem);
-    
+
     const updated = reordered.map((item, i) => ({
       ...item,
       priority: i,
     }));
-    
+
     setCategoriesList(updated);
     setDraggedIndex(null);
 
@@ -971,11 +970,11 @@ const SponsorsPanel = ({
           {/* Dynamic Categories Editor */}
           <div className="space-y-6 bg-[#0c0b10] border border-white/5 p-6 rounded-xl relative h-fit font-mono text-xs">
             <h3 className="font-heading font-bold text-lg text-white uppercase mb-2">Manage Sponsor Tiers</h3>
-            
+
             <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
               {categoriesList.map((cat, idx) => (
-                <div 
-                  key={cat.key} 
+                <div
+                  key={cat.key}
                   draggable
                   onDragStart={() => setDraggedIndex(idx)}
                   onDragOver={(e) => e.preventDefault()}
@@ -1022,7 +1021,7 @@ const SponsorsPanel = ({
 
             <div className="border-t border-white/5 pt-4 space-y-3">
               <h4 className="font-bold text-white/80 uppercase">{editingCatKey ? "Edit Tier" : "Create New Tier"}</h4>
-              
+
               <div className="grid grid-cols-2 gap-2">
                 <div className="space-y-1">
                   <label className="text-white/40 block text-[9px]">Tier Key</label>
@@ -1198,12 +1197,12 @@ const TeamPanel = ({
     const reordered = [...sectionsListState];
     const [draggedItem] = reordered.splice(draggedIndex, 1);
     reordered.splice(targetIndex, 0, draggedItem);
-    
+
     const updated = reordered.map((item, i) => ({
       ...item,
       priority: i,
     }));
-    
+
     setSectionsListState(updated);
     setDraggedIndex(null);
 
@@ -1237,14 +1236,14 @@ const TeamPanel = ({
       if (photoFile) {
         finalPhoto = await validateAndUploadImage(photoFile, "team_photos");
       }
-      
+
       const payload = {
         ...form,
         section: form.section || (sectionsListState[0]?.key || "leads"),
         photoUrl: finalPhoto,
         initials: form.initials || form.name.split(" ").map((n) => n[0]).join("").toUpperCase().substring(0, 2),
       } as any;
-      
+
       await saveTeamMember(payload);
       toast.success("Upload successful: Team member card saved successfully.");
       setForm({
@@ -1311,7 +1310,7 @@ const TeamPanel = ({
                 type="text"
                 value={form.role}
                 onChange={(e) => setForm({ ...form, role: e.target.value })}
-                placeholder="e.g. Lead Convenor"
+                placeholder="e.g. Lead Organizer"
                 className="w-full bg-[#111015] border border-white/10 p-3 rounded-lg text-white placeholder-white/20"
               />
             </div>
@@ -1454,11 +1453,11 @@ const TeamPanel = ({
           {/* Manage Sections Section */}
           <div className="space-y-6 bg-[#0c0b10] border border-white/5 p-6 rounded-xl relative h-fit font-mono text-xs">
             <h3 className="font-heading font-bold text-lg text-white uppercase mb-2">Manage Team Sections</h3>
-            
+
             <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
               {sectionsListState.map((sec, idx) => (
-                <div 
-                  key={sec.key} 
+                <div
+                  key={sec.key}
                   draggable
                   onDragStart={() => setDraggedIndex(idx)}
                   onDragOver={(e) => e.preventDefault()}
@@ -1506,7 +1505,7 @@ const TeamPanel = ({
 
             <div className="border-t border-white/5 pt-4 space-y-3">
               <h4 className="font-bold text-white/80 uppercase">{editingSecKey ? "Edit Section" : "Create New Section"}</h4>
-              
+
               <div className="grid grid-cols-2 gap-2">
                 <div className="space-y-1">
                   <label className="text-white/40 block text-[9px]">Section Key</label>
@@ -1540,6 +1539,7 @@ const TeamPanel = ({
                     className="w-full bg-[#111015] border border-white/10 p-2.5 rounded text-white"
                   >
                     <option value="red">Red</option>
+                    <option value="orange">Orange</option>
                     <option value="blue">Blue</option>
                     <option value="green">Green</option>
                     <option value="purple">Purple</option>
@@ -1724,7 +1724,7 @@ const GalleryPanel = ({
       });
 
       toast.success(editingId ? "Gallery item updated successfully." : "Upload successful: Gallery item card published.");
-      
+
       // Reset form states
       setTitle("");
       setSrcFile(null);
@@ -1873,7 +1873,7 @@ const GalleryPanel = ({
                           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/card:opacity-100 flex flex-col justify-end p-3 transition-opacity duration-300 pointer-events-none">
                             <span className="font-mono text-[10px] text-white font-bold truncate block">{item.title}</span>
                           </div>
-                          
+
                           {/* Top-right actions overlay */}
                           <div className="absolute top-2 right-2 flex gap-1.5 z-30">
                             <button

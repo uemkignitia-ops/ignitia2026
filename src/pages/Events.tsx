@@ -192,7 +192,30 @@ const Events = () => {
   const [eventsList, setEventsList] = useState<EventType[]>([]);
 
   useEffect(() => {
-    getEvents().then(setEventsList);
+    getEvents().then((data) => {
+      const PREDEFINED_ORDER = [
+        "ignisys",           // Row 1 - wide (Col 1-4)
+        "blind-coding",      // Row 1 - normal (Col 5-6)
+        "efootball",         // Row 2 - normal (Col 1-2)
+        "bgmi",              // Row 2 - wide (Col 3-6)
+        "quizophonia",       // Row 3 - wide (Col 1-4)
+        "guess-who",         // Row 3 - normal (Col 5-6)
+        "pixel-prophecy",    // Row 4 - normal (Col 1-2)
+        "ai-argumentarium",  // Row 4 - wide (Col 3-6)
+        "cineverse",         // Row 5 - normal (Col 1-2)
+        "circuit-crawl",     // Row 5 - normal (Col 3-4)
+        "evadex",            // Row 5 - normal (Col 5-6)
+        "cultural-program"   // Row 6 - normal (Col 3-4 - centered)
+      ];
+      const sorted = [...data].sort((a, b) => {
+        let idxA = PREDEFINED_ORDER.indexOf(a.id);
+        let idxB = PREDEFINED_ORDER.indexOf(b.id);
+        if (idxA === -1) idxA = 999;
+        if (idxB === -1) idxB = 999;
+        return idxA - idxB;
+      });
+      setEventsList(sorted);
+    });
   }, []);
 
   const filteredEvents = activeFilter === "ALL"
@@ -300,7 +323,7 @@ const Events = () => {
             className={
               activeFilter === "ROBOTICS"
                 ? "flex flex-col md:flex-row flex-wrap justify-center gap-6 overflow-visible"
-                : "grid grid-cols-1 md:grid-cols-3 gap-6 overflow-visible"
+                : "grid grid-cols-1 md:grid-cols-6 gap-6 overflow-visible"
             }
           >
             <AnimatePresence mode="popLayout">
@@ -311,11 +334,11 @@ const Events = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4 }}
-                  className={activeFilter === "ROBOTICS" ? "w-full relative overflow-visible" : "md:col-span-3 relative overflow-visible"}
+                  className={activeFilter === "ROBOTICS" ? "w-full relative overflow-visible h-full flex flex-col" : "md:col-span-6 relative overflow-visible h-full flex flex-col"}
                 >
                   <div
                     onClick={() => window.open(CENTRAL_REGISTRATION_URL, "_blank")}
-                    className="w-full h-full min-h-[300px]"
+                    className="w-full h-full min-h-[300px] flex flex-col flex-grow"
                   >
                     <InfoCard
                       image="/event-bg.png"
@@ -343,51 +366,63 @@ const Events = () => {
                 </motion.div>
               )}
 
-              {filteredEvents.map((event) => (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4 }}
-                  key={event.id}
-                  className={
-                    activeFilter === "ROBOTICS"
-                      ? "w-full md:w-[calc(33.333%-16px)] relative overflow-visible"
-                      : event.isWide
-                        ? "md:col-span-2 relative overflow-visible"
-                        : "md:col-span-1 relative overflow-visible"
-                  }
-                >
+              {filteredEvents.map((event) => {
+                const isCulturalInAll = activeFilter === "ALL" && event.id === "cultural-program";
+                return (
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.4 }}
+                    key={event.id}
+                    className={
+                      activeFilter === "ROBOTICS"
+                        ? "w-full md:w-[calc(33.333%-16px)] relative overflow-visible h-full flex flex-col"
+                        : event.isWide
+                          ? "md:col-span-4 relative overflow-visible h-full flex flex-col"
+                          : `md:col-span-2 ${
+                              isCulturalInAll 
+                                ? "md:col-start-3" 
+                                : activeFilter === "NON-TECH" && event.id === "cineverse"
+                                  ? "md:col-start-2"
+                                  : ""
+                            } relative overflow-visible h-full flex flex-col`
+                    }
+                  >
 
-                  <div onClick={() => event.id !== "cultural-program" && setSelectedEvent(event)} className="w-full h-full min-h-[300px]">
-                    <InfoCard
-                      image={getEventImage(event)}
-                      overlayImage={getEventOverlayImage(event)}
-                      title={event.title}
-                      description={event.description}
-                      prize={event.prize}
-                      format={event.teamSize}
-                      entryFee={event.entryFee}
-                      day={event.day}
-                      customFooterText={event.id === "cultural-program" ? "A stage for performers to showcase their artistic talents in a celebration of youth, energy, and creativity." : undefined}
-                      overlayHeight={event.id === "circuit-crawl" ? "80%" : undefined}
-                      metadataPaddingLeft={event.id === "ai-argumentarium" ? "60px" : undefined}
-                      borderColor={getBorderColor(event.theme)}
-                      borderBgColor="var(--border-bg-color)"
-                      cardBgColor="var(--card-bg-color)"
-                      shadowColor="var(--shadow-color)"
-                      textColor="var(--text-color)"
-                      hoverTextColor={getHoverTextColor(event.theme)}
-                      fontFamily="var(--font-family)"
-                      rtlFontFamily="var(--rtl-font-family)"
-                      effectBgColor={getBorderColor(event.theme)}
-                      patternColor1="var(--pattern-color1)"
-                      patternColor2="var(--pattern-color2)"
-                    />
-                  </div>
-                </motion.div>
-              ))}
+                    <div 
+                      onClick={() => event.id !== "cultural-program" && setSelectedEvent(event)} 
+                      className="w-full h-full min-h-[300px] flex flex-col flex-grow"
+                    >
+                      <InfoCard
+                        image={getEventImage(event)}
+                        overlayImage={getEventOverlayImage(event)}
+                        title={event.title}
+                        description={event.description}
+                        prize={event.prize}
+                        format={event.teamSize}
+                        entryFee={event.entryFee}
+                        day={event.day}
+                        customFooterText={event.id === "cultural-program" ? "A stage for performers to showcase their artistic talents in a celebration of youth, energy, and creativity." : undefined}
+                        overlayHeight={event.id === "circuit-crawl" ? "80%" : undefined}
+                        metadataPaddingLeft={event.id === "ai-argumentarium" ? "60px" : undefined}
+                        borderColor={getBorderColor(event.theme)}
+                        borderBgColor="var(--border-bg-color)"
+                        cardBgColor="var(--card-bg-color)"
+                        shadowColor="var(--shadow-color)"
+                        textColor="var(--text-color)"
+                        hoverTextColor={getHoverTextColor(event.theme)}
+                        fontFamily="var(--font-family)"
+                        rtlFontFamily="var(--rtl-font-family)"
+                        effectBgColor={getBorderColor(event.theme)}
+                        patternColor1="var(--pattern-color1)"
+                        patternColor2="var(--pattern-color2)"
+                      />
+                    </div>
+                  </motion.div>
+                );
+              })}
             </AnimatePresence>
           </motion.div>
         </section>
