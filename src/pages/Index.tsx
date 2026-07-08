@@ -232,36 +232,39 @@ const Index = () => {
 
                     {/* Apply on Devfolio Button (Row 2) */}
                     <div
-                      className="relative"
+                      className="relative devfolio-wrapper group"
                       style={{ height: "46px", width: "312px" }}
                     >
-                      {showSdk ? (
+                      {/* Our custom button (always visible) */}
+                      <a
+                        href="https://ignisys-ignitia.devfolio.co/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="devfolio-apply-button flex items-center justify-center gap-3 text-sm h-full w-full absolute inset-0 z-0"
+                      >
+                        <img
+                          src="/devfolio.png"
+                          alt="Devfolio"
+                          width={20}
+                          height={20}
+                          className="w-5 h-5 object-contain brightness-0 invert"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = "none";
+                          }}
+                        />
+                        Apply on Devfolio
+                        <ArrowRight size={14} />
+                      </a>
+
+                      {/* Devfolio SDK Overlay (transparent on top) */}
+                      {showSdk && (
                         <div
-                          className="apply-button w-full h-full"
+                          className="apply-button absolute inset-0 z-10 opacity-0 cursor-pointer"
                           data-hackathon-slug="ignisys-ignitia"
                           data-button-theme="dark"
+                          data-button-width="312"
                           style={{ height: "46px", width: "312px" }}
                         />
-                      ) : (
-                        <a
-                          href="https://ignisys-ignitia.devfolio.co/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="devfolio-apply-button flex items-center justify-center gap-3 text-sm h-full w-full"
-                        >
-                          <img
-                            src="/devfolio.png"
-                            alt="Devfolio"
-                            width={20}
-                            height={20}
-                            className="w-5 h-5 object-contain brightness-0 invert"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display = "none";
-                            }}
-                          />
-                          Apply on Devfolio
-                          <ArrowRight size={14} />
-                        </a>
                       )}
                     </div>
                   </div>

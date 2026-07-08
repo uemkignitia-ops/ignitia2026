@@ -31,7 +31,7 @@ const fadeUp = {
 };
 
 const Footer = () => (
-  <footer className="relative z-[100] overflow-visible border-t border-white/10 bg-background/85 backdrop-blur-xl py-6 md:py-8">
+  <footer className="relative z-10 overflow-visible border-t border-white/10 bg-background/85 backdrop-blur-xl py-6 md:py-8">
     <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(168,85,247,0.08),transparent_35%),radial-gradient(circle_at_top_right,rgba(255,215,0,0.04),transparent_30%)] overflow-hidden" />
 
     {/* Character standing on the footer line */}

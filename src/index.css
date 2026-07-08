@@ -216,13 +216,15 @@
     pointer-events: none;
   }
 
-  .devfolio-apply-button:hover {
+  .devfolio-apply-button:hover,
+  .devfolio-wrapper:hover .devfolio-apply-button {
     transform: translateY(-2px);
     box-shadow: 0 16px 42px rgba(41, 98, 255, 0.55), inset 0 0 28px rgba(255, 255, 255, 0.1);
     background: #3d73ff;
   }
 
-  .devfolio-apply-button:hover::before {
+  .devfolio-apply-button:hover::before,
+  .devfolio-wrapper:hover .devfolio-apply-button::before {
     transform: translateX(130%);
   }
 
