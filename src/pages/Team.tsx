@@ -25,170 +25,208 @@ export interface Member {
 
 // Ornate card holder component matching the Citadel design theme
 // Ornate card holder component matching the Citadel design theme
-const TeamCard = memo(({ member, theme }: { member: Member; theme: "red" | "blue" | "green" | "purple" }) => {
-  const themeMap = {
-    red: {
-      glowColor: "rgba(239, 68, 68, 0.18)",
-      circleBg: "bg-gradient-to-tr from-red-950/40 via-red-900/20 to-transparent",
-      circleGlow: "shadow-[0_0_15px_rgba(239, 68, 68, 0.3)]",
-    },
-    blue: {
-      glowColor: "rgba(59, 130, 246, 0.18)",
-      circleBg: "bg-gradient-to-tr from-blue-950/40 via-blue-900/20 to-transparent",
-      circleGlow: "shadow-[0_0_15px_rgba(59, 130, 246, 0.3)]",
-    },
-    green: {
-      glowColor: "rgba(16, 185, 129, 0.18)",
-      circleBg: "bg-gradient-to-tr from-emerald-950/40 via-emerald-900/20 to-transparent",
-      circleGlow: "shadow-[0_0_15px_rgba(16, 185, 129, 0.3)]",
-    },
-    purple: {
-      glowColor: "rgba(168, 85, 247, 0.18)",
-      circleBg: "bg-gradient-to-tr from-purple-950/40 via-purple-900/20 to-transparent",
-      circleGlow: "shadow-[0_0_15px_rgba(168, 85, 247, 0.3)]",
-    },
+const TeamCard = memo(({ member, theme }: { member: Member; theme: "red" | "blue" | "green" | "purple" | "orange" }) => {
+  const getCardStyles = (section: string, theme: string) => {
+    // Try section key first
+    if (section === "leads") {
+      return {
+        templateUrl: "/teams/leads.png",
+        labelColor: "text-[#ff4d4d]",
+        glowStyle: "hover:drop-shadow-[0_0_20px_rgba(239,68,68,0.65)]",
+      };
+    }
+    if (section === "organizers") {
+      return {
+        templateUrl: "/teams/organizers.png",
+        labelColor: "text-[#ff8f3d]",
+        glowStyle: "hover:drop-shadow-[0_0_20px_rgba(249,115,22,0.65)]",
+      };
+    }
+    if (section === "core") {
+      return {
+        templateUrl: "/teams/core.png",
+        labelColor: "text-[#3b82f6]",
+        glowStyle: "hover:drop-shadow-[0_0_20px_rgba(59,130,246,0.65)]",
+      };
+    }
+    if (section === "domain") {
+      return {
+        templateUrl: "/teams/domain.png",
+        labelColor: "text-[#c084fc]",
+        glowStyle: "hover:drop-shadow-[0_0_20px_rgba(168,85,247,0.65)]",
+      };
+    }
+
+    // Fallback to theme
+    switch (theme) {
+      case "red":
+        return {
+          templateUrl: "/teams/leads.png",
+          labelColor: "text-[#ff4d4d]",
+          glowStyle: "hover:drop-shadow-[0_0_20px_rgba(239,68,68,0.65)]",
+        };
+      case "orange":
+        return {
+          templateUrl: "/teams/organizers.png",
+          labelColor: "text-[#ff8f3d]",
+          glowStyle: "hover:drop-shadow-[0_0_20px_rgba(249,115,22,0.65)]",
+        };
+      case "blue":
+        return {
+          templateUrl: "/teams/core.png",
+          labelColor: "text-[#3b82f6]",
+          glowStyle: "hover:drop-shadow-[0_0_20px_rgba(59,130,246,0.65)]",
+        };
+      case "green":
+        return {
+          templateUrl: "/teams/core.png",
+          labelColor: "text-[#10b981]",
+          glowStyle: "hover:drop-shadow-[0_0_20px_rgba(16,185,129,0.65)]",
+        };
+      case "purple":
+      default:
+        return {
+          templateUrl: "/teams/domain.png",
+          labelColor: "text-[#c084fc]",
+          glowStyle: "hover:drop-shadow-[0_0_20px_rgba(168,85,247,0.65)]",
+        };
+    }
   };
 
-  const style = themeMap[theme];
+  const { templateUrl, labelColor, glowStyle } = getCardStyles(member.section || "", theme);
+  const initials = member.initials || member.name.split(" ").map((n) => n[0]).join("").toUpperCase().substring(0, 2);
+
+  // Dynamically calculate font sizes based on name and role length to fit within inner borders
+  const nameLength = member.name.length;
+  const nameFontSize = nameLength > 12
+    ? `clamp(8px, ${Math.max(3.2, (5.8 * 12) / nameLength)}cqw, 20px)`
+    : "clamp(11px, 5.8cqw, 20px)";
+
+  const roleText = member.role || "MEMBER";
+  const roleLength = roleText.length;
+  const roleFontSize = roleLength > 15
+    ? `clamp(7px, ${Math.max(2.8, (4.8 * 15) / roleLength)}cqw, 16px)`
+    : "clamp(9px, 4.8cqw, 16px)";
+
+  const cardImageStyle = {
+    top: "9.0%",
+    left: "13.5%",
+    width: "73.0%",
+    height: "61.8%",
+  };
 
   return (
-    <div className="group relative w-full aspect-[256/380] sm:w-64 sm:h-[380px] rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 select-none border border-purple-500/20 cursor-pointer"
-      style={{
-        background: `radial-gradient(circle at center, rgba(17,17,22,0.98) 30%, ${style.glowColor} 100%)`,
-        boxShadow: `0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6)`,
-      }}
+    <div
+      className={`group relative w-full aspect-[2/3] transition-all duration-300 hover:-translate-y-2 select-none cursor-pointer filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.7)] ${glowStyle}`}
+      style={{ containerType: "inline-size" }}
     >
-      <style>{`
-        @keyframes borderCrawl {
-          0% {
-            stroke-dashoffset: 1272;
-            opacity: 0;
-          }
-          4% {
-            opacity: 1;
-          }
-          70% {
-            opacity: 1;
-          }
-          76% {
-            opacity: 0;
-          }
-          100% {
-            stroke-dashoffset: 0;
-            opacity: 0;
-          }
-        }
-        .lightning-border-path {
-          stroke-dasharray: 200 1072;
-          animation: borderCrawl 4s linear infinite;
-        }
-      `}</style>
-
-      {/* Crawling Lightning Violet Border */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none rounded-xl z-20" viewBox="0 0 256 380" fill="none">
-        <defs>
-          <linearGradient id="violet-lightning-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#c084fc" />
-            <stop offset="50%" stopColor="#a855f7" />
-            <stop offset="100%" stopColor="#818cf8" />
-          </linearGradient>
-        </defs>
-        {/* Base static faint violet outer border */}
-        <rect x="2" y="2" width="252" height="376" rx="10" stroke="#a855f7" strokeWidth="1" opacity="0.2" />
-        {/* Animated crawling lightning stroke */}
-        <rect
-          x="2"
-          y="2"
-          width="252"
-          height="376"
-          rx="10"
-          stroke="url(#violet-lightning-gradient)"
-          strokeWidth="3"
-          className="lightning-border-path"
+      {/* Clipped Inner Container to hide the outer glass border of the PNG template */}
+      <div
+        className="absolute inset-0 w-full h-full overflow-hidden"
+        style={{
+          clipPath: "inset(5.2% 6.2% 6.2% 6.2% rounded 12px)"
+        }}
+      >
+        {/* Profile Photo Wrapper to prevent image overflowing card frames on hover */}
+        <div
+          className="absolute overflow-hidden z-0"
           style={{
-            filter: "drop-shadow(0 0 5px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 10px rgba(168, 85, 247, 0.4))",
+            ...cardImageStyle,
+            clipPath: "polygon(6% 0%, 94% 0%, 100% 6%, 100% 100%, 0% 100%, 0% 6%)"
           }}
-        />
-      </svg>
-
-      {/* Decorative Gold Inner Borders */}
-      <div className="absolute inset-1 sm:inset-1.5 border border-amber-500/25 rounded-lg pointer-events-none z-10" />
-      <div className="absolute inset-2 sm:inset-3.5 border-2 border-amber-500/40 rounded-lg pointer-events-none z-10" />
-
-      {/* Lightning Hover Glow Overlay */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.06)_0%,transparent_70%)] animate-pulse" />
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -inset-full bg-gradient-to-tr from-transparent via-amber-400/5 to-transparent rotate-45 translate-y-[-50%] animate-pulse" />
-        </div>
-      </div>
-
-      {/* Top Ornate Lightning Deco */}
-      <div className="absolute top-2 left-1/2 -translate-x-1/2 w-6 h-6 sm:w-8 sm:h-8 text-amber-500/80 group-hover:text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] transition-colors duration-300 z-10">
-        <svg viewBox="0 0 24 24" className="w-full h-full fill-current">
-          <polygon points="12,1 6,13 11,13 9,23 18,11 13,11" />
-        </svg>
-      </div>
-
-      {/* Bottom Ornate Lightning Deco */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 sm:w-8 sm:h-8 text-amber-500/80 group-hover:text-amber-400 rotate-180 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] transition-colors duration-300 z-10">
-        <svg viewBox="0 0 24 24" className="w-full h-full fill-current">
-          <polygon points="12,1 6,13 11,13 9,23 18,11 13,11" />
-        </svg>
-      </div>
-
-      {/* Corner Corner Accents (Cyberpunk / Fantasy corners) */}
-      <div className="absolute top-2 left-2 sm:top-3.5 sm:left-3.5 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-l-2 border-amber-500/80 z-10" />
-      <div className="absolute top-2 right-2 sm:top-3.5 sm:right-3.5 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-r-2 border-amber-500/80 z-10" />
-      <div className="absolute bottom-2 left-2 sm:bottom-3.5 sm:left-3.5 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-l-2 border-amber-500/80 z-10" />
-      <div className="absolute bottom-2 right-2 sm:bottom-3.5 sm:right-3.5 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-r-2 border-amber-500/80 z-10" />
-
-      {/* Profile Photo in Gold Circle */}
-      <div className="flex justify-center mt-8 sm:mt-12">
-        <div className={`relative w-20 h-20 sm:w-28 sm:h-28 rounded-full border-2 sm:border-4 border-amber-500/90 p-0.5 sm:p-1 overflow-hidden flex items-center justify-center transition-all duration-300 group-hover:scale-105 ${style.circleGlow}`}
-          style={{ background: style.circleBg }}
         >
           {member.photoUrl ? (
-            <img src={member.photoUrl} alt={member.name} className="w-full h-full rounded-full object-cover" />
+            <img
+              src={member.photoUrl}
+              alt={member.name}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
           ) : (
-            <div className="w-full h-full rounded-full flex items-center justify-center bg-black/60">
-              <span className="font-heading font-black text-lg sm:text-2xl text-white/90 tracking-normal select-none">
-                {member.initials}
+            <div
+              className="w-full h-full bg-gradient-to-b from-[#14121d] to-[#09080e] flex items-center justify-center border border-white/5"
+            >
+              <span className="font-heading font-black text-xl sm:text-2xl tracking-widest text-white/40 group-hover:text-white/60 transition-colors duration-300">
+                {initials}
               </span>
             </div>
           )}
         </div>
-      </div>
 
-      {/* Banner / Plaque box */}
-      <div className="absolute bottom-11 sm:bottom-16 left-1/2 -translate-x-1/2 w-[90%] sm:w-[85%]">
-        <div className="relative py-1 sm:py-2 px-2 sm:px-3 bg-[#0d0a0e] border sm:border-2 border-amber-500/70 rounded-md flex flex-col justify-center items-center shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
-          {/* Plaque side tabs */}
-          <div className="absolute -left-1 sm:-left-1.5 top-1/2 -translate-y-1/2 w-0.5 sm:w-1 h-2 sm:h-3 bg-amber-500/80 border-r border-black" />
-          <div className="absolute -right-1 sm:-right-1.5 top-1/2 -translate-y-1/2 w-0.5 sm:w-1 h-2 sm:h-3 bg-amber-500/80 border-l border-black" />
+        {/* Futuristic respect card frame PNG template */}
+        <img
+          src={templateUrl}
+          alt="Card Frame"
+          className="absolute inset-0 w-full h-full object-fill z-10 pointer-events-none"
+        />
 
-          <h4 className="font-heading font-bold text-[10px] sm:text-xs tracking-wider text-white uppercase text-center w-full truncate drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-            {member.name}
-          </h4>
-          {member.role && (
-            <span className="font-mono text-[7px] sm:text-[9px] text-amber-500 uppercase tracking-widest font-semibold mt-0.5 text-center truncate w-full">
-              {member.role}
+        {/* Coded text templates and values overlay in a single flexbox to prevent overlapping */}
+        <div
+          className="absolute z-20 pointer-events-none select-none flex flex-col"
+          style={{
+            top: "68%",
+            left: "clamp(18.5%, 21cqw, 21%)",
+            right: "clamp(14%, 16.5cqw, 16.5%)",
+            gap: "clamp(8px, 4.5cqw, 18px)"
+          }}
+        >
+          {/* Name section */}
+          <div className="flex flex-col justify-start min-w-0">
+            <span
+              className={`font-extrabold tracking-[0.25em] font-mono leading-none ${labelColor}`}
+              style={{ fontSize: "clamp(7.5px, 3.5cqw, 11px)" }}
+            >
+              NAME
             </span>
-          )}
+            <h4
+              className="font-heading font-bold uppercase text-white tracking-[0.05em] leading-tight truncate mt-1"
+              style={{ fontSize: nameFontSize }}
+            >
+              {member.name}
+            </h4>
+          </div>
+
+          {/* Role section */}
+          <div className="flex flex-col justify-start min-w-0">
+            <span
+              className={`font-extrabold tracking-[0.25em] font-mono leading-none ${labelColor}`}
+              style={{ fontSize: "clamp(7.5px, 3.5cqw, 11px)" }}
+            >
+              ROLE
+            </span>
+            <p
+              className="font-heading font-medium uppercase text-white/90 tracking-[0.05em] leading-tight truncate mt-1"
+              style={{ fontSize: roleFontSize }}
+            >
+              {roleText}
+            </p>
+          </div>
+        </div>
+
+        {/* Premium Sweep Glare Effect on Hover */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-30 overflow-hidden">
+          <div className="absolute -inset-full bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-45 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out" />
         </div>
       </div>
 
-      {/* LinkedIn Link */}
+      {/* Permanently centered LinkedIn Link at the bottom (partially overlapping the bottom border on mobile screens) */}
       {member.linkedin && member.linkedin !== "#" && (
-        <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-10" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="absolute z-40 animate-fade-in bottom-[6%] md:bottom-[7%]"
+          style={{ left: "50%", transform: "translateX(-50%)" }}
+          onClick={(e) => e.stopPropagation()}
+        >
           <a
             href={member.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-5.5 h-5.5 sm:w-7 sm:h-7 rounded-full border border-amber-500/50 bg-[#0e0c0f] hover:bg-amber-500/90 text-amber-500 hover:text-black flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-[0_0_10px_rgba(245,158,11,0.15)] hover:shadow-[0_0_15px_rgba(245,158,11,0.4)]"
+            className={`w-5 h-5 sm:w-8 sm:h-8 rounded-full border bg-[#0e0c0f] flex items-center justify-center transition-all duration-200 ${labelColor}`}
+            style={{
+              borderColor: "currentColor",
+              boxShadow: "0 0 10px rgba(0,0,0,0.85)",
+            }}
             title="LinkedIn Profile"
           >
-            <Linkedin className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5" />
+            <Linkedin className="w-3 h-3 sm:w-4 sm:h-4" />
           </a>
         </div>
       )}
@@ -386,21 +424,21 @@ const Team = () => {
             }}
           />
 
-            <div className="w-full flex justify-center z-[36] pointer-events-none text-center mt-8 mb-4">
-              <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">
-                <span className="ignitia-citadel-title mx-auto" data-text="TEAM">
-                  <span>T</span>
-                  <span>E</span>
-                  <span>A</span>
-                  <span>M</span>
-                </span>
-              </h1>
-            </div>
+          <div className="w-full flex justify-center z-[36] pointer-events-none text-center mt-8 mb-4">
+            <h1 className="hero-title-block leading-[0.82] select-none text-center mb-0">
+              <span className="ignitia-citadel-title mx-auto" data-text="TEAM">
+                <span>T</span>
+                <span>E</span>
+                <span>A</span>
+                <span>M</span>
+              </span>
+            </h1>
+          </div>
 
           {/* Subtitle */}
           <div className="mt-8 mb-0 flex flex-col items-center gap-3 relative z-10 pb-10">
             <div className="w-full flex justify-center px-4">
-              <TerminalSubheading 
+              <TerminalSubheading
                 text="A dedicated group of visionaries, planners, and creators shaping IGNITIA '26"
                 className="text-muted-foreground text-sm md:text-base font-medium text-center max-w-2xl"
               />
@@ -410,7 +448,7 @@ const Team = () => {
 
         {/* Team Grid Row Layout */}
         <section className="relative z-10 pb-32 max-w-7xl mx-auto px-4 md:px-8">
-          
+
           {sectionsList.map((sec) => {
             const members = teamList.filter((m) => m.section === sec.key);
             if (members.length === 0) return null;
@@ -427,12 +465,12 @@ const Team = () => {
                   </h2>
                   <div className="w-16 h-0.5 bg-amber-500/60 mt-2 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
                 </div>
-                <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-14 w-full">
+                <div className="flex flex-wrap justify-center gap-2 sm:gap-8 md:gap-14 w-full">
                   {members.map((member) => (
-                    <div 
-                      key={member.name} 
+                    <div
+                      key={member.name}
                       onClick={() => handleOpenCard(member, glowHsl)}
-                      className="w-[calc(50%-8px)] sm:w-64 max-w-[256px]"
+                      className="w-[calc(50%-4px)] sm:w-72 md:w-80 max-w-[320px] h-fit"
                     >
                       <TeamCard member={member} theme={themeColor as any} />
                     </div>

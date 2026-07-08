@@ -119,13 +119,14 @@ export const InfoCard: React.FC<InfoCardProps> = ({
         padding: borderPadding,
         boxSizing: "border-box",
         display: "flex",
-        alignItems: "center",
+        alignItems: "stretch",
         justifyContent: "center",
         cursor: title === "Cultural Program" ? "default" : "pointer",
         userSelect: "none",
         transition: "box-shadow 0.3s",
         position: "relative",
         fontFamily: effectiveFont,
+        flexGrow: 1,
       } as React.CSSProperties}
     >
       <div
