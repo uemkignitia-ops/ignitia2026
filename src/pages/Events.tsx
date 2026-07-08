@@ -442,9 +442,19 @@ const Events = () => {
                 animate={{ scale: 1, y: 0, opacity: 1 }}
                 exit={{ scale: 0.9, y: 20, opacity: 0 }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="relative w-full max-w-2xl max-h-[90vh] rounded-[1.5rem] overflow-hidden flex flex-col backdrop-blur-xl bg-[rgba(85,80,110,0.4)] border border-[rgba(164,132,215,0.5)] shadow-[0_0_20px_rgba(123,57,252,0.15),inset_0_1px_0_rgba(255,255,255,0.08)]"
+                className="relative w-full max-w-2xl max-h-[90vh] rounded-xl overflow-hidden flex flex-col backdrop-blur-xl bg-[#0B0A10]/95 border border-purple-500/20 shadow-[0_0_60px_rgba(139,92,246,0.15)]"
                 onClick={(e) => e.stopPropagation()}
               >
+                {/* Decorative Gold Inner Borders */}
+                <div className="absolute inset-1 sm:inset-1.5 border border-amber-500/25 rounded-lg pointer-events-none z-30" />
+                <div className="absolute inset-2 sm:inset-3.5 border-2 border-amber-500/40 rounded-lg pointer-events-none z-30" />
+
+                {/* Corner Corner Accents (Cyberpunk / Fantasy corners) */}
+                <div className="absolute top-2 left-2 sm:top-3.5 sm:left-3.5 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-l-2 border-amber-500/80 z-30" />
+                <div className="absolute top-2 right-2 sm:top-3.5 sm:right-3.5 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-r-2 border-amber-500/80 z-30" />
+                <div className="absolute bottom-2 left-2 sm:bottom-3.5 sm:left-3.5 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-l-2 border-amber-500/80 z-30" />
+                <div className="absolute bottom-2 right-2 sm:bottom-3.5 sm:right-3.5 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-r-2 border-amber-500/80 z-30" />
+
                 {/* Texture/Gradient Video Background */}
                 <video
                   autoPlay
@@ -474,7 +484,7 @@ const Events = () => {
                       <span className={`text-[10px] font-bold tracking-wider px-2 py-0.5 border rounded uppercase mb-1 inline-block ${themes[selectedEvent.theme].badge}`}>
                         {selectedEvent.category}
                       </span>
-                      <h3 className={`text-lg md:text-2xl font-bold font-mono ${themes[selectedEvent.theme].iconText} flex items-center truncate`}>
+                      <h3 className={`text-lg md:text-2xl font-bold font-['Orbitron'] ${themes[selectedEvent.theme].iconText} flex items-center truncate`}>
                         <span className="mr-2">&gt;</span>
                         <span className="truncate">{selectedEvent.title}</span>
                         <span className="w-3 h-6 bg-current animate-pulse inline-block ml-2 mb-[-2px] shrink-0"></span>
@@ -495,23 +505,23 @@ const Events = () => {
                   <div className={`grid ${selectedEvent.prize && selectedEvent.prize !== "N/A" && selectedEvent.prize !== "TBA" ? 'grid-cols-3' : 'grid-cols-2'} gap-2 md:gap-4 p-3 md:p-4 border border-white/5 bg-[#ffffff02] rounded-2xl`}>
                     {selectedEvent.prize && selectedEvent.prize !== "N/A" && selectedEvent.prize !== "TBA" && (
                       <div className="text-center">
-                        <span className={`text-[9px] md:text-[10px] uppercase tracking-wider ${themes[selectedEvent.theme].iconText} block font-mono`}>PRIZE POOL</span>
-                        <span className="text-sm md:text-lg font-bold font-mono text-white">
+                        <span className={`text-[9px] md:text-[10px] uppercase tracking-wider ${themes[selectedEvent.theme].iconText} block font-['Orbitron']`}>PRIZE POOL</span>
+                        <span className="text-sm md:text-lg font-bold font-['Orbitron'] text-white">
                           {selectedEvent.prize}
                         </span>
                       </div>
                     )}
                     <div className={`text-center ${selectedEvent.prize && selectedEvent.prize !== "N/A" && selectedEvent.prize !== "TBA" ? 'border-x' : 'border-r'} border-white/5`}>
-                      <span className={`text-[9px] md:text-[10px] uppercase tracking-wider ${themes[selectedEvent.theme].iconText} block font-mono`}>
+                      <span className={`text-[9px] md:text-[10px] uppercase tracking-wider ${themes[selectedEvent.theme].iconText} block font-['Orbitron']`}>
                         {"teamSizeLabel" in selectedEvent ? selectedEvent.teamSizeLabel : "TEAM"}
                       </span>
-                      <span className="text-sm md:text-lg font-bold font-mono text-white">
+                      <span className="text-sm md:text-lg font-bold font-['Orbitron'] text-white">
                         {selectedEvent.teamSize}
                       </span>
                     </div>
                     <div className="text-center">
-                      <span className={`text-[9px] md:text-[10px] uppercase tracking-wider ${themes[selectedEvent.theme].iconText} block font-mono`}>TIMING</span>
-                      <span className="text-xs md:text-base font-bold font-mono text-white">
+                      <span className={`text-[9px] md:text-[10px] uppercase tracking-wider ${themes[selectedEvent.theme].iconText} block font-['Orbitron']`}>TIMING</span>
+                      <span className="text-xs md:text-base font-bold font-['Orbitron'] text-white">
                         {selectedEvent.duration}
                       </span>
                     </div>
@@ -519,10 +529,10 @@ const Events = () => {
 
                   {/* Overview */}
                   <div>
-                    <h4 className={`text-xs uppercase tracking-wider font-semibold font-mono mb-2 ${themes[selectedEvent.theme].iconText}`}>
+                    <h4 className={`text-xs uppercase tracking-wider font-semibold font-['Orbitron'] mb-2 ${themes[selectedEvent.theme].iconText}`}>
                       Overview
                     </h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed font-mono">
+                    <p className="text-sm text-muted-foreground leading-relaxed font-['Orbitron']">
                       {selectedEvent.overview || selectedEvent.description}
                     </p>
                   </div>
@@ -532,14 +542,14 @@ const Events = () => {
                     {/* Rules */}
                     {selectedEvent.rules && selectedEvent.rules.length > 0 && (
                       <div>
-                        <h4 className={`text-xs uppercase tracking-wider font-semibold font-mono mb-3 ${themes[selectedEvent.theme].iconText}`}>
+                        <h4 className={`text-xs uppercase tracking-wider font-semibold font-['Orbitron'] mb-3 ${themes[selectedEvent.theme].iconText}`}>
                           Rules
                         </h4>
                         <ul className="space-y-2">
                           {selectedEvent.rules.map((rule, idx) => (
                             <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
                               <span className={`${themes[selectedEvent.theme].iconText} mt-0.5 shrink-0`}>▸</span>
-                              <span className="font-mono">{rule}</span>
+                              <span className="font-['Orbitron']">{rule}</span>
                             </li>
                           ))}
                         </ul>
@@ -549,14 +559,14 @@ const Events = () => {
                     {/* Judging Criteria */}
                     {selectedEvent.criteria && selectedEvent.criteria.length > 0 && (
                       <div>
-                        <h4 className={`text-xs uppercase tracking-wider font-semibold font-mono mb-3 ${themes[selectedEvent.theme].iconText}`}>
+                        <h4 className={`text-xs uppercase tracking-wider font-semibold font-['Orbitron'] mb-3 ${themes[selectedEvent.theme].iconText}`}>
                           Judging Criteria
                         </h4>
                         <ul className="space-y-2">
                           {selectedEvent.criteria.map((crit, idx) => (
                             <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
                               <span className={`${themes[selectedEvent.theme].iconText} mt-0.5 shrink-0`}>◆</span>
-                              <span className="font-mono">{crit}</span>
+                              <span className="font-['Orbitron']">{crit}</span>
                             </li>
                           ))}
                         </ul>
@@ -567,12 +577,12 @@ const Events = () => {
                   {/* Contact Persons */}
                   {selectedEvent.contacts && selectedEvent.contacts.length > 0 && (
                     <div className="pt-4 border-t border-white/5">
-                      <h4 className={`text-xs uppercase tracking-wider font-semibold font-mono mb-3 ${themes[selectedEvent.theme].iconText}`}>
+                      <h4 className={`text-xs uppercase tracking-wider font-semibold font-['Orbitron'] mb-3 ${themes[selectedEvent.theme].iconText}`}>
                         Contact Persons
                       </h4>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {selectedEvent.contacts.map((contact, idx) => (
-                          <div key={idx} className="flex justify-between items-center p-3 border border-white/5 bg-[#ffffff01] rounded-xl font-mono text-xs text-muted-foreground">
+                          <div key={idx} className="flex justify-between items-center p-3 border border-white/5 bg-[#ffffff01] rounded-xl font-['Orbitron'] text-xs text-muted-foreground">
                             <span>{contact.name}</span>
                             <a href={`tel:${contact.phone}`} className={`hover:underline ${themes[selectedEvent.theme].iconText}`}>
                               {contact.phone}
@@ -588,7 +598,7 @@ const Events = () => {
                 <div className="p-5 md:p-8 border-t border-white/5 flex flex-col-reverse sm:flex-row gap-3 sm:gap-4 justify-end relative z-10 bg-[#0c0d0e]/50">
                   <button
                     onClick={() => setShowRulebook(true)}
-                    className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl border border-white/10 text-white font-mono font-semibold uppercase tracking-wider transition-all duration-300 text-center text-sm bg-transparent hover:bg-white/5 hover:border-white/20 shrink-0"
+                    className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl border border-white/10 text-white font-['Orbitron'] font-semibold uppercase tracking-wider transition-all duration-300 text-center text-sm bg-transparent hover:bg-white/5 hover:border-white/20 shrink-0"
                   >
                     Rulebook
                   </button>
@@ -623,9 +633,19 @@ const Events = () => {
                 animate={{ scale: 1, y: 0, opacity: 1 }}
                 exit={{ scale: 0.9, y: 20, opacity: 0 }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="relative w-full max-w-4xl rounded-[1.5rem] overflow-hidden h-[90vh] flex flex-col backdrop-blur-xl bg-[rgba(85,80,110,0.4)] border border-[rgba(164,132,215,0.5)] shadow-[0_0_20px_rgba(123,57,252,0.15),inset_0_1px_0_rgba(255,255,255,0.08)]"
+                className="relative w-full max-w-4xl rounded-xl overflow-hidden h-[90vh] flex flex-col backdrop-blur-xl bg-[#0B0A10]/95 border border-purple-500/20 shadow-[0_0_60px_rgba(139,92,246,0.15)]"
                 onClick={(e) => e.stopPropagation()}
               >
+                {/* Decorative Gold Inner Borders */}
+                <div className="absolute inset-1 sm:inset-1.5 border border-amber-500/25 rounded-lg pointer-events-none z-30" />
+                <div className="absolute inset-2 sm:inset-3.5 border-2 border-amber-500/40 rounded-lg pointer-events-none z-30" />
+
+                {/* Corner Corner Accents (Cyberpunk / Fantasy corners) */}
+                <div className="absolute top-2 left-2 sm:top-3.5 sm:left-3.5 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-l-2 border-amber-500/80 z-30" />
+                <div className="absolute top-2 right-2 sm:top-3.5 sm:right-3.5 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-r-2 border-amber-500/80 z-30" />
+                <div className="absolute bottom-2 left-2 sm:bottom-3.5 sm:left-3.5 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-l-2 border-amber-500/80 z-30" />
+                <div className="absolute bottom-2 right-2 sm:bottom-3.5 sm:right-3.5 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-r-2 border-amber-500/80 z-30" />
+
                 {/* Texture/Gradient Video Background */}
                 <video
                   autoPlay
@@ -640,7 +660,7 @@ const Events = () => {
 
                 {/* Header */}
                 <div className="flex justify-between items-center p-4 md:p-6 border-b border-white/5 relative z-10 shrink-0 gap-4">
-                  <h3 className={`text-base md:text-xl font-bold font-mono ${themes[selectedEvent.theme].iconText} flex items-center min-w-0 flex-1 truncate`}>
+                  <h3 className={`text-base md:text-xl font-bold font-['Orbitron'] ${themes[selectedEvent.theme].iconText} flex items-center min-w-0 flex-1 truncate`}>
                     <span className="mr-2 opacity-80 shrink-0">&gt;</span>
                     <span className="truncate">{selectedEvent.title} — Rulebook</span>
                     <span className="w-2.5 h-5 bg-current animate-pulse inline-block ml-2 mb-[-2px] shrink-0"></span>
@@ -665,7 +685,7 @@ const Events = () => {
                       title={`${selectedEvent.title} Rulebook`}
                     />
                   ) : (
-                    <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
+                    <div className="flex items-center justify-center h-full text-muted-foreground text-sm font-['Orbitron']">
                       Rulebook coming soon...
                     </div>
                   )}

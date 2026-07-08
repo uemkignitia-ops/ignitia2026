@@ -23,46 +23,44 @@ const Index = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [typedText, setTypedText] = useState("");
 
-  const [showSdk, setShowSdk] = useState(false);
+  const [sdkLoaded, setSdkLoaded] = useState(false);
 
-  // Load Devfolio SDK — only load on production, keep fallback on localhost/local IPs
+  // Load Devfolio SDK & Poll for status
   useEffect(() => {
-    const isLocal =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1" ||
-      window.location.hostname.startsWith("192.168.");
-
-    if (isLocal) {
-      setShowSdk(false);
-      return;
-    }
-
-    const existing = document.getElementById("devfolio-sdk");
-    if (existing) {
-      if ((window as any).devfolio) (window as any).devfolio.init();
-      setShowSdk(true);
-      return;
-    }
-
     const script = document.createElement("script");
-    script.id = "devfolio-sdk";
     script.src = "https://apply.devfolio.co/v2/sdk.js";
     script.async = true;
     script.defer = true;
     script.onload = () => {
-      setTimeout(() => {
-        if ((window as any).devfolio) (window as any).devfolio.init();
-        setShowSdk(true);
-      }, 300);
-    };
-    script.onerror = () => {
-      setShowSdk(false);
+      if ((window as any).devfolio) {
+        (window as any).devfolio.init();
+      }
     };
     document.body.appendChild(script);
 
+    const checkButton = () => {
+      const applyBtn = document.querySelector(".apply-button");
+      if (applyBtn && applyBtn.hasChildNodes()) {
+        setSdkLoaded(true);
+      } else {
+        setSdkLoaded(false);
+      }
+    };
+
+    // Run quick checks initially as the SDK loads and renders
+    const t1 = setTimeout(checkButton, 500);
+    const t2 = setTimeout(checkButton, 1500);
+    const t3 = setTimeout(checkButton, 3000);
+
+    // Refresh every 10 seconds as requested
+    const interval = setInterval(checkButton, 10000);
+
     return () => {
-      const s = document.getElementById("devfolio-sdk");
-      if (s) document.body.removeChild(s);
+      document.body.removeChild(script);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearInterval(interval);
     };
   }, []);
 
@@ -233,39 +231,39 @@ const Index = () => {
                     {/* Apply on Devfolio Button (Row 2) */}
                     <div
                       className="relative devfolio-wrapper group"
-                      style={{ height: "46px", width: "312px" }}
+                      style={{ height: "44px", width: "320px" }}
                     >
-                      {/* Our custom button (always visible) */}
-                      <a
-                        href="https://ignisys-ignitia.devfolio.co/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="devfolio-apply-button flex items-center justify-center gap-3 text-sm h-full w-full absolute inset-0 z-0"
-                      >
-                        <img
-                          src="/devfolio.png"
-                          alt="Devfolio"
-                          width={20}
-                          height={20}
-                          className="w-5 h-5 object-contain brightness-0 invert"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = "none";
-                          }}
-                        />
-                        Apply on Devfolio
-                        <ArrowRight size={14} />
-                      </a>
-
-                      {/* Devfolio SDK Overlay (transparent on top) */}
-                      {showSdk && (
-                        <div
-                          className="apply-button absolute inset-0 z-10 opacity-0 cursor-pointer"
-                          data-hackathon-slug="ignisys-ignitia"
-                          data-button-theme="dark"
-                          data-button-width="312"
-                          style={{ height: "46px", width: "312px" }}
-                        />
+                      {/* Our custom button (visible when SDK hasn't loaded) */}
+                      {!sdkLoaded && (
+                        <a
+                          href="https://ignisys-ignitia.devfolio.co/overview"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="devfolio-apply-button flex items-center justify-center gap-2.5 text-sm h-full w-full absolute inset-0 z-10"
+                        >
+                          <img
+                            src="/devfolio.png"
+                            alt="Devfolio"
+                            width={20}
+                            height={20}
+                            className="w-5 h-5 object-contain brightness-0 invert"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).style.display = "none";
+                            }}
+                          />
+                          <span style={{ fontFamily: '"Inter", sans-serif', fontWeight: 600 }}>
+                            Apply with Devfolio
+                          </span>
+                        </a>
                       )}
+
+                      {/* Devfolio SDK Overlay/Button Container */}
+                      <div
+                        className="apply-button"
+                        data-hackathon-slug="ignisys-ignitia"
+                        data-button-theme="light"
+                        style={{ height: "44px", width: "319px" }}
+                      />
                     </div>
                   </div>
                 </div>
