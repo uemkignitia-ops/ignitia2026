@@ -188,45 +188,19 @@
   }
 
   .devfolio-apply-button {
-    background: #2962ff;
+    background: #3770ff;
     color: #ffffff;
-    border-radius: 9999px;
-    padding: 0.55rem 1.25rem;
+    border-radius: 4px;
     font-weight: 600;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 8px 28px rgba(41, 98, 255, 0.35), inset 0 0 20px rgba(255, 255, 255, 0.07);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
     white-space: nowrap;
+    transition: background-color 0.2s ease;
+    font-family: "Inter", sans-serif;
+  }
+  .devfolio-apply-button:hover {
+    background: #255ce7;
   }
 
-  @media (min-width: 640px) {
-    .devfolio-apply-button {
-      padding: 0.9rem 1.75rem;
-    }
-  }
-
-  .devfolio-apply-button::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.18), transparent 80%);
-    transform: translateX(-130%);
-    transition: transform 0.45s ease;
-    pointer-events: none;
-  }
-
-  .devfolio-apply-button:hover,
-  .devfolio-wrapper:hover .devfolio-apply-button {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 42px rgba(41, 98, 255, 0.55), inset 0 0 28px rgba(255, 255, 255, 0.1);
-    background: #3d73ff;
-  }
-
-  .devfolio-apply-button:hover::before,
-  .devfolio-wrapper:hover .devfolio-apply-button::before {
-    transform: translateX(130%);
-  }
 
   .hero-secondary-button {
     @apply bg-white/5 text-white/90 border border-white/10;
