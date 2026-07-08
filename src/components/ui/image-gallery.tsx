@@ -1,9 +1,7 @@
-'use client';
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { useInView } from 'framer-motion';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { ImageOff } from 'lucide-react';
 
 interface GalleryItem {
   title: string;
@@ -11,97 +9,130 @@ interface GalleryItem {
   color?: string;
   span?: string;
   src: string;
+  isPlaceholder?: boolean;
 }
 
 interface ImageGalleryProps {
   items: GalleryItem[];
   onImageClick?: (item: GalleryItem) => void;
+  /** When true every card shows a "Coming Soon" overlay */
+  isPlaceholder?: boolean;
 }
 
-export function ImageGallery({ items, onImageClick }: ImageGalleryProps) {
-	return (
-		<div className="relative flex w-full flex-col items-center justify-center pb-10">
-			<div className="mx-auto w-full columns-2 md:columns-3 gap-4 md:gap-6 space-y-4 md:space-y-6">
-				{items.map((item, index) => {
-					// Determine ratio based on index for variety
-					const isPortrait = index % 2 === 0;
-					const width = isPortrait ? 1080 : 1920;
-					const height = isPortrait ? 1920 : 1080;
-					const ratio = isPortrait ? 9 / 16 : 16 / 9;
+export function ImageGallery({ items, onImageClick, isPlaceholder }: ImageGalleryProps) {
+  if (items.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 gap-3 text-muted-foreground">
+        <ImageOff size={40} className="opacity-25" />
+        <p className="text-xs font-medium opacity-40 uppercase tracking-widest">No photos yet</p>
+      </div>
+    );
+  }
 
-					return (
-						<div 
-							key={index}
-							className="break-inside-avoid group cursor-pointer relative mb-4 md:mb-6"
-							onClick={() => onImageClick?.(item)}
-						>
-							<AnimatedImage
-								alt={item.title}
-								src={item.src}
-								ratio={ratio}
-								placeholder={`https://placehold.co/${width}x${height}/2a2a35/ffffff?text=Loading...`}
-							/>
-							<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex flex-col justify-end p-2 md:p-5">
-								<span className="text-[10px] md:text-xs text-primary font-semibold uppercase tracking-wider mb-1">
-									{item.category}
-								</span>
-								<h3 className="font-heading text-sm md:text-lg font-semibold text-white">
-									{item.title}
-								</h3>
-							</div>
-						</div>
-					);
-				})}
-			</div>
-		</div>
-	);
+  return (
+    <div className="w-full pb-8">
+      {/*
+        Uniform square grid:
+          mobile  → 3 columns
+          sm      → 4 columns
+          lg      → 5 columns
+        Each cell is a square via padding-bottom trick.
+      */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1.5 sm:gap-2">
+        {items.map((item, index) => {
+          const isPh = isPlaceholder || item.isPlaceholder;
+          return (
+            <div
+              key={(item as any).id ?? index}
+              className={cn(
+                'relative group overflow-hidden rounded-md sm:rounded-lg',
+                'aspect-square',                          // always square
+                isPh ? 'cursor-default' : 'cursor-pointer'
+              )}
+              onClick={() => {
+                if (!isPh) onImageClick?.(item);
+              }}
+            >
+              <GridImage
+                src={item.src}
+                alt={item.title}
+                isPlaceholder={isPh}
+              />
+
+              {/* Real-image hover overlay */}
+              {!isPh && (
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-250 flex flex-col justify-end p-1.5 sm:p-2.5">
+                  <span className="text-[8px] sm:text-[10px] text-primary font-semibold uppercase tracking-wider leading-none mb-0.5 truncate">
+                    {item.category}
+                  </span>
+                  <p className="text-[9px] sm:text-xs font-medium text-white leading-tight line-clamp-1">
+                    {item.title}
+                  </p>
+                </div>
+              )}
+
+              {/* Placeholder overlay — just a dim scrim + category label */}
+              {isPh && (
+                <div className="absolute inset-0 flex items-end justify-start bg-gradient-to-t from-black/60 via-transparent to-transparent p-1.5">
+                  <span className="text-white/50 font-medium text-[7px] sm:text-[9px] tracking-wide leading-none">
+                    {item.category}
+                  </span>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
-interface AnimatedImageProps {
-	alt: string;
-	src: string;
-	className?: string;
-	placeholder?: string;
-	ratio: number;
+// ─── Grid Image Cell ───────────────────────────────────────────────────────────
+
+interface GridImageProps {
+  src: string;
+  alt: string;
+  isPlaceholder?: boolean;
 }
 
-function AnimatedImage({ alt, src, ratio, placeholder, className }: AnimatedImageProps) {
-	const ref = React.useRef(null);
-	const isInView = useInView(ref, { once: true });
-	const [isLoading, setIsLoading] = React.useState(true);
-	const [imgSrc, setImgSrc] = React.useState(src);
+function GridImage({ src, alt, isPlaceholder }: GridImageProps) {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '0px 0px -40px 0px' });
+  const [loaded, setLoaded] = React.useState(false);
+  const [errored, setErrored] = React.useState(false);
+  const [imgSrc, setImgSrc] = React.useState(src);
 
-	// Update image source if prop changes
-	React.useEffect(() => {
-		setImgSrc(src);
-		setIsLoading(true);
-	}, [src]);
+  React.useEffect(() => {
+    setImgSrc(src);
+    setLoaded(false);
+    setErrored(false);
+  }, [src]);
 
-	const handleError = () => {
-		if (placeholder) {
-			setImgSrc(placeholder);
-		}
-	};
+  return (
+    <div ref={ref} className="absolute inset-0 bg-card/60">
+      {/* Shimmer */}
+      {!loaded && !errored && (
+        <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-white/4 via-white/8 to-white/4" />
+      )}
 
-	return (
-		<AspectRatio
-			ref={ref}
-			ratio={ratio}
-			className={cn("bg-card relative size-full rounded-lg border border-border/50 overflow-hidden", className)}
-		>
-			<img
-				alt={alt}
-				src={imgSrc}
-				className={cn(
-					'size-full rounded-lg object-cover opacity-0 transition-all duration-1000 ease-in-out',
-					{
-						'opacity-100': isInView && !isLoading,
-					},
-				)}
-				onLoad={() => setIsLoading(false)}
-				loading="lazy"
-				onError={handleError}
-			/>
-		</AspectRatio>
-	);
+      {errored ? (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <ImageOff size={18} className="text-muted-foreground/25" />
+        </div>
+      ) : (
+        <img
+          src={imgSrc}
+          alt={alt}
+          className={cn(
+            'absolute inset-0 w-full h-full object-cover transition-opacity duration-500',
+            isInView && loaded ? 'opacity-100' : 'opacity-0',
+            isPlaceholder && 'brightness-[0.65]'
+          )}
+          onLoad={() => setLoaded(true)}
+          onError={() => setErrored(true)}
+          loading="lazy"
+        />
+      )}
+    </div>
+  );
 }
